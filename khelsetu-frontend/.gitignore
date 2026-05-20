@@ -1,0 +1,11 @@
+node_modules/
+public/node_modules/
+dist/
+build/
+coverage/
+.vscode/
+.env
+*.log
+
+*storybook.log
+storybook-static
