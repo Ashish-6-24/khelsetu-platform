@@ -25,7 +25,6 @@ Production-grade realtime multi-tenant sports tournament management platform for
 ### Prerequisites
 
 - Node.js 18+
-- KhelSetu Backend running (default: http://localhost:8080)
 
 ### Installation
 
@@ -44,7 +43,6 @@ cp .env.example .env
 ```bash
 # Start dev server
 npm run dev
-# App: http://localhost:3000
 ```
 
 ### Build
