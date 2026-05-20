@@ -1,0 +1,114 @@
+import { Badge } from '@components/ui/Badge';
+import { Button } from '@components/ui/Button';
+import { Card, CardBody, CardHeader } from '@components/ui/Card';
+import type { Invoice } from '@features/billing/types';
+import { Download } from 'lucide-react';
+
+interface InvoiceListProps {
+  invoices: Invoice[];
+  onDownload?: (invoiceId: string) => void;
+  isLoading?: boolean;
+}
+
+export const InvoiceList = ({ invoices, onDownload, isLoading }: InvoiceListProps) => {
+  const getStatusColor = (status: Invoice['status']) => {
+    switch (status) {
+      case 'paid':
+        return 'success';
+      case 'pending':
+        return 'warning';
+      case 'overdue':
+        return 'error';
+      case 'refunded':
+        return 'default';
+      default:
+        return 'default';
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">Invoices</h3>
+        </CardHeader>
+        <CardBody>
+          <div className="space-y-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="animate-pulse flex justify-between">
+                <div className="space-y-2">
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24" />
+                  <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-32" />
+                </div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-16" />
+              </div>
+            ))}
+          </div>
+        </CardBody>
+      </Card>
+    );
+  }
+
+  if (invoices.length === 0) {
+    return (
+      <Card>
+        <CardBody>
+          <p className="text-center text-gray-500 dark:text-gray-400 py-8">
+            No invoices found
+          </p>
+        </CardBody>
+      </Card>
+    );
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white">Invoices</h3>
+      </CardHeader>
+      <CardBody>
+        <div className="space-y-3">
+          {invoices.map((invoice) => (
+            <div
+              key={invoice.id}
+              className="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-700"
+            >
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="font-medium text-gray-900 dark:text-white text-sm">
+                    {invoice.description}
+                  </span>
+                  <Badge variant={getStatusColor(invoice.status)}>
+                    {invoice.status}
+                  </Badge>
+                </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {new Date(invoice.date).toLocaleDateString()}
+                  {invoice.dueDate && invoice.status === 'pending' && (
+                    <span className="ml-2">
+                      Due: {new Date(invoice.dueDate).toLocaleDateString()}
+                    </span>
+                  )}
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="font-bold text-gray-900 dark:text-white">
+                  {invoice.currency} {invoice.amount.toFixed(2)}
+                </span>
+                {invoice.pdfUrl && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => onDownload?.(invoice.id)}
+                  >
+                    <Download className="w-4 h-4" />
+                  </Button>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </CardBody>
+    </Card>
+  );
+};

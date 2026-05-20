@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+echo "Running lint-staged (ESLint + Prettier)..."
+npx lint-staged
+
+echo "Running type check..."
+npm run typecheck
+
+echo "Running tests..."
+npm run test:run
+
+echo "Running build validation..."
+npm run build
+
+echo "All pre-commit checks passed!"

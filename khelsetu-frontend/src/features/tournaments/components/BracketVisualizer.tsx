@@ -1,0 +1,228 @@
+import { Badge } from '@components/ui/Badge';
+import { Card, CardBody } from '@components/ui/Card';
+import type { Match } from '@types-domain/tournament';
+import { clsx } from 'clsx';
+import { motion } from 'framer-motion';
+
+interface BracketMatchProps {
+  match: Match;
+  isWinner?: (teamId: string) => boolean;
+}
+
+export const BracketMatch = ({ match, isWinner }: BracketMatchProps) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm"
+    >
+      <div className="p-3">
+        <div
+          className={clsx(
+            'flex items-center justify-between p-2 rounded-lg',
+            isWinner?.(match.teamA.id)
+              ? 'bg-green-50 dark:bg-green-900/20'
+              : 'bg-gray-50 dark:bg-gray-700/50',
+          )}
+        >
+          <span
+            className={clsx(
+              'text-sm font-medium',
+              isWinner?.(match.teamA.id)
+                ? 'text-green-700 dark:text-green-400'
+                : 'text-gray-900 dark:text-white',
+            )}
+          >
+            {match.teamA.name}
+          </span>
+          {match.score && (
+            <span className="text-sm font-bold text-gray-900 dark:text-white">
+              {match.score.teamAScore}
+            </span>
+          )}
+        </div>
+        <div className="my-1 border-t border-gray-100 dark:border-gray-700" />
+        <div
+          className={clsx(
+            'flex items-center justify-between p-2 rounded-lg',
+            isWinner?.(match.teamB.id)
+              ? 'bg-green-50 dark:bg-green-900/20'
+              : 'bg-gray-50 dark:bg-gray-700/50',
+          )}
+        >
+          <span
+            className={clsx(
+              'text-sm font-medium',
+              isWinner?.(match.teamB.id)
+                ? 'text-green-700 dark:text-green-400'
+                : 'text-gray-900 dark:text-white',
+            )}
+          >
+            {match.teamB.name}
+          </span>
+          {match.score && (
+            <span className="text-sm font-bold text-gray-900 dark:text-white">
+              {match.score.teamBScore}
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="px-3 py-2 bg-gray-50 dark:bg-gray-700/30 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between">
+        <Badge
+          variant={
+            match.status === 'live'
+              ? 'live'
+              : match.status === 'completed'
+                ? 'success'
+                : 'info'
+          }
+          pulse={match.status === 'live'}
+        >
+          {match.status}
+        </Badge>
+        <span className="text-xs text-gray-500 dark:text-gray-400">
+          {match.venue}
+        </span>
+      </div>
+    </motion.div>
+  );
+};
+
+interface BracketVisualizerProps {
+  matches: Match[];
+  format: 'knockout' | 'league';
+}
+
+export const BracketVisualizer = ({
+  matches,
+  format,
+}: BracketVisualizerProps) => {
+  if (format === 'knockout') {
+    const rounds = matches.reduce<Record<string, Match[]>>((acc, match) => {
+      const round = match.round ?? 'Final';
+      if (!acc[round]) acc[round] = [];
+      acc[round].push(match);
+      return acc;
+    }, {});
+
+    return (
+      <div className="space-y-6">
+        {Object.entries(rounds).map(([roundName, roundMatches]) => (
+          <div key={roundName}>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+              {roundName}
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {roundMatches.map((match) => (
+                <BracketMatch
+                  key={match.id}
+                  match={match}
+                  isWinner={(teamId) => match.winner?.id === teamId}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  const matchesByRound = matches.reduce<Record<string, Match[]>>(
+    (acc, match) => {
+      const round = String(match.round ?? 1);
+      if (!acc[round]) acc[round] = [];
+      acc[round].push(match);
+      return acc;
+    },
+    {},
+  );
+
+  return (
+    <div className="space-y-6">
+      {Object.entries(matchesByRound).map(([round, roundMatches]) => (
+        <div key={round}>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+            Round {round}
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {roundMatches.map((match) => (
+              <BracketMatch key={match.id} match={match} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+interface FixtureTableProps {
+  matches: Match[];
+}
+
+export const FixtureTable = ({ matches }: FixtureTableProps) => {
+  return (
+    <Card>
+      <CardBody className="p-0">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-gray-200 dark:border-gray-700">
+                <th className="text-left px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">
+                  Match
+                </th>
+                <th className="text-left px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">
+                  Teams
+                </th>
+                <th className="text-left px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">
+                  Status
+                </th>
+                <th className="text-left px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">
+                  Venue
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {matches.map((match) => (
+                <tr
+                  key={match.id}
+                  className="border-b border-gray-100 dark:border-gray-700 last:border-0"
+                >
+                  <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
+                    #{match.id}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="text-sm">
+                      <p className="font-medium text-gray-900 dark:text-white">
+                        {match.teamA.name}
+                      </p>
+                      <p className="font-medium text-gray-900 dark:text-white">
+                        {match.teamB.name}
+                      </p>
+                    </div>
+                  </td>
+                  <td className="px-4 py-3">
+                    <Badge
+                      variant={
+                        match.status === 'live'
+                          ? 'live'
+                          : match.status === 'completed'
+                            ? 'success'
+                            : 'info'
+                      }
+                      pulse={match.status === 'live'}
+                    >
+                      {match.status}
+                    </Badge>
+                  </td>
+                  <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
+                    {match.venue}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </CardBody>
+    </Card>
+  );
+};
