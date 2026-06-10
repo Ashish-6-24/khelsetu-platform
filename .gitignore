@@ -1,0 +1,7 @@
+# Developer productivity tools (not for public repo)
+graphify-out/
+.opencode/
+
+# Environment
+.env
+*.log
