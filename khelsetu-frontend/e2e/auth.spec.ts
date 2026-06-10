@@ -26,7 +26,7 @@ test.describe('Authentication', () => {
 
   test('should navigate between login and register', async ({ page }) => {
     await page.goto('/auth/login');
-    await page.getByRole('link', { name: 'Create one for free' }).click();
+    await page.getByRole('link', { name: 'Create an account' }).click();
     await expect(page).toHaveURL(/\/auth\/register/);
 
     await page.getByRole('link', { name: 'Sign in' }).click();
