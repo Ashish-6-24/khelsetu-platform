@@ -2,10 +2,14 @@ import { describe, expect, it } from 'vitest';
 
 const getStreamStatusColor = (status: string): string => {
   switch (status) {
-    case 'live': return 'error';
-    case 'offline': return 'default';
-    case 'reconnecting': return 'warning';
-    default: return 'default';
+    case 'live':
+      return 'error';
+    case 'offline':
+      return 'default';
+    case 'reconnecting':
+      return 'warning';
+    default:
+      return 'default';
   }
 };
 

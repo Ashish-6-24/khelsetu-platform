@@ -1,10 +1,12 @@
 import { MatchCard } from '@components/sports/MatchCard';
-import { Tabs } from '@components/ui/Tabs';
 import { Skeleton } from '@components/ui/Skeleton';
+import { Tabs } from '@components/ui/Tabs';
 import { matchService } from '@services/api/tournament';
 import { useQuery } from '@tanstack/react-query';
 import type { Match } from '@types-domain/tournament';
+
 import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 const SPORT_FILTERS = [
@@ -28,14 +30,17 @@ export const ScoringPage = () => {
     queryFn: () => matchService.getAll(),
   });
 
-  const filteredMatches = matches?.filter((m) => {
-    const sport = (m as Match & { sport?: string }).sport ?? 'cricket';
-    return activeFilter === 'all' || sport === activeFilter;
-  }) ?? [];
+  const filteredMatches =
+    matches?.filter((m) => {
+      const sport = (m as Match & { sport?: string }).sport ?? 'cricket';
+      return activeFilter === 'all' || sport === activeFilter;
+    }) ?? [];
 
   const liveMatches = filteredMatches.filter((m) => m.status === 'live');
   const todayMatches = filteredMatches.filter((m) => m.status === 'scheduled');
-  const completedMatches = filteredMatches.filter((m) => m.status === 'completed');
+  const completedMatches = filteredMatches.filter(
+    (m) => m.status === 'completed',
+  );
 
   if (isLoading) {
     return (

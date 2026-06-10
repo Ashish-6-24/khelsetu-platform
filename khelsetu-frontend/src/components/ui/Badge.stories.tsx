@@ -72,9 +72,9 @@ export const Live: Story = {
   },
 };
 
-export const Premium: Story = {
+export const Gold: Story = {
   args: {
     children: 'Premium',
-    variant: 'premium',
+    variant: 'gold',
   },
 };

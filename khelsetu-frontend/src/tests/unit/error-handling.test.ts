@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-const getErrorSeverity = (statusCode: number): 'critical' | 'major' | 'minor' => {
+const getErrorSeverity = (
+  statusCode: number,
+): 'critical' | 'major' | 'minor' => {
   if (statusCode >= 500) return 'critical';
   if (statusCode >= 400) return 'major';
   return 'minor';

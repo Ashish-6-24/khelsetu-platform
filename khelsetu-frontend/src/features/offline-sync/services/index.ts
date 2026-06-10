@@ -29,7 +29,12 @@ export const offlineSyncService = {
     }
   },
 
-  syncBatch: async (entries: SyncEntry[]): Promise<{ success: string[]; failed: { id: string; error: string }[] }> => {
+  syncBatch: async (
+    entries: SyncEntry[],
+  ): Promise<{
+    success: string[];
+    failed: { id: string; error: string }[];
+  }> => {
     const success: string[] = [];
     const failed: { id: string; error: string }[] = [];
 
@@ -48,7 +53,11 @@ export const offlineSyncService = {
     return { success, failed };
   },
 
-  getQueueStats: async (): Promise<{ pending: number; failed: number; total: number }> => {
+  getQueueStats: async (): Promise<{
+    pending: number;
+    failed: number;
+    total: number;
+  }> => {
     const { data } = await axiosInstance.get('/sync/stats');
     return data;
   },

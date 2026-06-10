@@ -3,11 +3,113 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>khelsetu-frontend</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta
+      name="theme-color"
+      content="#0A0A0F"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta
+      name="theme-color"
+      content="#7F1D1D"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="description"
+      content="KhelSetu — Run your local tournament like a national one. Live scoring, fixtures, and broadcast overlays for cricket, football, volleyball, and basketball organizers in Nepal."
+    />
+    <meta
+      name="keywords"
+      content="sports, tournament, scoring, nepal, cricket, football, basketball, volleyball, brackets, live scoring, OBS overlay, eSewa, Khalti"
+    />
+    <meta name="author" content="KhelSetu" />
+    <meta name="application-name" content="KhelSetu" />
+    <meta name="apple-mobile-web-app-title" content="KhelSetu" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="KhelSetu" />
+    <meta
+      property="og:title"
+      content="KhelSetu — Run your local tournament like a national one"
+    />
+    <meta
+      property="og:description"
+      content="Live scoring, fixtures, broadcast overlays and member management for cricket, football, volleyball, and basketball organizers across Nepal."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://khelsetu.app" />
+    <meta property="og:locale" content="en_NP" />
+    <meta property="og:locale:alternate" content="ne_NP" />
+    <meta property="og:image" content="/og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="KhelSetu — Sports Tournament Management for Nepal"
+    />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="KhelSetu — Run your local tournament like a national one"
+    />
+    <meta
+      name="twitter:description"
+      content="Live scoring, fixtures, broadcast overlays and member management for cricket, football, volleyball, and basketball organizers across Nepal."
+    />
+    <meta name="twitter:image" content="/og-image.svg" />
+
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+
+    <title>KhelSetu — Run your local tournament like a national one</title>
   </head>
-  <body>
+  <body class="antialiased">
     <div id="root"></div>
+    <script>
+      // Zero-flash theme bootstrap. Runs synchronously before React mounts.
+      (function () {
+        try {
+          var stored = localStorage.getItem('khelsetu-theme');
+          var theme =
+            stored === 'light' || stored === 'dark' || stored === 'system'
+              ? stored
+              : 'system';
+          var prefersDark = window.matchMedia(
+            '(prefers-color-scheme: dark)',
+          ).matches;
+          var isDark = theme === 'dark' || (theme === 'system' && prefersDark);
+          document.documentElement.classList.toggle('dark', isDark);
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = isDark
+            ? 'dark'
+            : 'light';
+        } catch (_) {
+          /* localStorage may be blocked; fall through to system */
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

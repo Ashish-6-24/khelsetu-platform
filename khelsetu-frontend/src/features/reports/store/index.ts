@@ -1,4 +1,8 @@
-import type { ExportJob, ReportData, ReportType } from '@features/reports/types';
+import type {
+  ExportJob,
+  ReportData,
+  ReportType,
+} from '@features/reports/types';
 import { create } from 'zustand';
 
 interface ReportsState {
@@ -7,7 +11,11 @@ interface ReportsState {
   isLoading: boolean;
   setReports: (reports: ReportData[]) => void;
   addExportJob: (job: ExportJob) => void;
-  updateExportJob: (id: string, status: ExportJob['status'], url?: string) => void;
+  updateExportJob: (
+    id: string,
+    status: ExportJob['status'],
+    url?: string,
+  ) => void;
   setLoading: (isLoading: boolean) => void;
 }
 
@@ -16,10 +24,13 @@ export const useReportsStore = create<ReportsState>((set) => ({
   exportJobs: [],
   isLoading: false,
   setReports: (reports) => set({ reports }),
-  addExportJob: (job) => set((state) => ({ exportJobs: [...state.exportJobs, job] })),
+  addExportJob: (job) =>
+    set((state) => ({ exportJobs: [...state.exportJobs, job] })),
   updateExportJob: (id, status, url) =>
     set((state) => ({
-      exportJobs: state.exportJobs.map((j) => (j.id === id ? { ...j, status, url } : j)),
+      exportJobs: state.exportJobs.map((j) =>
+        j.id === id ? { ...j, status, url } : j,
+      ),
     })),
   setLoading: (isLoading) => set({ isLoading }),
 }));
@@ -83,4 +94,5 @@ const mockReports: Record<ReportType, ReportData> = {
   },
 };
 
-export const getMockReport = (type: ReportType): ReportData => mockReports[type];
+export const getMockReport = (type: ReportType): ReportData =>
+  mockReports[type];

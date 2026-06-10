@@ -9,7 +9,9 @@ import type { Standing } from '@features/standings/types';
 import { tournamentService } from '@services/api/tournament';
 import { useQuery } from '@tanstack/react-query';
 import type { Tournament } from '@types-domain/tournament';
+
 import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 const SPORT_FILTERS = [
@@ -25,19 +27,25 @@ export const StandingsPage = () => {
   const [activeSport, setActiveSport] = useState('all');
   const [selectedTournamentId, setSelectedTournamentId] = useState<string>('');
 
-  const { data: tournaments, isLoading: loadingTournaments } = useQuery<Tournament[]>({
+  const { data: tournaments, isLoading: loadingTournaments } = useQuery<
+    Tournament[]
+  >({
     queryKey: ['tournaments'],
     queryFn: () => tournamentService.getAll(),
   });
 
-  const filteredTournaments = tournaments?.filter((t) => {
-    const sport = (t as Tournament & { sport?: string }).sport ?? 'cricket';
-    return activeSport === 'all' || sport === activeSport;
-  }) ?? [];
+  const filteredTournaments =
+    tournaments?.filter((t) => {
+      const sport = (t as Tournament & { sport?: string }).sport ?? 'cricket';
+      return activeSport === 'all' || sport === activeSport;
+    }) ?? [];
 
-  const selectedTournament = tournaments?.find((t) => t.id === selectedTournamentId);
+  const selectedTournament = tournaments?.find(
+    (t) => t.id === selectedTournamentId,
+  );
 
-  const { standings, isLoading: loadingStandings } = useStandings(selectedTournamentId);
+  const { standings, isLoading: loadingStandings } =
+    useStandings(selectedTournamentId);
 
   return (
     <div className="space-y-6">
@@ -102,7 +110,8 @@ export const StandingsPage = () => {
                           {tournament.status}
                         </Badge>
                         <span className="text-xs text-gray-500 dark:text-gray-400">
-                          {(tournament as Tournament & { sport?: string }).sport ?? 'cricket'}
+                          {(tournament as Tournament & { sport?: string })
+                            .sport ?? 'cricket'}
                         </span>
                       </div>
                     </button>
@@ -131,7 +140,9 @@ export const StandingsPage = () => {
                 </div>
                 <Button
                   variant="outline"
-                  onClick={() => navigate(`/tournaments/${selectedTournamentId}`)}
+                  onClick={() =>
+                    navigate(`/tournaments/${selectedTournamentId}`)
+                  }
                 >
                   View Tournament
                 </Button>
@@ -140,8 +151,12 @@ export const StandingsPage = () => {
                 standings={standings as Standing[]}
                 isLoading={loadingStandings}
                 sport={
-                  ((selectedTournament as Tournament & { sport?: string })?.sport ??
-                    'cricket') as 'cricket' | 'football' | 'volleyball' | 'basketball'
+                  ((selectedTournament as Tournament & { sport?: string })
+                    ?.sport ?? 'cricket') as
+                    | 'cricket'
+                    | 'football'
+                    | 'volleyball'
+                    | 'basketball'
                 }
               />
             </div>

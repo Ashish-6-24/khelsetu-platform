@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest';
-
 import { z } from 'zod';
 
 const playerSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters').max(50, 'Name must be less than 50 characters'),
+  name: z
+    .string()
+    .min(2, 'Name must be at least 2 characters')
+    .max(50, 'Name must be less than 50 characters'),
   jerseyNumber: z.string().optional(),
   position: z.string().optional(),
 });
@@ -23,7 +25,9 @@ describe('Player Form Validation', () => {
       const result = playerSchema.safeParse({ name: 'J' });
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0]!.message).toBe('Name must be at least 2 characters');
+        expect(result.error.issues[0]!.message).toBe(
+          'Name must be at least 2 characters',
+        );
       }
     });
 
@@ -38,17 +42,26 @@ describe('Player Form Validation', () => {
     });
 
     it('should accept optional position', () => {
-      const result = playerSchema.safeParse({ name: 'John Doe', position: 'Bowler' });
+      const result = playerSchema.safeParse({
+        name: 'John Doe',
+        position: 'Bowler',
+      });
       expect(result.success).toBe(true);
     });
 
     it('should accept empty jersey number', () => {
-      const result = playerSchema.safeParse({ name: 'John Doe', jerseyNumber: '' });
+      const result = playerSchema.safeParse({
+        name: 'John Doe',
+        jerseyNumber: '',
+      });
       expect(result.success).toBe(true);
     });
 
     it('should accept string jersey number', () => {
-      const result = playerSchema.safeParse({ name: 'John Doe', jerseyNumber: '42' });
+      const result = playerSchema.safeParse({
+        name: 'John Doe',
+        jerseyNumber: '42',
+      });
       expect(result.success).toBe(true);
     });
   });

@@ -5,6 +5,7 @@ import type { Standing } from '@features/standings/types';
 import { isQualified, sortStandings } from '@features/standings/utils';
 import { motion } from 'framer-motion';
 import { ArrowDown, ArrowUp, Minus } from 'lucide-react';
+
 import { useState } from 'react';
 
 type SortKey = 'points' | 'nrr' | 'played' | 'won' | 'lost' | 'drawn';
@@ -42,7 +43,8 @@ export const StandingsTable = ({
     return (aVal - bVal) * multiplier;
   });
 
-  const finalStandings = sortKey === 'points' ? sortStandings(sortedStandings) : sortedStandings;
+  const finalStandings =
+    sortKey === 'points' ? sortStandings(sortedStandings) : sortedStandings;
 
   const getSortIcon = (key: SortKey) => {
     if (sortKey !== key) return <Minus className="w-4 h-4 text-gray-400" />;

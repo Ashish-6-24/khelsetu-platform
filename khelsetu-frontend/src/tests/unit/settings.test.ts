@@ -1,20 +1,28 @@
 import { describe, expect, it } from 'vitest';
-
 import { z } from 'zod';
 
 const profileSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters').max(50, 'Name must be less than 50 characters'),
-  phone: z.string().regex(/^\+?[\d\s-]{7,15}$/, 'Invalid phone number').optional().or(z.literal('')),
+  name: z
+    .string()
+    .min(2, 'Name must be at least 2 characters')
+    .max(50, 'Name must be less than 50 characters'),
+  phone: z
+    .string()
+    .regex(/^\+?[\d\s-]{7,15}$/, 'Invalid phone number')
+    .optional()
+    .or(z.literal('')),
 });
 
-const passwordSchema = z.object({
-  currentPassword: z.string().min(1, 'Current password is required'),
-  newPassword: z.string().min(8, 'Password must be at least 8 characters'),
-  confirmPassword: z.string().min(1, 'Please confirm your password'),
-}).refine((data) => data.newPassword === data.confirmPassword, {
-  message: 'Passwords do not match',
-  path: ['confirmPassword'],
-});
+const passwordSchema = z
+  .object({
+    currentPassword: z.string().min(1, 'Current password is required'),
+    newPassword: z.string().min(8, 'Password must be at least 8 characters'),
+    confirmPassword: z.string().min(1, 'Please confirm your password'),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
 
 describe('Settings Form Validation', () => {
   describe('Profile Schema', () => {
@@ -30,7 +38,9 @@ describe('Settings Form Validation', () => {
       const result = profileSchema.safeParse({ name: 'J' });
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0]!.message).toBe('Name must be at least 2 characters');
+        expect(result.error.issues[0]!.message).toBe(
+          'Name must be at least 2 characters',
+        );
       }
     });
 
@@ -45,12 +55,20 @@ describe('Settings Form Validation', () => {
     });
 
     it('should reject invalid phone number', () => {
-      const result = profileSchema.safeParse({ name: 'John Doe', phone: 'abc' });
+      const result = profileSchema.safeParse({
+        name: 'John Doe',
+        phone: 'abc',
+      });
       expect(result.success).toBe(false);
     });
 
     it('should accept valid phone formats', () => {
-      const validPhones = ['+1234567890', '123-456-7890', '1234567890', '+977 9841234567'];
+      const validPhones = [
+        '+1234567890',
+        '123-456-7890',
+        '1234567890',
+        '+977 9841234567',
+      ];
       validPhones.forEach((phone) => {
         const result = profileSchema.safeParse({ name: 'John Doe', phone });
         expect(result.success).toBe(true);
@@ -85,7 +103,11 @@ describe('Settings Form Validation', () => {
       });
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues.some((e: { message: string }) => e.message === 'Passwords do not match')).toBe(true);
+        expect(
+          result.error.issues.some(
+            (e: { message: string }) => e.message === 'Passwords do not match',
+          ),
+        ).toBe(true);
       }
     });
 

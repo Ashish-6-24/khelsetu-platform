@@ -1,8 +1,13 @@
 import { Button } from '@components/ui/Button';
 import { Card, CardBody } from '@components/ui/Card';
+import {
+  formatGameTime,
+  getEventTypeLabel,
+  getPointsForEventType,
+} from '@features/scoring/utils/basketball';
 import type { BasketballEvent, BasketballScore } from '@types-domain/scoring';
-import { getEventTypeLabel, getPointsForEventType, formatGameTime } from '@features/scoring/utils/basketball';
 import { motion } from 'framer-motion';
+
 import { useState } from 'react';
 
 interface BasketballScoringPanelProps {
@@ -39,7 +44,14 @@ export const BasketballScoringPanel = ({
   };
 
   const handleStat = (
-    type: 'rebound_offensive' | 'rebound_defensive' | 'assist' | 'steal' | 'block' | 'turnover' | 'foul_personal',
+    type:
+      | 'rebound_offensive'
+      | 'rebound_defensive'
+      | 'assist'
+      | 'steal'
+      | 'block'
+      | 'turnover'
+      | 'foul_personal',
   ) => {
     onAddEvent({
       matchId: '',
@@ -59,7 +71,9 @@ export const BasketballScoringPanel = ({
       <div className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-lg p-4">
         <div className="flex items-center justify-between">
           <div className="text-center flex-1">
-            <p className="text-lg font-bold text-gray-900 dark:text-white">{score.teamA.teamName}</p>
+            <p className="text-lg font-bold text-gray-900 dark:text-white">
+              {score.teamA.teamName}
+            </p>
             <p className="text-4xl font-bold text-red-600 dark:text-red-400 mt-1">
               {score.teamA.points}
             </p>
@@ -73,7 +87,9 @@ export const BasketballScoringPanel = ({
             </p>
           </div>
           <div className="text-center flex-1">
-            <p className="text-lg font-bold text-gray-900 dark:text-white">{score.teamB.teamName}</p>
+            <p className="text-lg font-bold text-gray-900 dark:text-white">
+              {score.teamB.teamName}
+            </p>
             <p className="text-4xl font-bold text-red-600 dark:text-red-400 mt-1">
               {score.teamB.points}
             </p>
@@ -133,18 +149,25 @@ export const BasketballScoringPanel = ({
                 Stats
               </h3>
               <div className="grid grid-cols-4 gap-2">
-                {(['rebound_offensive', 'assist', 'steal', 'block', 'turnover', 'foul_personal'] as const).map(
-                  (type) => (
-                    <Button
-                      key={type}
-                      variant="outline"
-                      className="h-10 text-xs"
-                      onClick={() => handleStat(type)}
-                    >
-                      {getEventTypeLabel(type)}
-                    </Button>
-                  ),
-                )}
+                {(
+                  [
+                    'rebound_offensive',
+                    'assist',
+                    'steal',
+                    'block',
+                    'turnover',
+                    'foul_personal',
+                  ] as const
+                ).map((type) => (
+                  <Button
+                    key={type}
+                    variant="outline"
+                    className="h-10 text-xs"
+                    onClick={() => handleStat(type)}
+                  >
+                    {getEventTypeLabel(type)}
+                  </Button>
+                ))}
               </div>
             </div>
           </div>
@@ -164,33 +187,37 @@ export const BasketballScoringPanel = ({
         <Card>
           <CardBody>
             <div className="space-y-2 max-h-48 overflow-y-auto">
-              {[...score.events].reverse().slice(0, 20).map((event, index) => (
-                <motion.div
-                  key={event.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="flex items-center gap-3 p-2 bg-gray-50 dark:bg-gray-800 rounded"
-                >
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">
-                      {event.playerName}
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      {event.teamName}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                      {getEventTypeLabel(event.type)}
-                      {event.points ? ` (+${event.points})` : ''}
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      Q{event.quarter} {formatGameTime(event.minute, event.second)}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
+              {[...score.events]
+                .reverse()
+                .slice(0, 20)
+                .map((event, index) => (
+                  <motion.div
+                    key={event.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="flex items-center gap-3 p-2 bg-gray-50 dark:bg-gray-800 rounded"
+                  >
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">
+                        {event.playerName}
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        {event.teamName}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                        {getEventTypeLabel(event.type)}
+                        {event.points ? ` (+${event.points})` : ''}
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Q{event.quarter}{' '}
+                        {formatGameTime(event.minute, event.second)}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
             </div>
           </CardBody>
         </Card>

@@ -10,7 +10,12 @@ interface PlanCardProps {
   isLoading?: boolean;
 }
 
-export const PlanCard = ({ plan, isCurrentPlan, onSelect, isLoading }: PlanCardProps) => {
+export const PlanCard = ({
+  plan,
+  isCurrentPlan,
+  onSelect,
+  isLoading,
+}: PlanCardProps) => {
   return (
     <Card className={isCurrentPlan ? 'ring-2 ring-blue-500' : ''}>
       <CardBody>
@@ -33,7 +38,9 @@ export const PlanCard = ({ plan, isCurrentPlan, onSelect, isLoading }: PlanCardP
             {plan.features.map((feature, index) => (
               <li key={index} className="flex items-start gap-2 text-sm">
                 <Check className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-700 dark:text-gray-300">{feature}</span>
+                <span className="text-gray-700 dark:text-gray-300">
+                  {feature}
+                </span>
               </li>
             ))}
           </ul>

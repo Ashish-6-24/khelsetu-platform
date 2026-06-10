@@ -1,33 +1,43 @@
 import { Button } from '@components/ui/Button';
 import { Card, CardBody } from '@components/ui/Card';
 import { Input } from '@components/ui/Input';
-import { useToast } from '@components/ui/useToast';
+import { useToast } from '@components/ui/toast-context';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { authService } from '@services/api/auth';
 import { useAuthStore } from '@store/authStore';
-import type { User } from '@types-domain/auth';
 import { useMutation } from '@tanstack/react-query';
-import { zodResolver } from '@hookform/resolvers/zod';
+import type { User } from '@types-domain/auth';
 import { clsx } from 'clsx';
 import { Moon, Phone, Save, Sun, User as UserIcon } from 'lucide-react';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { useState } from 'react';
+
 const profileSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters').max(50, 'Name must be less than 50 characters'),
-  phone: z.string().regex(/^\+?[\d\s-]{7,15}$/, 'Invalid phone number').optional().or(z.literal('')),
+  name: z
+    .string()
+    .min(2, 'Name must be at least 2 characters')
+    .max(50, 'Name must be less than 50 characters'),
+  phone: z
+    .string()
+    .regex(/^\+?[\d\s-]{7,15}$/, 'Invalid phone number')
+    .optional()
+    .or(z.literal('')),
 });
 
 type ProfileFormData = z.infer<typeof profileSchema>;
 
-const passwordSchema = z.object({
-  currentPassword: z.string().min(1, 'Current password is required'),
-  newPassword: z.string().min(8, 'Password must be at least 8 characters'),
-  confirmPassword: z.string().min(1, 'Please confirm your password'),
-}).refine((data) => data.newPassword === data.confirmPassword, {
-  message: 'Passwords do not match',
-  path: ['confirmPassword'],
-});
+const passwordSchema = z
+  .object({
+    currentPassword: z.string().min(1, 'Current password is required'),
+    newPassword: z.string().min(8, 'Password must be at least 8 characters'),
+    confirmPassword: z.string().min(1, 'Please confirm your password'),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
 
 type PasswordFormData = z.infer<typeof passwordSchema>;
 
@@ -107,7 +117,7 @@ export const SettingsPage = () => {
       <Card>
         <CardBody>
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-2xl font-bold">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#7F1D1D] to-[#991B1B] flex items-center justify-center text-white text-2xl font-bold">
               {user?.name?.charAt(0).toUpperCase() ?? 'U'}
             </div>
             <div>
@@ -171,10 +181,7 @@ export const SettingsPage = () => {
             Security
           </h3>
           {!showPasswordForm ? (
-            <Button
-              variant="outline"
-              onClick={() => setShowPasswordForm(true)}
-            >
+            <Button variant="outline" onClick={() => setShowPasswordForm(true)}>
               Change Password
             </Button>
           ) : (
@@ -259,7 +266,11 @@ export const SettingsPage = () => {
             <div className="flex items-center justify-between py-3">
               <div>
                 <p className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
-                  {darkMode ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+                  {darkMode ? (
+                    <Moon className="w-4 h-4" />
+                  ) : (
+                    <Sun className="w-4 h-4" />
+                  )}
                   Dark Mode
                 </p>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -273,9 +284,7 @@ export const SettingsPage = () => {
                 }}
                 className={clsx(
                   'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
-                  darkMode
-                    ? 'bg-blue-600'
-                    : 'bg-gray-300 dark:bg-gray-600',
+                  darkMode ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600',
                 )}
               >
                 <span

@@ -1,5 +1,4 @@
-import { describe, expect, it } from 'vitest';
-
+import type { Standing } from '@features/standings/types';
 import {
   calculateNRR,
   getQualificationZone,
@@ -7,14 +6,59 @@ import {
   isQualified,
   sortStandings,
 } from '@features/standings/utils';
-import type { Standing } from '@features/standings/types';
+import { describe, expect, it } from 'vitest';
 
 const mockStandings: Standing[] = [
-  { teamId: 't1', teamName: 'Team A', played: 10, won: 7, lost: 2, drawn: 1, points: 15, nrr: 1.25 },
-  { teamId: 't2', teamName: 'Team B', played: 10, won: 6, lost: 3, drawn: 1, points: 13, nrr: 0.75 },
-  { teamId: 't3', teamName: 'Team C', played: 10, won: 5, lost: 4, drawn: 1, points: 11, nrr: -0.5 },
-  { teamId: 't4', teamName: 'Team D', played: 10, won: 4, lost: 5, drawn: 1, points: 9, nrr: -1.0 },
-  { teamId: 't5', teamName: 'Team E', played: 10, won: 3, lost: 6, drawn: 1, points: 7, nrr: -1.5 },
+  {
+    teamId: 't1',
+    teamName: 'Team A',
+    played: 10,
+    won: 7,
+    lost: 2,
+    drawn: 1,
+    points: 15,
+    nrr: 1.25,
+  },
+  {
+    teamId: 't2',
+    teamName: 'Team B',
+    played: 10,
+    won: 6,
+    lost: 3,
+    drawn: 1,
+    points: 13,
+    nrr: 0.75,
+  },
+  {
+    teamId: 't3',
+    teamName: 'Team C',
+    played: 10,
+    won: 5,
+    lost: 4,
+    drawn: 1,
+    points: 11,
+    nrr: -0.5,
+  },
+  {
+    teamId: 't4',
+    teamName: 'Team D',
+    played: 10,
+    won: 4,
+    lost: 5,
+    drawn: 1,
+    points: 9,
+    nrr: -1.0,
+  },
+  {
+    teamId: 't5',
+    teamName: 'Team E',
+    played: 10,
+    won: 3,
+    lost: 6,
+    drawn: 1,
+    points: 7,
+    nrr: -1.5,
+  },
 ];
 
 describe('sortStandings', () => {
@@ -26,9 +70,36 @@ describe('sortStandings', () => {
 
   it('should use NRR as tiebreaker when points are equal', () => {
     const tiedStandings: Standing[] = [
-      { teamId: 't1', teamName: 'Team A', played: 10, won: 5, lost: 5, drawn: 0, points: 10, nrr: 0.5 },
-      { teamId: 't2', teamName: 'Team B', played: 10, won: 5, lost: 5, drawn: 0, points: 10, nrr: 1.0 },
-      { teamId: 't3', teamName: 'Team C', played: 10, won: 5, lost: 5, drawn: 0, points: 10, nrr: -0.5 },
+      {
+        teamId: 't1',
+        teamName: 'Team A',
+        played: 10,
+        won: 5,
+        lost: 5,
+        drawn: 0,
+        points: 10,
+        nrr: 0.5,
+      },
+      {
+        teamId: 't2',
+        teamName: 'Team B',
+        played: 10,
+        won: 5,
+        lost: 5,
+        drawn: 0,
+        points: 10,
+        nrr: 1.0,
+      },
+      {
+        teamId: 't3',
+        teamName: 'Team C',
+        played: 10,
+        won: 5,
+        lost: 5,
+        drawn: 0,
+        points: 10,
+        nrr: -0.5,
+      },
     ];
     const sorted = sortStandings(tiedStandings);
     expect(sorted[0]!.teamId).toBe('t2');
@@ -38,8 +109,25 @@ describe('sortStandings', () => {
 
   it('should handle missing NRR as 0', () => {
     const standingsWithoutNRR: Standing[] = [
-      { teamId: 't1', teamName: 'Team A', played: 5, won: 3, lost: 2, drawn: 0, points: 6 },
-      { teamId: 't2', teamName: 'Team B', played: 5, won: 3, lost: 2, drawn: 0, points: 6, nrr: 0.5 },
+      {
+        teamId: 't1',
+        teamName: 'Team A',
+        played: 5,
+        won: 3,
+        lost: 2,
+        drawn: 0,
+        points: 6,
+      },
+      {
+        teamId: 't2',
+        teamName: 'Team B',
+        played: 5,
+        won: 3,
+        lost: 2,
+        drawn: 0,
+        points: 6,
+        nrr: 0.5,
+      },
     ];
     const sorted = sortStandings(standingsWithoutNRR);
     expect(sorted[0]!.teamId).toBe('t2');

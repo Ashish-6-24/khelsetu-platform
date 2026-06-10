@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 
-export const useFocusTrap = (isActive: boolean): React.RefObject<HTMLDivElement | null> => {
-  const ref = useRef<HTMLDivElement>(null);
+export const useFocusTrap = <T extends HTMLElement = HTMLDivElement>(
+  isActive: boolean,
+): React.RefObject<T | null> => {
+  const ref = useRef<T | null>(null);
 
   useEffect(() => {
     if (!isActive || !ref.current) return;
 
     const element = ref.current;
     const focusableElements = element.querySelectorAll<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
     );
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
@@ -17,6 +19,11 @@ export const useFocusTrap = (isActive: boolean): React.RefObject<HTMLDivElement 
 
     const handleKeyDown = (e: KeyboardEvent): void => {
       if (e.key !== 'Tab') return;
+
+      if (focusableElements.length === 0) {
+        e.preventDefault();
+        return;
+      }
 
       if (e.shiftKey) {
         if (document.activeElement === firstElement) {
@@ -50,7 +57,10 @@ export const useKeyboardNav = (
         case 'ArrowDown':
         case 'ArrowRight':
           e.preventDefault();
-          currentIndexRef.current = Math.min(currentIndexRef.current + 1, items.length - 1);
+          currentIndexRef.current = Math.min(
+            currentIndexRef.current + 1,
+            items.length - 1,
+          );
           items[currentIndexRef.current]?.focus();
           break;
         case 'ArrowUp':
@@ -90,7 +100,8 @@ export const useReducedMotion = (): boolean => {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   };
 
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(getInitialState);
+  const [prefersReducedMotion, setPrefersReducedMotion] =
+    useState(getInitialState);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -106,10 +117,16 @@ export const useReducedMotion = (): boolean => {
   return prefersReducedMotion;
 };
 
-export const useLiveAnnouncer = (): ((message: string, priority?: 'polite' | 'assertive') => void) => {
+export const useLiveAnnouncer = (): ((
+  message: string,
+  priority?: 'polite' | 'assertive',
+) => void) => {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  return (message: string, priority: 'polite' | 'assertive' = 'polite'): void => {
+  return (
+    message: string,
+    priority: 'polite' | 'assertive' = 'polite',
+  ): void => {
     const el = document.getElementById(`aria-live-${priority}`);
     if (el) {
       el.textContent = '';

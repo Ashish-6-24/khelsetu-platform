@@ -1,4 +1,7 @@
-import type { VolleyballEvent, VolleyballEventType } from '@types-domain/scoring';
+import type {
+  VolleyballEvent,
+  VolleyballEventType,
+} from '@types-domain/scoring';
 
 export const createVolleyballEvent = (
   matchId: string,
@@ -30,7 +33,8 @@ export const isSetComplete = (
   setsWonB = 0,
   setsToWin = 3,
 ): { complete: boolean; winner: 'teamA' | 'teamB' | null } => {
-  const isDecidingSet = setsWonA === setsToWin - 1 || setsWonB === setsToWin - 1;
+  const isDecidingSet =
+    setsWonA === setsToWin - 1 || setsWonB === setsToWin - 1;
   const targetPoints = isDecidingSet ? 15 : pointsToWin;
 
   if (teamAPoints >= targetPoints && teamAPoints - teamBPoints >= 2) {

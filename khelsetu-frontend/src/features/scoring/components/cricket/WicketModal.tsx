@@ -1,7 +1,11 @@
 import { Button } from '@components/ui/Button';
 import { Modal } from '@components/ui/Modal';
-import type { CricketBatsmanScore, CricketWicketType } from '@types-domain/scoring';
+import type {
+  CricketBatsmanScore,
+  CricketWicketType,
+} from '@types-domain/scoring';
 import { clsx } from 'clsx';
+
 import { useState } from 'react';
 
 const WICKET_TYPES: { value: CricketWicketType; label: string }[] = [
@@ -17,7 +21,11 @@ interface WicketModalProps {
   isOpen: boolean;
   batsmen: CricketBatsmanScore[];
   currentStrikerId: string;
-  onConfirm: (wicketType: CricketWicketType, dismissedPlayerId: string, newBatsmanId?: string) => void;
+  onConfirm: (
+    wicketType: CricketWicketType,
+    dismissedPlayerId: string,
+    newBatsmanId?: string,
+  ) => void;
   onCancel: () => void;
 }
 
@@ -30,7 +38,8 @@ export const WicketModal = ({
 }: WicketModalProps) => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [wicketType, setWicketType] = useState<CricketWicketType | null>(null);
-  const [dismissedPlayerId, setDismissedPlayerId] = useState<string>(currentStrikerId);
+  const [dismissedPlayerId, setDismissedPlayerId] =
+    useState<string>(currentStrikerId);
   const [newBatsmanId, setNewBatsmanId] = useState<string>('');
 
   const handleWicketTypeSelect = (type: CricketWicketType) => {
@@ -61,7 +70,9 @@ export const WicketModal = ({
     onCancel();
   };
 
-  const availableBatsmen = batsmen.filter((b) => !b.isOut && b.playerId !== currentStrikerId);
+  const availableBatsmen = batsmen.filter(
+    (b) => !b.isOut && b.playerId !== currentStrikerId,
+  );
 
   return (
     <Modal isOpen={isOpen} onClose={handleCancel} title="Wicket">
@@ -103,7 +114,9 @@ export const WicketModal = ({
                       dismissedPlayerId === batsman.playerId &&
                         'bg-blue-50 border-blue-500 dark:bg-blue-900/20',
                     )}
-                    onClick={() => handleDismissedPlayerSelect(batsman.playerId)}
+                    onClick={() =>
+                      handleDismissedPlayerSelect(batsman.playerId)
+                    }
                   >
                     <span className="font-medium">{batsman.playerName}</span>
                     <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">

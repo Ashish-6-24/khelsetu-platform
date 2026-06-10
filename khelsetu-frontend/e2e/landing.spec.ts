@@ -6,21 +6,30 @@ test.describe('Landing Page', () => {
     await expect(page).toHaveTitle(/KhelSetu/);
     await expect(
       page.getByRole('heading', {
-        name: /Complete Sports Tournament Management/,
+        name: /Run your local tournament/,
       }),
     ).toBeVisible();
   });
 
   test('should display features section', async ({ page }) => {
-    await page.goto('/');
-    await expect(page.getByText('Live Scoring')).toBeVisible();
-    await expect(page.getByText('Tournament Management')).toBeVisible();
-    await expect(page.getByText('OBS Overlays')).toBeVisible();
+    await page.goto('/#features');
+    await expect(
+      page.getByRole('heading', { name: /Live scoring, ball by ball/ }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Smart brackets' }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Broadcast overlays' }),
+    ).toBeVisible();
   });
 
   test('should navigate to registration page', async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('link', { name: 'Get Started' }).click();
+    await page
+      .getByRole('link', { name: 'Start a tournament' })
+      .first()
+      .click();
     await expect(page).toHaveURL(/\/auth\/register/);
   });
 });

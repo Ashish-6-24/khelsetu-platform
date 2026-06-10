@@ -16,7 +16,7 @@ describe('Badge Component', () => {
       'error',
       'info',
       'live',
-      'premium',
+      'gold',
     ] as const;
     variants.forEach((variant) => {
       const { unmount } = render(<Badge variant={variant}>{variant}</Badge>);

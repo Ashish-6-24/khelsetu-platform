@@ -1,3 +1,4 @@
+import { axiosInstance } from '@lib/axios';
 import type {
   BasketballEvent,
   CricketBall,
@@ -8,7 +9,6 @@ import type {
   VolleyballEvent,
 } from '@types-domain/scoring';
 import type { Match, MatchStatus } from '@types-domain/tournament';
-import { axiosInstance } from '@lib/axios';
 
 export const scoringService = {
   getMatch: async (matchId: string) => {

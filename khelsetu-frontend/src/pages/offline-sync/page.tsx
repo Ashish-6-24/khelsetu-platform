@@ -1,7 +1,11 @@
 import { Card, CardBody, CardHeader } from '@components/ui/Card';
 import { Tabs } from '@components/ui/Tabs';
+import {
+  SyncEntryRow,
+  SyncStatusBadge,
+} from '@features/offline-sync/components';
 import { useOfflineSync } from '@features/offline-sync/hooks';
-import { SyncEntryRow, SyncStatusBadge } from '@features/offline-sync/components';
+
 import { useState } from 'react';
 
 const TABS = [
@@ -28,7 +32,9 @@ export const OfflineSyncPage = () => {
     return entry.status === activeTab;
   });
 
-  const completedCount = queue.entries.filter((e) => e.status === 'completed').length;
+  const completedCount = queue.entries.filter(
+    (e) => e.status === 'completed',
+  ).length;
 
   return (
     <div className="space-y-6">
@@ -61,7 +67,9 @@ export const OfflineSyncPage = () => {
               <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
                 {pendingCount}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Pending</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                Pending
+              </p>
             </div>
           </CardBody>
         </Card>
@@ -71,7 +79,9 @@ export const OfflineSyncPage = () => {
               <p className="text-3xl font-bold text-red-600 dark:text-red-400">
                 {failedCount}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Failed</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                Failed
+              </p>
             </div>
           </CardBody>
         </Card>
@@ -81,7 +91,9 @@ export const OfflineSyncPage = () => {
               <p className="text-3xl font-bold text-green-600 dark:text-green-400">
                 {completedCount}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Synced</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                Synced
+              </p>
             </div>
           </CardBody>
         </Card>

@@ -1,4 +1,8 @@
-import type { BroadcastStream, Overlay, OverlayType } from '@features/live-broadcast/types';
+import type {
+  BroadcastStream,
+  Overlay,
+  OverlayType,
+} from '@features/live-broadcast/types';
 import { OVERLAY_PRESETS } from '@features/live-broadcast/types';
 import { create } from 'zustand';
 
@@ -74,5 +78,6 @@ export const useBroadcastStore = create<BroadcastState>((set) => ({
       ),
     })),
   setViewers: (viewers) => set({ viewers }),
-  resetBroadcast: () => set({ stream: null, overlays: [], isLive: false, viewers: 0 }),
+  resetBroadcast: () =>
+    set({ stream: null, overlays: [], isLive: false, viewers: 0 }),
 }));

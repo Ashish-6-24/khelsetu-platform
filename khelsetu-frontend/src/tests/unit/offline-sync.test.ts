@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-const generateSyncId = (): string => `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+const generateSyncId = (): string =>
+  `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
 const getSyncStatusColor = (status: string): string => {
   switch (status) {

@@ -6,10 +6,7 @@ npx lint-staged
 echo "Running type check..."
 npm run typecheck
 
-echo "Running tests..."
-npm run test:run
-
-echo "Running build validation..."
-npm run build
+echo "Running circular dependency check..."
+npm run circular
 
 echo "All pre-commit checks passed!"

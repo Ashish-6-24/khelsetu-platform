@@ -1,7 +1,12 @@
 import { Card, CardBody } from '@components/ui/Card';
 import { Tabs } from '@components/ui/Tabs';
+import {
+  InvoiceList,
+  PlanCard,
+  SubscriptionCard,
+} from '@features/billing/components';
 import { useBilling } from '@features/billing/hooks';
-import { PlanCard, SubscriptionCard, InvoiceList } from '@features/billing/components';
+
 import { useState } from 'react';
 
 const TABS = [
@@ -58,7 +63,10 @@ export const BillingPage = () => {
                   <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-32" />
                   <div className="space-y-2">
                     {[1, 2, 3].map((j) => (
-                      <div key={j} className="h-3 bg-gray-200 dark:bg-gray-700 rounded" />
+                      <div
+                        key={j}
+                        className="h-3 bg-gray-200 dark:bg-gray-700 rounded"
+                      />
                     ))}
                   </div>
                 </div>
@@ -113,9 +121,7 @@ export const BillingPage = () => {
             </div>
           )}
 
-          {activeTab === 'invoices' && (
-            <InvoiceList invoices={invoices} />
-          )}
+          {activeTab === 'invoices' && <InvoiceList invoices={invoices} />}
         </>
       )}
     </div>

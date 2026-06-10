@@ -35,7 +35,10 @@ export const createCricketBall = (
   timestamp: new Date().toISOString(),
 });
 
-export const shouldRotateStrike = (runs: number, extras?: CricketExtraType): boolean => {
+export const shouldRotateStrike = (
+  runs: number,
+  extras?: CricketExtraType,
+): boolean => {
   if (extras === 'wide' || extras === 'no-ball') return false;
   return runs % 2 === 1;
 };
@@ -60,10 +63,16 @@ export const calculateBatsmanStats = (
     strikeRate:
       batsman.balls + (isWide ? 0 : 1) > 0
         ? parseFloat(
-            ((batsman.runs + runsOffBat) / (batsman.balls + (isWide ? 0 : 1)) * 100).toFixed(2),
+            (
+              ((batsman.runs + runsOffBat) /
+                (batsman.balls + (isWide ? 0 : 1))) *
+              100
+            ).toFixed(2),
           )
         : 0,
-    isOut: batsman.isOut || (ball.isWicket && ball.dismissedPlayerId === batsman.playerId),
+    isOut:
+      batsman.isOut ||
+      (ball.isWicket && ball.dismissedPlayerId === batsman.playerId),
   };
 };
 
@@ -81,13 +90,23 @@ export const calculateBowlerStats = (
 
   return {
     ...bowler,
-    overs: parseFloat((bowler.overs + (legalDelivery ? ball.ball + 1 : 0) / 6).toFixed(1)),
-    maidens: bowler.maidens + (runsConceded === 0 && legalDelivery && ball.ball === 5 ? 1 : 0),
+    overs: parseFloat(
+      (bowler.overs + (legalDelivery ? ball.ball + 1 : 0) / 6).toFixed(1),
+    ),
+    maidens:
+      bowler.maidens +
+      (runsConceded === 0 && legalDelivery && ball.ball === 5 ? 1 : 0),
     runs: bowler.runs + runsConceded,
     wickets: bowler.wickets + (ball.isWicket ? 1 : 0),
-    economy: bowler.overs + (legalDelivery ? ball.ball + 1 : 0) / 6 > 0
-      ? parseFloat((bowler.runs / (bowler.overs + (legalDelivery ? ball.ball + 1 : 0) / 6)).toFixed(2))
-      : 0,
+    economy:
+      bowler.overs + (legalDelivery ? ball.ball + 1 : 0) / 6 > 0
+        ? parseFloat(
+            (
+              bowler.runs /
+              (bowler.overs + (legalDelivery ? ball.ball + 1 : 0) / 6)
+            ).toFixed(2),
+          )
+        : 0,
   };
 };
 
@@ -102,10 +121,7 @@ export const calculatePartnership = (
       !b.isWicket,
   );
 
-  const partnershipRuns = partnershipBalls.reduce(
-    (sum, b) => sum + b.runs,
-    0,
-  );
+  const partnershipRuns = partnershipBalls.reduce((sum, b) => sum + b.runs, 0);
 
   return {
     runs: partnershipRuns,
@@ -115,7 +131,8 @@ export const calculatePartnership = (
       innings.batsmen.find((b) => b.playerId === strikerId)?.playerName ?? '',
     batsmanBId: nonStrikerId,
     batsmanBName:
-      innings.batsmen.find((b) => b.playerId === nonStrikerId)?.playerName ?? '',
+      innings.batsmen.find((b) => b.playerId === nonStrikerId)?.playerName ??
+      '',
   };
 };
 

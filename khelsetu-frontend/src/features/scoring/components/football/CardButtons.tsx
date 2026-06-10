@@ -1,6 +1,7 @@
 import { Button } from '@components/ui/Button';
 import { Modal } from '@components/ui/Modal';
 import type { FootballEvent } from '@types-domain/scoring';
+
 import { useState } from 'react';
 
 interface CardButtonsProps {
@@ -21,7 +22,9 @@ export const CardButtons = ({
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState<'teamA' | 'teamB'>('teamA');
   const [playerId, setPlayerId] = useState('');
-  const [cardType, setCardType] = useState<'yellow_card' | 'red_card' | 'second_yellow'>('yellow_card');
+  const [cardType, setCardType] = useState<
+    'yellow_card' | 'red_card' | 'second_yellow'
+  >('yellow_card');
 
   const players = selectedTeam === 'teamA' ? teamAPlayers : teamBPlayers;
   const teamId = selectedTeam === 'teamA' ? teamAId : teamBId;
@@ -73,7 +76,11 @@ export const CardButtons = ({
         </Button>
       </div>
 
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Record Card">
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="Record Card"
+      >
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-2">
             <Button
@@ -136,10 +143,18 @@ export const CardButtons = ({
           </div>
 
           <div className="flex gap-2">
-            <Button variant="outline" onClick={() => setIsOpen(false)} className="flex-1">
+            <Button
+              variant="outline"
+              onClick={() => setIsOpen(false)}
+              className="flex-1"
+            >
               Cancel
             </Button>
-            <Button onClick={handleSubmit} disabled={!playerId} className="flex-1">
+            <Button
+              onClick={handleSubmit}
+              disabled={!playerId}
+              className="flex-1"
+            >
               Record Card
             </Button>
           </div>

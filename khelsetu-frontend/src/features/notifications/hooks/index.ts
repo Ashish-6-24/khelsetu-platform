@@ -1,7 +1,7 @@
 import { notificationService } from '@features/notifications/services';
 import { useNotificationStore } from '@features/notifications/store';
 import type { Notification } from '@features/notifications/types';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useNotifications = () => {
   const {

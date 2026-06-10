@@ -6,6 +6,8 @@ interface CardProps {
   className?: string;
   hover?: boolean;
   glass?: boolean;
+  elevated?: boolean;
+  as?: 'div' | 'section' | 'article';
 }
 
 export const Card = ({
@@ -13,36 +15,46 @@ export const Card = ({
   className,
   hover = false,
   glass = false,
+  elevated = false,
+  as: Tag = 'div',
 }: CardProps) => {
   return (
-    <div
+    <Tag
       className={twMerge(
         clsx(
-          'rounded-2xl',
+          'rounded-2xl transition-all duration-300',
           glass
-            ? 'bg-white/10 backdrop-blur-xl border border-white/20'
-            : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700',
+            ? 'glass'
+            : elevated
+              ? 'surface shadow-[var(--shadow-md)]'
+              : 'surface',
           hover &&
-            'transition-all duration-300 hover:shadow-xl hover:-translate-y-1',
+            'cursor-pointer hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)] hover:border-slate-300/70 dark:hover:border-slate-600/50',
           className,
         ),
       )}
     >
       {children}
-    </div>
+    </Tag>
   );
 };
 
 interface CardHeaderProps {
   children: React.ReactNode;
   className?: string;
+  divided?: boolean;
 }
 
-export const CardHeader = ({ children, className }: CardHeaderProps) => {
+export const CardHeader = ({
+  children,
+  className,
+  divided = true,
+}: CardHeaderProps) => {
   return (
     <div
       className={clsx(
-        'px-6 py-4 border-b border-gray-200 dark:border-gray-700',
+        'px-5 sm:px-6 py-4',
+        divided && 'border-b border-[var(--border-subtle)]',
         className,
       )}
     >
@@ -54,22 +66,42 @@ export const CardHeader = ({ children, className }: CardHeaderProps) => {
 interface CardBodyProps {
   children: React.ReactNode;
   className?: string;
+  padding?: 'none' | 'sm' | 'md' | 'lg';
 }
 
-export const CardBody = ({ children, className }: CardBodyProps) => {
-  return <div className={clsx('px-6 py-4', className)}>{children}</div>;
+const bodyPadding = {
+  none: '',
+  sm: 'p-3 sm:p-4',
+  md: 'p-5 sm:p-6',
+  lg: 'p-6 sm:p-8',
+};
+
+export const CardBody = ({
+  children,
+  className,
+  padding = 'md',
+}: CardBodyProps) => {
+  return (
+    <div className={clsx(bodyPadding[padding], className)}>{children}</div>
+  );
 };
 
 interface CardFooterProps {
   children: React.ReactNode;
   className?: string;
+  divided?: boolean;
 }
 
-export const CardFooter = ({ children, className }: CardFooterProps) => {
+export const CardFooter = ({
+  children,
+  className,
+  divided = true,
+}: CardFooterProps) => {
   return (
     <div
       className={clsx(
-        'px-6 py-4 border-t border-gray-200 dark:border-gray-700',
+        'px-5 sm:px-6 py-4',
+        divided && 'border-t border-[var(--border-subtle)]',
         className,
       )}
     >

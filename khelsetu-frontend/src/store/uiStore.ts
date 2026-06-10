@@ -1,4 +1,6 @@
+import { STORAGE_KEYS } from '@utils/constants';
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 type Theme = 'light' | 'dark' | 'system';
 type SidebarState = 'expanded' | 'collapsed' | 'hidden';
@@ -33,47 +35,80 @@ interface UIActions {
   setLoading: (isLoading: boolean) => void;
 }
 
-export const useUIStore = create<UIState & UIActions>((set) => ({
-  theme: 'system',
-  sidebarState: 'expanded',
-  isMobileMenuOpen: false,
-  activeModal: null,
-  notifications: [],
-  isLoading: false,
+const applyThemeToDOM = (theme: Theme) => {
+  if (typeof document === 'undefined') return;
+  const root = document.documentElement;
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const isDark = theme === 'dark' || (theme === 'system' && prefersDark);
+  root.classList.toggle('dark', isDark);
+  root.dataset.theme = theme;
+};
 
-  setTheme: (theme) => set({ theme }),
+export const useUIStore = create<UIState & UIActions>()(
+  persist(
+    (set) => ({
+      theme: 'system',
+      sidebarState: 'expanded',
+      isMobileMenuOpen: false,
+      activeModal: null,
+      notifications: [],
+      isLoading: false,
 
-  toggleSidebar: () =>
-    set((state) => ({
-      sidebarState:
-        state.sidebarState === 'expanded' ? 'collapsed' : 'expanded',
-    })),
+      setTheme: (theme) => {
+        applyThemeToDOM(theme);
+        localStorage.setItem(STORAGE_KEYS.THEME, theme);
+        set({ theme });
+      },
 
-  setSidebarState: (sidebarState) => set({ sidebarState }),
+      toggleSidebar: () =>
+        set((state) => ({
+          sidebarState:
+            state.sidebarState === 'expanded' ? 'collapsed' : 'expanded',
+        })),
 
-  toggleMobileMenu: () =>
-    set((state) => ({ isMobileMenuOpen: !state.isMobileMenuOpen })),
+      setSidebarState: (sidebarState) => set({ sidebarState }),
 
-  setMobileMenuOpen: (isMobileMenuOpen) => set({ isMobileMenuOpen }),
+      toggleMobileMenu: () =>
+        set((state) => ({ isMobileMenuOpen: !state.isMobileMenuOpen })),
 
-  openModal: (modalId) => set({ activeModal: modalId }),
+      setMobileMenuOpen: (isMobileMenuOpen) => set({ isMobileMenuOpen }),
 
-  closeModal: () => set({ activeModal: null }),
+      openModal: (modalId) => set({ activeModal: modalId }),
 
-  addNotification: (notification) =>
-    set((state) => ({
-      notifications: [
-        ...state.notifications,
-        { ...notification, id: crypto.randomUUID() },
-      ],
-    })),
+      closeModal: () => set({ activeModal: null }),
 
-  removeNotification: (id) =>
-    set((state) => ({
-      notifications: state.notifications.filter((n) => n.id !== id),
-    })),
+      addNotification: (notification) =>
+        set((state) => ({
+          notifications: [
+            ...state.notifications,
+            {
+              ...notification,
+              id:
+                typeof crypto !== 'undefined' && 'randomUUID' in crypto
+                  ? crypto.randomUUID()
+                  : `${Date.now()}-${Math.random()}`,
+            },
+          ],
+        })),
 
-  clearNotifications: () => set({ notifications: [] }),
+      removeNotification: (id) =>
+        set((state) => ({
+          notifications: state.notifications.filter((n) => n.id !== id),
+        })),
 
-  setLoading: (isLoading) => set({ isLoading }),
-}));
+      clearNotifications: () => set({ notifications: [] }),
+
+      setLoading: (isLoading) => set({ isLoading }),
+    }),
+    {
+      name: STORAGE_KEYS.UI_STATE,
+      partialize: (state) => ({
+        theme: state.theme,
+        sidebarState: state.sidebarState,
+      }),
+      onRehydrateStorage: () => (state) => {
+        if (state?.theme) applyThemeToDOM(state.theme);
+      },
+    },
+  ),
+);

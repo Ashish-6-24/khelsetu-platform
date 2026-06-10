@@ -8,7 +8,9 @@ import { teamService } from '@services/api/team';
 import { useQuery } from '@tanstack/react-query';
 import type { Player, Team } from '@types-domain/tournament';
 import { ArrowLeft, Edit, Trophy } from 'lucide-react';
+
 import { useState } from 'react';
+
 import { useNavigate, useParams } from 'react-router-dom';
 
 const TABS = [
@@ -86,7 +88,10 @@ export const PlayerDetailPage = () => {
             </p>
           </div>
         </div>
-        <Button variant="outline" onClick={() => navigate(`/players/${id}/edit`)}>
+        <Button
+          variant="outline"
+          onClick={() => navigate(`/players/${id}/edit`)}
+        >
           <Edit className="w-4 h-4 mr-1" />
           Edit
         </Button>
@@ -114,7 +119,9 @@ export const PlayerDetailPage = () => {
         {player.stats.wickets !== undefined && (
           <Card>
             <CardBody>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Wickets</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Wickets
+              </p>
               <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">
                 {player.stats.wickets}
               </p>
@@ -134,7 +141,9 @@ export const PlayerDetailPage = () => {
         {player.stats.assists !== undefined && (
           <Card>
             <CardBody>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Assists</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Assists
+              </p>
               <p className="text-2xl font-bold text-purple-600 dark:text-purple-400 mt-1">
                 {player.stats.assists}
               </p>
@@ -143,14 +152,19 @@ export const PlayerDetailPage = () => {
         )}
       </div>
 
-      <Tabs tabs={TABS} activeTab={activeTab} onChange={setActiveTab} variant="pills" />
+      <Tabs
+        tabs={TABS}
+        activeTab={activeTab}
+        onChange={setActiveTab}
+        variant="pills"
+      />
 
       {activeTab === 'overview' && (
         <Card>
           <CardBody>
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-3xl font-bold">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#7F1D1D] to-[#991B1B] flex items-center justify-center text-white text-3xl font-bold">
                   {player.name.charAt(0).toUpperCase()}
                 </div>
                 <div>
@@ -178,7 +192,9 @@ export const PlayerDetailPage = () => {
                 </div>
                 {player.jerseyNumber && (
                   <div>
-                    <p className="text-gray-500 dark:text-gray-400">Jersey Number</p>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      Jersey Number
+                    </p>
                     <p className="font-medium text-gray-900 dark:text-white">
                       #{player.jerseyNumber}
                     </p>

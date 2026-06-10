@@ -1,4 +1,9 @@
-import type { Invoice, PaymentMethod, Plan, Subscription } from '@features/billing/types';
+import type {
+  Invoice,
+  PaymentMethod,
+  Plan,
+  Subscription,
+} from '@features/billing/types';
 import { axiosInstance } from '@lib/axios';
 import { API_ENDPOINTS } from '@utils/constants';
 
@@ -43,7 +48,9 @@ export const billingService = {
     return data;
   },
 
-  addPaymentMethod: async (method: Record<string, unknown>): Promise<PaymentMethod> => {
+  addPaymentMethod: async (
+    method: Record<string, unknown>,
+  ): Promise<PaymentMethod> => {
     const { data } = await axiosInstance.post<PaymentMethod>(
       API_ENDPOINTS.BILLING.PAYMENT_METHODS,
       method,

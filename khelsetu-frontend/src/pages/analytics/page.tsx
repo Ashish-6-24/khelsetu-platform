@@ -6,6 +6,7 @@ import { tournamentService } from '@services/api/tournament';
 import { useQuery } from '@tanstack/react-query';
 import type { Tournament } from '@types-domain/tournament';
 import { BarChart3, Calendar, Trophy, Users } from 'lucide-react';
+
 import { useMemo, useState } from 'react';
 
 const TIME_FILTERS = [
@@ -37,7 +38,9 @@ const getDateRange = (filter: string): { start: Date; end: Date } => {
 export const AnalyticsPage = () => {
   const [timeFilter, setTimeFilter] = useState('30d');
 
-  const { data: tournaments, isLoading: loadingTournaments } = useQuery<Tournament[]>({
+  const { data: tournaments, isLoading: loadingTournaments } = useQuery<
+    Tournament[]
+  >({
     queryKey: ['tournaments'],
     queryFn: () => tournamentService.getAll(),
   });
@@ -46,33 +49,47 @@ export const AnalyticsPage = () => {
 
   const filteredTournaments = useMemo(() => {
     const currentNow = new Date();
-    return tournaments?.filter((t) => {
-      const created = new Date(t.createdAt ?? currentNow);
-      return created >= dateRange.start && created <= dateRange.end;
-    }) ?? [];
+    return (
+      tournaments?.filter((t) => {
+        const created = new Date(t.createdAt ?? currentNow);
+        return created >= dateRange.start && created <= dateRange.end;
+      }) ?? []
+    );
   }, [tournaments, dateRange]);
 
   const stats = {
     totalTournaments: filteredTournaments.length,
-    liveTournaments: filteredTournaments.filter((t) => t.status === 'live').length,
-    completedTournaments: filteredTournaments.filter((t) => t.status === 'completed').length,
-    upcomingTournaments: filteredTournaments.filter((t) => t.status === 'upcoming').length,
-    totalTeams: tournaments?.reduce((sum, t) => sum + (t.currentTeams ?? 0), 0) ?? 0,
+    liveTournaments: filteredTournaments.filter((t) => t.status === 'live')
+      .length,
+    completedTournaments: filteredTournaments.filter(
+      (t) => t.status === 'completed',
+    ).length,
+    upcomingTournaments: filteredTournaments.filter(
+      (t) => t.status === 'upcoming',
+    ).length,
+    totalTeams:
+      tournaments?.reduce((sum, t) => sum + (t.currentTeams ?? 0), 0) ?? 0,
     totalMatches: 0,
     liveMatches: 0,
   };
 
-  const sportDistribution = filteredTournaments.reduce<Record<string, number>>((acc, t) => {
-    const sport = (t as Tournament & { sport?: string }).sport ?? 'cricket';
-    acc[sport] = (acc[sport] ?? 0) + 1;
-    return acc;
-  }, {});
+  const sportDistribution = filteredTournaments.reduce<Record<string, number>>(
+    (acc, t) => {
+      const sport = (t as Tournament & { sport?: string }).sport ?? 'cricket';
+      acc[sport] = (acc[sport] ?? 0) + 1;
+      return acc;
+    },
+    {},
+  );
 
-  const formatDistribution = filteredTournaments.reduce<Record<string, number>>((acc, t) => {
-    const format = t.format ?? 'unknown';
-    acc[format] = (acc[format] ?? 0) + 1;
-    return acc;
-  }, {});
+  const formatDistribution = filteredTournaments.reduce<Record<string, number>>(
+    (acc, t) => {
+      const format = t.format ?? 'unknown';
+      acc[format] = (acc[format] ?? 0) + 1;
+      return acc;
+    },
+    {},
+  );
 
   if (loadingTournaments) {
     return (
@@ -115,7 +132,9 @@ export const AnalyticsPage = () => {
           <CardBody>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Tournaments</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Tournaments
+                </p>
                 <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">
                   {stats.totalTournaments}
                 </p>
@@ -131,7 +150,9 @@ export const AnalyticsPage = () => {
           <CardBody>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Live Now</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Live Now
+                </p>
                 <p className="text-3xl font-bold text-green-600 dark:text-green-400 mt-1">
                   {stats.liveTournaments}
                 </p>
@@ -147,7 +168,9 @@ export const AnalyticsPage = () => {
           <CardBody>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Teams</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Teams
+                </p>
                 <p className="text-3xl font-bold text-purple-600 dark:text-purple-400 mt-1">
                   {stats.totalTeams}
                 </p>
@@ -163,7 +186,9 @@ export const AnalyticsPage = () => {
           <CardBody>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Completed</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Completed
+                </p>
                 <p className="text-3xl font-bold text-orange-600 dark:text-orange-400 mt-1">
                   {stats.completedTournaments}
                 </p>
@@ -187,9 +212,10 @@ export const AnalyticsPage = () => {
                 {Object.entries(sportDistribution)
                   .sort(([, a], [, b]) => b - a)
                   .map(([sport, count]) => {
-                    const percentage = stats.totalTournaments > 0
-                      ? Math.round((count / stats.totalTournaments) * 100)
-                      : 0;
+                    const percentage =
+                      stats.totalTournaments > 0
+                        ? Math.round((count / stats.totalTournaments) * 100)
+                        : 0;
                     return (
                       <div key={sport}>
                         <div className="flex items-center justify-between mb-1">
@@ -228,9 +254,10 @@ export const AnalyticsPage = () => {
                 {Object.entries(formatDistribution)
                   .sort(([, a], [, b]) => b - a)
                   .map(([format, count]) => {
-                    const percentage = stats.totalTournaments > 0
-                      ? Math.round((count / stats.totalTournaments) * 100)
-                      : 0;
+                    const percentage =
+                      stats.totalTournaments > 0
+                        ? Math.round((count / stats.totalTournaments) * 100)
+                        : 0;
                     return (
                       <div key={format}>
                         <div className="flex items-center justify-between mb-1">
@@ -269,7 +296,9 @@ export const AnalyticsPage = () => {
             <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-green-600 dark:text-green-400">Live</p>
+                  <p className="text-sm text-green-600 dark:text-green-400">
+                    Live
+                  </p>
                   <p className="text-2xl font-bold text-green-700 dark:text-green-300">
                     {stats.liveTournaments}
                   </p>
@@ -282,7 +311,9 @@ export const AnalyticsPage = () => {
             <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-blue-600 dark:text-blue-400">Upcoming</p>
+                  <p className="text-sm text-blue-600 dark:text-blue-400">
+                    Upcoming
+                  </p>
                   <p className="text-2xl font-bold text-blue-700 dark:text-blue-300">
                     {stats.upcomingTournaments}
                   </p>
@@ -293,7 +324,9 @@ export const AnalyticsPage = () => {
             <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Completed</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Completed
+                  </p>
                   <p className="text-2xl font-bold text-gray-700 dark:text-gray-300">
                     {stats.completedTournaments}
                   </p>

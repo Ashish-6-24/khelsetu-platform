@@ -18,11 +18,17 @@ interface PerformanceWithMemory extends Performance {
 }
 
 const getInitialMetrics = (): PerformanceMetrics => {
-  const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
-  const ttfb = navigation ? navigation.responseStart - navigation.requestStart : null;
+  const navigation = performance.getEntriesByType('navigation')[0] as
+    | PerformanceNavigationTiming
+    | undefined;
+  const ttfb = navigation
+    ? navigation.responseStart - navigation.requestStart
+    : null;
 
   const perf = performance as PerformanceWithMemory;
-  const memoryMB = perf.memory ? perf.memory.usedJSHeapSize / 1024 / 1024 : null;
+  const memoryMB = perf.memory
+    ? perf.memory.usedJSHeapSize / 1024 / 1024
+    : null;
 
   return {
     fcp: null,
@@ -79,17 +85,32 @@ export const getPerformanceReport = (metrics: PerformanceMetrics): string => {
   const lines: string[] = ['=== Performance Report ==='];
 
   if (metrics.fcp !== null) {
-    const status = metrics.fcp < 1800 ? 'Good' : metrics.fcp < 3000 ? 'Needs Improvement' : 'Poor';
+    const status =
+      metrics.fcp < 1800
+        ? 'Good'
+        : metrics.fcp < 3000
+          ? 'Needs Improvement'
+          : 'Poor';
     lines.push(`FCP: ${metrics.fcp.toFixed(0)}ms (${status})`);
   }
 
   if (metrics.lcp !== null) {
-    const status = metrics.lcp < 2500 ? 'Good' : metrics.lcp < 4000 ? 'Needs Improvement' : 'Poor';
+    const status =
+      metrics.lcp < 2500
+        ? 'Good'
+        : metrics.lcp < 4000
+          ? 'Needs Improvement'
+          : 'Poor';
     lines.push(`LCP: ${metrics.lcp.toFixed(0)}ms (${status})`);
   }
 
   if (metrics.cls !== null) {
-    const status = metrics.cls < 0.1 ? 'Good' : metrics.cls < 0.25 ? 'Needs Improvement' : 'Poor';
+    const status =
+      metrics.cls < 0.1
+        ? 'Good'
+        : metrics.cls < 0.25
+          ? 'Needs Improvement'
+          : 'Poor';
     lines.push(`CLS: ${metrics.cls.toFixed(3)} (${status})`);
   }
 

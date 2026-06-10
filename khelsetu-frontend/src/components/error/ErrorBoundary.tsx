@@ -1,5 +1,6 @@
 import { ROUTES } from '@utils/constants';
 import { AlertTriangle, ArrowLeft, Home, RefreshCw } from 'lucide-react';
+
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 
 interface ErrorBoundaryProps {
@@ -14,7 +15,10 @@ interface ErrorBoundaryState {
   errorInfo: ErrorInfo | null;
 }
 
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false, error: null, errorInfo: null };
@@ -91,7 +95,9 @@ export const ServerErrorPage = () => (
   <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
     <div className="text-center max-w-md">
       <div className="mx-auto w-16 h-16 rounded-full bg-red-100 dark:bg-red-900/20 flex items-center justify-center mb-6">
-        <span className="text-3xl font-bold text-red-600 dark:text-red-400">500</span>
+        <span className="text-3xl font-bold text-red-600 dark:text-red-400">
+          500
+        </span>
       </div>
       <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
         Server Error
@@ -123,15 +129,26 @@ export const OfflinePage = () => (
   <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
     <div className="text-center max-w-md">
       <div className="mx-auto w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-6">
-        <svg className="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-12.728 12.728M5.636 5.636l12.728 12.728" />
+        <svg
+          className="w-8 h-8 text-gray-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M18.364 5.636l-12.728 12.728M5.636 5.636l12.728 12.728"
+          />
         </svg>
       </div>
       <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
         You're Offline
       </h1>
       <p className="text-gray-600 dark:text-gray-400 mb-6">
-        Check your internet connection and try again. Some features may still work offline.
+        Check your internet connection and try again. Some features may still
+        work offline.
       </p>
       <button
         onClick={() => window.location.reload()}
@@ -144,7 +161,11 @@ export const OfflinePage = () => (
   </div>
 );
 
-export const CrashRecoveryPage = ({ onRecovery }: { onRecovery?: () => void }) => (
+export const CrashRecoveryPage = ({
+  onRecovery,
+}: {
+  onRecovery?: () => void;
+}) => (
   <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
     <div className="text-center max-w-md">
       <div className="mx-auto w-16 h-16 rounded-full bg-yellow-100 dark:bg-yellow-900/20 flex items-center justify-center mb-6">
@@ -154,7 +175,8 @@ export const CrashRecoveryPage = ({ onRecovery }: { onRecovery?: () => void }) =
         Application Recovered
       </h1>
       <p className="text-gray-600 dark:text-gray-400 mb-6">
-        The application encountered a critical error and has been reset. Your data should be safe.
+        The application encountered a critical error and has been reset. Your
+        data should be safe.
       </p>
       <div className="flex gap-3 justify-center">
         <button

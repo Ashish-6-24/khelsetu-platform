@@ -1,8 +1,24 @@
 export const APP_NAME = 'KhelSetu';
 export const APP_VERSION = '1.0.0';
+export const APP_TAGLINE =
+  'Production-grade multi-tenant sports tournament management for Nepal';
+
+export const STORAGE_KEYS = {
+  THEME: 'khelsetu-theme',
+  UI_STATE: 'khelsetu-ui',
+  COMMAND_RECENT: 'khelsetu-cmd-recent',
+  TOUR_DONE: 'khelsetu-tour-done',
+  ONBOARDING_DONE: 'khelsetu-onboarding-done',
+  SIDEBAR_COLLAPSED: 'khelsetu-sidebar-collapsed',
+} as const;
+
+export const THEME_VALUES = ['light', 'dark', 'system'] as const;
+export type ThemeValue = (typeof THEME_VALUES)[number];
 
 export const ROUTES = {
   HOME: '/',
+  ABOUT: '/about',
+  CONTACT: '/contact',
   LOGIN: '/auth/login',
   REGISTER: '/auth/register',
   DASHBOARD: '/dashboard',

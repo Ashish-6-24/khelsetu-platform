@@ -1,4 +1,7 @@
-import type { BasketballEvent, BasketballEventType } from '@types-domain/scoring';
+import type {
+  BasketballEvent,
+  BasketballEventType,
+} from '@types-domain/scoring';
 
 export const createBasketballEvent = (
   matchId: string,
@@ -74,7 +77,9 @@ export const getPointsForEventType = (type: BasketballEventType): number => {
 };
 
 export const isFoulEvent = (type: BasketballEventType): boolean =>
-  type === 'foul_personal' || type === 'foul_technical' || type === 'foul_flagrant';
+  type === 'foul_personal' ||
+  type === 'foul_technical' ||
+  type === 'foul_flagrant';
 
 export const isScoringEvent = (type: BasketballEventType): boolean =>
   type === '2pt' || type === '3pt' || type === 'free_throw';

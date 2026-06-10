@@ -1,4 +1,5 @@
 import { ErrorBoundary } from '@components/error/ErrorBoundary';
+
 import { AuthProvider } from './AuthProvider';
 import { QueryProvider } from './QueryProvider';
 import { RouterProvider } from './RouterProvider';

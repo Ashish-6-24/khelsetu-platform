@@ -1,6 +1,11 @@
 import { Tabs } from '@components/ui/Tabs';
+import {
+  SearchBar,
+  SearchFilters,
+  SearchResultCard,
+} from '@features/search/components';
 import { useSearch } from '@features/search/hooks';
-import { SearchBar, SearchResultCard, SearchFilters } from '@features/search/components';
+
 import { useState } from 'react';
 
 const TABS = [
@@ -80,7 +85,10 @@ export const SearchPage = () => {
           {isLoading ? (
             <div className="space-y-3">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="animate-pulse h-16 bg-gray-200 dark:bg-gray-700 rounded-lg" />
+                <div
+                  key={i}
+                  className="animate-pulse h-16 bg-gray-200 dark:bg-gray-700 rounded-lg"
+                />
               ))}
             </div>
           ) : results.length === 0 && query ? (

@@ -31,7 +31,10 @@ export interface RoleState {
 
 export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
   admin: [
-    { resource: 'tournaments', actions: ['create', 'read', 'update', 'delete'] },
+    {
+      resource: 'tournaments',
+      actions: ['create', 'read', 'update', 'delete'],
+    },
     { resource: 'teams', actions: ['create', 'read', 'update', 'delete'] },
     { resource: 'users', actions: ['create', 'read', 'update', 'delete'] },
     { resource: 'billing', actions: ['create', 'read', 'update', 'delete'] },

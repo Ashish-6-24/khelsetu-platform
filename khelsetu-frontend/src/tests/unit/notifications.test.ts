@@ -1,7 +1,6 @@
-import { describe, expect, it } from 'vitest';
-
-import { notificationUtils } from '@features/notifications/utils';
 import type { Notification } from '@features/notifications/types';
+import { notificationUtils } from '@features/notifications/utils';
+import { describe, expect, it } from 'vitest';
 
 const mockNotifications: Notification[] = [
   {

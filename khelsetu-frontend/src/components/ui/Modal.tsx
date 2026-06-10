@@ -1,14 +1,18 @@
+import { useFocusTrap, useReducedMotion } from '@features/accessibility';
 import { clsx } from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
+import { X } from 'lucide-react';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title?: string;
+  description?: string;
   children: React.ReactNode;
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  footer?: React.ReactNode;
 }
 
 const sizeStyles = {
@@ -23,22 +27,45 @@ export const Modal = ({
   isOpen,
   onClose,
   title,
+  description,
   children,
   size = 'md',
+  footer,
 }: ModalProps) => {
+  const dialogRef = useFocusTrap<HTMLDivElement>(isOpen);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
+  const prefersReducedMotion = useReducedMotion();
+
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+    if (!isOpen) return;
+
+    previouslyFocusedRef.current = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e: KeyboardEvent): void => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+      }
     };
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
-    }
+
+    document.addEventListener('keydown', handleKeyDown);
+
     return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      previouslyFocusedRef.current?.focus();
     };
   }, [isOpen, onClose]);
+
+  const backdropTransition = prefersReducedMotion
+    ? { duration: 0 }
+    : { duration: 0.18 };
+
+  const dialogTransition = prefersReducedMotion
+    ? { duration: 0 }
+    : { type: 'spring' as const, stiffness: 360, damping: 30 };
 
   return (
     <AnimatePresence>
@@ -48,46 +75,62 @@ export const Modal = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+            transition={backdropTransition}
+            className="fixed inset-0 bg-slate-950/40 backdrop-blur-md dark:bg-slate-950/70"
             onClick={onClose}
+            aria-hidden="true"
           />
-          <div className="flex min-h-full items-center justify-center p-4">
+          <div className="flex min-h-full items-center justify-center p-4 sm:p-6">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              ref={dialogRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby={title ? 'modal-title' : undefined}
+              aria-describedby={description ? 'modal-description' : undefined}
+              initial={{ opacity: 0, scale: 0.96, y: 16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ type: 'spring', duration: 0.3 }}
+              exit={{ opacity: 0, scale: 0.96, y: 16 }}
+              transition={dialogTransition}
               className={clsx(
-                'relative w-full bg-white dark:bg-gray-800 rounded-2xl shadow-2xl',
+                'relative w-full overflow-hidden rounded-2xl bg-[var(--bg-surface)] shadow-[var(--shadow-xl)] ring-1 ring-[var(--border-subtle)]',
                 sizeStyles[size],
               )}
             >
-              {title && (
-                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    {title}
-                  </h3>
+              {(title || description) && (
+                <div className="flex items-start justify-between gap-4 border-b border-[var(--border-subtle)] px-6 py-4">
+                  <div>
+                    {title && (
+                      <h2
+                        id="modal-title"
+                        className="text-lg font-semibold tracking-tight text-slate-900 dark:text-white"
+                      >
+                        {title}
+                      </h2>
+                    )}
+                    {description && (
+                      <p
+                        id="modal-description"
+                        className="mt-1 text-sm text-slate-500 dark:text-slate-400"
+                      >
+                        {description}
+                      </p>
+                    )}
+                  </div>
                   <button
                     onClick={onClose}
-                    className="p-1 rounded-lg text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    aria-label="Close dialog"
+                    className="inline-flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:hover:bg-slate-800 dark:hover:text-slate-200"
                   >
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                    <X className="h-5 w-5" />
                   </button>
                 </div>
               )}
-              <div className="px-6 py-4">{children}</div>
+              <div className="px-6 py-5">{children}</div>
+              {footer && (
+                <div className="flex items-center justify-end gap-2 border-t border-[var(--border-subtle)] bg-slate-50/60 px-6 py-3.5 dark:bg-slate-900/40">
+                  {footer}
+                </div>
+              )}
             </motion.div>
           </div>
         </div>

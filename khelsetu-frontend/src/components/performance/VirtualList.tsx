@@ -57,10 +57,7 @@ export const VirtualList = <T,>({
             const item = items[index];
             if (!item) return null;
             return (
-              <div
-                key={index}
-                style={{ height: itemHeight }}
-              >
+              <div key={index} style={{ height: itemHeight }}>
                 {renderItem(item, index)}
               </div>
             );

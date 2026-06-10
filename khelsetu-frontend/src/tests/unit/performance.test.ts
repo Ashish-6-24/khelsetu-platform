@@ -10,7 +10,10 @@ const calculateBundleSize = (size: number): { size: string; unit: string } => {
   return { size: size.toString(), unit: 'B' };
 };
 
-const isBundleSizeAcceptable = (sizeInKB: number, threshold: number = 500): boolean => {
+const isBundleSizeAcceptable = (
+  sizeInKB: number,
+  threshold: number = 500,
+): boolean => {
   return sizeInKB <= threshold;
 };
 

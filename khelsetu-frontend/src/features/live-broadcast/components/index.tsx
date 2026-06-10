@@ -2,7 +2,16 @@ import { Badge } from '@components/ui/Badge';
 import { Button } from '@components/ui/Button';
 import { Card, CardBody, CardHeader } from '@components/ui/Card';
 import type { OverlayType } from '@features/live-broadcast/types';
-import { Circle, Eye, Layers, Monitor, Plus, Trash2, Video, VideoOff } from 'lucide-react';
+import {
+  Circle,
+  Eye,
+  Layers,
+  Monitor,
+  Plus,
+  Trash2,
+  Video,
+  VideoOff,
+} from 'lucide-react';
 
 interface StreamControlProps {
   isLive: boolean;
@@ -12,7 +21,13 @@ interface StreamControlProps {
   onStop: () => void;
 }
 
-export const StreamControl = ({ isLive, viewers, streamKey, onStart, onStop }: StreamControlProps) => {
+export const StreamControl = ({
+  isLive,
+  viewers,
+  streamKey,
+  onStart,
+  onStop,
+}: StreamControlProps) => {
   return (
     <Card>
       <CardHeader>
@@ -41,7 +56,9 @@ export const StreamControl = ({ isLive, viewers, streamKey, onStart, onStop }: S
 
           {streamKey && (
             <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs font-mono">
-              <span className="text-gray-500 dark:text-gray-400">Stream Key:</span>
+              <span className="text-gray-500 dark:text-gray-400">
+                Stream Key:
+              </span>
               <p className="text-gray-900 dark:text-white mt-1">{streamKey}</p>
             </div>
           )}
@@ -80,15 +97,27 @@ interface OverlayControlProps {
   onToggle: (id: string) => void;
 }
 
-export const OverlayControl = ({ overlays, onAdd, onRemove, onToggle }: OverlayControlProps) => {
-  const overlayTypes: OverlayType[] = ['scoreboard', 'lower-third', 'full-screen', 'ticker'];
+export const OverlayControl = ({
+  overlays,
+  onAdd,
+  onRemove,
+  onToggle,
+}: OverlayControlProps) => {
+  const overlayTypes: OverlayType[] = [
+    'scoreboard',
+    'lower-third',
+    'full-screen',
+    'ticker',
+  ];
 
   return (
     <Card>
       <CardHeader>
         <div className="flex items-center gap-2">
           <Layers className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white">Overlays</h3>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            Overlays
+          </h3>
         </div>
       </CardHeader>
       <CardBody>

@@ -1,23 +1,36 @@
 import { describe, expect, it } from 'vitest';
 
-const validateCSVFormat = (content: string): { valid: boolean; errors: string[] } => {
+const validateCSVFormat = (
+  content: string,
+): { valid: boolean; errors: string[] } => {
   const lines = content.trim().split('\n');
-  if (lines.length < 2) return { valid: false, errors: ['CSV must have header and at least one data row'] };
+  if (lines.length < 2)
+    return {
+      valid: false,
+      errors: ['CSV must have header and at least one data row'],
+    };
   const headerCount = lines[0]!.split(',').length;
   const errors: string[] = [];
   lines.slice(1).forEach((line, i) => {
     const colCount = line.split(',').length;
-    if (colCount !== headerCount) errors.push(`Row ${i + 2}: expected ${headerCount} columns, got ${colCount}`);
+    if (colCount !== headerCount)
+      errors.push(
+        `Row ${i + 2}: expected ${headerCount} columns, got ${colCount}`,
+      );
   });
   return { valid: errors.length === 0, errors };
 };
 
 const getImportStatusColor = (status: string): string => {
   switch (status) {
-    case 'completed': return 'success';
-    case 'failed': return 'error';
-    case 'processing': return 'info';
-    default: return 'default';
+    case 'completed':
+      return 'success';
+    case 'failed':
+      return 'error';
+    case 'processing':
+      return 'info';
+    default:
+      return 'default';
   }
 };
 

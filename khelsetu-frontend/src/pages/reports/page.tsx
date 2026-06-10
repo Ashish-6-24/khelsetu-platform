@@ -1,5 +1,5 @@
-import { useReports } from '@features/reports/hooks';
 import { ReportCard, ReportGenerator } from '@features/reports/components';
+import { useReports } from '@features/reports/hooks';
 import type { ExportFormat, ReportType } from '@features/reports/types';
 
 export const ReportsPage = () => {
@@ -28,16 +28,23 @@ export const ReportsPage = () => {
           Reports & Exports
         </h1>
         <p className="text-gray-500 dark:text-gray-400 mt-1">
-          Generate and download reports for tournaments, teams, players, and matches
+          Generate and download reports for tournaments, teams, players, and
+          matches
         </p>
       </div>
 
-      <ReportGenerator onGenerate={handleGenerate} isGenerating={isGenerating} />
+      <ReportGenerator
+        onGenerate={handleGenerate}
+        isGenerating={isGenerating}
+      />
 
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[1, 2].map((i) => (
-            <div key={i} className="animate-pulse h-48 bg-gray-200 dark:bg-gray-700 rounded-2xl" />
+            <div
+              key={i}
+              className="animate-pulse h-48 bg-gray-200 dark:bg-gray-700 rounded-2xl"
+            />
           ))}
         </div>
       ) : reports.length === 0 ? (
@@ -61,7 +68,9 @@ export const ReportsPage = () => {
 
       {exportJobs.length > 0 && (
         <div className="space-y-3">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Export Jobs</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            Export Jobs
+          </h3>
           {exportJobs.map((job) => (
             <div
               key={job.id}
