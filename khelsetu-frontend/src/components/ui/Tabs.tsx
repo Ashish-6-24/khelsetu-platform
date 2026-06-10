@@ -6,6 +6,7 @@ interface TabsProps {
   onChange: (tabId: string) => void;
   className?: string;
   variant?: 'default' | 'pills' | 'underline';
+  fullWidth?: boolean;
 }
 
 export const Tabs = ({
@@ -14,12 +15,16 @@ export const Tabs = ({
   onChange,
   className,
   variant = 'default',
+  fullWidth = false,
 }: TabsProps) => {
   return (
     <div
+      role="tablist"
       className={clsx(
-        'flex gap-1',
-        variant === 'pills' && 'bg-gray-100 dark:bg-gray-800 p-1 rounded-xl',
+        'inline-flex',
+        variant === 'pills' &&
+          'rounded-xl bg-slate-100/80 p-1 dark:bg-slate-800/60',
+        variant === 'underline' && 'border-b border-[var(--border-subtle)]',
         className,
       )}
     >
@@ -28,27 +33,39 @@ export const Tabs = ({
         return (
           <button
             key={tab.id}
+            role="tab"
+            aria-selected={isActive}
             onClick={() => onChange(tab.id)}
             className={clsx(
-              'flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200',
-              variant === 'pills'
-                ? isActive
-                  ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
-                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-                : isActive
-                  ? 'text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400'
-                  : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300',
+              'inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-all duration-200',
+              'focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+              fullWidth && 'flex-1',
+              variant === 'pills' && 'h-9 px-3.5',
+              variant === 'default' && 'h-9 px-3.5',
+              variant === 'underline' &&
+                'h-10 px-3 border-b-2 -mb-px rounded-none',
+              variant === 'pills' && isActive
+                ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-900 dark:text-white'
+                : variant === 'pills'
+                  ? 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                  : variant === 'underline'
+                    ? isActive
+                      ? 'border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400'
+                      : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+                    : isActive
+                      ? 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300'
+                      : 'text-slate-600 hover:bg-slate-100/60 dark:text-slate-300 dark:hover:bg-slate-800/50',
             )}
           >
             {tab.icon}
-            {tab.label}
+            <span>{tab.label}</span>
             {tab.count !== undefined && (
               <span
                 className={clsx(
-                  'ml-1 px-2 py-0.5 text-xs rounded-full',
+                  'ml-0.5 inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-semibold tabular-nums',
                   isActive
-                    ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
-                    : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400',
+                    ? 'bg-blue-600/10 text-blue-700 dark:bg-blue-400/20 dark:text-blue-300'
+                    : 'bg-slate-200/70 text-slate-600 dark:bg-slate-700/60 dark:text-slate-300',
                 )}
               >
                 {tab.count}

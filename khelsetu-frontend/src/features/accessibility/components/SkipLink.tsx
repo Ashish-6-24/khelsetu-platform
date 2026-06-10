@@ -1,4 +1,5 @@
 import { clsx } from 'clsx';
+
 import { useEffect, useRef, useState } from 'react';
 
 interface SkipLinkProps {
@@ -6,7 +7,10 @@ interface SkipLinkProps {
   label?: string;
 }
 
-export const SkipLink = ({ targetId = 'main-content', label = 'Skip to main content' }: SkipLinkProps) => {
+export const SkipLink = ({
+  targetId = 'main-content',
+  label = 'Skip to main content',
+}: SkipLinkProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 

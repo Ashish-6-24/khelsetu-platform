@@ -1,7 +1,8 @@
-import type { Invoice, Plan, Subscription } from '@features/billing/types';
 import { billingService } from '@features/billing/services';
 import { useBillingStore } from '@features/billing/store';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import type { Invoice, Plan, Subscription } from '@features/billing/types';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import { useEffect } from 'react';
 
 export const useBilling = () => {
@@ -21,12 +22,15 @@ export const useBilling = () => {
     queryFn: () => billingService.getPlans(),
   });
 
-  const { data: subscriptionData, isLoading: loadingSubscription } = useQuery<Subscription | null>({
-    queryKey: ['billing-subscription'],
-    queryFn: () => billingService.getSubscription(),
-  });
+  const { data: subscriptionData, isLoading: loadingSubscription } =
+    useQuery<Subscription | null>({
+      queryKey: ['billing-subscription'],
+      queryFn: () => billingService.getSubscription(),
+    });
 
-  const { data: invoicesData, isLoading: loadingInvoices } = useQuery<Invoice[]>({
+  const { data: invoicesData, isLoading: loadingInvoices } = useQuery<
+    Invoice[]
+  >({
     queryKey: ['billing-invoices'],
     queryFn: () => billingService.getInvoices(),
   });

@@ -2,6 +2,7 @@ import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
 import { Modal } from '@components/ui/Modal';
 import type { FootballEvent } from '@types-domain/scoring';
+
 import { useState } from 'react';
 
 interface GoalButtonProps {
@@ -64,7 +65,11 @@ export const GoalButton = ({
         ⚽ Goal
       </Button>
 
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Record Goal">
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="Record Goal"
+      >
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-2">
             <Button
@@ -97,7 +102,10 @@ export const GoalButton = ({
               onChange={(e) => setIsOwnGoal(e.target.checked)}
               className="rounded"
             />
-            <label htmlFor="own-goal" className="text-sm text-gray-700 dark:text-gray-300">
+            <label
+              htmlFor="own-goal"
+              className="text-sm text-gray-700 dark:text-gray-300"
+            >
               Own Goal
             </label>
           </div>
@@ -127,10 +135,18 @@ export const GoalButton = ({
           />
 
           <div className="flex gap-2">
-            <Button variant="outline" onClick={() => setIsOpen(false)} className="flex-1">
+            <Button
+              variant="outline"
+              onClick={() => setIsOpen(false)}
+              className="flex-1"
+            >
               Cancel
             </Button>
-            <Button onClick={handleSubmit} disabled={!scorerId} className="flex-1">
+            <Button
+              onClick={handleSubmit}
+              disabled={!scorerId}
+              className="flex-1"
+            >
               Record Goal
             </Button>
           </div>

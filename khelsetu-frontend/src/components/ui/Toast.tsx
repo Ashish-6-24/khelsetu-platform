@@ -1,93 +1,228 @@
+import { useReducedMotion } from '@features/accessibility';
 import { clsx } from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
+import { AlertTriangle, CheckCircle2, Info, X, XCircle } from 'lucide-react';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import type { ToastType } from './ToastType';
-import { ToastContext } from './useToast';
+import { type Toast, ToastContext } from './toast-context';
 
-interface Toast {
-  id: string;
-  message: string;
-  type: ToastType;
-  duration?: number;
+const MAX_VISIBLE = 3;
+
+const typeStyles: Record<
+  ToastType,
+  { wrap: string; icon: string; ring: string; Icon: typeof Info }
+> = {
+  success: {
+    wrap: 'bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100',
+    icon: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
+    ring: 'ring-emerald-500/20',
+    Icon: CheckCircle2,
+  },
+  error: {
+    wrap: 'bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100',
+    icon: 'bg-red-500/10 text-red-600 dark:text-red-400',
+    ring: 'ring-red-500/20',
+    Icon: XCircle,
+  },
+  warning: {
+    wrap: 'bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100',
+    icon: 'bg-amber-500/10 text-amber-600 dark:text-amber-400',
+    ring: 'ring-amber-500/20',
+    Icon: AlertTriangle,
+  },
+  info: {
+    wrap: 'bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100',
+    icon: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
+    ring: 'ring-blue-500/20',
+    Icon: Info,
+  },
+};
+
+function ProgressBar({
+  duration,
+  onExpire,
+  paused,
+}: {
+  duration: number;
+  onExpire: () => void;
+  paused: boolean;
+}) {
+  const [width, setWidth] = useState(100);
+  useEffect(() => {
+    if (duration <= 0 || paused) return;
+    const start = performance.now();
+    let frame: number;
+    const tick = (now: number) => {
+      const elapsed = now - start;
+      const pct = Math.max(0, 100 - (elapsed / duration) * 100);
+      setWidth(pct);
+      if (pct <= 0) {
+        onExpire();
+        return;
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [duration, onExpire, paused]);
+
+  return (
+    <div
+      className="pointer-events-none absolute inset-x-0 bottom-0 h-0.5 bg-slate-200/60 dark:bg-slate-700/40"
+      aria-hidden
+    >
+      <div
+        className="h-full bg-gradient-to-r from-[#7F1D1D] to-[#B8860B] transition-[width] ease-linear"
+        style={{ width: `${width}%`, transitionDuration: '120ms' }}
+      />
+    </div>
+  );
 }
 
-interface ToastProviderProps {
-  children: React.ReactNode;
+function ToastItem({
+  toast,
+  onDismiss,
+}: {
+  toast: Toast;
+  onDismiss: (id: string) => void;
+}) {
+  const cfg = typeStyles[toast.type];
+  const Icon = cfg.Icon;
+  const [hovered, setHovered] = useState(false);
+  const reducedMotion = useReducedMotion();
+  const duration = toast.duration ?? 5000;
+
+  return (
+    <motion.div
+      layout
+      initial={
+        reducedMotion ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.96 }
+      }
+      animate={reducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+      exit={
+        reducedMotion
+          ? { opacity: 0 }
+          : { opacity: 0, x: 80, scale: 0.96, transition: { duration: 0.18 } }
+      }
+      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className={clsx(
+        'pointer-events-auto relative flex w-full max-w-sm items-start gap-3 overflow-hidden rounded-2xl p-3.5 pr-2 ring-1 shadow-[var(--shadow-lg)]',
+        cfg.wrap,
+        cfg.ring,
+      )}
+    >
+      <div
+        className={clsx(
+          'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl',
+          cfg.icon,
+        )}
+        aria-hidden
+      >
+        <Icon className="h-5 w-5" />
+      </div>
+      <div className="flex-1 min-w-0 pt-0.5">
+        {toast.title && (
+          <p className="text-sm font-semibold leading-5">{toast.title}</p>
+        )}
+        <p
+          className={clsx(
+            'text-sm leading-5 text-slate-600 dark:text-slate-300',
+            toast.title && 'mt-0.5',
+          )}
+        >
+          {toast.message}
+        </p>
+        {toast.action && (
+          <button
+            type="button"
+            onClick={() => {
+              toast.action?.onClick();
+              onDismiss(toast.id);
+            }}
+            className="mt-2 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-blue-400 dark:hover:text-blue-300"
+          >
+            {toast.action.label}
+          </button>
+        )}
+      </div>
+      <button
+        onClick={() => onDismiss(toast.id)}
+        aria-label="Dismiss notification"
+        className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+      >
+        <X className="h-4 w-4" />
+      </button>
+      {duration > 0 && (
+        <ProgressBar
+          duration={duration}
+          onExpire={() => onDismiss(toast.id)}
+          paused={hovered}
+        />
+      )}
+    </motion.div>
+  );
 }
 
-export const ToastProvider = ({ children }: ToastProviderProps) => {
+function ToastContainer({
+  toasts,
+  removeToast,
+}: {
+  toasts: Toast[];
+  removeToast: (id: string) => void;
+}) {
+  const visible = toasts.slice(-MAX_VISIBLE);
+  const overflow = toasts.length - visible.length;
+
+  return (
+    <div
+      aria-live="polite"
+      aria-atomic="true"
+      className="pointer-events-none fixed inset-x-0 bottom-4 z-[60] flex flex-col items-center gap-2 px-4 sm:bottom-6 sm:right-6 sm:left-auto sm:items-end"
+    >
+      {overflow > 0 && (
+        <div className="pointer-events-auto rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-3 py-1 text-xs font-semibold text-slate-600 shadow-sm dark:text-slate-300">
+          +{overflow} more notification{overflow === 1 ? '' : 's'}
+        </div>
+      )}
+      <AnimatePresence mode="popLayout">
+        {visible.map((toast) => (
+          <ToastItem key={toast.id} toast={toast} onDismiss={removeToast} />
+        ))}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  const addToast = (toast: Omit<Toast, 'id'>) => {
-    const id = crypto.randomUUID();
-    setToasts((prev) => [...prev, { ...toast, id }]);
-    if (toast.duration !== 0) {
-      setTimeout(() => removeToast(id), toast.duration ?? 5000);
-    }
-  };
-
-  const removeToast = (id: string) => {
+  const removeToast = useCallback((id: string) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
-  };
+  }, []);
+
+  const addToast = useCallback(
+    (toast: Omit<Toast, 'id'>) => {
+      const id =
+        typeof crypto !== 'undefined' && 'randomUUID' in crypto
+          ? crypto.randomUUID()
+          : `${Date.now()}-${Math.random()}`;
+      setToasts((prev) => [...prev, { ...toast, id }]);
+      if (toast.duration !== 0) {
+        const ms = toast.duration ?? 5000;
+        setTimeout(() => removeToast(id), ms);
+      }
+    },
+    [removeToast],
+  );
 
   return (
     <ToastContext.Provider value={{ toasts, addToast, removeToast }}>
       {children}
       <ToastContainer toasts={toasts} removeToast={removeToast} />
     </ToastContext.Provider>
-  );
-};
-
-const typeStyles: Record<ToastType, string> = {
-  success:
-    'bg-green-50 border-green-200 text-green-800 dark:bg-green-900/20 dark:border-green-800 dark:text-green-300',
-  error:
-    'bg-red-50 border-red-200 text-red-800 dark:bg-red-900/20 dark:border-red-800 dark:text-red-300',
-  warning:
-    'bg-yellow-50 border-yellow-200 text-yellow-800 dark:bg-yellow-900/20 dark:border-yellow-800 dark:text-yellow-300',
-  info: 'bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-300',
-};
-
-const typeIcons: Record<ToastType, string> = {
-  success: '✓',
-  error: '✕',
-  warning: '⚠',
-  info: 'ℹ',
-};
-
-interface ToastContainerProps {
-  toasts: Toast[];
-  removeToast: (id: string) => void;
-}
-
-const ToastContainer = ({ toasts, removeToast }: ToastContainerProps) => {
-  return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm">
-      <AnimatePresence>
-        {toasts.map((toast) => (
-          <motion.div
-            key={toast.id}
-            initial={{ opacity: 0, x: 100, scale: 0.8 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: 100, scale: 0.8 }}
-            className={clsx(
-              'flex items-center gap-3 p-4 rounded-xl border shadow-lg',
-              typeStyles[toast.type],
-            )}
-          >
-            <span className="text-lg font-bold">{typeIcons[toast.type]}</span>
-            <p className="flex-1 text-sm font-medium">{toast.message}</p>
-            <button
-              onClick={() => removeToast(toast.id)}
-              className="text-gray-400 hover:text-gray-500"
-            >
-              ✕
-            </button>
-          </motion.div>
-        ))}
-      </AnimatePresence>
-    </div>
   );
 };

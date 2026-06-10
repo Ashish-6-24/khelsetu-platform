@@ -3,17 +3,69 @@ import { ROLE_PERMISSIONS } from '@features/user-roles/types';
 import { create } from 'zustand';
 
 const mockRoles: UserRole[] = [
-  { id: 'r1', name: 'Administrator', role: 'admin', permissions: ROLE_PERMISSIONS.admin, userCount: 3, description: 'Full access to all features' },
-  { id: 'r2', name: 'Organizer', role: 'organizer', permissions: ROLE_PERMISSIONS.organizer, userCount: 12, description: 'Manage tournaments and teams' },
-  { id: 'r3', name: 'Scorer', role: 'scorer', permissions: ROLE_PERMISSIONS.scorer, userCount: 25, description: 'Score matches and update results' },
-  { id: 'r4', name: 'Viewer', role: 'viewer', permissions: ROLE_PERMISSIONS.viewer, userCount: 150, description: 'Read-only access' },
+  {
+    id: 'r1',
+    name: 'Administrator',
+    role: 'admin',
+    permissions: ROLE_PERMISSIONS.admin,
+    userCount: 3,
+    description: 'Full access to all features',
+  },
+  {
+    id: 'r2',
+    name: 'Organizer',
+    role: 'organizer',
+    permissions: ROLE_PERMISSIONS.organizer,
+    userCount: 12,
+    description: 'Manage tournaments and teams',
+  },
+  {
+    id: 'r3',
+    name: 'Scorer',
+    role: 'scorer',
+    permissions: ROLE_PERMISSIONS.scorer,
+    userCount: 25,
+    description: 'Score matches and update results',
+  },
+  {
+    id: 'r4',
+    name: 'Viewer',
+    role: 'viewer',
+    permissions: ROLE_PERMISSIONS.viewer,
+    userCount: 150,
+    description: 'Read-only access',
+  },
 ];
 
 const mockUsers: UserWithRole[] = [
-  { id: 'u1', name: 'Admin User', email: 'admin@khelsetu.com', role: 'admin', lastActive: new Date().toISOString() },
-  { id: 'u2', name: 'Tournament Org', email: 'org@khelsetu.com', role: 'organizer', lastActive: new Date().toISOString() },
-  { id: 'u3', name: 'Match Scorer', email: 'scorer@khelsetu.com', role: 'scorer', lastActive: new Date().toISOString() },
-  { id: 'u4', name: 'Guest Viewer', email: 'viewer@khelsetu.com', role: 'viewer', lastActive: new Date().toISOString() },
+  {
+    id: 'u1',
+    name: 'Admin User',
+    email: 'admin@khelsetu.com',
+    role: 'admin',
+    lastActive: new Date().toISOString(),
+  },
+  {
+    id: 'u2',
+    name: 'Tournament Org',
+    email: 'org@khelsetu.com',
+    role: 'organizer',
+    lastActive: new Date().toISOString(),
+  },
+  {
+    id: 'u3',
+    name: 'Match Scorer',
+    email: 'scorer@khelsetu.com',
+    role: 'scorer',
+    lastActive: new Date().toISOString(),
+  },
+  {
+    id: 'u4',
+    name: 'Guest Viewer',
+    email: 'viewer@khelsetu.com',
+    role: 'viewer',
+    lastActive: new Date().toISOString(),
+  },
 ];
 
 interface UserRolesState {

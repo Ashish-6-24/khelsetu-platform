@@ -1,63 +1,1516 @@
+import { CountUp, CursorGlow, Reveal } from '@components/animations';
+import { Accordion } from '@components/ui/Accordion';
+import { Logo } from '@components/ui/Logo';
+import { SportIcon } from '@components/ui/SportIcon';
+import { ROUTES } from '@utils/constants';
+import { clsx } from 'clsx';
+import { type Variants, motion } from 'framer-motion';
+import {
+  BarChart3,
+  Calendar,
+  CheckCircle2,
+  ChevronRight,
+  Cpu,
+  Globe,
+  HelpCircle,
+  Play,
+  Radio,
+  ShieldCheck,
+  Sparkles,
+  Trophy,
+  Tv,
+  Users,
+  Zap,
+} from 'lucide-react';
+
+import { useState } from 'react';
+
+import { Link } from 'react-router-dom';
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
+
+const stagger: Variants = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.06 } },
+};
+
 export const LandingPage = () => {
   return (
-    <div className="py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
-            Complete Sports Tournament Management
-          </h1>
-          <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
-            KhelSetu provides everything you need to organize, manage, and score
-            tournaments with real-time updates.
-          </p>
-          <div className="mt-10 flex items-center justify-center gap-x-6">
-            <a
-              href="/auth/register"
-              className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500"
-            >
-              Get Started
-            </a>
-            <a
-              href="#features"
-              className="text-sm font-semibold leading-6 text-gray-900 dark:text-white"
-            >
-              Learn more <span aria-hidden="true">→</span>
-            </a>
-          </div>
-        </div>
-
-        <div id="features" className="mt-32">
-          <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
-            Features
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                Live Scoring
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Real-time ball-by-ball scoring with instant updates
-              </p>
-            </div>
-            <div className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                Tournament Management
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Create and manage tournaments with ease
-              </p>
-            </div>
-            <div className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                OBS Overlays
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Professional broadcast overlays for streaming
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="relative overflow-hidden">
+      <CursorGlow />
+      <Hero />
+      <SocialProof />
+      <Sports />
+      <Features />
+      <Metrics />
+      <HowItWorks />
+      <Testimonials />
+      <Pricing />
+      <FAQ />
+      <CTA />
     </div>
+  );
+};
+
+const Hero = () => {
+  return (
+    <section className="relative overflow-hidden">
+      <div
+        className="absolute inset-0 -z-10 gradient-animate"
+        style={{
+          background:
+            'linear-gradient(135deg, #FAFAF9 0%, #FEF2F2 50%, #FAFAF9 100%)',
+          backgroundSize: '400% 400%',
+        }}
+      />
+      <div
+        className="absolute inset-0 -z-10 opacity-50"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle at 1px 1px, rgba(127, 29, 29, 0.08) 1px, transparent 0)',
+          backgroundSize: '32px 32px',
+          maskImage:
+            'linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 60%)',
+          WebkitMaskImage:
+            'linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 60%)',
+        }}
+      />
+      <div
+        className="pointer-events-none absolute -top-20 left-1/2 -z-10 h-[400px] w-[800px] -translate-x-1/2 rounded-full opacity-40 blur-3xl"
+        style={{
+          background: 'radial-gradient(circle, #7F1D1D 0%, transparent 70%)',
+        }}
+      />
+
+      <div className="mx-auto max-w-7xl px-4 pb-20 pt-20 sm:px-6 sm:pt-28 lg:px-8 lg:pt-32">
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={stagger}
+          className="mx-auto max-w-3xl text-center"
+        >
+          <motion.div
+            variants={fadeUp}
+            className="mx-auto inline-flex items-center gap-2 rounded-full border border-[#7F1D1D]/15 bg-white/80 px-3 py-1 text-xs font-semibold text-[#7F1D1D] backdrop-blur dark:border-[#FCA5A5]/20 dark:bg-[#7F1D1D]/10 dark:text-[#FCA5A5]"
+          >
+            <Sparkles className="h-3.5 w-3.5 text-[#B8860B]" />
+            KhelSetu · नेपालको लागि
+          </motion.div>
+
+          <motion.h1
+            variants={fadeUp}
+            className="mt-6 text-balance font-display text-4xl font-bold tracking-tight text-[#0F172A] sm:text-6xl lg:text-7xl dark:text-white"
+          >
+            Run your local tournament{' '}
+            <span className="text-[#7F1D1D] dark:text-[#FCA5A5]">
+              like a national one.
+            </span>
+          </motion.h1>
+
+          <motion.p
+            variants={fadeUp}
+            className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-[#475569] sm:text-xl dark:text-[#CBD5E1]"
+          >
+            KhelSetu is the operations platform for cricket, football,
+            volleyball, and basketball organizers across Nepal. Set up fixtures,
+            run live scoring, and share results — in 10 minutes.
+          </motion.p>
+
+          <motion.div
+            variants={fadeUp}
+            className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
+          >
+            <Link to={ROUTES.REGISTER}>
+              <button className="group inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#991B1B] via-[#7F1D1D] to-[#450A0A] px-6 text-sm font-semibold text-white shadow-[0_4px_24px_-4px_rgb(127_29_29/0.5)] transition-all hover:shadow-[0_8px_32px_-4px_rgb(127_29_29/0.6)] active:translate-y-px">
+                Start a tournament
+                <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </button>
+            </Link>
+            <button className="group inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-[#E7E5E4] bg-white/80 px-6 text-sm font-semibold text-[#0F172A] backdrop-blur transition-all hover:border-[#D6D3D1] hover:bg-white dark:border-[#3F3F46] dark:bg-[#13131A]/80 dark:text-[#F1F5F9] dark:hover:border-[#52525B] dark:hover:bg-[#1A1A23]">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#7F1D1D]/10 text-[#7F1D1D] dark:text-[#FCA5A5]">
+                <Play className="h-3 w-3 fill-current" />
+              </span>
+              Watch a 90-second tour
+            </button>
+          </motion.div>
+
+          <motion.p
+            variants={fadeUp}
+            className="mt-5 text-xs text-[#475569] dark:text-[#CBD5E1]"
+          >
+            Free for clubs under 8 teams · No credit card · 24/7 Nepali support
+          </motion.p>
+
+          <motion.div
+            variants={fadeUp}
+            className="mt-10 flex flex-col items-center justify-center gap-x-8 gap-y-4 text-sm sm:flex-row"
+            aria-label="Platform metrics"
+          >
+            <div className="flex items-center gap-2">
+              <div
+                className="flex items-center gap-0.5 text-[#B8860B]"
+                aria-hidden="true"
+              >
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <span key={i} className="text-base leading-none">
+                    ★
+                  </span>
+                ))}
+              </div>
+              <span className="font-semibold tabular-nums text-[#0F172A] dark:text-white">
+                4.9
+              </span>
+              <span className="text-[#475569] dark:text-[#94A3B8]">
+                from 320+ organizers
+              </span>
+            </div>
+            <span
+              className="hidden h-4 w-px bg-[#E7E5E4] sm:block dark:bg-[#27272A]"
+              aria-hidden="true"
+            />
+            <div className="flex items-center gap-2 text-[#475569] dark:text-[#94A3B8]">
+              <ShieldCheck className="h-4 w-4 text-[#15803D]" aria-hidden />
+              <span>SOC 2 ready · ISO-aligned</span>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="relative mx-auto mt-20 max-w-5xl"
+        >
+          <div
+            className="absolute -inset-x-6 -inset-y-6 -z-10 rounded-[2rem] opacity-30 blur-2xl"
+            style={{
+              background: 'linear-gradient(135deg, #7F1D1D 0%, #B8860B 100%)',
+            }}
+          />
+          <div className="overflow-hidden rounded-2xl border border-[#E7E5E4] bg-white shadow-[0_24px_48px_-12px_rgb(15_23_42/0.12)] dark:border-[#27272A] dark:bg-[#13131A]">
+            <div className="flex items-center gap-1.5 border-b border-[#E7E5E4] bg-[#F5F5F4]/80 px-4 py-3 dark:border-[#27272A] dark:bg-[#0F0F14]/80">
+              <span className="h-3 w-3 rounded-full bg-[#DC2626]" />
+              <span className="h-3 w-3 rounded-full bg-[#B8860B]" />
+              <span className="h-3 w-3 rounded-full bg-[#15803D]" />
+              <div className="ml-4 flex-1">
+                <div className="mx-auto h-5 w-72 max-w-full rounded-md bg-[#E7E5E4] dark:bg-[#27272A]" />
+              </div>
+            </div>
+            <div className="grid grid-cols-12 gap-4 p-4 sm:p-6">
+              <div className="col-span-12 sm:col-span-3">
+                <div className="space-y-2">
+                  {[Trophy, Users, Calendar, BarChart3, Radio, Tv].map(
+                    (Icon, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-3 rounded-lg bg-[#7F1D1D]/5 px-2.5 py-2 text-xs"
+                      >
+                        <Icon className="h-4 w-4 text-[#7F1D1D]" />
+                        <span className="h-2 w-24 rounded bg-[#E7E5E4] dark:bg-[#27272A]" />
+                      </div>
+                    ),
+                  )}
+                </div>
+              </div>
+              <div className="col-span-12 space-y-4 sm:col-span-9">
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {[
+                    { label: 'Tournaments', value: '12' },
+                    { label: 'Live now', value: '3' },
+                    { label: 'Teams', value: '48' },
+                    { label: 'Players', value: '576' },
+                  ].map((s) => (
+                    <div
+                      key={s.label}
+                      className="rounded-xl border border-[#E7E5E4] bg-[#FAFAF9] p-3 dark:border-[#27272A] dark:bg-[#0F0F14]"
+                    >
+                      <p className="text-[10px] uppercase tracking-wider text-[#94A3B8]">
+                        {s.label}
+                      </p>
+                      <p className="mt-1 text-2xl font-bold tabular-nums text-[#0F172A] dark:text-white">
+                        {s.value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <div className="rounded-xl border border-[#E7E5E4] bg-[#FAFAF9] p-4 dark:border-[#27272A] dark:bg-[#0F0F14]">
+                  <div className="mb-3 flex items-center justify-between">
+                    <p className="text-sm font-semibold text-[#0F172A] dark:text-white">
+                      Live: Pokhara Tigers vs Kathmandu Eagles
+                    </p>
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#DC2626] px-2 py-0.5 text-[10px] font-semibold text-white">
+                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+                      LIVE
+                    </span>
+                  </div>
+                  <div className="space-y-2">
+                    {[
+                      { name: 'Tigers', score: 142, pct: 80 },
+                      { name: 'Eagles', score: 128, pct: 65 },
+                    ].map((t) => (
+                      <div key={t.name} className="flex items-center gap-3">
+                        <span className="w-16 text-xs font-medium text-[#475569] dark:text-[#CBD5E1]">
+                          {t.name}
+                        </span>
+                        <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#E7E5E4] dark:bg-[#27272A]">
+                          <div
+                            className="h-full rounded-full"
+                            style={{
+                              width: `${t.pct}%`,
+                              background:
+                                'linear-gradient(90deg, #7F1D1D 0%, #B8860B 100%)',
+                            }}
+                          />
+                        </div>
+                        <span className="w-10 text-right font-mono text-sm font-bold tabular-nums text-[#0F172A] dark:text-white">
+                          {t.score}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+const SocialProof = () => {
+  const partners = [
+    { code: 'CAN', name: 'Cricket Association of Nepal' },
+    { code: 'ANFA', name: 'All Nepal Football Association' },
+    { code: 'NVA', name: 'Nepal Volleyball Association' },
+    { code: 'NSC', name: 'Nepal Sports Council' },
+    { code: 'NSJF', name: 'Nepal Sports Journalists Forum' },
+    { code: 'TU', name: 'Tribhuvan University' },
+    { code: 'KU', name: 'Kathmandu University' },
+    { code: 'NPL', name: 'Nepal Premier League' },
+  ];
+  const row = [...partners, ...partners];
+  return (
+    <Reveal intensity="subtle">
+      <section
+        aria-labelledby="social-proof-heading"
+        className="relative border-y border-[#E7E5E4] bg-white py-10 dark:border-[#27272A] dark:bg-[#13131A]"
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p
+            id="social-proof-heading"
+            className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-[#475569] dark:text-[#CBD5E1]"
+          >
+            Trusted by federations, clubs & organizers across Nepal
+          </p>
+          <div
+            className="marquee mt-6"
+            role="list"
+            aria-label="Partner organizations"
+          >
+            <div className="marquee-track">
+              {row.map((p, i) => (
+                <div
+                  role="listitem"
+                  key={`${p.code}-${i}`}
+                  className="group flex h-11 shrink-0 items-center gap-2.5 rounded-lg border border-[#E7E5E4] bg-[#FAFAF9] px-4 transition-colors hover:border-[#7F1D1D]/30 hover:bg-white dark:border-[#27272A] dark:bg-[#0F0F14] dark:hover:border-[#FCA5A5]/30 dark:hover:bg-[#1A1A23]"
+                >
+                  <span className="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-[#7F1D1D] to-[#450A0A] text-[10px] font-bold tracking-wider text-white">
+                    {p.code.charAt(0)}
+                  </span>
+                  <span className="text-sm font-bold tracking-wider text-[#475569] transition-colors group-hover:text-[#0F172A] dark:text-[#94A3B8] dark:group-hover:text-white">
+                    {p.code}
+                  </span>
+                  <span className="hidden text-xs text-[#94A3B8] dark:text-[#64748B] sm:inline">
+                    · {p.name}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </Reveal>
+  );
+};
+
+const Features = () => {
+  return (
+    <Reveal intensity="moderate">
+      <section id="features" className="relative py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="eyebrow justify-center">Everything you need</p>
+            <h2 className="mt-5 font-display text-4xl font-bold tracking-tight text-[#0F172A] sm:text-5xl dark:text-white">
+              One platform, <span className="italic">every sport</span>.
+            </h2>
+            <p className="mt-4 text-pretty text-lg text-[#475569] dark:text-[#CBD5E1]">
+              Cricket, football, basketball, volleyball — all the tools you need
+              to run, score, and broadcast tournaments at any scale.
+            </p>
+          </div>
+
+          <div className="mt-16 grid gap-5 lg:grid-cols-3 lg:grid-rows-2">
+            {/* Large hero card — Live scoring */}
+            <div className="group lift-2 tilt-card relative col-span-1 row-span-2 overflow-hidden rounded-3xl border border-[#E7E5E4] bg-white p-8 dark:border-[#27272A] dark:bg-[#13131A] lg:p-10">
+              <div
+                className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                style={{
+                  background:
+                    'radial-gradient(circle at 100% 0%, rgb(127 29 29 / 0.06) 0%, transparent 50%)',
+                }}
+                aria-hidden
+              />
+              <div className="relative flex h-full flex-col">
+                <div
+                  className="inline-flex h-12 w-12 items-center justify-center rounded-2xl text-white shadow-[0_8px_24px_-4px_rgb(127_29_29/0.45)]"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, #991B1B 0%, #7F1D1D 50%, #450A0A 100%)',
+                  }}
+                >
+                  <Radio className="h-5 w-5" />
+                </div>
+                <h3 className="mt-6 font-display text-3xl font-bold tracking-tight text-[#0F172A] dark:text-white">
+                  Live scoring, ball by ball.
+                </h3>
+                <p className="mt-3 text-pretty leading-relaxed text-[#475569] dark:text-[#CBD5E1]">
+                  Sport-specific scoring engines validate every event. Score
+                  from any phone, tablet, or laptop — fans, parents, and
+                  broadcasters see updates the instant the ball is bowled.
+                </p>
+
+                {/* Mock live score preview */}
+                <div className="mt-8 flex-1 rounded-2xl border border-[#E7E5E4] bg-[#FAFAF9] p-5 dark:border-[#27272A] dark:bg-[#0F0F14]">
+                  <div className="mb-4 flex items-center justify-between">
+                    <p className="text-xs font-semibold text-[#475569] dark:text-[#94A3B8]">
+                      OVER 12.3 · NPL ROUND 7
+                    </p>
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#DC2626] px-2 py-0.5 text-[10px] font-semibold text-white">
+                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+                      LIVE
+                    </span>
+                  </div>
+                  <div className="space-y-2.5">
+                    {[
+                      { name: 'Tigers', score: 142, pct: 80 },
+                      { name: 'Eagles', score: 128, pct: 65 },
+                    ].map((t) => (
+                      <div key={t.name} className="flex items-center gap-3">
+                        <span className="w-16 text-xs font-semibold text-[#0F172A] dark:text-white">
+                          {t.name}
+                        </span>
+                        <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#E7E5E4] dark:bg-[#27272A]">
+                          <div
+                            className="h-full rounded-full"
+                            style={{
+                              width: `${t.pct}%`,
+                              background:
+                                'linear-gradient(90deg, #7F1D1D 0%, #B8860B 100%)',
+                            }}
+                          />
+                        </div>
+                        <span className="w-10 text-right font-mono text-sm font-bold tabular-nums text-[#0F172A] dark:text-white">
+                          {t.score}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 grid grid-cols-3 gap-2 border-t border-[#E7E5E4] pt-4 dark:border-[#27272A]">
+                    {['FOUR', 'WICKET', 'DOT'].map((e) => (
+                      <span
+                        key={e}
+                        className="rounded-md bg-white px-2 py-1.5 text-center text-[10px] font-semibold tracking-wider text-[#475569] dark:bg-[#13131A] dark:text-[#CBD5E1]"
+                      >
+                        + {e}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#7F1D1D] dark:text-[#FCA5A5]">
+                  See it in action
+                  <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </div>
+              </div>
+            </div>
+
+            {/* Smart brackets */}
+            <div className="group lift-1 tilt-card relative overflow-hidden rounded-3xl border border-[#E7E5E4] bg-white p-7 dark:border-[#27272A] dark:bg-[#13131A]">
+              <div
+                className="inline-flex h-11 w-11 items-center justify-center rounded-2xl text-white shadow-md"
+                style={{
+                  background:
+                    'linear-gradient(135deg, #B8860B 0%, #9A7209 100%)',
+                }}
+              >
+                <Trophy className="h-5 w-5" />
+              </div>
+              <h3 className="mt-5 text-lg font-semibold tracking-tight text-[#0F172A] dark:text-white">
+                Smart brackets
+              </h3>
+              <p className="mt-2 text-pretty text-sm leading-relaxed text-[#475569] dark:text-[#CBD5E1]">
+                Single-elimination, double-elimination, round-robin, and group
+                stages. Generated in seconds, edited in clicks.
+              </p>
+              <svg
+                viewBox="0 0 120 40"
+                className="mt-5 h-8 w-full text-[#7F1D1D]/30 dark:text-[#FCA5A5]/20"
+                aria-hidden
+              >
+                <line
+                  x1="20"
+                  y1="10"
+                  x2="50"
+                  y2="10"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                />
+                <line
+                  x1="20"
+                  y1="30"
+                  x2="50"
+                  y2="30"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                />
+                <line
+                  x1="50"
+                  y1="10"
+                  x2="50"
+                  y2="30"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                />
+                <line
+                  x1="50"
+                  y1="20"
+                  x2="80"
+                  y2="20"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                />
+                <line
+                  x1="80"
+                  y1="20"
+                  x2="80"
+                  y2="10"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                />
+                <line
+                  x1="80"
+                  y1="20"
+                  x2="80"
+                  y2="30"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                />
+                <line
+                  x1="80"
+                  y1="10"
+                  x2="110"
+                  y2="10"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                />
+                <line
+                  x1="80"
+                  y1="30"
+                  x2="110"
+                  y2="30"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                />
+                <circle cx="20" cy="10" r="3" fill="#7F1D1D" />
+                <circle cx="20" cy="30" r="3" fill="#7F1D1D" />
+                <circle cx="110" cy="10" r="3" fill="#B8860B" />
+                <circle cx="110" cy="30" r="3" fill="#B8860B" />
+              </svg>
+            </div>
+
+            {/* Broadcast overlays */}
+            <div className="group lift-1 tilt-card relative overflow-hidden rounded-3xl border border-[#E7E5E4] bg-white p-7 dark:border-[#27272A] dark:bg-[#13131A]">
+              <div
+                className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full opacity-10 blur-2xl"
+                style={{
+                  background:
+                    'radial-gradient(circle, #B8860B 0%, transparent 70%)',
+                }}
+                aria-hidden
+              />
+              <div
+                className="inline-flex h-11 w-11 items-center justify-center rounded-2xl text-white shadow-md"
+                style={{
+                  background:
+                    'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
+                }}
+              >
+                <Tv className="h-5 w-5" />
+              </div>
+              <h3 className="mt-5 text-lg font-semibold tracking-tight text-[#0F172A] dark:text-white">
+                Broadcast overlays
+              </h3>
+              <p className="mt-2 text-pretty text-sm leading-relaxed text-[#475569] dark:text-[#CBD5E1]">
+                OBS-ready scoreboards, lower-thirds, and live stats — pixel
+                perfect on every stream.
+              </p>
+              <div className="mt-5 overflow-hidden rounded-lg border border-[#E7E5E4] bg-gradient-to-br from-[#0F172A] to-[#1E293B] p-3 dark:border-[#27272A]">
+                <div className="flex items-center justify-between text-[10px] font-semibold tracking-wider text-[#E5B547]">
+                  <span>LIVE · OVER 8.2</span>
+                  <span className="text-white/60">142/3</span>
+                </div>
+                <div className="mt-2 h-1 w-3/4 rounded-full bg-gradient-to-r from-[#7F1D1D] to-[#B8860B]" />
+              </div>
+            </div>
+
+            {/* Real-time analytics */}
+            <div className="group lift-1 tilt-card relative overflow-hidden rounded-3xl border border-[#E7E5E4] bg-white p-7 dark:border-[#27272A] dark:bg-[#13131A]">
+              <div
+                className="inline-flex h-11 w-11 items-center justify-center rounded-2xl text-white shadow-md"
+                style={{
+                  background:
+                    'linear-gradient(135deg, #7F1D1D 0%, #5B1414 100%)',
+                }}
+              >
+                <BarChart3 className="h-5 w-5" />
+              </div>
+              <h3 className="mt-5 text-lg font-semibold tracking-tight text-[#0F172A] dark:text-white">
+                Real-time analytics
+              </h3>
+              <p className="mt-2 text-pretty text-sm leading-relaxed text-[#475569] dark:text-[#CBD5E1]">
+                Player form, team momentum, and tournament progress with
+                dashboards built for organizers.
+              </p>
+              <div className="mt-5 flex h-16 items-end gap-1" aria-hidden>
+                {[40, 65, 50, 80, 60, 90, 75].map((h, i) => (
+                  <div
+                    key={i}
+                    className="flex-1 rounded-t-sm"
+                    style={{
+                      height: `${h}%`,
+                      background:
+                        i === 5
+                          ? 'linear-gradient(180deg, #B8860B 0%, #7F1D1D 100%)'
+                          : 'linear-gradient(180deg, #E7E5E4 0%, #E7E5E4 100%)',
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Multi-tenant wide */}
+            <div className="group lift-1 tilt-card relative col-span-1 overflow-hidden rounded-3xl border border-[#E7E5E4] bg-white p-7 dark:border-[#27272A] dark:bg-[#13131A] lg:col-span-3">
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
+                <div className="flex-1">
+                  <div
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-2xl text-white shadow-md"
+                    style={{
+                      background:
+                        'linear-gradient(135deg, #1E293B 0%, #0F172A 100%)',
+                    }}
+                  >
+                    <Globe className="h-5 w-5" />
+                  </div>
+                  <h3 className="mt-5 text-lg font-semibold tracking-tight text-[#0F172A] dark:text-white">
+                    Multi-tenant for federations & schools
+                  </h3>
+                  <p className="mt-2 text-pretty text-sm leading-relaxed text-[#475569] dark:text-[#CBD5E1]">
+                    Organizations, role-based access, complete audit logs,
+                    custom domains, and SSO. Built for the way Nepal&apos;s
+                    federations and school networks actually run.
+                  </p>
+                  <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-[#475569] dark:text-[#94A3B8]">
+                    <span className="inline-flex items-center gap-1.5">
+                      <ShieldCheck className="h-3.5 w-3.5 text-[#7F1D1D]" />
+                      RBAC + audit logs
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <Zap className="h-3.5 w-3.5 text-[#B8860B]" />
+                      SSO ready
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <Globe className="h-3.5 w-3.5 text-[#7F1D1D]" />
+                      Custom domain
+                    </span>
+                  </div>
+                </div>
+                <div className="grid flex-shrink-0 grid-cols-3 gap-3 sm:max-w-xs">
+                  {['CAN', 'ANFA', 'NSC', 'TU', 'KU', 'NVA'].map((c) => (
+                    <div
+                      key={c}
+                      className="flex h-14 items-center justify-center rounded-lg border border-[#E7E5E4] bg-[#FAFAF9] text-xs font-bold tracking-wider text-[#475569] dark:border-[#27272A] dark:bg-[#0F0F14] dark:text-[#CBD5E1]"
+                    >
+                      {c}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </Reveal>
+  );
+};
+
+type Sport = 'cricket' | 'football' | 'volleyball' | 'basketball';
+
+const sports: {
+  name: string;
+  sport: Sport;
+  count: string;
+  accent: string;
+}[] = [
+  {
+    name: 'Cricket',
+    sport: 'cricket',
+    count: '340+ tournaments',
+    accent: 'from-[#15803D] to-[#166534]',
+  },
+  {
+    name: 'Football',
+    sport: 'football',
+    count: '520+ tournaments',
+    accent: 'from-[#1E40AF] to-[#1E3A8A]',
+  },
+  {
+    name: 'Volleyball',
+    sport: 'volleyball',
+    count: '180+ tournaments',
+    accent: 'from-[#B45309] to-[#92400E]',
+  },
+  {
+    name: 'Basketball',
+    sport: 'basketball',
+    count: '210+ tournaments',
+    accent: 'from-[#C2410C] to-[#9A3412]',
+  },
+];
+
+const Sports = () => {
+  return (
+    <section
+      id="sports"
+      className="border-t border-[#E7E5E4] bg-[#FAFAF9] py-24 dark:border-[#27272A] dark:bg-[#0A0A0F]"
+    >
+      <Reveal intensity="moderate">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#B8860B]/30 bg-[#FEF3C7] px-3 py-1 text-xs font-semibold text-[#7A5A08] dark:border-[#B8860B]/30 dark:bg-[#B8860B]/15 dark:text-[#E5B547]">
+                <Trophy className="h-3.5 w-3.5" />
+                Multi-sport support
+              </div>
+              <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-[#0F172A] sm:text-4xl dark:text-white">
+                Built for the way each sport is actually scored.
+              </h2>
+              <p className="mt-4 text-pretty text-lg text-[#475569] dark:text-[#CBD5E1]">
+                From cricket overs to football halves, basketball quarters to
+                volleyball sets — our scoring engine is tailored for every
+                sport&apos;s unique flow.
+              </p>
+              <ul className="mt-6 space-y-2.5">
+                {[
+                  'Sport-specific rules and validation',
+                  'Undo history for every event',
+                  'Real-time stats & commentary',
+                  'Per-sport leaderboards',
+                ].map((b) => (
+                  <li
+                    key={b}
+                    className="flex items-center gap-2.5 text-sm text-[#0F172A] dark:text-[#F1F5F9]"
+                  >
+                    <CheckCircle2 className="h-4 w-4 text-[#15803D]" />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {sports.map((s) => (
+                <div
+                  key={s.name}
+                  className="group tilt-card relative overflow-hidden rounded-2xl border border-[#E7E5E4] bg-white p-6 transition-all hover:-translate-y-1 hover:shadow-[0_12px_24px_-6px_rgb(15_23_42/0.08)] dark:border-[#27272A] dark:bg-[#13131A]"
+                >
+                  <div
+                    className={`relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${s.accent} text-white shadow-md transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}
+                    aria-hidden
+                  >
+                    <SportIcon sport={s.sport} className="h-7 w-7" />
+                  </div>
+                  <p className="mt-4 text-base font-semibold text-[#0F172A] dark:text-white">
+                    {s.name}
+                  </p>
+                  <p className="mt-1 text-xs text-[#475569] dark:text-[#94A3B8]">
+                    {s.count}
+                  </p>
+                  <div
+                    className={`pointer-events-none absolute -right-8 -bottom-8 h-24 w-24 rounded-full bg-gradient-to-br opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-30 ${s.accent}`}
+                    aria-hidden
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </Reveal>
+    </section>
+  );
+};
+
+const steps = [
+  {
+    icon: Trophy,
+    title: 'Create your tournament',
+    description:
+      'Set the format, add teams, configure rules — done in under 5 minutes.',
+  },
+  {
+    icon: Users,
+    title: 'Onboard teams & players',
+    description:
+      'Bulk import via CSV or add one at a time. Players get a complete profile.',
+  },
+  {
+    icon: Radio,
+    title: 'Run live scoring',
+    description:
+      'Score from any device. Brackets, standings, and stats update instantly.',
+  },
+  {
+    icon: Tv,
+    title: 'Broadcast like a pro',
+    description:
+      'Connect OBS to broadcast-ready overlays and share the action with the world.',
+  },
+];
+
+const HowItWorks = () => {
+  return (
+    <Reveal intensity="moderate">
+      <section id="how" className="py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="eyebrow justify-center">How it works</p>
+            <h2 className="mt-5 font-display text-4xl font-bold tracking-tight text-[#0F172A] sm:text-5xl dark:text-white">
+              From kickoff to championship in{' '}
+              <span className="italic">four steps</span>.
+            </h2>
+            <p className="mt-4 text-pretty text-lg text-[#475569] dark:text-[#CBD5E1]">
+              A guided setup built for first-time organizers, with the depth
+              that power-users need on day 100.
+            </p>
+          </div>
+
+          <div className="relative mt-20">
+            <div
+              className="absolute left-0 right-0 top-12 hidden h-px lg:block"
+              style={{
+                background:
+                  'linear-gradient(90deg, transparent 0%, #7F1D1D 15%, #B8860B 50%, #7F1D1D 85%, transparent 100%)',
+              }}
+              aria-hidden
+            />
+            <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+              {steps.map((s, idx) => (
+                <div key={s.title} className="group relative">
+                  <div
+                    className="relative mx-auto flex h-24 w-24 items-center justify-center rounded-3xl text-white shadow-[0_8px_24px_-4px_rgb(127_29_29/0.35)] transition-transform duration-300 group-hover:-translate-y-1"
+                    style={{
+                      background:
+                        'linear-gradient(135deg, #991B1B 0%, #7F1D1D 50%, #450A0A 100%)',
+                    }}
+                  >
+                    <s.icon className="h-9 w-9" strokeWidth={1.5} />
+                    <span
+                      className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-[#B8860B] to-[#9A7209] text-xs font-bold text-[#1A0A0A] shadow-md"
+                      aria-hidden
+                    >
+                      {idx + 1}
+                    </span>
+                  </div>
+                  <h3 className="mt-6 text-center text-base font-semibold tracking-tight text-[#0F172A] dark:text-white">
+                    {s.title}
+                  </h3>
+                  <p className="mt-2 text-center text-pretty text-sm text-[#475569] dark:text-[#CBD5E1]">
+                    {s.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </Reveal>
+  );
+};
+
+const metrics = [
+  {
+    target: 1250,
+    suffix: '+',
+    label: 'Tournaments run',
+    sub: 'Across all 7 provinces',
+  },
+  {
+    target: 18500,
+    suffix: '',
+    label: 'Players scored',
+    sub: 'Cricket, football, VB, BB',
+  },
+  {
+    target: 42000,
+    suffix: '',
+    label: 'Matches scored live',
+    sub: 'In the last 12 months',
+  },
+  {
+    target: 9997,
+    suffix: '%',
+    label: 'Uptime SLA',
+    sub: 'Mumbai + Singapore regions',
+    format: (n: number) => (n / 100).toFixed(2),
+  },
+];
+
+const Metrics = () => {
+  return (
+    <Reveal intensity="bold">
+      <section
+        aria-labelledby="metrics-heading"
+        className="relative border-y border-[#E7E5E4] bg-[#0F172A] py-20 dark:border-[#27272A] dark:bg-[#0A0A0F]"
+      >
+        <div
+          className="pointer-events-none absolute inset-0 opacity-40"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle at 1px 1px, rgba(184, 134, 11, 0.15) 1px, transparent 0)',
+            backgroundSize: '24px 24px',
+          }}
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -left-20 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full opacity-30 blur-3xl"
+          style={{ background: '#7F1D1D' }}
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -right-20 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full opacity-20 blur-3xl"
+          style={{ background: '#B8860B' }}
+          aria-hidden
+        />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 id="metrics-heading" className="sr-only">
+            Platform metrics
+          </h2>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
+            {metrics.map((m, i) => (
+              <div key={m.label} className="relative">
+                {i > 0 && (
+                  <span
+                    className="absolute -left-3 top-1/2 hidden h-12 w-px -translate-y-1/2 bg-gradient-to-b from-transparent via-[#B8860B]/30 to-transparent lg:block"
+                    aria-hidden
+                  />
+                )}
+                <p
+                  className="font-display text-5xl font-bold leading-none tracking-tight text-white sm:text-6xl"
+                  style={{ fontFeatureSettings: '"tnum"' }}
+                >
+                  <CountUp
+                    target={m.target}
+                    suffix={m.suffix}
+                    format={m.format ?? ((n) => n.toLocaleString())}
+                  />
+                </p>
+                <p className="mt-3 text-sm font-semibold text-white/90">
+                  {m.label}
+                </p>
+                <p className="mt-1 text-xs text-white/50">{m.sub}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </Reveal>
+  );
+};
+
+const Testimonials = () => {
+  const items = [
+    {
+      quote:
+        'KhelSetu cut our tournament ops time in half. Live scoring and overlays are unmatched for the Nepali circuit.',
+      name: 'Sita Rana',
+      role: 'Operations Lead',
+      org: 'Pokhara Premier League',
+      initials: 'SR',
+      accent: 'from-[#7F1D1D] to-[#991B1B]',
+    },
+    {
+      quote:
+        'We run 50+ school tournaments a year. KhelSetu is the only tool that scales with us — and the bulk import saves hours every season.',
+      name: 'Bibek Shrestha',
+      role: 'Athletic Director',
+      org: 'Kathmandu Model College',
+      initials: 'BS',
+      accent: 'from-[#B8860B] to-[#9A7209]',
+    },
+    {
+      quote:
+        'Our broadcast quality jumped overnight. The OBS overlays are simply gorgeous, and the OBS browser source never drops a frame.',
+      name: 'Prakash Joshi',
+      role: 'Producer',
+      org: 'NSJF',
+      initials: 'PJ',
+      accent: 'from-[#0F172A] to-[#1E293B]',
+    },
+  ];
+  return (
+    <Reveal intensity="moderate">
+      <section className="border-y border-[#E7E5E4] bg-[#FAFAF9] py-24 dark:border-[#27272A] dark:bg-[#0A0A0F]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
+            <div className="max-w-xl">
+              <p className="eyebrow">Loved by organizers</p>
+              <h2 className="mt-5 font-display text-4xl font-bold tracking-tight text-[#0F172A] sm:text-5xl dark:text-white">
+                Hear from the people who run{' '}
+                <span className="italic">Nepal&apos;s biggest</span>{' '}
+                tournaments.
+              </h2>
+            </div>
+            <div className="flex items-center gap-3 rounded-2xl border border-[#E7E5E4] bg-white px-5 py-4 dark:border-[#27272A] dark:bg-[#13131A]">
+              <div className="flex flex-col">
+                <div
+                  className="flex items-center gap-1 text-[#B8860B]"
+                  aria-hidden
+                >
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <span key={i} className="text-lg leading-none">
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <p className="mt-1 text-2xl font-bold tracking-tight text-[#0F172A] dark:text-white">
+                  4.9
+                  <span className="ml-1 text-sm font-medium text-[#94A3B8]">
+                    / 5
+                  </span>
+                </p>
+              </div>
+              <div
+                className="h-10 w-px bg-[#E7E5E4] dark:bg-[#27272A]"
+                aria-hidden
+              />
+              <div>
+                <p className="text-sm font-semibold text-[#0F172A] dark:text-white">
+                  320+ reviews
+                </p>
+                <p className="text-xs text-[#475569] dark:text-[#94A3B8]">
+                  Verified organizers
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {items.map((t, i) => (
+              <figure
+                key={t.name}
+                className="card-hover relative flex flex-col gap-5 overflow-hidden rounded-3xl border border-[#E7E5E4] bg-white p-7 dark:border-[#27272A] dark:bg-[#13131A]"
+              >
+                <div
+                  className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full opacity-10 blur-2xl"
+                  style={{
+                    background: `radial-gradient(circle, ${
+                      i === 1 ? '#B8860B' : '#7F1D1D'
+                    } 0%, transparent 70%)`,
+                  }}
+                  aria-hidden
+                />
+                <div
+                  className="font-display text-5xl leading-none text-[#7F1D1D]/15 dark:text-[#FCA5A5]/15"
+                  aria-hidden
+                >
+                  &ldquo;
+                </div>
+                <div className="flex gap-0.5 text-[#B8860B]" aria-hidden>
+                  {Array.from({ length: 5 }).map((_, j) => (
+                    <span key={j} className="text-sm leading-none">
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <blockquote className="text-pretty text-base leading-relaxed text-[#0F172A] dark:text-white">
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+                <figcaption className="mt-auto flex items-center gap-3 border-t border-[#E7E5E4] pt-5 dark:border-[#27272A]">
+                  <div
+                    className={`flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br text-sm font-semibold text-white shadow-sm ${t.accent}`}
+                  >
+                    {t.initials}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-[#0F172A] dark:text-white">
+                      {t.name}
+                    </p>
+                    <p className="text-xs text-[#475569] dark:text-[#94A3B8]">
+                      {t.role} · {t.org}
+                    </p>
+                  </div>
+                  <span
+                    className="inline-flex items-center gap-1 rounded-full bg-[#15803D]/10 px-2 py-0.5 text-[10px] font-semibold text-[#15803D] dark:bg-[#4ADE80]/15 dark:text-[#4ADE80]"
+                    title="Verified customer"
+                  >
+                    <CheckCircle2 className="h-3 w-3" />
+                    Verified
+                  </span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+    </Reveal>
+  );
+};
+
+const formatNPR = (amount: number) =>
+  new Intl.NumberFormat('en-NP', {
+    style: 'currency',
+    currency: 'NPR',
+    maximumFractionDigits: 0,
+  }).format(amount);
+
+interface Plan {
+  name: string;
+  monthly: number | 'free' | 'custom';
+  description: string;
+  features: string[];
+  cta: string;
+  highlight: boolean;
+}
+
+const plans: Plan[] = [
+  {
+    name: 'Starter',
+    monthly: 'free',
+    description: 'For small clubs and first-time organizers.',
+    features: [
+      '1 tournament',
+      'Up to 4 teams',
+      'Live scoring',
+      'Community support',
+    ],
+    cta: 'Get started',
+    highlight: false,
+  },
+  {
+    name: 'Club',
+    monthly: 2500,
+    description: 'For leagues and competitive organizers.',
+    features: [
+      '5 tournaments',
+      'Up to 24 teams',
+      'OBS broadcast overlays',
+      'Custom branding',
+      'eSewa / Khalti payments',
+      'Priority support',
+    ],
+    cta: 'Start with Club',
+    highlight: true,
+  },
+  {
+    name: 'District',
+    monthly: 9500,
+    description: 'For federations & multi-org platforms.',
+    features: [
+      'Unlimited tournaments',
+      'Unlimited teams',
+      'Custom domain',
+      'Multi-club sub-accounts',
+      'Dedicated account manager',
+      'API access',
+    ],
+    cta: 'Contact sales',
+    highlight: false,
+  },
+];
+
+const renderPrice = (monthly: Plan['monthly'], annual: boolean) => {
+  if (monthly === 'free') return { amount: 'Free', suffix: 'forever' };
+  if (monthly === 'custom') return { amount: 'Custom', suffix: '' };
+  const value = annual ? monthly * 10 : monthly;
+  return {
+    amount: formatNPR(value),
+    suffix: annual ? '/ year' : '/ month',
+  };
+};
+
+const Pricing = () => {
+  const [annual, setAnnual] = useState(false);
+
+  return (
+    <Reveal intensity="subtle">
+      <section id="pricing" className="py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#B8860B]/30 bg-[#FEF3C7] px-3 py-1 text-xs font-semibold text-[#7A5A08] dark:border-[#B8860B]/30 dark:bg-[#B8860B]/15 dark:text-[#E5B547]">
+              <Cpu className="h-3.5 w-3.5" />
+              Pricing
+            </div>
+            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-[#0F172A] sm:text-4xl dark:text-white">
+              Pricing for local clubs, not international SaaS.
+            </h2>
+            <p className="mt-4 text-lg text-[#475569] dark:text-[#CBD5E1]">
+              Pay in NPR. Cancel anytime. Free for clubs under 8 teams.
+            </p>
+
+            <div
+              role="radiogroup"
+              aria-label="Billing period"
+              className="mt-8 inline-flex items-center gap-1 rounded-full border border-[#E7E5E4] bg-[#F5F5F4]/70 p-1 text-sm dark:border-[#27272A] dark:bg-[#1A1A23]/60"
+            >
+              <button
+                type="button"
+                role="radio"
+                aria-checked={!annual}
+                onClick={() => setAnnual(false)}
+                className={clsx(
+                  'h-8 rounded-full px-4 text-sm font-semibold transition-all',
+                  !annual
+                    ? 'bg-white text-[#0F172A] shadow-sm dark:bg-[#13131A] dark:text-white'
+                    : 'text-[#475569] hover:text-[#0F172A] dark:text-[#CBD5E1] dark:hover:text-white',
+                )}
+              >
+                Monthly
+              </button>
+              <button
+                type="button"
+                role="radio"
+                aria-checked={annual}
+                onClick={() => setAnnual(true)}
+                className={clsx(
+                  'inline-flex h-8 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all',
+                  annual
+                    ? 'bg-white text-[#0F172A] shadow-sm dark:bg-[#13131A] dark:text-white'
+                    : 'text-[#475569] hover:text-[#0F172A] dark:text-[#CBD5E1] dark:hover:text-white',
+                )}
+              >
+                Annual
+                <span className="rounded-full bg-gradient-to-r from-[#B8860B] to-[#9A7209] px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#1A0A0A]">
+                  Save 17%
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-16 grid gap-6 lg:grid-cols-3">
+            {plans.map((p) => {
+              const price = renderPrice(p.monthly, annual);
+              return (
+                <div
+                  key={p.name}
+                  className={`lift-1 relative flex flex-col overflow-hidden rounded-3xl border p-7 ${
+                    p.highlight
+                      ? 'border-[#7F1D1D] bg-gradient-to-br from-[#FEF2F2] via-white to-[#FAFAF9] shadow-[0_20px_60px_-15px_rgb(127_29_29/0.35)] dark:from-[#7F1D1D]/10 dark:via-[#13131A] dark:to-[#1A1A23]'
+                      : 'border-[#E7E5E4] bg-white dark:border-[#27272A] dark:bg-[#13131A]'
+                  }`}
+                >
+                  {p.highlight && (
+                    <div
+                      className="pointer-events-none absolute inset-0 pinstripe opacity-60"
+                      aria-hidden
+                    />
+                  )}
+                  {p.highlight && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                      <span
+                        className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold text-[#1A0A0A] shadow-sm"
+                        style={{
+                          background:
+                            'linear-gradient(90deg, #B8860B 0%, #9A7209 100%)',
+                        }}
+                      >
+                        <Sparkles className="h-3 w-3" />
+                        Most popular
+                      </span>
+                    </div>
+                  )}
+                  <h3 className="text-base font-semibold text-[#0F172A] dark:text-white">
+                    {p.name}
+                  </h3>
+                  <p className="mt-1 text-sm text-[#475569] dark:text-[#94A3B8]">
+                    {p.description}
+                  </p>
+                  <div className="mt-5 flex items-baseline gap-1">
+                    <span className="text-4xl font-bold tracking-tight text-[#0F172A] dark:text-white">
+                      {price.amount}
+                    </span>
+                    {price.suffix && (
+                      <span className="text-sm text-[#475569] dark:text-[#94A3B8]">
+                        {price.suffix}
+                      </span>
+                    )}
+                  </div>
+                  <ul className="mt-6 space-y-2.5">
+                    {p.features.map((f) => (
+                      <li
+                        key={f}
+                        className="flex items-center gap-2.5 text-sm text-[#0F172A] dark:text-[#F1F5F9]"
+                      >
+                        <CheckCircle2 className="h-4 w-4 shrink-0 text-[#15803D]" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-7">
+                    <Link to={ROUTES.REGISTER}>
+                      <button
+                        className={`inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl text-sm font-semibold transition-all ${
+                          p.highlight
+                            ? 'bg-gradient-to-br from-[#991B1B] via-[#7F1D1D] to-[#450A0A] text-white shadow-[0_4px_14px_-2px_rgb(127_29_29/0.45)] hover:shadow-[0_8px_24px_-4px_rgb(127_29_29/0.55)]'
+                            : 'border border-[#E7E5E4] bg-white text-[#0F172A] hover:bg-[#F5F5F4] dark:border-[#3F3F46] dark:bg-[#13131A] dark:text-[#F1F5F9] dark:hover:bg-[#1A1A23]'
+                        }`}
+                      >
+                        {p.cta}
+                        <ChevronRight className="h-4 w-4" />
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <p className="mt-10 text-center text-sm text-[#475569] dark:text-[#94A3B8]">
+            All plans billed in NPR · Pay via eSewa, Khalti, Fonepay, or bank
+            transfer · 17% off annual
+          </p>
+        </div>
+      </section>
+    </Reveal>
+  );
+};
+
+const faqItems = [
+  {
+    id: 'faq-trial',
+    title: 'Is there really a free trial? Do I need a credit card?',
+    content: (
+      <p>
+        Yes — 14 days, full access to every Club feature. We don&apos;t ask for
+        a credit card upfront. When the trial ends, you can keep using the free
+        Starter plan or upgrade. No surprises.
+      </p>
+    ),
+  },
+  {
+    id: 'faq-payments',
+    title: 'Which Nepali payment methods do you accept?',
+    content: (
+      <p>
+        We accept eSewa, Khalti, Fonepay, ConnectIPS, direct bank transfer, and
+        (for District plan) invoiced annual contracts in NPR. Invoices in
+        English or Nepali.
+      </p>
+    ),
+  },
+  {
+    id: 'faq-sports',
+    title: 'Which sports are supported?',
+    content: (
+      <p>
+        Cricket (T20, ODI, T10), football (11-a-side & 5-a-side), volleyball
+        (indoor & beach), and basketball. Each sport has its own scoring engine,
+        validation rules, and stat categories.
+      </p>
+    ),
+  },
+  {
+    id: 'faq-broadcast',
+    title: 'Do the OBS overlays cost extra?',
+    content: (
+      <p>
+        OBS broadcast overlays are included on the Club and District plans. You
+        connect OBS via a browser source URL, and we stream pixel-perfect
+        scoreboards, lower-thirds, and live stats.
+      </p>
+    ),
+  },
+  {
+    id: 'faq-offline',
+    title: 'What happens if my internet drops during a match?',
+    content: (
+      <p>
+        KhelSetu has offline-first scoring built in. Scorekeepers can keep
+        scoring without internet — events are queued locally and synced the
+        moment connectivity returns. Crucial for grounds in the hills.
+      </p>
+    ),
+  },
+  {
+    id: 'faq-schools',
+    title: 'Do you offer discounts for schools and youth clubs?',
+    content: (
+      <p>
+        Yes. Schools and registered youth clubs get 50% off the Club plan.
+        Contact our team with your school registration to apply.
+      </p>
+    ),
+  },
+  {
+    id: 'faq-data',
+    title: 'Where is my data stored? Can I export it?',
+    content: (
+      <p>
+        All data is stored on encrypted Postgres databases with backups in
+        ap-south-1 (Mumbai). You can export tournaments, players, scoring
+        history, and analytics as CSV or JSON at any time.
+      </p>
+    ),
+  },
+  {
+    id: 'faq-support',
+    title: 'How do I get help if something goes wrong?',
+    content: (
+      <p>
+        Email and chat support in English and Nepali. Club customers get 24-hour
+        response. District customers get a dedicated account manager and a
+        private WhatsApp group for fast turnaround.
+      </p>
+    ),
+  },
+];
+
+const FAQ = () => {
+  return (
+    <Reveal intensity="subtle">
+      <section
+        id="faq"
+        className="border-t border-[#E7E5E4] bg-[#FAFAF9] py-24 sm:py-32 dark:border-[#27272A] dark:bg-[#0A0A0F]"
+      >
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#7F1D1D]/15 bg-[#FEF2F2] px-3 py-1 text-xs font-semibold text-[#7F1D1D] dark:border-[#FCA5A5]/20 dark:bg-[#7F1D1D]/10 dark:text-[#FCA5A5]">
+              <HelpCircle className="h-3.5 w-3.5" />
+              FAQ
+            </div>
+            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-[#0F172A] sm:text-4xl dark:text-white">
+              Questions, answered.
+            </h2>
+            <p className="mt-4 text-lg text-[#475569] dark:text-[#CBD5E1]">
+              Everything you need to know before getting started.
+            </p>
+          </div>
+          <div className="mt-12">
+            <Accordion items={faqItems} defaultOpen={faqItems[0]?.id} />
+          </div>
+          <p className="mt-10 text-center text-sm text-[#475569] dark:text-[#94A3B8]">
+            Still have questions?{' '}
+            <a
+              href="mailto:hello@khelsetu.app"
+              className="font-semibold text-[#7F1D1D] hover:text-[#991B1B] dark:text-[#FCA5A5]"
+            >
+              Talk to our team
+            </a>
+          </p>
+        </div>
+      </section>
+    </Reveal>
+  );
+};
+
+const CTA = () => {
+  return (
+    <Reveal intensity="bold">
+      <section className="py-24 sm:py-32">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div
+            className="relative overflow-hidden rounded-3xl p-10 text-center sm:p-16 gradient-animate"
+            style={{
+              background:
+                'linear-gradient(135deg, #7F1D1D 0%, #450A0A 50%, #1E293B 100%)',
+              backgroundSize: '400% 400%',
+            }}
+          >
+            <div
+              className="absolute inset-0 opacity-20"
+              style={{
+                backgroundImage:
+                  'radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.15) 1px, transparent 0)',
+                backgroundSize: '24px 24px',
+              }}
+            />
+            <div
+              className="pointer-events-none absolute -left-20 -top-20 h-72 w-72 rounded-full opacity-30 blur-3xl"
+              style={{ background: '#B8860B' }}
+            />
+            <div
+              className="pointer-events-none absolute -right-20 -bottom-20 h-72 w-72 rounded-full opacity-30 blur-3xl"
+              style={{ background: '#7F1D1D' }}
+            />
+            <div className="relative">
+              <div
+                className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-lg"
+                style={{
+                  background:
+                    'linear-gradient(135deg, #B8860B 0%, #9A7209 100%)',
+                }}
+              >
+                <Zap className="h-7 w-7" />
+              </div>
+              <h2 className="mt-6 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">
+                Ready to run your{' '}
+                <span className="italic text-[#E5B547]">best tournament</span>{' '}
+                yet?
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-pretty text-base text-stone-200 sm:text-lg">
+                Join 1,200+ organizers who trust KhelSetu to deliver
+                unforgettable sporting moments across Nepal.
+              </p>
+              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Link to={ROUTES.REGISTER}>
+                  <button className="shine inline-flex h-12 items-center justify-center gap-2 rounded-xl px-6 text-sm font-semibold text-[#7F1D1D] shadow-lg transition-all hover:shadow-xl">
+                    Start a tournament — free
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </Link>
+                <Link to={ROUTES.LOGIN}>
+                  <button className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 text-sm font-semibold text-white backdrop-blur transition-all hover:bg-white/15">
+                    <ShieldCheck className="h-4 w-4" />
+                    Sign in
+                  </button>
+                </Link>
+              </div>
+              <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {[
+                  { label: 'No credit card', icon: CheckCircle2 },
+                  { label: 'Free under 8 teams', icon: Trophy },
+                  { label: '24/7 Nepali support', icon: ShieldCheck },
+                  { label: 'Cancel anytime', icon: Sparkles },
+                ].map((chip) => (
+                  <div
+                    key={chip.label}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs font-medium text-white/80 backdrop-blur"
+                  >
+                    <chip.icon className="h-3.5 w-3.5 text-[#E5B547]" />
+                    {chip.label}
+                  </div>
+                ))}
+              </div>
+              <p className="mt-8 flex items-center justify-center gap-2 text-xs text-stone-300">
+                <Logo size="sm" variant="white" withWordmark={false} />
+                Made with care in Nepal
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </Reveal>
   );
 };

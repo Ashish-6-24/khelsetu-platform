@@ -1,4 +1,6 @@
 import type {
+  BasketballEvent,
+  BasketballScore,
   CricketBall,
   CricketScore,
   FootballEvent,
@@ -6,8 +8,6 @@ import type {
   SportType,
   VolleyballEvent,
   VolleyballScore,
-  BasketballEvent,
-  BasketballScore,
 } from '@types-domain/scoring';
 import { create } from 'zustand';
 
@@ -51,7 +51,10 @@ interface ScoringActions {
   updateFootballMinute: (minute: number) => void;
   toggleFootballTimer: () => void;
   setVolleyballScore: (score: VolleyballScore) => void;
-  addVolleyballPoint: (team: 'teamA' | 'teamB', event?: VolleyballEvent) => void;
+  addVolleyballPoint: (
+    team: 'teamA' | 'teamB',
+    event?: VolleyballEvent,
+  ) => void;
   endVolleyballSet: () => void;
   switchVolleyballServe: () => void;
   setBasketballScore: (score: BasketballScore) => void;
@@ -111,18 +114,21 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
   addCricketBall: (ball) =>
     set((state) => {
       if (!state.cricket.score) return state;
-      const currentInnings = state.cricket.score.innings[state.cricket.score.currentInningsIndex];
+      const currentInnings =
+        state.cricket.score.innings[state.cricket.score.currentInningsIndex];
       if (!currentInnings) return state;
       const updatedInnings = {
         ...currentInnings,
         runs: currentInnings.runs + ball.runs,
         wickets: currentInnings.wickets + (ball.isWicket ? 1 : 0),
-        overs: ball.ball === 5 ? currentInnings.overs + 1 : currentInnings.overs,
+        overs:
+          ball.ball === 5 ? currentInnings.overs + 1 : currentInnings.overs,
         balls: [...currentInnings.balls, ball],
         lastBalls: [...state.cricket.score.lastBalls.slice(-11), ball],
       };
       const updatedInningsList = [...state.cricket.score.innings];
-      updatedInningsList[state.cricket.score.currentInningsIndex] = updatedInnings;
+      updatedInningsList[state.cricket.score.currentInningsIndex] =
+        updatedInnings;
       return {
         cricket: {
           score: {
@@ -168,7 +174,12 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
     set((state) => {
       if (!state.football.score) return state;
       return {
-        football: { score: { ...state.football.score, isRunning: !state.football.score.isRunning } },
+        football: {
+          score: {
+            ...state.football.score,
+            isRunning: !state.football.score.isRunning,
+          },
+        },
         lastUpdate: new Date().toISOString(),
       };
     }),
@@ -184,7 +195,9 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
         [team]: state.volleyball.score.currentPoint[team] + 1,
       };
       return {
-        volleyball: { score: { ...state.volleyball.score, currentPoint: newPoint } },
+        volleyball: {
+          score: { ...state.volleyball.score, currentPoint: newPoint },
+        },
         history: [...state.history, { type: 'volleyball_point', team }],
         lastUpdate: new Date().toISOString(),
       };
@@ -193,15 +206,19 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
   endVolleyballSet: () =>
     set((state) => {
       if (!state.volleyball.score) return state;
-      const currentSet = state.volleyball.score.sets[state.volleyball.score.currentSet - 1];
+      const currentSet =
+        state.volleyball.score.sets[state.volleyball.score.currentSet - 1];
       if (!currentSet) return state;
-      const winner: 'teamA' | 'teamB' | null = currentSet.teamAPoints > currentSet.teamBPoints ? 'teamA' : 'teamB';
+      const winner: 'teamA' | 'teamB' | null =
+        currentSet.teamAPoints > currentSet.teamBPoints ? 'teamA' : 'teamB';
       const updatedSet = { ...currentSet, winner };
       const updatedSets = [...state.volleyball.score.sets];
       updatedSets[state.volleyball.score.currentSet - 1] = updatedSet;
       const newSetsWon = {
-        teamA: state.volleyball.score.teamASetsWon + (winner === 'teamA' ? 1 : 0),
-        teamB: state.volleyball.score.teamBSetsWon + (winner === 'teamB' ? 1 : 0),
+        teamA:
+          state.volleyball.score.teamASetsWon + (winner === 'teamA' ? 1 : 0),
+        teamB:
+          state.volleyball.score.teamBSetsWon + (winner === 'teamB' ? 1 : 0),
       };
       return {
         volleyball: {
@@ -227,7 +244,10 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
         volleyball: {
           score: {
             ...state.volleyball.score,
-            servingTeam: state.volleyball.score.servingTeam === 'teamA' ? 'teamB' : 'teamA',
+            servingTeam:
+              state.volleyball.score.servingTeam === 'teamA'
+                ? 'teamB'
+                : 'teamA',
           },
         },
         lastUpdate: new Date().toISOString(),
@@ -256,7 +276,10 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
   nextBasketballQuarter: () =>
     set((state) => {
       if (!state.basketball.score) return state;
-      const currentQ = state.basketball.score.quarters[state.basketball.score.currentQuarter - 1];
+      const currentQ =
+        state.basketball.score.quarters[
+          state.basketball.score.currentQuarter - 1
+        ];
       if (!currentQ) return state;
       const updatedQ = {
         ...currentQ,
@@ -283,7 +306,9 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
     set((state) => {
       if (!state.basketball.score) return state;
       return {
-        basketball: { score: { ...state.basketball.score, shotClock: seconds } },
+        basketball: {
+          score: { ...state.basketball.score, shotClock: seconds },
+        },
         lastUpdate: new Date().toISOString(),
       };
     }),
@@ -292,7 +317,12 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
     set((state) => {
       if (!state.basketball.score) return state;
       return {
-        basketball: { score: { ...state.basketball.score, isRunning: !state.basketball.score.isRunning } },
+        basketball: {
+          score: {
+            ...state.basketball.score,
+            isRunning: !state.basketball.score.isRunning,
+          },
+        },
         lastUpdate: new Date().toISOString(),
       };
     }),

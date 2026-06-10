@@ -2,6 +2,7 @@ import { standingsService } from '@features/standings/services';
 import { useStandingsStore } from '@features/standings/store';
 import type { Standing } from '@features/standings/types';
 import { useQuery } from '@tanstack/react-query';
+
 import { useEffect } from 'react';
 
 export const useStandings = (tournamentId: string) => {

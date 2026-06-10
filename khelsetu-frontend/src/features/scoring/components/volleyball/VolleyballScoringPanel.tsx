@@ -1,7 +1,7 @@
 import { Button } from '@components/ui/Button';
 import { Card, CardBody } from '@components/ui/Card';
-import type { VolleyballEvent, VolleyballScore } from '@types-domain/scoring';
 import { getEventTypeIcon } from '@features/scoring/utils/volleyball';
+import type { VolleyballEvent, VolleyballScore } from '@types-domain/scoring';
 import { motion } from 'framer-motion';
 
 interface VolleyballScoringPanelProps {
@@ -26,7 +26,9 @@ export const VolleyballScoringPanel = ({
       <div className="bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 rounded-lg p-4">
         <div className="flex items-center justify-between">
           <div className="text-center flex-1">
-            <p className="text-lg font-bold text-gray-900 dark:text-white">{score.teamAName}</p>
+            <p className="text-lg font-bold text-gray-900 dark:text-white">
+              {score.teamAName}
+            </p>
             <p className="text-4xl font-bold text-orange-600 dark:text-orange-400 mt-1">
               {score.currentPoint.teamA}
             </p>
@@ -35,13 +37,19 @@ export const VolleyballScoringPanel = ({
             </p>
           </div>
           <div className="text-center px-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Set {score.currentSet}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Set {score.currentSet}
+            </p>
             <p className="text-xs text-gray-400 dark:text-gray-500">
-              {score.servingTeam === 'teamA' ? `${score.teamAName} serving` : `${score.teamBName} serving`}
+              {score.servingTeam === 'teamA'
+                ? `${score.teamAName} serving`
+                : `${score.teamBName} serving`}
             </p>
           </div>
           <div className="text-center flex-1">
-            <p className="text-lg font-bold text-gray-900 dark:text-white">{score.teamBName}</p>
+            <p className="text-lg font-bold text-gray-900 dark:text-white">
+              {score.teamBName}
+            </p>
             <p className="text-4xl font-bold text-orange-600 dark:text-orange-400 mt-1">
               {score.currentPoint.teamB}
             </p>
@@ -94,7 +102,9 @@ export const VolleyballScoringPanel = ({
                   transition={{ delay: index * 0.05 }}
                   className="flex items-center gap-3 p-2 bg-gray-50 dark:bg-gray-800 rounded"
                 >
-                  <span className="text-lg">{getEventTypeIcon(event.type)}</span>
+                  <span className="text-lg">
+                    {getEventTypeIcon(event.type)}
+                  </span>
                   <div className="flex-1">
                     <p className="text-sm font-medium text-gray-900 dark:text-white">
                       {event.playerName ?? event.teamName}

@@ -1,12 +1,14 @@
+import { PlayerCard } from '@components/teams/PlayerCard';
 import { Input } from '@components/ui/Input';
 import { Skeleton } from '@components/ui/Skeleton';
 import { Tabs } from '@components/ui/Tabs';
-import { PlayerCard } from '@components/teams/PlayerCard';
 import { playerService } from '@services/api/team';
 import { useQuery } from '@tanstack/react-query';
 import type { Player } from '@types-domain/tournament';
 import { Search, Users } from 'lucide-react';
+
 import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 const POSITION_FILTERS = [
@@ -31,11 +33,16 @@ export const PlayersPage = () => {
     queryFn: () => playerService.getAll(),
   });
 
-  const filteredPlayers = players?.filter((player) => {
-    const matchesSearch = player.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesPosition = activeFilter === 'all' || player.position?.toLowerCase() === activeFilter;
-    return matchesSearch && matchesPosition;
-  }) ?? [];
+  const filteredPlayers =
+    players?.filter((player) => {
+      const matchesSearch = player.name
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
+      const matchesPosition =
+        activeFilter === 'all' ||
+        player.position?.toLowerCase() === activeFilter;
+      return matchesSearch && matchesPosition;
+    }) ?? [];
 
   if (isLoading) {
     return (

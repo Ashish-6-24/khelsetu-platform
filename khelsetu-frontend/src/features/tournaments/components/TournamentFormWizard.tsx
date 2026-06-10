@@ -309,76 +309,76 @@ export const TournamentFormWizard = ({
             </h2>
             <Card>
               <CardBody>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-gray-500 dark:text-gray-400">
-                    Tournament Name
-                  </p>
-                  <p className="font-medium text-gray-900 dark:text-white">
-                    {(formData.name as string) || '—'}
-                  </p>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      Tournament Name
+                    </p>
+                    <p className="font-medium text-gray-900 dark:text-white">
+                      {(formData.name as string) || '—'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 dark:text-gray-400">Sport</p>
+                    <p className="font-medium text-gray-900 dark:text-white">
+                      {(formData.sport as string) || '—'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 dark:text-gray-400">Format</p>
+                    <p className="font-medium text-gray-900 dark:text-white capitalize">
+                      {(formData.format as string) || '—'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      Max Teams
+                    </p>
+                    <p className="font-medium text-gray-900 dark:text-white">
+                      {(formData.maxTeams as number) || '—'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      Start Date
+                    </p>
+                    <p className="font-medium text-gray-900 dark:text-white">
+                      {(formData.startDate as string) || '—'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 dark:text-gray-400">End Date</p>
+                    <p className="font-medium text-gray-900 dark:text-white">
+                      {(formData.endDate as string) || '—'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 dark:text-gray-400">Venue</p>
+                    <p className="font-medium text-gray-900 dark:text-white">
+                      {(formData.venue as string) || '—'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      Entry Fee
+                    </p>
+                    <p className="font-medium text-gray-900 dark:text-white">
+                      {formData.entryFee
+                        ? `$${formData.entryFee as number}`
+                        : 'Free'}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-gray-500 dark:text-gray-400">Sport</p>
-                  <p className="font-medium text-gray-900 dark:text-white">
-                    {(formData.sport as string) || '—'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-500 dark:text-gray-400">Format</p>
-                  <p className="font-medium text-gray-900 dark:text-white capitalize">
-                    {(formData.format as string) || '—'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-500 dark:text-gray-400">
-                    Max Teams
-                  </p>
-                  <p className="font-medium text-gray-900 dark:text-white">
-                    {(formData.maxTeams as number) || '—'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-500 dark:text-gray-400">
-                    Start Date
-                  </p>
-                  <p className="font-medium text-gray-900 dark:text-white">
-                    {(formData.startDate as string) || '—'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-500 dark:text-gray-400">End Date</p>
-                  <p className="font-medium text-gray-900 dark:text-white">
-                    {(formData.endDate as string) || '—'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-500 dark:text-gray-400">Venue</p>
-                  <p className="font-medium text-gray-900 dark:text-white">
-                    {(formData.venue as string) || '—'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-500 dark:text-gray-400">
-                    Entry Fee
-                  </p>
-                  <p className="font-medium text-gray-900 dark:text-white">
-                    {formData.entryFee
-                      ? `$${formData.entryFee as number}`
-                      : 'Free'}
-                  </p>
-                </div>
-              </div>
-              {(formData.rules as string) && (
-                <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">
-                    Rules
-                  </p>
-                  <p className="text-sm text-gray-700 dark:text-gray-300 mt-1 whitespace-pre-wrap">
-                    {String(formData.rules)}
-                  </p>
-                </div>
-              )}
+                {(formData.rules as string) && (
+                  <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <p className="text-gray-500 dark:text-gray-400 text-sm">
+                      Rules
+                    </p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 mt-1 whitespace-pre-wrap">
+                      {String(formData.rules)}
+                    </p>
+                  </div>
+                )}
               </CardBody>
             </Card>
           </motion.div>

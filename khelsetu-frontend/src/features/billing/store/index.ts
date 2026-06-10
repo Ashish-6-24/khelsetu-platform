@@ -1,4 +1,9 @@
-import type { Invoice, PaymentMethod, Plan, Subscription } from '@features/billing/types';
+import type {
+  Invoice,
+  PaymentMethod,
+  Plan,
+  Subscription,
+} from '@features/billing/types';
 import { create } from 'zustand';
 
 interface BillingState {
@@ -22,10 +27,11 @@ export const useBillingStore = create<BillingState>((set) => ({
   setInvoices: (invoices) => set({ invoices }),
   setPlans: (plans) => set({ availablePlans: plans }),
   setPaymentMethods: (methods) => set({ paymentMethods: methods }),
-  clearBilling: () => set({
-    subscription: null,
-    invoices: [],
-    availablePlans: [],
-    paymentMethods: [],
-  }),
+  clearBilling: () =>
+    set({
+      subscription: null,
+      invoices: [],
+      availablePlans: [],
+      paymentMethods: [],
+    }),
 }));

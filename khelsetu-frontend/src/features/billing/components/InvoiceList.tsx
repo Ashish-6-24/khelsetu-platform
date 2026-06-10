@@ -10,7 +10,11 @@ interface InvoiceListProps {
   isLoading?: boolean;
 }
 
-export const InvoiceList = ({ invoices, onDownload, isLoading }: InvoiceListProps) => {
+export const InvoiceList = ({
+  invoices,
+  onDownload,
+  isLoading,
+}: InvoiceListProps) => {
   const getStatusColor = (status: Invoice['status']) => {
     switch (status) {
       case 'paid':
@@ -30,7 +34,9 @@ export const InvoiceList = ({ invoices, onDownload, isLoading }: InvoiceListProp
     return (
       <Card>
         <CardHeader>
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white">Invoices</h3>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            Invoices
+          </h3>
         </CardHeader>
         <CardBody>
           <div className="space-y-4">
@@ -64,7 +70,9 @@ export const InvoiceList = ({ invoices, onDownload, isLoading }: InvoiceListProp
   return (
     <Card>
       <CardHeader>
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white">Invoices</h3>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+          Invoices
+        </h3>
       </CardHeader>
       <CardBody>
         <div className="space-y-3">

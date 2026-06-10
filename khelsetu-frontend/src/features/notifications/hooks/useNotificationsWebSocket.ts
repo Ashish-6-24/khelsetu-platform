@@ -1,6 +1,10 @@
 import { useNotificationStore } from '@features/notifications/store';
-import type { Notification, NotificationType } from '@features/notifications/types';
+import type {
+  Notification,
+  NotificationType,
+} from '@features/notifications/types';
 import { wsService } from '@services/websocket';
+
 import { useCallback, useEffect } from 'react';
 
 interface WebSocketNotificationPayload {

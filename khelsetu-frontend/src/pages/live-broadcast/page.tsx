@@ -1,6 +1,9 @@
 import { Card, CardBody } from '@components/ui/Card';
+import {
+  OverlayControl,
+  StreamControl,
+} from '@features/live-broadcast/components';
 import { useBroadcast } from '@features/live-broadcast/hooks';
-import { OverlayControl, StreamControl } from '@features/live-broadcast/components';
 import type { OverlayType } from '@features/live-broadcast/types';
 
 export const LiveBroadcastPage = () => {
@@ -44,7 +47,9 @@ export const LiveBroadcastPage = () => {
         <Card>
           <CardBody>
             <div className="space-y-4">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white">Preview</h3>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                Preview
+              </h3>
               <div className="aspect-video bg-gray-900 rounded-lg flex items-center justify-center relative overflow-hidden">
                 {isLive ? (
                   <>
@@ -55,20 +60,26 @@ export const LiveBroadcastPage = () => {
                     <div className="absolute top-4 right-4 text-white text-xs">
                       {viewers.toLocaleString()} viewers
                     </div>
-                    {overlays.filter((o) => o.visible).map((overlay) => (
-                      <div
-                        key={overlay.id}
-                        className={`absolute bg-black/70 text-white px-3 py-1 rounded text-sm ${
-                          overlay.position === 'top' ? 'top-12 left-1/2 -translate-x-1/2' :
-                          overlay.position === 'bottom' ? 'bottom-4 left-4' :
-                          overlay.position === 'left' ? 'left-4 top-1/2 -translate-y-1/2' :
-                          overlay.position === 'right' ? 'right-4 top-1/2 -translate-y-1/2' :
-                          'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
-                        }`}
-                      >
-                        {overlay.type}
-                      </div>
-                    ))}
+                    {overlays
+                      .filter((o) => o.visible)
+                      .map((overlay) => (
+                        <div
+                          key={overlay.id}
+                          className={`absolute bg-black/70 text-white px-3 py-1 rounded text-sm ${
+                            overlay.position === 'top'
+                              ? 'top-12 left-1/2 -translate-x-1/2'
+                              : overlay.position === 'bottom'
+                                ? 'bottom-4 left-4'
+                                : overlay.position === 'left'
+                                  ? 'left-4 top-1/2 -translate-y-1/2'
+                                  : overlay.position === 'right'
+                                    ? 'right-4 top-1/2 -translate-y-1/2'
+                                    : 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+                          }`}
+                        >
+                          {overlay.type}
+                        </div>
+                      ))}
                     <p className="text-gray-400">Stream Preview</p>
                   </>
                 ) : (

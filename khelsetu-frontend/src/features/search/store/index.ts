@@ -1,4 +1,8 @@
-import type { SearchFilters, SearchResult, SearchState } from '@features/search/types';
+import type {
+  SearchFilters,
+  SearchResult,
+  SearchState,
+} from '@features/search/types';
 import { create } from 'zustand';
 
 interface SearchStore extends SearchState {
@@ -27,7 +31,10 @@ export const useSearchStore = create<SearchStore>((set) => ({
     })),
   addRecentSearch: (query) =>
     set((state) => {
-      const searches = [query, ...state.recentSearches.filter((s) => s !== query)].slice(0, 10);
+      const searches = [
+        query,
+        ...state.recentSearches.filter((s) => s !== query),
+      ].slice(0, 10);
       return { recentSearches: searches };
     }),
   clearRecentSearches: () => set({ recentSearches: [] }),

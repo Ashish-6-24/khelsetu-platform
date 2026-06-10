@@ -7,6 +7,7 @@ import type {
   CricketInnings,
   CricketWicketType,
 } from '@types-domain/scoring';
+
 import { useState } from 'react';
 
 import { BatsmanSelector } from './BatsmanSelector';
@@ -39,9 +40,15 @@ export const CricketScoringPanel = ({
   const [showWicketModal, setShowWicketModal] = useState(false);
 
   const currentBatsmen = innings.batsmen.filter((b) => !b.isOut);
-  const striker = currentBatsmen.find((b) => b.playerId === innings.currentStrikerId);
-  const nonStriker = currentBatsmen.find((b) => b.playerId === innings.currentNonStrikerId);
-  const currentBowler = innings.bowlers.find((b) => b.playerId === innings.currentBowlerId);
+  const striker = currentBatsmen.find(
+    (b) => b.playerId === innings.currentStrikerId,
+  );
+  const nonStriker = currentBatsmen.find(
+    (b) => b.playerId === innings.currentNonStrikerId,
+  );
+  const currentBowler = innings.bowlers.find(
+    (b) => b.playerId === innings.currentBowlerId,
+  );
 
   const currentOverBalls = innings.balls.filter(
     (b) => b.over === innings.overs && b.innings === innings.inningsNumber,
@@ -63,7 +70,10 @@ export const CricketScoringPanel = ({
     dismissedPlayerId: string,
     _newBatsmanId?: string,
   ) => {
-    const ball = createBall(0, undefined, { type: wicketType, dismissedPlayerId });
+    const ball = createBall(0, undefined, {
+      type: wicketType,
+      dismissedPlayerId,
+    });
     onAddBall(ball);
     setShowWicketModal(false);
   };
@@ -93,7 +103,12 @@ export const CricketScoringPanel = ({
     <div className="space-y-4">
       <InningsSummary innings={innings} />
 
-      <Tabs tabs={TABS} activeTab={activeTab} onChange={setActiveTab} variant="pills" />
+      <Tabs
+        tabs={TABS}
+        activeTab={activeTab}
+        onChange={setActiveTab}
+        variant="pills"
+      />
 
       {activeTab === 'score' && (
         <div className="space-y-4">
@@ -102,7 +117,9 @@ export const CricketScoringPanel = ({
               <div className="space-y-3">
                 <div className="grid grid-cols-2 gap-3 text-sm">
                   <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-3">
-                    <p className="text-xs text-gray-500 dark:text-gray-400">Striker</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      Striker
+                    </p>
                     <p className="font-bold text-gray-900 dark:text-white">
                       {striker?.playerName ?? '—'}
                     </p>
@@ -111,7 +128,9 @@ export const CricketScoringPanel = ({
                     </p>
                   </div>
                   <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3">
-                    <p className="text-xs text-gray-500 dark:text-gray-400">Non-Striker</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      Non-Striker
+                    </p>
                     <p className="font-bold text-gray-900 dark:text-white">
                       {nonStriker?.playerName ?? '—'}
                     </p>
@@ -123,12 +142,15 @@ export const CricketScoringPanel = ({
 
                 {currentBowler && (
                   <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-3">
-                    <p className="text-xs text-gray-500 dark:text-gray-400">Bowler</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      Bowler
+                    </p>
                     <p className="font-bold text-gray-900 dark:text-white">
                       {currentBowler.playerName}
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {currentBowler.overs} ov, {currentBowler.wickets}/{currentBowler.runs}
+                      {currentBowler.overs} ov, {currentBowler.wickets}/
+                      {currentBowler.runs}
                     </p>
                   </div>
                 )}
@@ -138,7 +160,10 @@ export const CricketScoringPanel = ({
 
           <Card>
             <CardBody>
-              <OverTracker balls={currentOverBalls} overNumber={innings.overs} />
+              <OverTracker
+                balls={currentOverBalls}
+                overNumber={innings.overs}
+              />
             </CardBody>
           </Card>
 

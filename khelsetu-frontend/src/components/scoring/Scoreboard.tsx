@@ -23,7 +23,9 @@ export const Scoreboard = ({ score }: ScoreboardProps) => {
     <div className="bg-gray-900 text-white rounded-xl p-6">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-bold">{currentInnings.battingTeamName}</h3>
+          <h3 className="text-lg font-bold">
+            {currentInnings.battingTeamName}
+          </h3>
           <p className="text-4xl font-bold text-green-400">
             {currentInnings.runs}/{currentInnings.wickets}
           </p>

@@ -1,5 +1,5 @@
+import { formatMinute, getEventIcon } from '@features/scoring/utils/football';
 import type { FootballEvent } from '@types-domain/scoring';
-import { getEventIcon, formatMinute } from '@features/scoring/utils/football';
 import { motion } from 'framer-motion';
 
 interface EventTimelineProps {
@@ -35,7 +35,8 @@ export const EventTimeline = ({ events }: EventTimelineProps) => {
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
                   {event.playerName}
-                  {event.assistPlayerName && ` (Assist: ${event.assistPlayerName})`}
+                  {event.assistPlayerName &&
+                    ` (Assist: ${event.assistPlayerName})`}
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   {event.teamName}

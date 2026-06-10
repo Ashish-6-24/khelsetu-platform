@@ -1,7 +1,15 @@
 import { Badge } from '@components/ui/Badge';
 import { Button } from '@components/ui/Button';
 import type { SyncEntry } from '@features/offline-sync/types';
-import { CheckCircle, Clock, RefreshCw, Trash2, Wifi, WifiOff, XCircle } from 'lucide-react';
+import {
+  CheckCircle,
+  Clock,
+  RefreshCw,
+  Trash2,
+  Wifi,
+  WifiOff,
+  XCircle,
+} from 'lucide-react';
 
 interface SyncStatusBadgeProps {
   isOnline: boolean;
@@ -37,9 +45,7 @@ export const SyncStatusBadge = ({
         <Badge variant="warning">{pendingCount} pending</Badge>
       )}
 
-      {failedCount > 0 && (
-        <Badge variant="error">{failedCount} failed</Badge>
-      )}
+      {failedCount > 0 && <Badge variant="error">{failedCount} failed</Badge>}
 
       <Button
         variant="ghost"
@@ -48,7 +54,9 @@ export const SyncStatusBadge = ({
         disabled={!isOnline || isSyncing}
         className="text-xs"
       >
-        <RefreshCw className={`w-3 h-3 mr-1 ${isSyncing ? 'animate-spin' : ''}`} />
+        <RefreshCw
+          className={`w-3 h-3 mr-1 ${isSyncing ? 'animate-spin' : ''}`}
+        />
         Sync
       </Button>
 
@@ -74,9 +82,13 @@ export const SyncEntryRow = ({ entry, onRemove }: SyncEntryRowProps) => {
   const getStatusIcon = (status: SyncEntry['status']) => {
     switch (status) {
       case 'completed':
-        return <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400" />;
+        return (
+          <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400" />
+        );
       case 'syncing':
-        return <Clock className="w-4 h-4 text-blue-600 dark:text-blue-400 animate-spin" />;
+        return (
+          <Clock className="w-4 h-4 text-blue-600 dark:text-blue-400 animate-spin" />
+        );
       case 'failed':
         return <XCircle className="w-4 h-4 text-red-600 dark:text-red-400" />;
       default:
@@ -112,7 +124,9 @@ export const SyncEntryRow = ({ entry, onRemove }: SyncEntryRowProps) => {
             )}
           </p>
           {entry.error && (
-            <p className="text-xs text-red-600 dark:text-red-400 mt-1">{entry.error}</p>
+            <p className="text-xs text-red-600 dark:text-red-400 mt-1">
+              {entry.error}
+            </p>
           )}
         </div>
       </div>

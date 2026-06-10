@@ -6,7 +6,18 @@ import { NotificationItem } from '@features/notifications/components';
 import { useNotifications } from '@features/notifications/hooks';
 import type { NotificationType } from '@features/notifications/types';
 import { notificationUtils } from '@features/notifications/utils';
-import { Bell, Check, Trash2 } from 'lucide-react';
+import {
+  Activity,
+  Bell,
+  Check,
+  CreditCard,
+  type LucideIcon,
+  Settings,
+  Trash2,
+  Trophy,
+  Volleyball,
+} from 'lucide-react';
+
 import { useState } from 'react';
 
 const TYPE_FILTERS = [
@@ -18,26 +29,35 @@ const TYPE_FILTERS = [
   { id: 'billing', label: 'Billing' },
 ];
 
-const getNotificationIcon = (type: NotificationType) => {
-  const icons: Record<NotificationType, string> = {
-    match_start: '🏏',
-    score_update: '📊',
-    tournament_update: '🏆',
-    system: '⚙️',
-    billing: '💳',
+const getNotificationIcon = (type: NotificationType): LucideIcon => {
+  const icons: Record<NotificationType, LucideIcon> = {
+    match_start: Volleyball,
+    score_update: Activity,
+    tournament_update: Trophy,
+    system: Settings,
+    billing: CreditCard,
   };
-  return icons[type] ?? '🔔';
+  return icons[type] ?? Bell;
 };
 
 export const NotificationsPage = () => {
-  const { notifications, unreadCount, isLoading, markAsRead, markAllAsRead, deleteNotification } = useNotifications();
+  const {
+    notifications,
+    unreadCount,
+    isLoading,
+    markAsRead,
+    markAllAsRead,
+    deleteNotification,
+  } = useNotifications();
   const [activeFilter, setActiveFilter] = useState('all');
 
   const filteredNotifications = notifications.filter((n) => {
     return activeFilter === 'all' || n.type === activeFilter;
   });
 
-  const groupedNotifications = notificationUtils.groupByDate(filteredNotifications) as Record<string, typeof filteredNotifications>;
+  const groupedNotifications = notificationUtils.groupByDate(
+    filteredNotifications,
+  ) as Record<string, typeof filteredNotifications>;
 
   const handleMarkAllAsRead = async () => {
     await markAllAsRead();

@@ -46,7 +46,9 @@ export const OverTracker = ({ balls, overNumber }: OverTrackerProps) => {
           </motion.div>
         ))}
         {balls.length === 0 && (
-          <p className="text-sm text-gray-500 dark:text-gray-400">No balls bowled yet</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            No balls bowled yet
+          </p>
         )}
       </div>
     </div>

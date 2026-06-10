@@ -1,8 +1,8 @@
 import { Button } from '@components/ui/Button';
 import { Card, CardBody, CardHeader } from '@components/ui/Card';
+import { useI18n } from '@features/i18n/hooks';
 import type { Language } from '@features/i18n/translations';
 import { languageNames } from '@features/i18n/translations';
-import { useI18n } from '@features/i18n/hooks';
 import { Globe } from 'lucide-react';
 
 export const LanguageSwitcher = () => {
@@ -59,23 +59,41 @@ export const I18nDemo = () => {
           </div>
 
           <div className="space-y-2">
-            <h4 className="font-medium text-gray-900 dark:text-white">Translations:</h4>
+            <h4 className="font-medium text-gray-900 dark:text-white">
+              Translations:
+            </h4>
             <div className="grid grid-cols-2 gap-2 text-sm">
               <div className="p-2 bg-gray-50 dark:bg-gray-800 rounded">
-                <span className="text-gray-500 dark:text-gray-400">common.home:</span>
-                <p className="font-medium text-gray-900 dark:text-white">{t('common.home')}</p>
+                <span className="text-gray-500 dark:text-gray-400">
+                  common.home:
+                </span>
+                <p className="font-medium text-gray-900 dark:text-white">
+                  {t('common.home')}
+                </p>
               </div>
               <div className="p-2 bg-gray-50 dark:bg-gray-800 rounded">
-                <span className="text-gray-500 dark:text-gray-400">common.search:</span>
-                <p className="font-medium text-gray-900 dark:text-white">{t('common.search')}</p>
+                <span className="text-gray-500 dark:text-gray-400">
+                  common.search:
+                </span>
+                <p className="font-medium text-gray-900 dark:text-white">
+                  {t('common.search')}
+                </p>
               </div>
               <div className="p-2 bg-gray-50 dark:bg-gray-800 rounded">
-                <span className="text-gray-500 dark:text-gray-400">nav.tournaments:</span>
-                <p className="font-medium text-gray-900 dark:text-white">{t('nav.tournaments')}</p>
+                <span className="text-gray-500 dark:text-gray-400">
+                  nav.tournaments:
+                </span>
+                <p className="font-medium text-gray-900 dark:text-white">
+                  {t('nav.tournaments')}
+                </p>
               </div>
               <div className="p-2 bg-gray-50 dark:bg-gray-800 rounded">
-                <span className="text-gray-500 dark:text-gray-400">auth.login:</span>
-                <p className="font-medium text-gray-900 dark:text-white">{t('auth.login')}</p>
+                <span className="text-gray-500 dark:text-gray-400">
+                  auth.login:
+                </span>
+                <p className="font-medium text-gray-900 dark:text-white">
+                  {t('auth.login')}
+                </p>
               </div>
             </div>
           </div>

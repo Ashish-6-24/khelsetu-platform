@@ -14,7 +14,10 @@ const EXTRA_TYPES: { type: CricketExtraType; label: string; abbr: string }[] = [
   { type: 'leg-bye', label: 'Leg Bye', abbr: 'Lb' },
 ];
 
-export const ExtraButtons = ({ onExtra, disabled = false }: ExtraButtonsProps) => {
+export const ExtraButtons = ({
+  onExtra,
+  disabled = false,
+}: ExtraButtonsProps) => {
   return (
     <div className="grid grid-cols-2 gap-2">
       {EXTRA_TYPES.map(({ type, label, abbr }) => (

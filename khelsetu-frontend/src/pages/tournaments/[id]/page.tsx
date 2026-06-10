@@ -44,13 +44,16 @@ export const TournamentDetailPage = () => {
     enabled: !!id,
   });
 
-  const { data: standings, isLoading: loadingStandings } = useQuery<Standing[]>({
-    queryKey: ['tournament-standings', id],
-    queryFn: () => tournamentService.getStandings(id!) as Promise<Standing[]>,
-    enabled: !!id,
-  });
+  const { data: standings, isLoading: loadingStandings } = useQuery<Standing[]>(
+    {
+      queryKey: ['tournament-standings', id],
+      queryFn: () => tournamentService.getStandings(id!) as Promise<Standing[]>,
+      enabled: !!id,
+    },
+  );
 
-  const { standings: featureStandings, isLoading: featureLoadingStandings } = useStandings(id!);
+  const { standings: featureStandings, isLoading: featureLoadingStandings } =
+    useStandings(id!);
   useStandingsWebSocket(id);
 
   if (loadingTournament) {
@@ -235,7 +238,13 @@ export const TournamentDetailPage = () => {
         <StandingsTable
           standings={featureStandings ?? (standings as Standing[]) ?? []}
           isLoading={loadingStandings || featureLoadingStandings}
-          sport={(tournament?.sport as 'cricket' | 'football' | 'volleyball' | 'basketball') ?? 'cricket'}
+          sport={
+            (tournament?.sport as
+              | 'cricket'
+              | 'football'
+              | 'volleyball'
+              | 'basketball') ?? 'cricket'
+          }
         />
       )}
     </div>

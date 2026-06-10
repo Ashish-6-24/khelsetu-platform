@@ -2,7 +2,8 @@ import type { OfflineSyncState, SyncEntry } from '@features/offline-sync/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-const generateId = (): string => `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+const generateId = (): string =>
+  `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
 export const useOfflineSyncStore = create<OfflineSyncState>()(
   persist(
@@ -49,8 +50,12 @@ export const useOfflineSyncStore = create<OfflineSyncState>()(
                     ...e,
                     status,
                     error,
-                    syncedAt: status === 'completed' ? new Date().toISOString() : e.syncedAt,
-                    retryCount: status === 'failed' ? e.retryCount + 1 : e.retryCount,
+                    syncedAt:
+                      status === 'completed'
+                        ? new Date().toISOString()
+                        : e.syncedAt,
+                    retryCount:
+                      status === 'failed' ? e.retryCount + 1 : e.retryCount,
                   }
                 : e,
             ),
@@ -85,7 +90,9 @@ export const useOfflineSyncStore = create<OfflineSyncState>()(
         set((state) => ({
           queue: {
             ...state.queue,
-            entries: state.queue.entries.filter((e) => e.status !== 'completed'),
+            entries: state.queue.entries.filter(
+              (e) => e.status !== 'completed',
+            ),
           },
         })),
 

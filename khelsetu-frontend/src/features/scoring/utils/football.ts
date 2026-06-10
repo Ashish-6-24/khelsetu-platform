@@ -74,8 +74,10 @@ export const getEventIcon = (type: FootballEvent['type']): string => {
 };
 
 export const getEventColor = (type: FootballEvent['type']): string => {
-  if (type === 'goal' || type === 'penalty_scored') return 'text-green-600 dark:text-green-400';
-  if (type === 'yellow_card' || type === 'second_yellow') return 'text-yellow-600 dark:text-yellow-400';
+  if (type === 'goal' || type === 'penalty_scored')
+    return 'text-green-600 dark:text-green-400';
+  if (type === 'yellow_card' || type === 'second_yellow')
+    return 'text-yellow-600 dark:text-yellow-400';
   if (type === 'red_card') return 'text-red-600 dark:text-red-400';
   if (type === 'substitution') return 'text-blue-600 dark:text-blue-400';
   return 'text-gray-600 dark:text-gray-400';
@@ -92,10 +94,19 @@ export const isCardEvent = (type: FootballEvent['type']): boolean =>
 export const isGoalEvent = (type: FootballEvent['type']): boolean =>
   type === 'goal' || type === 'own_goal' || type === 'penalty_scored';
 
-export const getMaxSubstitutions = (teamEvents: FootballEvent[], teamId: string): number => {
-  return teamEvents.filter((e) => e.type === 'substitution' && e.teamId === teamId).length;
+export const getMaxSubstitutions = (
+  teamEvents: FootballEvent[],
+  teamId: string,
+): number => {
+  return teamEvents.filter(
+    (e) => e.type === 'substitution' && e.teamId === teamId,
+  ).length;
 };
 
-export const canSubstitute = (teamEvents: FootballEvent[], teamId: string, maxSubs = 5): boolean => {
+export const canSubstitute = (
+  teamEvents: FootballEvent[],
+  teamId: string,
+  maxSubs = 5,
+): boolean => {
   return getMaxSubstitutions(teamEvents, teamId) < maxSubs;
 };

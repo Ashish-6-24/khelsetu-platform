@@ -46,6 +46,12 @@ export default defineConfig({
         'e2e/**',
         'public/**',
       ],
+      thresholds: {
+        statements: 65,
+        branches: 60,
+        functions: 50,
+        lines: 70,
+      },
     },
   },
 });

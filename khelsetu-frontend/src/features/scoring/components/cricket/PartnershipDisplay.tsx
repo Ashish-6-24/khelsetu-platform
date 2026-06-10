@@ -4,12 +4,15 @@ interface PartnershipDisplayProps {
   partnership?: CricketPartnership;
 }
 
-export const PartnershipDisplay = ({ partnership }: PartnershipDisplayProps) => {
+export const PartnershipDisplay = ({
+  partnership,
+}: PartnershipDisplayProps) => {
   if (!partnership) return null;
 
-  const runRate = partnership.balls > 0
-    ? ((partnership.runs / partnership.balls) * 6).toFixed(2)
-    : '0.00';
+  const runRate =
+    partnership.balls > 0
+      ? ((partnership.runs / partnership.balls) * 6).toFixed(2)
+      : '0.00';
 
   return (
     <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 space-y-2">
@@ -19,11 +22,15 @@ export const PartnershipDisplay = ({ partnership }: PartnershipDisplayProps) => 
       <div className="grid grid-cols-2 gap-2 text-sm">
         <div>
           <p className="text-gray-500 dark:text-gray-400">Runs</p>
-          <p className="font-bold text-gray-900 dark:text-white">{partnership.runs}</p>
+          <p className="font-bold text-gray-900 dark:text-white">
+            {partnership.runs}
+          </p>
         </div>
         <div>
           <p className="text-gray-500 dark:text-gray-400">Balls</p>
-          <p className="font-bold text-gray-900 dark:text-white">{partnership.balls}</p>
+          <p className="font-bold text-gray-900 dark:text-white">
+            {partnership.balls}
+          </p>
         </div>
         <div>
           <p className="text-gray-500 dark:text-gray-400">Run Rate</p>

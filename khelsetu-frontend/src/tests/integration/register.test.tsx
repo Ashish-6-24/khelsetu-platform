@@ -2,6 +2,8 @@ import { RegisterPage } from '@pages/auth/register/page';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
+import { MemoryRouter } from 'react-router-dom';
+
 vi.mock('@hooks/useAuth', () => ({
   useAuth: () => ({
     login: vi.fn(),
@@ -10,22 +12,32 @@ vi.mock('@hooks/useAuth', () => ({
   }),
 }));
 
+const renderWithRouter = (ui: React.ReactNode) => {
+  return render(<MemoryRouter>{ui}</MemoryRouter>);
+};
+
 describe('Register Page Integration', () => {
   it('should render registration form with all fields', () => {
-    render(<RegisterPage />);
+    renderWithRouter(<RegisterPage />);
     expect(
-      screen.getByRole('heading', { name: /create account/i }),
+      screen.getByRole('heading', { name: /create your account/i }),
     ).toBeInTheDocument();
-    expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: /create account/i }),
+      screen.getByLabelText(/^full name\b/i, { selector: 'input' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(/^work email\b/i, { selector: 'input' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(/^password\b/i, { selector: 'input' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /^create account$/i }),
     ).toBeInTheDocument();
   });
 
   it('should display link to login page', () => {
-    render(<RegisterPage />);
+    renderWithRouter(<RegisterPage />);
     const link = screen.getByRole('link', { name: /sign in/i });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', '/auth/login');

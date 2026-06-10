@@ -1,7 +1,7 @@
 import { Badge } from '@components/ui/Badge';
 import { Card, CardBody } from '@components/ui/Card';
 import type { SearchCategory, SearchResult } from '@features/search/types';
-import { Calendar, Search, Trophy, Users, User } from 'lucide-react';
+import { Calendar, Search, Trophy, User, Users } from 'lucide-react';
 
 const categoryIcons: Record<SearchCategory, React.ReactNode> = {
   tournaments: <Trophy className="w-4 h-4" />,
@@ -17,7 +17,12 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-export const SearchBar = ({ value, onChange, onSearch, placeholder = 'Search...' }: SearchBarProps) => {
+export const SearchBar = ({
+  value,
+  onChange,
+  onSearch,
+  placeholder = 'Search...',
+}: SearchBarProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearch(value);
@@ -76,7 +81,12 @@ interface SearchFiltersProps {
 }
 
 export const SearchFilters = ({ filters, onChange }: SearchFiltersProps) => {
-  const categories: SearchCategory[] = ['tournaments', 'teams', 'players', 'matches'];
+  const categories: SearchCategory[] = [
+    'tournaments',
+    'teams',
+    'players',
+    'matches',
+  ];
 
   const toggleCategory = (category: SearchCategory) => {
     const updated = filters.categories.includes(category)

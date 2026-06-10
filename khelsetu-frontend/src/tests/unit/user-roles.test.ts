@@ -1,7 +1,11 @@
-import { describe, expect, it } from 'vitest';
 import { ROLE_PERMISSIONS } from '@features/user-roles/types';
+import { describe, expect, it } from 'vitest';
 
-const hasPermission = (role: string, resource: string, action: string): boolean => {
+const hasPermission = (
+  role: string,
+  resource: string,
+  action: string,
+): boolean => {
   const permissions = ROLE_PERMISSIONS[role as keyof typeof ROLE_PERMISSIONS];
   if (!permissions) return false;
   const perm = permissions.find((p) => p.resource === resource);

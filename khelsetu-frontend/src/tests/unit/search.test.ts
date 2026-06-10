@@ -32,7 +32,9 @@ describe('Search Utilities', () => {
     ];
 
     expect(filterResults(results, ['tournaments'], 'NPL')).toHaveLength(1);
-    expect(filterResults(results, ['tournaments', 'teams'], '')).toHaveLength(2);
+    expect(filterResults(results, ['tournaments', 'teams'], '')).toHaveLength(
+      2,
+    );
     expect(filterResults(results, [], 'NPL')).toHaveLength(0);
   });
 

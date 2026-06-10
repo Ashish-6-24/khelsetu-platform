@@ -1,6 +1,14 @@
 import { Card, CardBody, CardHeader } from '@components/ui/Card';
 import { Tabs } from '@components/ui/Tabs';
-import { useFocusTrap, useReducedMotion, useLiveAnnouncer, VisuallyHidden, LiveRegion, SkipLink } from '@features/accessibility';
+import {
+  LiveRegion,
+  SkipLink,
+  VisuallyHidden,
+  useFocusTrap,
+  useLiveAnnouncer,
+  useReducedMotion,
+} from '@features/accessibility';
+
 import { useState } from 'react';
 
 const TABS = [
@@ -44,7 +52,9 @@ export const AccessibilityPage = () => {
         <div className="space-y-6">
           <Card>
             <CardHeader>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white">Focus Trap Demo</h3>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                Focus Trap Demo
+              </h3>
             </CardHeader>
             <CardBody>
               <div className="space-y-4">
@@ -56,7 +66,10 @@ export const AccessibilityPage = () => {
                 </button>
 
                 {trapActive && (
-                  <div ref={trapRef} className="p-4 border-2 border-blue-500 rounded-lg space-y-3">
+                  <div
+                    ref={trapRef}
+                    className="p-4 border-2 border-blue-500 rounded-lg space-y-3"
+                  >
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                       Tab key is now trapped within this region
                     </p>
@@ -84,7 +97,9 @@ export const AccessibilityPage = () => {
 
           <Card>
             <CardHeader>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white">Live Announcer Demo</h3>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                Live Announcer Demo
+              </h3>
             </CardHeader>
             <CardBody>
               <div className="space-y-3">
@@ -106,18 +121,23 @@ export const AccessibilityPage = () => {
 
           <Card>
             <CardHeader>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white">Reduced Motion</h3>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                Reduced Motion
+              </h3>
             </CardHeader>
             <CardBody>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Prefers reduced motion: <strong>{prefersReducedMotion ? 'Yes' : 'No'}</strong>
+                Prefers reduced motion:{' '}
+                <strong>{prefersReducedMotion ? 'Yes' : 'No'}</strong>
               </p>
             </CardBody>
           </Card>
 
           <Card>
             <CardHeader>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white">Visually Hidden</h3>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                Visually Hidden
+              </h3>
             </CardHeader>
             <CardBody>
               <VisuallyHidden>
@@ -135,14 +155,34 @@ export const AccessibilityPage = () => {
         <Card>
           <CardBody>
             <div className="prose dark:prose-invert max-w-none">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">Accessibility Features</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                Accessibility Features
+              </h2>
               <ul className="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                <li><strong>Skip Link:</strong> Keyboard users can skip to main content</li>
-                <li><strong>Focus Trap:</strong> Keeps focus within modal/dialog regions</li>
-                <li><strong>Live Regions:</strong> Announces dynamic content changes to screen readers</li>
-                <li><strong>Reduced Motion:</strong> Respects user's motion preferences</li>
-                <li><strong>Keyboard Navigation:</strong> Full keyboard support with arrow keys</li>
-                <li><strong>ARIA Labels:</strong> Proper semantic markup throughout</li>
+                <li>
+                  <strong>Skip Link:</strong> Keyboard users can skip to main
+                  content
+                </li>
+                <li>
+                  <strong>Focus Trap:</strong> Keeps focus within modal/dialog
+                  regions
+                </li>
+                <li>
+                  <strong>Live Regions:</strong> Announces dynamic content
+                  changes to screen readers
+                </li>
+                <li>
+                  <strong>Reduced Motion:</strong> Respects user's motion
+                  preferences
+                </li>
+                <li>
+                  <strong>Keyboard Navigation:</strong> Full keyboard support
+                  with arrow keys
+                </li>
+                <li>
+                  <strong>ARIA Labels:</strong> Proper semantic markup
+                  throughout
+                </li>
               </ul>
             </div>
           </CardBody>

@@ -28,7 +28,7 @@ export const TournamentCard = ({
       onClick={onClick}
     >
       <Card hover className="overflow-hidden">
-        <div className="h-2 bg-gradient-to-r from-blue-600 to-indigo-600" />
+        <div className="h-2 bg-gradient-to-r from-[#7F1D1D] to-[#B8860B]" />
         <CardBody>
           <div className="flex items-start justify-between">
             <div>

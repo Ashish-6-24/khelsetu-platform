@@ -32,7 +32,11 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
-              if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+              if (
+                id.includes('react') ||
+                id.includes('react-dom') ||
+                id.includes('react-router')
+              ) {
                 return 'vendor-react';
               }
               if (id.includes('@tanstack/react-query')) {
@@ -41,7 +45,11 @@ export default defineConfig(({ mode }) => {
               if (id.includes('framer-motion')) {
                 return 'vendor-motion';
               }
-              if (id.includes('react-hook-form') || id.includes('@hookform/resolvers') || id.includes('zod')) {
+              if (
+                id.includes('react-hook-form') ||
+                id.includes('@hookform/resolvers') ||
+                id.includes('zod')
+              ) {
                 return 'vendor-forms';
               }
               if (id.includes('recharts')) {
@@ -50,7 +58,11 @@ export default defineConfig(({ mode }) => {
               if (id.includes('lucide-react')) {
                 return 'vendor-icons';
               }
-              if (id.includes('clsx') || id.includes('tailwind-merge') || id.includes('zustand')) {
+              if (
+                id.includes('clsx') ||
+                id.includes('tailwind-merge') ||
+                id.includes('zustand')
+              ) {
                 return 'vendor-utils';
               }
             }
@@ -70,7 +82,13 @@ export default defineConfig(({ mode }) => {
       sourcemap: !isProduction,
     },
     optimizeDeps: {
-      include: ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query', 'framer-motion'],
+      include: [
+        'react',
+        'react-dom',
+        'react-router-dom',
+        '@tanstack/react-query',
+        'framer-motion',
+      ],
     },
     server: {
       port: 3000,

@@ -2,18 +2,22 @@ import { Button } from '@components/ui/Button';
 import { Card, CardBody } from '@components/ui/Card';
 import { Input } from '@components/ui/Input';
 import { Select } from '@components/ui/Select';
-import { useToast } from '@components/ui/useToast';
+import { useToast } from '@components/ui/toast-context';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { playerService } from '@services/api/team';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { Player } from '@types-domain/tournament';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowLeft, Save } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
 import { z } from 'zod';
 
+import { useNavigate, useParams } from 'react-router-dom';
+
 const playerSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters').max(50, 'Name must be less than 50 characters'),
+  name: z
+    .string()
+    .min(2, 'Name must be at least 2 characters')
+    .max(50, 'Name must be less than 50 characters'),
   jerseyNumber: z.string().optional(),
   position: z.string().optional(),
 });
@@ -61,7 +65,9 @@ export const PlayerEditPage = () => {
     mutationFn: (data: PlayerFormData) =>
       playerService.update(id!, {
         name: data.name,
-        jerseyNumber: data.jerseyNumber ? parseInt(data.jerseyNumber, 10) : undefined,
+        jerseyNumber: data.jerseyNumber
+          ? parseInt(data.jerseyNumber, 10)
+          : undefined,
         position: data.position || undefined,
       }),
     onSuccess: () => {
@@ -148,7 +154,11 @@ export const PlayerEditPage = () => {
               error={errors.position?.message}
             />
             <div className="flex gap-2">
-              <Button type="submit" isLoading={isSubmitting} disabled={isSubmitting}>
+              <Button
+                type="submit"
+                isLoading={isSubmitting}
+                disabled={isSubmitting}
+              >
                 <Save className="w-4 h-4 mr-1" />
                 Save Changes
               </Button>

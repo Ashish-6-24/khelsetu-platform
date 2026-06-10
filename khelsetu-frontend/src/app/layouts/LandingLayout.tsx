@@ -1,5 +1,6 @@
 import { Footer } from '@components/navigation/Footer';
 import { Navbar } from '@components/navigation/Navbar';
+import { SkipLink } from '@features/accessibility';
 
 interface LandingLayoutProps {
   children: React.ReactNode;
@@ -7,9 +8,10 @@ interface LandingLayoutProps {
 
 export const LandingLayout = ({ children }: LandingLayoutProps) => {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-[var(--bg-app)]">
+      <SkipLink />
       <Navbar />
-      <main>{children}</main>
+      <main id="main-content">{children}</main>
       <Footer />
     </div>
   );

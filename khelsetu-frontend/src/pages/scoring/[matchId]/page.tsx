@@ -8,16 +8,27 @@ import {
   FootballScoringPanel,
   VolleyballScoringPanel,
 } from '@features/scoring/components';
-import { useScoringStore } from '@store/scoringStore';
 import { matchService } from '@services/api/tournament';
+import { useScoringStore } from '@store/scoringStore';
 import { useQuery } from '@tanstack/react-query';
 import type { Match } from '@types-domain/tournament';
+
 import { useEffect } from 'react';
+
 import { useParams } from 'react-router-dom';
 
 export const ScoringMatchPage = () => {
   const { matchId } = useParams<{ matchId: string }>();
-  const { activeSport, setActiveMatch, setScoring, undoLastAction, cricket, football, volleyball, basketball } = useScoringStore();
+  const {
+    activeSport,
+    setActiveMatch,
+    setScoring,
+    undoLastAction,
+    cricket,
+    football,
+    volleyball,
+    basketball,
+  } = useScoringStore();
 
   const { data: match, isLoading } = useQuery<Match>({
     queryKey: ['match', matchId],
@@ -28,7 +39,10 @@ export const ScoringMatchPage = () => {
   useEffect(() => {
     if (match && matchId) {
       const sport = (match as Match & { sport?: string }).sport ?? 'cricket';
-      setActiveMatch(matchId, sport as 'cricket' | 'football' | 'volleyball' | 'basketball');
+      setActiveMatch(
+        matchId,
+        sport as 'cricket' | 'football' | 'volleyball' | 'basketball',
+      );
     }
   }, [match, matchId, setActiveMatch]);
 
@@ -69,7 +83,8 @@ export const ScoringMatchPage = () => {
             {match.teamA.name} vs {match.teamB.name}
           </h1>
           <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            {match.venue} &middot; {sport.charAt(0).toUpperCase() + sport.slice(1)}
+            {match.venue} &middot;{' '}
+            {sport.charAt(0).toUpperCase() + sport.slice(1)}
           </p>
         </div>
         <MatchStatusIndicator status={match.status} />
@@ -91,13 +106,17 @@ export const ScoringMatchPage = () => {
       {activeSport && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            {sport === 'cricket' && cricket.score && cricket.score.innings[cricket.score.currentInningsIndex] && (
-              <CricketScoringPanel
-                innings={cricket.score.innings[cricket.score.currentInningsIndex]!}
-                onAddBall={() => {}}
-                onUndo={undoLastAction}
-              />
-            )}
+            {sport === 'cricket' &&
+              cricket.score &&
+              cricket.score.innings[cricket.score.currentInningsIndex] && (
+                <CricketScoringPanel
+                  innings={
+                    cricket.score.innings[cricket.score.currentInningsIndex]!
+                  }
+                  onAddBall={() => {}}
+                  onUndo={undoLastAction}
+                />
+              )}
             {sport === 'football' && football.score && (
               <FootballScoringPanel
                 score={football.score}
@@ -135,7 +154,9 @@ export const ScoringMatchPage = () => {
                 </h3>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <p className="text-gray-500 dark:text-gray-400">Tournament</p>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      Tournament
+                    </p>
                     <p className="font-medium text-gray-900 dark:text-white">
                       {match.tournamentId ?? 'N/A'}
                     </p>

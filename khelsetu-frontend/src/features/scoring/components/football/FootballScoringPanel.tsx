@@ -2,6 +2,7 @@ import { Button } from '@components/ui/Button';
 import { Card, CardBody } from '@components/ui/Card';
 import { Tabs } from '@components/ui/Tabs';
 import type { FootballEvent, FootballScore } from '@types-domain/scoring';
+
 import { useState } from 'react';
 
 import { CardButtons } from './CardButtons';
@@ -48,7 +49,9 @@ export const FootballScoringPanel = ({
       <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg p-4">
         <div className="flex items-center justify-between">
           <div className="text-center flex-1">
-            <p className="text-lg font-bold text-gray-900 dark:text-white">{score.teamA.teamName}</p>
+            <p className="text-lg font-bold text-gray-900 dark:text-white">
+              {score.teamA.teamName}
+            </p>
             <p className="text-4xl font-bold text-green-600 dark:text-green-400 mt-1">
               {score.teamA.goals}
             </p>
@@ -57,7 +60,9 @@ export const FootballScoringPanel = ({
             <p className="text-sm text-gray-500 dark:text-gray-400">VS</p>
           </div>
           <div className="text-center flex-1">
-            <p className="text-lg font-bold text-gray-900 dark:text-white">{score.teamB.teamName}</p>
+            <p className="text-lg font-bold text-gray-900 dark:text-white">
+              {score.teamB.teamName}
+            </p>
             <p className="text-4xl font-bold text-green-600 dark:text-green-400 mt-1">
               {score.teamB.goals}
             </p>
@@ -96,7 +101,12 @@ export const FootballScoringPanel = ({
         </CardBody>
       </Card>
 
-      <Tabs tabs={TABS} activeTab={activeTab} onChange={setActiveTab} variant="pills" />
+      <Tabs
+        tabs={TABS}
+        activeTab={activeTab}
+        onChange={setActiveTab}
+        variant="pills"
+      />
 
       {activeTab === 'events' && (
         <Card>

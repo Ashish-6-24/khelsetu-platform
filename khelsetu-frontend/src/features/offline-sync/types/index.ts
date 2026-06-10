@@ -21,7 +21,9 @@ export interface SyncQueue {
 
 export interface OfflineSyncState {
   queue: SyncQueue;
-  addEntry: (entry: Omit<SyncEntry, 'id' | 'status' | 'createdAt' | 'retryCount'>) => void;
+  addEntry: (
+    entry: Omit<SyncEntry, 'id' | 'status' | 'createdAt' | 'retryCount'>,
+  ) => void;
   removeEntry: (id: string) => void;
   updateEntryStatus: (id: string, status: SyncStatus, error?: string) => void;
   setOnlineStatus: (isOnline: boolean) => void;

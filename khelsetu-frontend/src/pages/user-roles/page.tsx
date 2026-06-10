@@ -1,7 +1,12 @@
 import { Tabs } from '@components/ui/Tabs';
+import {
+  PermissionTable,
+  RoleCard,
+  UserRow,
+} from '@features/user-roles/components';
 import { useUserRoles } from '@features/user-roles/hooks';
-import { PermissionTable, RoleCard, UserRow } from '@features/user-roles/components';
 import type { Role } from '@features/user-roles/types';
+
 import { useState } from 'react';
 
 const TABS = [
@@ -12,7 +17,14 @@ const TABS = [
 
 export const UserRolesPage = () => {
   const [activeTab, setActiveTab] = useState('roles');
-  const { roles, users, currentRole, getPermissionsForRole, setCurrentRole, assignRole } = useUserRoles();
+  const {
+    roles,
+    users,
+    currentRole,
+    getPermissionsForRole,
+    setCurrentRole,
+    assignRole,
+  } = useUserRoles();
 
   const permissions = currentRole ? getPermissionsForRole(currentRole) : [];
 
@@ -53,21 +65,25 @@ export const UserRolesPage = () => {
       {activeTab === 'permissions' && (
         <div className="space-y-4">
           <div className="flex gap-2">
-            {(['admin', 'organizer', 'scorer', 'viewer'] as Role[]).map((role) => (
-              <button
-                key={role}
-                onClick={() => setCurrentRole(role)}
-                className={`px-3 py-1.5 text-sm rounded-lg capitalize ${
-                  currentRole === role
-                    ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
-                    : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
-                }`}
-              >
-                {role}
-              </button>
-            ))}
+            {(['admin', 'organizer', 'scorer', 'viewer'] as Role[]).map(
+              (role) => (
+                <button
+                  key={role}
+                  onClick={() => setCurrentRole(role)}
+                  className={`px-3 py-1.5 text-sm rounded-lg capitalize ${
+                    currentRole === role
+                      ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+                      : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+                  }`}
+                >
+                  {role}
+                </button>
+              ),
+            )}
           </div>
-          {permissions.length > 0 && <PermissionTable permissions={permissions} />}
+          {permissions.length > 0 && (
+            <PermissionTable permissions={permissions} />
+          )}
         </div>
       )}
     </div>

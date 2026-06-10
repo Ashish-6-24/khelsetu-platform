@@ -1,6 +1,19 @@
-import type { Notification, NotificationType } from '@features/notifications/types';
+import type {
+  Notification,
+  NotificationType,
+} from '@features/notifications/types';
 import { notificationUtils } from '@features/notifications/utils';
-import { Bell, Check } from 'lucide-react';
+import {
+  Activity,
+  Bell,
+  Check,
+  CircleDollarSign,
+  type LucideIcon,
+  PlayCircle,
+  Settings,
+  Trophy,
+} from 'lucide-react';
+
 import { useState } from 'react';
 
 import { NotificationItem } from './NotificationItem';
@@ -14,15 +27,15 @@ interface NotificationDropdownProps {
   onViewAll: () => void;
 }
 
-const getNotificationIcon = (type: NotificationType) => {
-  const icons: Record<NotificationType, string> = {
-    match_start: '🏏',
-    score_update: '📊',
-    tournament_update: '🏆',
-    system: '⚙️',
-    billing: '💳',
+const getNotificationIcon = (type: NotificationType): LucideIcon => {
+  const icons: Record<NotificationType, LucideIcon> = {
+    match_start: PlayCircle,
+    score_update: Activity,
+    tournament_update: Trophy,
+    system: Settings,
+    billing: CircleDollarSign,
   };
-  return icons[type] ?? '🔔';
+  return icons[type] ?? Bell;
 };
 
 export const NotificationDropdown = ({
@@ -35,17 +48,22 @@ export const NotificationDropdown = ({
 }: NotificationDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const groupedNotifications = notificationUtils.groupByDate(notifications) as Record<string, Notification[]>;
+  const groupedNotifications = notificationUtils.groupByDate(
+    notifications,
+  ) as Record<string, Notification[]>;
 
   return (
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 rounded-xl text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 transition-colors"
+        aria-label={`Notifications, ${unreadCount} unread`}
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+        className="relative inline-flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl text-gray-500 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
       >
-        <Bell className="w-5 h-5" />
+        <Bell className="h-5 w-5" />
         {unreadCount > 0 && (
-          <span className="absolute top-1 right-1 min-w-[18px] h-[18px] flex items-center justify-center bg-red-500 text-white text-[10px] font-bold rounded-full px-1">
+          <span className="absolute right-1 top-1 inline-flex min-h-[18px] min-w-[18px] items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
             {unreadCount > 99 ? '99+' : unreadCount}
           </span>
         )}
@@ -56,18 +74,23 @@ export const NotificationDropdown = ({
           <div
             className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
+            aria-hidden="true"
           />
-          <div className="absolute right-0 mt-2 w-96 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 z-50 overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+          <div
+            role="dialog"
+            aria-label="Notifications"
+            className="absolute right-0 z-50 mt-2 w-96 max-w-[calc(100vw-2rem)] overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-900"
+          >
+            <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3 dark:border-gray-700">
               <h3 className="font-semibold text-gray-900 dark:text-white">
                 Notifications
               </h3>
               {unreadCount > 0 && (
                 <button
                   onClick={onMarkAllAsRead}
-                  className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium flex items-center gap-1"
+                  className="inline-flex min-h-[32px] items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
                 >
-                  <Check className="w-3 h-3" />
+                  <Check className="h-3 w-3" />
                   Mark all read
                 </button>
               )}
@@ -76,7 +99,7 @@ export const NotificationDropdown = ({
             <div className="max-h-96 overflow-y-auto">
               {notifications.length === 0 ? (
                 <div className="px-4 py-12 text-center">
-                  <Bell className="w-8 h-8 mx-auto text-gray-400 dark:text-gray-600 mb-2" />
+                  <Bell className="mx-auto mb-2 h-8 w-8 text-gray-400 dark:text-gray-600" />
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     No notifications yet
                   </p>
@@ -84,31 +107,34 @@ export const NotificationDropdown = ({
               ) : (
                 Object.entries(groupedNotifications).map(([date, items]) => (
                   <div key={date}>
-                    <div className="px-4 py-2 bg-gray-50 dark:bg-gray-800/50 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <div className="bg-gray-50 px-4 py-2 text-xs font-medium uppercase tracking-wider text-gray-500 dark:bg-gray-800/50 dark:text-gray-400">
                       {date}
                     </div>
-                    {items.map((notification) => (
-                      <NotificationItem
-                        key={notification.id}
-                        notification={notification}
-                        icon={getNotificationIcon(notification.type)}
-                        onMarkAsRead={onMarkAsRead}
-                        onDelete={onDelete}
-                      />
-                    ))}
+                    {items.map((notification) => {
+                      const Icon = getNotificationIcon(notification.type);
+                      return (
+                        <NotificationItem
+                          key={notification.id}
+                          notification={notification}
+                          icon={Icon}
+                          onMarkAsRead={onMarkAsRead}
+                          onDelete={onDelete}
+                        />
+                      );
+                    })}
                   </div>
                 ))
               )}
             </div>
 
             {notifications.length > 0 && (
-              <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-700">
+              <div className="border-t border-gray-200 px-4 py-3 dark:border-gray-700">
                 <button
                   onClick={() => {
                     setIsOpen(false);
                     onViewAll();
                   }}
-                  className="w-full text-center text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
+                  className="w-full text-center text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
                 >
                   View all notifications
                 </button>

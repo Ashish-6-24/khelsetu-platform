@@ -1,36 +1,37 @@
 import { AuthLayout } from '@app/layouts/AuthLayout';
 import { DashboardLayout } from '@app/layouts/DashboardLayout';
 import { LandingLayout } from '@app/layouts/LandingLayout';
+import { ErrorBoundary } from '@components/error/ErrorBoundary';
+import { AboutPage } from '@pages/about/page';
+import { AccessibilityPage } from '@pages/accessibility/page';
+import { AnalyticsPage } from '@pages/analytics/page';
+import { AuditLogPage } from '@pages/audit-log/page';
 import { LoginPage } from '@pages/auth/login/page';
 import { RegisterPage } from '@pages/auth/register/page';
-import { DashboardPage } from '@pages/dashboard/page';
-import { LandingPage } from '@pages/landing/page';
-import { NotFoundPage } from '@pages/not-found/page';
-import { OverlaysPage } from '@pages/overlays/page';
-import { ScoreboardOverlay } from '@pages/overlays/scoreboard/[matchId]/page';
-import { ScoringMatchPage } from '@pages/scoring/[matchId]/page';
-import { ScoringPage } from '@pages/scoring/page';
-import { StandingsPage } from '@pages/standings/page';
-import { NotificationsPage } from '@pages/notifications/page';
-import { PlayerDetailPage } from '@pages/players/[id]/page';
-import { PlayerEditPage } from '@pages/players/[id]/edit/page';
-import { PlayersPage } from '@pages/players/page';
-import { AnalyticsPage } from '@pages/analytics/page';
 import { BillingPage } from '@pages/billing/page';
-import { OfflineSyncPage } from '@pages/offline-sync/page';
-import { AccessibilityPage } from '@pages/accessibility/page';
-import { SearchPage } from '@pages/search/page';
-import { ReportsPage } from '@pages/reports/page';
-import { UserRolesPage } from '@pages/user-roles/page';
+import { CommunicationPage } from '@pages/communication/page';
+import { ContactPage } from '@pages/contact/page';
+import { DashboardPage } from '@pages/dashboard/page';
+import { DataImportPage } from '@pages/data-import/page';
 import { I18nPage } from '@pages/i18n/page';
+import { LandingPage } from '@pages/landing/page';
 import { LiveBroadcastPage } from '@pages/live-broadcast/page';
 import { MediaPage } from '@pages/media/page';
+import { NotFoundPage } from '@pages/not-found/page';
+import { NotificationsPage } from '@pages/notifications/page';
+import { OfflineSyncPage } from '@pages/offline-sync/page';
+import { OverlaysPage } from '@pages/overlays/page';
+import { ScoreboardOverlay } from '@pages/overlays/scoreboard/[matchId]/page';
+import { PlayerEditPage } from '@pages/players/[id]/edit/page';
+import { PlayerDetailPage } from '@pages/players/[id]/page';
+import { PlayersPage } from '@pages/players/page';
+import { ReportsPage } from '@pages/reports/page';
 import { SchedulePage } from '@pages/schedule/page';
-import { VenuesPage } from '@pages/venues/page';
-import { CommunicationPage } from '@pages/communication/page';
-import { AuditLogPage } from '@pages/audit-log/page';
-import { DataImportPage } from '@pages/data-import/page';
+import { ScoringMatchPage } from '@pages/scoring/[matchId]/page';
+import { ScoringPage } from '@pages/scoring/page';
+import { SearchPage } from '@pages/search/page';
 import { SettingsPage } from '@pages/settings/page';
+import { StandingsPage } from '@pages/standings/page';
 import { TeamDetailPage } from '@pages/teams/[id]/page';
 import { TeamsPage } from '@pages/teams/page';
 import { TournamentBracketPage } from '@pages/tournaments/[id]/bracket/page';
@@ -38,7 +39,8 @@ import { TournamentEditPage } from '@pages/tournaments/[id]/edit/page';
 import { TournamentDetailPage } from '@pages/tournaments/[id]/page';
 import { TournamentCreatePage } from '@pages/tournaments/create/page';
 import { TournamentsPage } from '@pages/tournaments/page';
-import { ErrorBoundary } from '@components/error/ErrorBoundary';
+import { UserRolesPage } from '@pages/user-roles/page';
+import { VenuesPage } from '@pages/venues/page';
 import { useAuthStore } from '@store/authStore';
 import { ROUTES } from '@utils/constants';
 
@@ -51,11 +53,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     return <Navigate to={ROUTES.LOGIN} replace />;
   }
 
-  return (
-    <ErrorBoundary>
-      {children}
-    </ErrorBoundary>
-  );
+  return <ErrorBoundary>{children}</ErrorBoundary>;
 };
 
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
@@ -77,6 +75,28 @@ export const AppRouter = () => {
           <ErrorBoundary>
             <LandingLayout>
               <LandingPage />
+            </LandingLayout>
+          </ErrorBoundary>
+        }
+      />
+
+      <Route
+        path={ROUTES.ABOUT}
+        element={
+          <ErrorBoundary>
+            <LandingLayout>
+              <AboutPage />
+            </LandingLayout>
+          </ErrorBoundary>
+        }
+      />
+
+      <Route
+        path={ROUTES.CONTACT}
+        element={
+          <ErrorBoundary>
+            <LandingLayout>
+              <ContactPage />
             </LandingLayout>
           </ErrorBoundary>
         }

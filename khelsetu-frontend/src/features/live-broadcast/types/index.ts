@@ -1,5 +1,9 @@
 export type BroadcastStatus = 'offline' | 'live' | 'ending' | 'reconnecting';
-export type OverlayType = 'scoreboard' | 'lower-third' | 'full-screen' | 'ticker';
+export type OverlayType =
+  | 'scoreboard'
+  | 'lower-third'
+  | 'full-screen'
+  | 'ticker';
 
 export interface BroadcastStream {
   id: string;

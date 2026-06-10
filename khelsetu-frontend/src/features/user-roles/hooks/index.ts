@@ -1,6 +1,6 @@
+import { useUserRolesStore } from '@features/user-roles/store';
 import type { Permission, Role } from '@features/user-roles/types';
 import { ROLE_PERMISSIONS } from '@features/user-roles/types';
-import { useUserRolesStore } from '@features/user-roles/store';
 
 export const useUserRoles = () => {
   const {
@@ -13,7 +13,11 @@ export const useUserRoles = () => {
     assignRole,
   } = useUserRolesStore();
 
-  const hasPermission = (userRole: Role, resource: string, action: string): boolean => {
+  const hasPermission = (
+    userRole: Role,
+    resource: string,
+    action: string,
+  ): boolean => {
     const permissions = ROLE_PERMISSIONS[userRole];
     if (!permissions) return false;
     const perm = permissions.find((p) => p.resource === resource);

@@ -1,7 +1,8 @@
-import type { ExportFormat, ReportType } from '@features/reports/types';
 import { reportsService } from '@features/reports/services';
-import { useReportsStore, getMockReport } from '@features/reports/store';
+import { getMockReport, useReportsStore } from '@features/reports/store';
+import type { ExportFormat, ReportType } from '@features/reports/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import { useEffect } from 'react';
 
 export const useReports = () => {
@@ -26,7 +27,12 @@ export const useReports = () => {
   }, [data, setReports]);
 
   const generateMutation = useMutation({
-    mutationFn: async ({ type }: { type: ReportType; filters: Record<string, unknown> }) => {
+    mutationFn: async ({
+      type,
+    }: {
+      type: ReportType;
+      filters: Record<string, unknown>;
+    }) => {
       return getMockReport(type);
     },
     onMutate: () => setLoading(true),
@@ -38,9 +44,21 @@ export const useReports = () => {
   });
 
   const exportMutation = useMutation({
-    mutationFn: async ({ reportId, format }: { reportId: string; format: ExportFormat }) => {
+    mutationFn: async ({
+      reportId,
+      format,
+    }: {
+      reportId: string;
+      format: ExportFormat;
+    }) => {
       const jobId = `job-${Date.now()}`;
-      addExportJob({ id: jobId, reportId, format, status: 'processing', createdAt: new Date().toISOString() });
+      addExportJob({
+        id: jobId,
+        reportId,
+        format,
+        status: 'processing',
+        createdAt: new Date().toISOString(),
+      });
       await reportsService.downloadReport(reportId, format);
       return jobId;
     },

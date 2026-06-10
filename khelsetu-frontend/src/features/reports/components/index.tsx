@@ -1,7 +1,11 @@
 import { Badge } from '@components/ui/Badge';
 import { Button } from '@components/ui/Button';
 import { Card, CardBody, CardHeader } from '@components/ui/Card';
-import type { ExportFormat, ReportData, ReportType } from '@features/reports/types';
+import type {
+  ExportFormat,
+  ReportData,
+  ReportType,
+} from '@features/reports/types';
 import { BarChart3, Download, FileText, Table } from 'lucide-react';
 
 const reportIcons: Record<ReportType, React.ReactNode> = {
@@ -18,7 +22,11 @@ interface ReportCardProps {
   isExporting?: boolean;
 }
 
-export const ReportCard = ({ report, onExport, isExporting }: ReportCardProps) => {
+export const ReportCard = ({
+  report,
+  onExport,
+  isExporting,
+}: ReportCardProps) => {
   return (
     <Card>
       <CardHeader>
@@ -31,7 +39,9 @@ export const ReportCard = ({ report, onExport, isExporting }: ReportCardProps) =
               {report.name}
             </h3>
           </div>
-          <Badge variant="default" className="capitalize">{report.type}</Badge>
+          <Badge variant="default" className="capitalize">
+            {report.type}
+          </Badge>
         </div>
       </CardHeader>
       <CardBody>
@@ -42,9 +52,16 @@ export const ReportCard = ({ report, onExport, isExporting }: ReportCardProps) =
 
           <div className="grid grid-cols-2 gap-3">
             {Object.entries(report.summary).map(([key, value]) => (
-              <div key={key} className="p-2 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">{key}</p>
-                <p className="text-lg font-bold text-gray-900 dark:text-white">{String(value)}</p>
+              <div
+                key={key}
+                className="p-2 bg-gray-50 dark:bg-gray-800 rounded-lg"
+              >
+                <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">
+                  {key}
+                </p>
+                <p className="text-lg font-bold text-gray-900 dark:text-white">
+                  {String(value)}
+                </p>
               </div>
             ))}
           </div>
@@ -80,13 +97,24 @@ interface ReportGeneratorProps {
   isGenerating?: boolean;
 }
 
-export const ReportGenerator = ({ onGenerate, isGenerating }: ReportGeneratorProps) => {
-  const reportTypes: ReportType[] = ['tournament', 'team', 'player', 'match', 'analytics'];
+export const ReportGenerator = ({
+  onGenerate,
+  isGenerating,
+}: ReportGeneratorProps) => {
+  const reportTypes: ReportType[] = [
+    'tournament',
+    'team',
+    'player',
+    'match',
+    'analytics',
+  ];
 
   return (
     <Card>
       <CardHeader>
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white">Generate Report</h3>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+          Generate Report
+        </h3>
       </CardHeader>
       <CardBody>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">

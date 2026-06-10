@@ -1,7 +1,8 @@
-import type { SyncEntry } from '@features/offline-sync/types';
 import { offlineSyncService } from '@features/offline-sync/services';
 import { useOfflineSyncStore } from '@features/offline-sync/store';
+import type { SyncEntry } from '@features/offline-sync/types';
 import { useMutation } from '@tanstack/react-query';
+
 import { useEffect } from 'react';
 
 export const useOfflineSync = () => {
@@ -66,7 +67,9 @@ export const useOfflineSync = () => {
     };
   }, [setOnlineStatus, getPendingEntries, setSyncing, syncBatchMutation]);
 
-  const pendingCount = queue.entries.filter((e) => e.status === 'pending').length;
+  const pendingCount = queue.entries.filter(
+    (e) => e.status === 'pending',
+  ).length;
   const failedCount = queue.entries.filter((e) => e.status === 'failed').length;
 
   return {

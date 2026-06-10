@@ -69,4 +69,8 @@ export const api = {
     axiosInstance.delete<T>(url, config),
 };
 
+if (import.meta.env.DEV) {
+  import('./mock-api').then(({ setupMockApi }) => setupMockApi(axiosInstance));
+}
+
 export { axiosInstance };
