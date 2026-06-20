@@ -1,5 +1,8 @@
 # 25 — Responsive Experience
 
+> See also: `research/mobile-first-responsive-research.md` for Nepal-specific
+> data, touch target research, offline patterns, and performance budgets.
+
 ## 25.1 Breakpoint system
 
 Standard Tailwind breakpoints, with product-named intents.
@@ -14,8 +17,14 @@ Standard Tailwind breakpoints, with product-named intents.
 | `2xl` | 1536 | Desktop | Dashboard wide, overlay editing |
 | `3xl` | 1920 | Studio / broadcast | Overlay 1080p preview |
 
+**Nepal context**: 360px captures most Nepali budget phones (Samsung, Xiaomi,
+Realme at 360x800). Design must be functional at 360px before responsive
+enhancements. Target median: 6.5" screen, 1080x2400. Test floor: 1280x720,
+4 GB RAM.
+
 `prefers-color-scheme`, `prefers-reduced-motion`, and `prefers-contrast`
-are honoured throughout.
+are honoured throughout. Container queries (`@container`, `@sm:`, `@md:`)
+used for reusable components that appear in variable-width contexts.
 
 ## 25.2 Device postures
 
@@ -145,34 +154,50 @@ We don't just rely on width; the app reads device posture from a
 
 ## 25.10 Touch & pointer
 
-- Min 44×44 px hit area for any interactive control (Apple HIG).
-- Scorer buttons: 64×64 (mobile), 80×80 (tablet).
+- Min **48×48 px** hit area for any interactive control (Material Design).
+- Scorer buttons: **64×64 (mobile)**, **80×80 (tablet)** — Fitts's law: larger
+  targets are faster to acquire during live scoring with one hand.
+- **8px minimum spacing** between adjacent touch targets.
 - Sliders / steppers: 48 px height on touch.
+- `touch-action: manipulation` on all interactive elements (eliminates 300ms
+  tap delay).
 - Hover-only affordances forbidden; provide tap equivalent.
 - `:focus-visible` styles for keyboard users; not shown on mouse click.
+- `@media (any-pointer: coarse)` to increase targets for touchscreen users.
+- Haptic feedback (`navigator.vibrate(10)`) on gesture completion, not every
+  tap.
 
 ## 25.11 Performance budgets
 
-| Surface | TTI (3G) | TTI (4G) | LCP target |
-|---|---|---|---|
-| Public landing | < 4s | < 2s | < 2.5s |
-| Public live score | < 3s | < 1.5s | < 2s |
-| Dashboard home | < 4s | < 2s | < 2.5s |
-| Scorer console | < 3s | < 1.5s | < 2s |
-| Overlay | < 2s | < 1s | < 1.5s |
+**Nepal network reality**: Design for 4G under load (~3 Mbps, ~200ms latency).
+Kathmandu fiber: 20-100 Mbps. Kathmandu 4G evenings: 1-5 Mbps. Tier-2 cities:
+5-25 Mbps. Rural: 0.5-5 Mbps. A site that works at 3 Mbps works everywhere.
+
+**Budget device**: V8 engine on budget Android runs JS 5-10x slower than
+developer MacBook. DOM >1,500 nodes causes jank. Passive listeners mandatory.
+
+| Surface | TTI (3G) | TTI (4G) | LCP target | Bundle |
+|---|---|---|---|---|
+| Public landing | < 4s | < 2s | < 2.5s | < 150KB |
+| Public live score | < 3s | < 1.5s | < 2s | < 100KB |
+| Dashboard home | < 4s | < 2s | < 2.5s | < 200KB |
+| Scorer console | < 3s | < 1.5s | < 2s | < 150KB |
+| Overlay | < 2s | < 1s | < 1.5s | < 50KB |
 
 ## 25.12 Testing matrix
 
 - Browsers: Chrome (Stable), Safari (latest 2), Firefox (latest 2), Edge
   (latest).
 - Devices to test on (minimum):
+  - **Budget Android** (Tecno/Realme/Itel, 2-3 GB RAM) — **Critical**
+  - **Samsung A-series** — **Critical**
   - iPhone 12 / 14 (Safari)
   - Samsung Galaxy S22 (Chrome)
   - iPad Air (Safari)
   - Surface Pro (Edge)
   - 1440p desktop (Chrome)
   - 1920p large desktop (broadcast preview)
-- Network: 3G (regular), Slow 4G, Wi-Fi.
+- Network: **Regular 3G (1.5 Mbps)**, Slow 4G (4 Mbps), Wi-Fi.
 - Orientation: portrait + landscape for tablet & phone.
 
 ## 25.13 Layout rules of thumb
@@ -181,6 +206,9 @@ We don't just rely on width; the app reads device posture from a
 - **Never** show two scrolling containers next to each other on mobile.
 - **Always** reserve space for sticky headers (no content jump on
   scroll).
-- **Always** size by `dvh` for full-height containers (avoids iOS URL bar
-  jumping).
+- **Always** size by `dvh` for full-height containers with `vh` fallback
+  (avoids iOS URL bar jumping). Use `svh` for above-the-fold content
+  that must fit on initial load.
 - **Always** test in landscape mode for the scorer console.
+- **Always** include `env(safe-area-inset-*)` padding for edge-to-edge
+  displays with notches.

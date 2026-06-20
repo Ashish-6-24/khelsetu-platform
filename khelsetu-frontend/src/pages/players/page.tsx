@@ -93,12 +93,12 @@ export const PlayersPage = () => {
         <div className="text-center py-12">
           <Users className="w-12 h-12 mx-auto text-gray-400 dark:text-gray-600 mb-3" />
           <p className="text-lg font-medium text-gray-900 dark:text-white">
-            No players found
+            {searchQuery ? 'No matches found' : 'No players yet'}
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             {searchQuery
-              ? 'Try adjusting your search or filters'
-              : 'Add players to teams to see them here'}
+              ? 'Try a different search term'
+              : 'Add players to your teams and they\'ll show up here'}
           </p>
         </div>
       ) : (

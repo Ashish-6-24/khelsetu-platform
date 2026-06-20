@@ -9,6 +9,7 @@ import { Tabs } from '@components/ui/Tabs';
 import { playerService, teamService } from '@services/api/team';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { Player, Team } from '@types-domain/tournament';
+import { Plus } from 'lucide-react';
 
 import { useState } from 'react';
 
@@ -120,7 +121,7 @@ export const TeamDetailPage = () => {
           </p>
         </div>
         <div className="flex gap-3">
-          <Button onClick={() => setShowAddPlayerModal(true)}>
+          <Button variant="create" leftIcon={<Plus className="h-4 w-4" />} onClick={() => setShowAddPlayerModal(true)}>
             Add Player
           </Button>
         </div>
@@ -161,7 +162,7 @@ export const TeamDetailPage = () => {
           ) : (
             <div className="text-center py-12">
               <p className="text-gray-500 dark:text-gray-400">
-                No players in this team yet. Add players to get started.
+                No players on the roster yet. Add some to build your squad.
               </p>
             </div>
           )}
@@ -244,6 +245,7 @@ export const TeamDetailPage = () => {
             </Button>
             <Button
               type="submit"
+              variant="create"
               className="flex-1"
               isLoading={addPlayer.isPending}
             >

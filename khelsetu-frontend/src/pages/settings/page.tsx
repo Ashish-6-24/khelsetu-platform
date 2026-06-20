@@ -8,11 +8,11 @@ import { useAuthStore } from '@store/authStore';
 import { useMutation } from '@tanstack/react-query';
 import type { User } from '@types-domain/auth';
 import { clsx } from 'clsx';
-import { Moon, Phone, Save, Sun, User as UserIcon } from 'lucide-react';
+import { Loader2, Moon, Phone, Save, Sun, User as UserIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const profileSchema = z.object({
   name: z
@@ -40,6 +40,59 @@ const passwordSchema = z
   });
 
 type PasswordFormData = z.infer<typeof passwordSchema>;
+
+type SaveState = 'idle' | 'loading' | 'success';
+
+const SaveButton = ({
+  isLoading,
+  onSuccess,
+  label = 'Save Changes',
+}: {
+  isLoading: boolean;
+  onSuccess?: () => void;
+  label?: string;
+}) => {
+  const [state, setState] = useState<SaveState>('idle');
+
+  useEffect(() => {
+    if (isLoading) {
+      setState('loading');
+    } else if (state === 'loading') {
+      setState('success');
+      onSuccess?.();
+      const timer = setTimeout(() => setState('idle'), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading]);
+
+  return (
+    <button
+      type="submit"
+      disabled={state === 'loading'}
+      className={clsx(
+        'btn-save shine relative inline-flex items-center justify-center gap-2',
+        'rounded-xl px-5 py-2.5 text-sm font-semibold',
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#7F1D1D]',
+        'dark:focus-visible:ring-[#FCA5A5] dark:focus-visible:ring-offset-slate-900',
+        'disabled:cursor-not-allowed disabled:opacity-50',
+        state === 'success'
+          ? 'btn-save-success text-white'
+          : 'bg-gradient-to-br from-[#B91C1C] via-[#991B1B] to-[#7F1D1D] text-white shadow-[0_4px_14px_-2px_rgb(153_27_27/0.45)] hover:from-[#991B1B] hover:via-[#7F1D1D] hover:to-[#450A0A] hover:shadow-[0_8px_28px_-4px_rgb(153_27_27/0.55)] hover:brightness-110',
+      )}
+    >
+      {state === 'loading' && (
+        <Loader2 className="h-4 w-4 animate-spin" />
+      )}
+      {state === 'success' && (
+        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="20 6 9 17 4 12" className="check-draw" />
+        </svg>
+      )}
+      {state === 'idle' && <Save className="h-4 w-4" />}
+      {state === 'loading' ? 'Saving…' : state === 'success' ? 'Saved' : label}
+    </button>
+  );
+};
 
 export const SettingsPage = () => {
   const user = useAuthStore((state) => state.user);
@@ -154,17 +207,14 @@ export const SettingsPage = () => {
                 leftIcon={<Phone className="w-4 h-4" />}
               />
               <div className="flex gap-2">
-                <Button
-                  type="submit"
+                <SaveButton
                   isLoading={isProfileSubmitting}
-                  disabled={isProfileSubmitting}
-                >
-                  <Save className="w-4 h-4 mr-1" />
-                  Save Changes
-                </Button>
+                  onSuccess={() => addToast({ title: 'Profile updated', type: 'success', message: 'Profile updated successfully' })}
+                />
                 <Button
                   type="button"
                   variant="outline"
+                  size="lg"
                   onClick={() => resetProfile()}
                 >
                   Reset
@@ -206,16 +256,19 @@ export const SettingsPage = () => {
                   error={passwordErrors.confirmPassword?.message}
                 />
                 <div className="flex gap-2">
-                  <Button
-                    type="submit"
+                  <SaveButton
                     isLoading={isPasswordSubmitting}
-                    disabled={isPasswordSubmitting}
-                  >
-                    Update Password
-                  </Button>
+                    label="Update Password"
+                    onSuccess={() => {
+                      addToast({ title: 'Password updated', type: 'success', message: 'Password updated successfully' });
+                      setShowPasswordForm(false);
+                      resetPassword();
+                    }}
+                  />
                   <Button
                     type="button"
                     variant="outline"
+                    size="lg"
                     onClick={() => {
                       setShowPasswordForm(false);
                       resetPassword();

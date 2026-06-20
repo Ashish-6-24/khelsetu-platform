@@ -1,10 +1,9 @@
 import { Card, CardBody } from '@components/ui/Card';
 import { useReducedMotion } from '@features/accessibility';
 import { clsx } from 'clsx';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface StatsCardProps {
   title: string;
@@ -26,6 +25,10 @@ const accentMap: Record<NonNullable<StatsCardProps['accent']>, string> = {
   rose: 'from-rose-500 to-pink-600 shadow-rose-500/25',
 };
 
+/**
+ * AnimatedNumber — pure CSS/requestAnimationFrame count-up.
+ * No framer-motion dependency.
+ */
 function AnimatedNumber({
   value,
   reducedMotion,
@@ -35,29 +38,43 @@ function AnimatedNumber({
 }) {
   const isNumeric = typeof value === 'number' || !isNaN(Number(value));
   const n = typeof value === 'number' ? value : parseFloat(value) || 0;
-
-  const motionValue = useMotionValue(0);
-  const spring = useSpring(motionValue, {
-    stiffness: 80,
-    damping: 20,
-    mass: 0.6,
-  });
-  const rounded = useTransform(spring, (v) => Math.round(v).toLocaleString());
+  const [display, setDisplay] = useState(reducedMotion ? n : 0);
+  const ref = useRef<number | null>(null);
 
   useEffect(() => {
-    motionValue.set(n);
-  }, [n, motionValue]);
+    if (!isNumeric || reducedMotion) {
+      setDisplay(n);
+      return;
+    }
+
+    const start = display;
+    const end = n;
+    const duration = 600;
+    const startTime = performance.now();
+
+    const animate = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplay(Math.round(start + (end - start) * eased));
+      if (progress < 1) {
+        ref.current = requestAnimationFrame(animate);
+      }
+    };
+
+    ref.current = requestAnimationFrame(animate);
+    return () => {
+      if (ref.current) cancelAnimationFrame(ref.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [n, reducedMotion, isNumeric]);
 
   if (!isNumeric) {
     return <span>{value}</span>;
   }
 
-  // Reduced motion: render the final value immediately.
-  if (reducedMotion) {
-    return <span>{n.toLocaleString()}</span>;
-  }
-
-  return <motion.span>{rounded}</motion.span>;
+  return <span>{display.toLocaleString()}</span>;
 }
 
 export const StatsCard = ({
@@ -73,11 +90,9 @@ export const StatsCard = ({
   const reducedMotion = useReducedMotion();
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay, ease: 'easeOut' }}
-      whileHover={reducedMotion ? undefined : { y: -2 }}
+    <div
+      className="animate-fade-in-up"
+      style={{ animationDelay: `${delay}s`, animationFillMode: 'both' }}
     >
       <Card hover elevated className="group relative overflow-hidden">
         <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-gradient-to-br from-[#7F1D1D]/0 to-[#B8860B]/0 transition-all duration-500 group-hover:from-[#7F1D1D]/5 group-hover:to-[#B8860B]/10" />
@@ -125,6 +140,6 @@ export const StatsCard = ({
           </div>
         </CardBody>
       </Card>
-    </motion.div>
+    </div>
   );
 };

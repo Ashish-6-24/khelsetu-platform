@@ -100,7 +100,7 @@ export const TournamentDetailPage = () => {
           >
             View Bracket
           </Button>
-          <Button onClick={() => navigate(`/tournaments/${id}/edit`)}>
+          <Button variant="outline" onClick={() => navigate(`/tournaments/${id}/edit`)}>
             Edit
           </Button>
         </div>
@@ -192,7 +192,7 @@ export const TournamentDetailPage = () => {
               </div>
             ) : (
               <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                No matches scheduled yet.
+                No matches scheduled yet. Add matches to get the tournament rolling.
               </p>
             )}
           </CardBody>
@@ -227,7 +227,7 @@ export const TournamentDetailPage = () => {
               </div>
             ) : (
               <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                No teams registered yet.
+                No teams signed up yet. Register teams to compete.
               </p>
             )}
           </CardBody>

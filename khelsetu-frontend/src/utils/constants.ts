@@ -54,6 +54,14 @@ export const ROUTES = {
   SETTINGS: '/settings',
   OVERLAYS: '/overlays',
   OVERLAY_SCOREBOARD: '/overlays/scoreboard/:matchId',
+  NEWS: '/news',
+  NEWS_DETAIL: '/news/:id',
+  CERTIFICATES: '/certificates',
+  FORMATION: '/formation/:matchId',
+  LIVE_EVENTS: '/live-events/:matchId',
+  MATCH_STATISTICS: '/match-statistics/:matchId',
+  MATCH_REPORTS: '/match-reports/:matchId',
+  MEDIA_GALLERY: '/media-gallery',
 } as const;
 
 export const API_ENDPOINTS = {
@@ -105,6 +113,39 @@ export const API_ENDPOINTS = {
     UPDATE_PLAN: '/billing/subscription/update',
     CANCEL_SUBSCRIPTION: '/billing/subscription/cancel',
     PAYMENT_METHODS: '/billing/payment-methods',
+  },
+  NEWS: {
+    LIST: '/news',
+    DETAIL: (id: string) => `/news/${id}`,
+    CREATE: '/news',
+    UPDATE: (id: string) => `/news/${id}`,
+    DELETE: (id: string) => `/news/${id}`,
+  },
+  CERTIFICATES: {
+    GENERATE: '/certificates/generate',
+    VERIFY: (id: string) => `/certificates/verify/${id}`,
+    LIST: '/certificates',
+  },
+  FORMATIONS: {
+    GET: (matchId: string) => `/formations/${matchId}`,
+    SAVE: (matchId: string) => `/formations/${matchId}`,
+  },
+  MATCH_EVENTS: {
+    LIST: (matchId: string) => `/matches/${matchId}/events`,
+    CREATE: (matchId: string) => `/matches/${matchId}/events`,
+  },
+  MATCH_STATISTICS: {
+    GET: (matchId: string) => `/matches/${matchId}/statistics`,
+  },
+  MATCH_REPORTS: {
+    GET: (matchId: string) => `/matches/${matchId}/report`,
+    GENERATE: (matchId: string) => `/matches/${matchId}/report/generate`,
+    UPDATE: (matchId: string) => `/matches/${matchId}/report`,
+  },
+  MEDIA: {
+    LIST: '/media',
+    UPLOAD: '/media/upload',
+    DELETE: (id: string) => `/media/${id}`,
   },
 } as const;
 

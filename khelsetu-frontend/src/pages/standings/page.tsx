@@ -119,7 +119,7 @@ export const StandingsPage = () => {
                 </div>
               ) : (
                 <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-4">
-                  No tournaments found
+                  No tournaments yet. Create one to see standings.
                 </p>
               )}
             </CardBody>

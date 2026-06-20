@@ -3,10 +3,8 @@ import { Button } from '@components/ui/Button';
 import { Card, CardBody } from '@components/ui/Card';
 import { Skeleton } from '@components/ui/Skeleton';
 import { Tabs } from '@components/ui/Tabs';
-import {
-  BracketVisualizer,
-  FixtureTable,
-} from '@features/tournaments/components';
+import { AdvancedBracketView } from '@features/bracket-advanced';
+import { FixtureTable } from '@features/tournaments/components';
 import { tournamentService } from '@services/api/tournament';
 import { useQuery } from '@tanstack/react-query';
 import type { Match, Tournament } from '@types-domain/tournament';
@@ -88,9 +86,16 @@ export const TournamentBracketPage = () => {
       />
 
       {activeTab === 'bracket' && (
-        <BracketVisualizer
+        <AdvancedBracketView
           matches={matches ?? []}
-          format={tournament.format as 'knockout' | 'league'}
+          format={
+            tournament.format === 'league'
+              ? 'round-robin'
+              : tournament.format === 'knockout'
+                ? 'single-elimination'
+                : tournament.format as 'single-elimination' | 'double-elimination' | 'knockout' | 'round-robin' | 'group-to-knockout'
+          }
+          tournamentName={tournament.name}
         />
       )}
 

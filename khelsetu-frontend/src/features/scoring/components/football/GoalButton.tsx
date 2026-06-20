@@ -59,7 +59,7 @@ export const GoalButton = ({
     <>
       <Button
         variant="outline"
-        className="h-14 bg-green-50 text-green-800 hover:bg-green-100 dark:bg-green-900/20 dark:text-green-300 font-bold text-lg"
+        className="h-14 bg-red-50 text-red-800 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-300 font-bold text-lg"
         onClick={() => setIsOpen(true)}
       >
         ⚽ Goal

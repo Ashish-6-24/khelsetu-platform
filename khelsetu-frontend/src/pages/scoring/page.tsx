@@ -145,8 +145,7 @@ export const ScoringPage = () => {
       {matches && matches.length === 0 && (
         <div className="text-center py-12">
           <p className="text-gray-500 dark:text-gray-400">
-            No matches available. Create a tournament and schedule matches to
-            start scoring.
+            Nothing scheduled yet. Create a tournament and add matches to start scoring.
           </p>
         </div>
       )}

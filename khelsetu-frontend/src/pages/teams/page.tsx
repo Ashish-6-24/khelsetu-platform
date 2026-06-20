@@ -7,6 +7,7 @@ import { Tabs } from '@components/ui/Tabs';
 import { teamService } from '@services/api/team';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { Team } from '@types-domain/tournament';
+import { Plus } from 'lucide-react';
 
 import { useState } from 'react';
 
@@ -92,7 +93,7 @@ export const TeamsPage = () => {
             Manage teams and player rosters
           </p>
         </div>
-        <Button onClick={() => setShowCreateModal(true)}>Create Team</Button>
+        <Button variant="create" leftIcon={<Plus className="h-4 w-4" />} onClick={() => setShowCreateModal(true)}>Create Team</Button>
       </div>
 
       <Tabs
@@ -115,7 +116,7 @@ export const TeamsPage = () => {
       ) : (
         <div className="text-center py-12">
           <p className="text-gray-500 dark:text-gray-400">
-            No teams found. Create your first team to get started.
+            No teams yet. Build your first squad and get playing.
           </p>
         </div>
       )}
@@ -151,6 +152,7 @@ export const TeamsPage = () => {
             </Button>
             <Button
               type="submit"
+              variant="create"
               className="flex-1"
               isLoading={createTeam.isPending}
             >

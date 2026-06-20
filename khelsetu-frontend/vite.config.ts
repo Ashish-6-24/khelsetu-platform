@@ -55,6 +55,9 @@ export default defineConfig(({ mode }) => {
               if (id.includes('recharts')) {
                 return 'vendor-charts';
               }
+              if (id.includes('html2canvas') || id.includes('jspdf')) {
+                return 'vendor-pdf';
+              }
               if (id.includes('lucide-react')) {
                 return 'vendor-icons';
               }

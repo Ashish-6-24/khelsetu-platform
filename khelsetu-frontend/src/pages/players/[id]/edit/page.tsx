@@ -156,6 +156,7 @@ export const PlayerEditPage = () => {
             <div className="flex gap-2">
               <Button
                 type="submit"
+                variant="create"
                 isLoading={isSubmitting}
                 disabled={isSubmitting}
               >

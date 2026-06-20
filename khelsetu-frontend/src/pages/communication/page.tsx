@@ -1,6 +1,6 @@
 import { Button } from '@components/ui/Button';
 import { Card, CardBody, CardHeader } from '@components/ui/Card';
-import { MessageCircle, Send } from 'lucide-react';
+import { MessageCircle, Send, Users } from 'lucide-react';
 
 import { useState } from 'react';
 
@@ -109,7 +109,7 @@ export const CommunicationPage = () => {
               <Button variant="outline" className="w-full">
                 Send Announcement
               </Button>
-              <Button variant="outline" className="w-full">
+              <Button variant="create" leftIcon={<Users className="h-4 w-4" />}>
                 Create Group
               </Button>
               <Button variant="outline" className="w-full">
