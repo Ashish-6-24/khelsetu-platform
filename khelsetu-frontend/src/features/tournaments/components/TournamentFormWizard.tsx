@@ -410,11 +410,11 @@ export const TournamentFormWizard = ({
           Back
         </Button>
         {currentStep < 5 ? (
-          <Button onClick={() => onStepChange(currentStep + 1)}>
+          <Button variant="secondary" onClick={() => onStepChange(currentStep + 1)}>
             Next Step
           </Button>
         ) : (
-          <Button onClick={onSubmit} isLoading={isSubmitting}>
+          <Button variant="create" onClick={onSubmit} isLoading={isSubmitting}>
             Create Tournament
           </Button>
         )}

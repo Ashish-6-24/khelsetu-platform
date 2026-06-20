@@ -4,7 +4,6 @@ import { Card, CardBody, CardHeader } from '@components/ui/Card';
 import { EmptyState } from '@components/ui/EmptyState';
 import type { Match } from '@types-domain/tournament';
 import { ROUTES } from '@utils/constants';
-import { motion } from 'framer-motion';
 import { ChevronRight, Radio } from 'lucide-react';
 
 import { Link } from 'react-router-dom';
@@ -48,11 +47,11 @@ export const LiveMatchesPanel = ({
         {liveMatches.length === 0 ? (
           <EmptyState
             icon={Radio}
-            title="No live matches right now"
-            description="Start a scoring session to broadcast live updates to your fans and organizers."
+            title="Quiet at the moment"
+            description="No matches live right now. Start a scoring session to bring the game to your fans."
             action={
               <Link to={ROUTES.SCORING}>
-                <Button size="sm" leftIcon={<Radio className="h-4 w-4" />}>
+                <Button size="sm" variant="live" leftIcon={<Radio className="h-4 w-4" />}>
                   Start scoring
                 </Button>
               </Link>
@@ -63,11 +62,10 @@ export const LiveMatchesPanel = ({
         ) : (
           <ul className="divide-y divide-[var(--border-subtle)]">
             {liveMatches.map((match, idx) => (
-              <motion.li
+              <li
                 key={match.id}
-                initial={{ opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.05 }}
+                className="animate-fade-in-up"
+                style={{ animationDelay: `${idx * 0.05}s` }}
               >
                 <button
                   onClick={() => onMatchClick?.(match)}
@@ -83,14 +81,14 @@ export const LiveMatchesPanel = ({
                         {match.teamB.name}
                       </p>
                     </div>
-                    <div className="text-right font-mono text-lg font-bold tabular-nums leading-tight text-slate-900 dark:text-white">
+                    <div className="text-right font-mono text-lg font-semibold tabular-nums leading-tight text-slate-900 dark:text-white">
                       <div>{match.score?.teamAScore ?? 0}</div>
                       <div>{match.score?.teamBScore ?? 0}</div>
                     </div>
                   </div>
                   <ChevronRight className="h-4 w-4 shrink-0 text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-slate-600 dark:group-hover:text-slate-200" />
                 </button>
-              </motion.li>
+              </li>
             ))}
           </ul>
         )}

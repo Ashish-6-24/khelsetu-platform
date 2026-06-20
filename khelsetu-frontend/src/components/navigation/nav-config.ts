@@ -1,5 +1,6 @@
 import { ROUTES } from '@utils/constants';
 import {
+  Award,
   BarChart3,
   Bell,
   Calendar,
@@ -8,7 +9,6 @@ import {
   DollarSign,
   Eye,
   FileText,
-  Globe,
   Languages,
   LayoutDashboard,
   ListTree,
@@ -55,6 +55,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { name: 'Standings', href: ROUTES.STANDINGS, icon: ListTree },
       { name: 'Schedule', href: ROUTES.SCHEDULE, icon: Calendar },
       { name: 'Scoring', href: ROUTES.SCORING, icon: Zap },
+      { name: 'News', href: ROUTES.NEWS, icon: FileText },
     ],
   },
   {
@@ -63,6 +64,8 @@ export const NAV_GROUPS: NavGroup[] = [
       { name: 'Teams', href: ROUTES.TEAMS, icon: Users },
       { name: 'Players', href: ROUTES.PLAYERS, icon: Shield },
       { name: 'Venues', href: ROUTES.VENUES, icon: MapPin },
+      { name: 'Certificates', href: ROUTES.CERTIFICATES, icon: Award },
+      { name: 'Media Gallery', href: ROUTES.MEDIA_GALLERY, icon: Database },
     ],
   },
   {
@@ -96,7 +99,6 @@ export const NAV_GROUPS: NavGroup[] = [
       { name: 'Data Import', href: ROUTES.DATA_IMPORT, icon: Upload },
       { name: 'Languages', href: ROUTES.I18N, icon: Languages },
       { name: 'Offline Sync', href: ROUTES.OFFLINE_SYNC, icon: Wifi },
-      { name: 'Accessibility', href: ROUTES.ACCESSIBILITY, icon: Globe },
       { name: 'Settings', href: ROUTES.SETTINGS, icon: Settings },
       { name: 'Media', href: ROUTES.MEDIA, icon: Database },
     ],

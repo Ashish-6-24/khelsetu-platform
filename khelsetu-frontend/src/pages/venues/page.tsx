@@ -55,8 +55,7 @@ export const VenuesPage = () => {
             Manage grounds and facilities
           </p>
         </div>
-        <Button variant="primary">
-          <Plus className="w-4 h-4 mr-2" />
+        <Button variant="create" leftIcon={<Plus className="h-4 w-4" />}>
           Add Venue
         </Button>
       </div>

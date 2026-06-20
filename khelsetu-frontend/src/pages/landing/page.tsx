@@ -1,10 +1,14 @@
 import { CountUp, CursorGlow, Reveal } from '@components/animations';
 import { Accordion } from '@components/ui/Accordion';
+import { AnimatedBackground } from '@components/ui/AnimatedBackground';
+import { FloatingOrb } from '@components/ui/FloatingOrb';
+import { GradientMesh } from '@components/ui/PremiumCard';
+import { GlowPulse } from '@components/ui/GlowPulse';
 import { Logo } from '@components/ui/Logo';
+import { ScoreTicker, type TickerItem } from '@components/ui/ScoreTicker';
 import { SportIcon } from '@components/ui/SportIcon';
 import { ROUTES } from '@utils/constants';
 import { clsx } from 'clsx';
-import { type Variants, motion } from 'framer-motion';
 import {
   BarChart3,
   Calendar,
@@ -27,16 +31,6 @@ import { useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
-};
-
-const stagger: Variants = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.06 } },
-};
-
 export const LandingPage = () => {
   return (
     <div className="relative overflow-hidden">
@@ -56,8 +50,26 @@ export const LandingPage = () => {
 };
 
 const Hero = () => {
+  const liveScores: TickerItem[] = [
+    { id: '1', label: 'T20', teamA: 'Tigers', teamB: 'Eagles', scoreA: '142/3', scoreB: '128/5', status: 'live' },
+    { id: '2', label: 'ODI', teamA: 'Rhinos', teamB: 'Lions', scoreA: '245/6', scoreB: '198/4', status: 'live' },
+    { id: '3', label: 'T10', teamA: 'Hawks', teamB: 'Wolves', scoreA: '87/2', scoreB: '64/4', status: 'live' },
+    { id: '4', label: 'T20', teamA: 'Kings', teamB: 'Knights', scoreA: '156/4', scoreB: '156/8', status: 'completed' },
+    { id: '5', label: 'League', teamA: 'Phoenix', teamB: 'Dragons', scoreA: '—', scoreB: '—', status: 'upcoming' },
+    { id: '6', label: 'T20', teamA: 'Strikers', teamB: 'Warriors', scoreA: '178/5', scoreB: '162/7', status: 'live' },
+  ];
+
   return (
     <section className="relative overflow-hidden">
+      <CursorGlow />
+      <GradientMesh variant="premium" />
+      <AnimatedBackground variant="dots" color="#7F1D1D" density="sparse" />
+      
+      {/* Floating orbs for connected feel */}
+      <FloatingOrb color="#7F1D1D" size={300} delay={0} duration={25} className="-left-32 top-1/4" />
+      <FloatingOrb color="#B8860B" size={250} delay={2} duration={20} className="-right-20 top-1/3" />
+      <FloatingOrb color="#7F1D1D" size={180} delay={4} duration={22} className="left-1/4 -bottom-20" />
+      
       <div
         className="absolute inset-0 -z-10 gradient-animate"
         style={{
@@ -86,42 +98,41 @@ const Hero = () => {
       />
 
       <div className="mx-auto max-w-7xl px-4 pb-20 pt-20 sm:px-6 sm:pt-28 lg:px-8 lg:pt-32">
-        <motion.div
-          initial="hidden"
-          animate="show"
-          variants={stagger}
-          className="mx-auto max-w-3xl text-center"
-        >
-          <motion.div
-            variants={fadeUp}
-            className="mx-auto inline-flex items-center gap-2 rounded-full border border-[#7F1D1D]/15 bg-white/80 px-3 py-1 text-xs font-semibold text-[#7F1D1D] backdrop-blur dark:border-[#FCA5A5]/20 dark:bg-[#7F1D1D]/10 dark:text-[#FCA5A5]"
+        {/* Live score ticker */}
+        <div className="animate-fade-in-up mx-auto mb-10 max-w-3xl" style={{ animationDelay: '0ms' }}>
+          <ScoreTicker items={liveScores} speed={35} />
+        </div>
+
+        <div className="animate-stagger mx-auto max-w-3xl text-center">
+          <div
+            className="animate-fade-in-up mx-auto inline-flex items-center gap-2 rounded-full border border-[#7F1D1D]/15 bg-white/80 px-3 py-1 text-xs font-semibold text-[#7F1D1D] backdrop-blur dark:border-[#FCA5A5]/20 dark:bg-[#7F1D1D]/10 dark:text-[#FCA5A5]"
           >
             <Sparkles className="h-3.5 w-3.5 text-[#B8860B]" />
             KhelSetu · नेपालको लागि
-          </motion.div>
+          </div>
 
-          <motion.h1
-            variants={fadeUp}
-            className="mt-6 text-balance font-display text-4xl font-bold tracking-tight text-[#0F172A] sm:text-6xl lg:text-7xl dark:text-white"
+          <h1
+            className="animate-fade-in-up mt-6 text-balance font-display text-4xl font-medium -tracking-[0.02em] text-[#0F172A] sm:text-6xl lg:text-7xl dark:text-white gradient-shimmer-text"
+            style={{ animationDelay: '60ms' }}
           >
             Run your local tournament{' '}
             <span className="text-[#7F1D1D] dark:text-[#FCA5A5]">
               like a national one.
             </span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            variants={fadeUp}
-            className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-[#475569] sm:text-xl dark:text-[#CBD5E1]"
+          <p
+            className="animate-fade-in-up mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-[#475569] sm:text-xl dark:text-[#CBD5E1]"
+            style={{ animationDelay: '120ms' }}
           >
             KhelSetu is the operations platform for cricket, football,
             volleyball, and basketball organizers across Nepal. Set up fixtures,
             run live scoring, and share results — in 10 minutes.
-          </motion.p>
+          </p>
 
-          <motion.div
-            variants={fadeUp}
-            className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
+          <div
+            className="animate-fade-in-up mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
+            style={{ animationDelay: '180ms' }}
           >
             <Link to={ROUTES.REGISTER}>
               <button className="group inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#991B1B] via-[#7F1D1D] to-[#450A0A] px-6 text-sm font-semibold text-white shadow-[0_4px_24px_-4px_rgb(127_29_29/0.5)] transition-all hover:shadow-[0_8px_32px_-4px_rgb(127_29_29/0.6)] active:translate-y-px">
@@ -135,18 +146,18 @@ const Hero = () => {
               </span>
               Watch a 90-second tour
             </button>
-          </motion.div>
+          </div>
 
-          <motion.p
-            variants={fadeUp}
-            className="mt-5 text-xs text-[#475569] dark:text-[#CBD5E1]"
+          <p
+            className="animate-fade-in-up mt-5 text-xs text-[#475569] dark:text-[#CBD5E1]"
+            style={{ animationDelay: '240ms' }}
           >
             Free for clubs under 8 teams · No credit card · 24/7 Nepali support
-          </motion.p>
+          </p>
 
-          <motion.div
-            variants={fadeUp}
-            className="mt-10 flex flex-col items-center justify-center gap-x-8 gap-y-4 text-sm sm:flex-row"
+          <div
+            className="animate-fade-in-up mt-10 flex flex-col items-center justify-center gap-x-8 gap-y-4 text-sm sm:flex-row"
+            style={{ animationDelay: '300ms' }}
             aria-label="Platform metrics"
           >
             <div className="flex items-center gap-2">
@@ -175,14 +186,12 @@ const Hero = () => {
               <ShieldCheck className="h-4 w-4 text-[#15803D]" aria-hidden />
               <span>SOC 2 ready · ISO-aligned</span>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="relative mx-auto mt-20 max-w-5xl"
+        <div
+          className="animate-fade-in-up relative mx-auto mt-20 max-w-5xl"
+          style={{ animationDelay: '350ms' }}
         >
           <div
             className="absolute -inset-x-6 -inset-y-6 -z-10 rounded-[2rem] opacity-30 blur-2xl"
@@ -230,44 +239,51 @@ const Hero = () => {
                       <p className="text-[10px] uppercase tracking-wider text-[#94A3B8]">
                         {s.label}
                       </p>
-                      <p className="mt-1 text-2xl font-bold tabular-nums text-[#0F172A] dark:text-white">
+                      <p className="mt-1 text-2xl font-semibold tabular-nums text-[#0F172A] dark:text-white">
                         {s.value}
                       </p>
                     </div>
                   ))}
                 </div>
-                <div className="rounded-xl border border-[#E7E5E4] bg-[#FAFAF9] p-4 dark:border-[#27272A] dark:bg-[#0F0F14]">
+                <div className="live-card relative rounded-xl border border-[#E7E5E4] bg-[#FAFAF9] p-4 dark:border-[#27272A] dark:bg-[#0F0F14] overflow-hidden">
+                  <div className="absolute inset-x-0 top-0 h-0.5 rounded-t-xl live-card-border" />
                   <div className="mb-3 flex items-center justify-between">
                     <p className="text-sm font-semibold text-[#0F172A] dark:text-white">
                       Live: Pokhara Tigers vs Kathmandu Eagles
                     </p>
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#DC2626] px-2 py-0.5 text-[10px] font-semibold text-white">
-                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#DC2626]/10 px-2 py-0.5 text-[10px] font-semibold text-[#DC2626]">
+                      <GlowPulse color="red" size="sm" />
                       LIVE
                     </span>
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {[
-                      { name: 'Tigers', score: 142, pct: 80 },
-                      { name: 'Eagles', score: 128, pct: 65 },
-                    ].map((t) => (
-                      <div key={t.name} className="flex items-center gap-3">
-                        <span className="w-16 text-xs font-medium text-[#475569] dark:text-[#CBD5E1]">
-                          {t.name}
-                        </span>
-                        <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#E7E5E4] dark:bg-[#27272A]">
+                      { name: 'Tigers', score: '142/3', overs: '15.2 ov', pct: 80 },
+                      { name: 'Eagles', score: '128/5', overs: '14.4 ov', pct: 65 },
+                    ].map((t, i) => (
+                      <div key={t.name}>
+                        <div className="flex items-center justify-between mb-1.5">
+                          <span className="text-xs font-medium text-[#475569] dark:text-[#CBD5E1]">
+                            {t.name}
+                          </span>
+                          <div className="flex items-baseline gap-1.5">
+                            <span className="font-mono text-sm font-bold tabular-nums text-[#0F172A] dark:text-white score-flash">
+                              {t.score}
+                            </span>
+                            <span className="text-[10px] text-[#94A3B8] dark:text-[#64748B] tabular-nums">
+                              {t.overs}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="h-1.5 overflow-hidden rounded-full bg-[#E7E5E4] dark:bg-[#27272A]">
                           <div
-                            className="h-full rounded-full"
+                            className="h-full rounded-full bg-gradient-to-r from-[#7F1D1D] to-[#B8860B]"
                             style={{
                               width: `${t.pct}%`,
-                              background:
-                                'linear-gradient(90deg, #7F1D1D 0%, #B8860B 100%)',
+                              animation: `progress-grow 1s ease-out ${i * 200}ms both`,
                             }}
                           />
                         </div>
-                        <span className="w-10 text-right font-mono text-sm font-bold tabular-nums text-[#0F172A] dark:text-white">
-                          {t.score}
-                        </span>
                       </div>
                     ))}
                   </div>
@@ -275,7 +291,7 @@ const Hero = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -344,7 +360,7 @@ const Features = () => {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <p className="eyebrow justify-center">Everything you need</p>
-            <h2 className="mt-5 font-display text-4xl font-bold tracking-tight text-[#0F172A] sm:text-5xl dark:text-white">
+            <h2 className="mt-5 font-display text-4xl font-medium -tracking-[0.01em] text-[#0F172A] sm:text-5xl dark:text-white">
               One platform, <span className="italic">every sport</span>.
             </h2>
             <p className="mt-4 text-pretty text-lg text-[#475569] dark:text-[#CBD5E1]">
@@ -374,7 +390,7 @@ const Features = () => {
                 >
                   <Radio className="h-5 w-5" />
                 </div>
-                <h3 className="mt-6 font-display text-3xl font-bold tracking-tight text-[#0F172A] dark:text-white">
+                <h3 className="mt-6 font-display text-3xl font-medium -tracking-[0.01em] text-[#0F172A] dark:text-white">
                   Live scoring, ball by ball.
                 </h3>
                 <p className="mt-3 text-pretty leading-relaxed text-[#475569] dark:text-[#CBD5E1]">
@@ -389,8 +405,8 @@ const Features = () => {
                     <p className="text-xs font-semibold text-[#475569] dark:text-[#94A3B8]">
                       OVER 12.3 · NPL ROUND 7
                     </p>
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#DC2626] px-2 py-0.5 text-[10px] font-semibold text-white">
-                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#DC2626]/10 px-2 py-0.5 text-[10px] font-semibold text-[#DC2626]">
+                      <GlowPulse color="red" size="sm" />
                       LIVE
                     </span>
                   </div>
@@ -413,7 +429,7 @@ const Features = () => {
                             }}
                           />
                         </div>
-                        <span className="w-10 text-right font-mono text-sm font-bold tabular-nums text-[#0F172A] dark:text-white">
+                        <span className="w-10 text-right font-mono text-sm font-semibold tabular-nums text-[#0F172A] dark:text-white">
                           {t.score}
                         </span>
                       </div>
@@ -705,7 +721,7 @@ const Sports = () => {
                 <Trophy className="h-3.5 w-3.5" />
                 Multi-sport support
               </div>
-              <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-[#0F172A] sm:text-4xl dark:text-white">
+              <h2 className="mt-4 font-display text-3xl font-medium -tracking-[0.01em] text-[#0F172A] sm:text-4xl dark:text-white">
                 Built for the way each sport is actually scored.
               </h2>
               <p className="mt-4 text-pretty text-lg text-[#475569] dark:text-[#CBD5E1]">
@@ -797,7 +813,7 @@ const HowItWorks = () => {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <p className="eyebrow justify-center">How it works</p>
-            <h2 className="mt-5 font-display text-4xl font-bold tracking-tight text-[#0F172A] sm:text-5xl dark:text-white">
+            <h2 className="mt-5 font-display text-4xl font-medium -tracking-[0.01em] text-[#0F172A] sm:text-5xl dark:text-white">
               From kickoff to championship in{' '}
               <span className="italic">four steps</span>.
             </h2>
@@ -918,7 +934,7 @@ const Metrics = () => {
                   />
                 )}
                 <p
-                  className="font-display text-5xl font-bold leading-none tracking-tight text-white sm:text-6xl"
+                  className="font-display text-5xl font-medium leading-none -tracking-[0.02em] text-white sm:text-6xl tabular-nums"
                   style={{ fontFeatureSettings: '"tnum"' }}
                 >
                   <CountUp
@@ -977,7 +993,7 @@ const Testimonials = () => {
           <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
             <div className="max-w-xl">
               <p className="eyebrow">Loved by organizers</p>
-              <h2 className="mt-5 font-display text-4xl font-bold tracking-tight text-[#0F172A] sm:text-5xl dark:text-white">
+              <h2 className="mt-5 font-display text-4xl font-medium -tracking-[0.01em] text-[#0F172A] sm:text-5xl dark:text-white">
                 Hear from the people who run{' '}
                 <span className="italic">Nepal&apos;s biggest</span>{' '}
                 tournaments.
@@ -995,7 +1011,7 @@ const Testimonials = () => {
                     </span>
                   ))}
                 </div>
-                <p className="mt-1 text-2xl font-bold tracking-tight text-[#0F172A] dark:text-white">
+                <p className="mt-1 text-2xl font-semibold tracking-tight tabular-nums text-[#0F172A] dark:text-white">
                   4.9
                   <span className="ml-1 text-sm font-medium text-[#94A3B8]">
                     / 5
@@ -1163,7 +1179,7 @@ const Pricing = () => {
               <Cpu className="h-3.5 w-3.5" />
               Pricing
             </div>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-[#0F172A] sm:text-4xl dark:text-white">
+            <h2 className="mt-4 font-display text-3xl font-medium -tracking-[0.01em] text-[#0F172A] sm:text-4xl dark:text-white">
               Pricing for local clubs, not international SaaS.
             </h2>
             <p className="mt-4 text-lg text-[#475569] dark:text-[#CBD5E1]">
@@ -1248,7 +1264,7 @@ const Pricing = () => {
                     {p.description}
                   </p>
                   <div className="mt-5 flex items-baseline gap-1">
-                    <span className="text-4xl font-bold tracking-tight text-[#0F172A] dark:text-white">
+                    <span className="text-4xl font-semibold tracking-tight tabular-nums text-[#0F172A] dark:text-white">
                       {price.amount}
                     </span>
                     {price.suffix && (
@@ -1400,7 +1416,7 @@ const FAQ = () => {
               <HelpCircle className="h-3.5 w-3.5" />
               FAQ
             </div>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-[#0F172A] sm:text-4xl dark:text-white">
+            <h2 className="mt-4 font-display text-3xl font-medium -tracking-[0.01em] text-[#0F172A] sm:text-4xl dark:text-white">
               Questions, answered.
             </h2>
             <p className="mt-4 text-lg text-[#475569] dark:text-[#CBD5E1]">
@@ -1438,6 +1454,7 @@ const CTA = () => {
               backgroundSize: '400% 400%',
             }}
           >
+            {/* Animated dot grid */}
             <div
               className="absolute inset-0 opacity-20"
               style={{
@@ -1446,14 +1463,9 @@ const CTA = () => {
                 backgroundSize: '24px 24px',
               }}
             />
-            <div
-              className="pointer-events-none absolute -left-20 -top-20 h-72 w-72 rounded-full opacity-30 blur-3xl"
-              style={{ background: '#B8860B' }}
-            />
-            <div
-              className="pointer-events-none absolute -right-20 -bottom-20 h-72 w-72 rounded-full opacity-30 blur-3xl"
-              style={{ background: '#7F1D1D' }}
-            />
+            {/* Floating orbs for premium feel */}
+            <FloatingOrb color="#B8860B" size={280} delay={0} duration={18} className="-left-20 -top-20" />
+            <FloatingOrb color="#7F1D1D" size={220} delay={3} duration={22} className="-right-16 -bottom-16" />
             <div className="relative">
               <div
                 className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-lg"
@@ -1464,7 +1476,7 @@ const CTA = () => {
               >
                 <Zap className="h-7 w-7" />
               </div>
-              <h2 className="mt-6 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">
+              <h2 className="mt-6 font-display text-4xl font-medium -tracking-[0.02em] text-white sm:text-5xl">
                 Ready to run your{' '}
                 <span className="italic text-[#E5B547]">best tournament</span>{' '}
                 yet?
@@ -1475,7 +1487,7 @@ const CTA = () => {
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Link to={ROUTES.REGISTER}>
-                  <button className="shine inline-flex h-12 items-center justify-center gap-2 rounded-xl px-6 text-sm font-semibold text-[#7F1D1D] shadow-lg transition-all hover:shadow-xl">
+                  <button className="shine inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-white px-6 text-sm font-semibold text-[#7F1D1D] shadow-lg transition-all hover:shadow-xl dark:text-[#7F1D1D]">
                     Start a tournament — free
                     <ChevronRight className="h-4 w-4" />
                   </button>

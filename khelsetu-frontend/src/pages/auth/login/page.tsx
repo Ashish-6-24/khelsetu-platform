@@ -58,7 +58,7 @@ export const LoginPage = () => {
         <Logo size="md" />
       </div>
 
-      <h1 className="font-display text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
+      <h1 className="font-display text-3xl font-medium -tracking-[0.01em] text-[var(--text-primary)] sm:text-4xl">
         Welcome back.
       </h1>
       <p className="mt-2 text-sm text-[var(--text-secondary)]">

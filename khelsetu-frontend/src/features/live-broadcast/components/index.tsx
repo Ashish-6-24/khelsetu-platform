@@ -66,11 +66,12 @@ export const StreamControl = ({
           <div className="flex gap-2">
             {!isLive ? (
               <Button
-                variant="primary"
+                variant="live"
+                size="lg"
                 className="w-full"
+                leftIcon={<Video className="h-4 w-4" />}
                 onClick={() => onStart('match-1')}
               >
-                <Video className="w-4 h-4 mr-2" />
                 Go Live
               </Button>
             ) : (

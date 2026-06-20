@@ -2,19 +2,21 @@ import { ActivityFeed } from '@components/dashboard/ActivityFeed';
 import type { ActivityItem } from '@components/dashboard/ActivityFeed';
 import { LiveMatchesPanel } from '@components/dashboard/LiveMatchesPanel';
 import { OnboardingChecklist } from '@components/dashboard/OnboardingChecklist';
-import { StatsCard } from '@components/dashboard/StatsCard';
+import { GradientMesh, GlowStatCard } from '@components/ui/PremiumCard';
+import { FloatingOrb } from '@components/ui/FloatingOrb';
 import { Button } from '@components/ui/Button';
+import { Badge } from '@components/ui/Badge';
 import { Skeleton, SkeletonStatsCard } from '@components/ui/Skeleton';
 import { matchService, tournamentService } from '@services/api/tournament';
 import { useAuthStore } from '@store/authStore';
 import { useQuery } from '@tanstack/react-query';
 import type { Match, Tournament } from '@types-domain/tournament';
 import { ROUTES } from '@utils/constants';
-import { motion } from 'framer-motion';
 import {
   ArrowRight,
   BarChart3,
   Calendar,
+  ChevronRight,
   Plus,
   Radio,
   Trophy,
@@ -102,33 +104,34 @@ export const DashboardPage = () => {
     matches?.filter((m) => m.status === 'scheduled').slice(0, 3) ?? [];
 
   return (
-    <div className="space-y-6">
-      <motion.section
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="relative overflow-hidden rounded-3xl border border-[var(--border-subtle)] bg-gradient-to-br from-[#7F1D1D] via-[#991B1B] to-[#450A0A] p-6 text-white shadow-[var(--shadow-lg)] sm:p-8"
+    <div className="relative space-y-6">
+      <GradientMesh variant="brand" />
+      <FloatingOrb color="#7F1D1D" size={200} delay={0} duration={20} className="-right-16 top-0" />
+      <FloatingOrb color="#B8860B" size={150} delay={2} duration={18} className="-left-12 bottom-0" />
+      
+      <section
+        className="relative overflow-hidden rounded-3xl border border-[var(--border-subtle)] bg-gradient-to-br from-[#7F1D1D] via-[#991B1B] to-[#450A0A] p-6 text-white shadow-[var(--shadow-lg)] sm:p-8 animate-fade-in-up"
       >
         <div className="pointer-events-none absolute inset-0 -z-0 opacity-30">
           <div className="absolute -left-10 -top-10 h-40 w-40 rounded-full bg-white/20 blur-3xl" />
-          <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-violet-300/30 blur-3xl" />
+          <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-[#B8860B]/20 blur-3xl" />
           <div className="absolute inset-0 grid-pattern opacity-30" />
         </div>
         <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold backdrop-blur">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur">
               <span className="inline-flex h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" />
               {liveMatches > 0
                 ? `${liveMatches} live match${liveMatches === 1 ? '' : 'es'} right now`
                 : 'All systems operational'}
             </div>
-            <h1 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
+            <h1 className="mt-3 font-display text-2xl font-medium -tracking-[0.01em] sm:text-3xl">
               Welcome back, {user?.name?.split(' ')[0] || 'champion'}.
             </h1>
             <p className="mt-1.5 max-w-xl text-sm text-blue-100 sm:text-base">
               {liveMatches > 0
-                ? 'You have live matches running. Jump into the scoring console now.'
-                : 'Here\u2019s a snapshot of your tournaments. Spin up a new event or open the scoring console.'}
+                ? 'Your matches are live. Jump in and keep the action going.'
+                : 'Here\u2019s what\u2019s happening with your tournaments. Ready to start something new?'}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -142,7 +145,7 @@ export const DashboardPage = () => {
             </Button>
             <Button
               size="lg"
-              variant="glass"
+              variant="create"
               leftIcon={<Plus className="h-4 w-4" />}
               onClick={() => navigate(ROUTES.TOURNAMENT_CREATE)}
             >
@@ -150,7 +153,7 @@ export const DashboardPage = () => {
             </Button>
           </div>
         </div>
-      </motion.section>
+      </section>
 
       <OnboardingChecklist
         state={{
@@ -162,43 +165,146 @@ export const DashboardPage = () => {
       />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatsCard
+        <GlowStatCard
           title="Total Tournaments"
           value={totalTournaments}
           icon={<Trophy className="h-5 w-5" />}
-          accent="blue"
+          glowColor="#7F1D1D"
           change={{ value: 12, isPositive: true }}
-          delay={0.05}
         />
-        <StatsCard
+        <GlowStatCard
           title="Live Matches"
           value={liveMatches}
           icon={<Radio className="h-5 w-5" />}
-          accent="red"
+          glowColor="#DC2626"
           change={
             liveMatches > 0
               ? { value: 100, isPositive: true }
               : { value: 0, isPositive: false }
           }
-          delay={0.1}
         />
-        <StatsCard
+        <GlowStatCard
           title="Total Teams"
           value={totalTeams}
           icon={<Users className="h-5 w-5" />}
-          accent="violet"
+          glowColor="#7C3AED"
           change={{ value: 8, isPositive: true }}
-          delay={0.15}
         />
-        <StatsCard
+        <GlowStatCard
           title="Total Players"
           value={totalPlayers}
           icon={<UserPlus className="h-5 w-5" />}
-          accent="green"
+          glowColor="#15803D"
           change={{ value: 24, isPositive: true }}
-          delay={0.2}
         />
       </div>
+
+      {liveMatches > 0 && (
+        <section className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-base font-semibold flex items-center gap-2 text-slate-900 dark:text-white">
+              <span className="inline-flex h-2 w-2 animate-pulse rounded-full bg-red-500" />
+              Live now
+            </h2>
+            <button
+              onClick={() => navigate(ROUTES.SCORING)}
+              className="text-xs font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
+            >
+              View all →
+            </button>
+          </div>
+          <div className="flex gap-4 overflow-x-auto pb-2 -mx-4 px-4 snap-x scrollbar-hide">
+            {(matches ?? [])
+              .filter((m) => m.status === 'live')
+              .map((match, idx) => {
+                const inningsA = match.score?.teamAInnings?.[0];
+                const inningsB = match.score?.teamBInnings?.[0];
+                const scoreA = match.score?.teamAScore ?? 0;
+                const scoreB = match.score?.teamBScore ?? 0;
+                const maxScore = Math.max(scoreA, scoreB, 1);
+                const progressA = (scoreA / maxScore) * 100;
+                const progressB = (scoreB / maxScore) * 100;
+
+                const formatScore = (innings?: typeof inningsA, total?: number) => {
+                  if (innings) {
+                    return `${innings.runs}/${innings.wickets}`;
+                  }
+                  return total?.toString() ?? '0';
+                };
+
+                const formatOvers = (innings?: typeof inningsA) => {
+                  if (!innings) return '';
+                  return `${innings.overs} ov`;
+                };
+
+                return (
+                  <button
+                    key={match.id}
+                    onClick={() => navigate(`/scoring/${match.id}`)}
+                    className="live-card spring-bounce relative group flex-shrink-0 w-72 snap-start rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-4 shadow-[var(--shadow-sm)] transition-all hover:shadow-[var(--shadow-md)] cursor-pointer overflow-hidden"
+                    style={{ animationDelay: `${idx * 150}ms` }}
+                  >
+                    <div className="absolute inset-x-0 top-0 h-0.5 rounded-t-2xl live-card-border" />
+                    <div className="flex items-center justify-between mb-3">
+                      <Badge variant="live" pulse size="sm">LIVE</Badge>
+                      <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                        Match {idx + 1}
+                      </span>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="truncate text-sm font-medium text-slate-900 dark:text-white">
+                          {match.teamA.name}
+                        </span>
+                        <div className="flex items-baseline gap-1.5">
+                          <span className="score-update score-flash tabular-nums text-base font-bold text-slate-900 dark:text-white">
+                            {formatScore(inningsA, scoreA)}
+                          </span>
+                          {inningsA && (
+                            <span className="text-[10px] text-slate-400 dark:text-slate-500 tabular-nums">
+                              {formatOvers(inningsA)}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+                        <div
+                          className="h-full rounded-full bg-gradient-to-r from-[#7F1D1D] to-[#B8860B] transition-all duration-1000 ease-out"
+                          style={{ width: `${progressA}%` }}
+                        />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="truncate text-sm font-medium text-slate-900 dark:text-white">
+                          {match.teamB.name}
+                        </span>
+                        <div className="flex items-baseline gap-1.5">
+                          <span className="score-update score-flash tabular-nums text-base font-bold text-slate-900 dark:text-white">
+                            {formatScore(inningsB, scoreB)}
+                          </span>
+                          {inningsB && (
+                            <span className="text-[10px] text-slate-400 dark:text-slate-500 tabular-nums">
+                              {formatOvers(inningsB)}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+                        <div
+                          className="h-full rounded-full bg-gradient-to-r from-[#B8860B] to-[#7F1D1D] transition-all duration-1000 ease-out"
+                          style={{ width: `${progressB}%` }}
+                        />
+                      </div>
+                    </div>
+                    <div className="mt-3 flex items-center justify-end gap-1 text-xs font-medium text-blue-600 group-hover:text-blue-700 dark:text-blue-400">
+                      Open scoring
+                      <ChevronRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+                    </div>
+                  </button>
+                );
+              })}
+          </div>
+        </section>
+      )}
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
@@ -245,7 +351,7 @@ const UpcomingMatches = ({
         </div>
         <button
           onClick={onSeeAll}
-          className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400"
+          className="inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
         >
           See all
           <ArrowRight className="h-3.5 w-3.5" />
@@ -270,11 +376,11 @@ const UpcomingMatches = ({
               key={m.id}
               className="flex items-center gap-4 px-5 py-4 transition-colors hover:bg-slate-50/70 sm:px-6 dark:hover:bg-slate-800/40"
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#7F1D1D] to-[#991B1B] text-sm font-semibold text-white">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#7F1D1D] to-[#991B1B] text-xs font-semibold text-white">
                 VS
               </div>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
+                <p className="truncate text-sm font-medium text-slate-900 dark:text-white">
                   {m.teamA.name} <span className="text-slate-400">vs</span>{' '}
                   {m.teamB.name}
                 </p>

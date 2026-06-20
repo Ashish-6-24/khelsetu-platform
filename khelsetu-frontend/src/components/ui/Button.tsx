@@ -1,10 +1,4 @@
 import { clsx } from 'clsx';
-import {
-  HTMLMotionProps,
-  type MotionProps,
-  type Variants,
-  motion,
-} from 'framer-motion';
 import { twMerge } from 'tailwind-merge';
 
 import { type ElementType, type ReactNode, forwardRef } from 'react';
@@ -17,7 +11,9 @@ type ButtonVariant =
   | 'danger'
   | 'success'
   | 'glass'
-  | 'gold';
+  | 'gold'
+  | 'live'
+  | 'create';
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 interface ButtonOwnProps {
@@ -36,26 +32,25 @@ interface ButtonOwnProps {
   disabled?: boolean;
 }
 
-// Polymorphic-friendly typing: strip native event handlers to avoid collisions
-// with the motion component, while still letting users pass `to`, `href`, etc.
 export type ButtonProps = ButtonOwnProps &
-  Omit<HTMLMotionProps<'button'>, keyof ButtonOwnProps>;
+  Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof ButtonOwnProps>;
 
 const baseStyles =
   'relative inline-flex items-center justify-center font-semibold tracking-tight ' +
   'rounded-xl whitespace-nowrap select-none align-middle ' +
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ' +
   'focus-visible:ring-[#7F1D1D] dark:focus-visible:ring-[#FCA5A5] dark:focus-visible:ring-offset-slate-900 ' +
-  'disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none ' +
+  'disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none ' +
   'transition-[transform,background-color,box-shadow,color,border-color] duration-200 ease-out ' +
-  'active:translate-y-px';
+  'active:translate-y-px hover:scale-[1.02] active:scale-[0.97] ' +
+  'will-change-transform';
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
     'bg-gradient-to-br from-[#991B1B] via-[#7F1D1D] to-[#450A0A] text-white ' +
     'shadow-[0_4px_14px_-2px_rgb(127_29_29/0.45)] ' +
     'hover:from-[#7F1D1D] hover:via-[#7F1D1D] hover:to-[#450A0A] ' +
-    'hover:shadow-[0_8px_24px_-4px_rgb(127_29_29/0.55)] ' +
+    'hover:shadow-[0_8px_24px_-4px_rgb(127_29_29/0.55)] hover:brightness-110 ' +
     'dark:from-[#FCA5A5] dark:via-[#FCA5A5] dark:to-[#FECACA] ' +
     'dark:text-[#1A0A0A]',
   secondary:
@@ -87,6 +82,22 @@ const variantStyles: Record<ButtonVariant, string> = {
     'hover:from-[#C4930A] hover:via-[#B8860B] hover:to-[#8B6709] ' +
     'hover:shadow-[0_8px_24px_-4px_rgb(184_134_11/0.55)] ' +
     'dark:from-[#E5B547] dark:via-[#D1A73D] dark:to-[#B8860B] dark:text-[#1A0A0A]',
+  live:
+    'bg-gradient-to-br from-[#B91C1C] via-[#991B1B] to-[#7F1D1D] text-white ' +
+    'shadow-[0_4px_14px_-2px_rgb(185_28_28/0.5)] ' +
+    'hover:from-[#991B1B] hover:via-[#7F1D1D] hover:to-[#450A0A] ' +
+    'hover:shadow-[0_8px_28px_-4px_rgb(185_28_28/0.6),0_0_50px_10px_rgb(185_28_28/0.2)] ' +
+    'hover:brightness-110 ' +
+    'dark:from-[#FCA5A5] dark:via-[#F87171] dark:to-[#FECACA] ' +
+    'dark:text-[#1A0A0A]',
+  create:
+    'bg-gradient-to-br from-[#B91C1C] via-[#991B1B] to-[#7F1D1D] text-white ' +
+    'shadow-[0_4px_14px_-2px_rgb(153_27_27/0.45)] ' +
+    'hover:from-[#991B1B] hover:via-[#7F1D1D] hover:to-[#450A0A] ' +
+    'hover:shadow-[0_8px_28px_-4px_rgb(153_27_27/0.55),0_0_0_2px_rgb(153_27_27/0.15)] ' +
+    'hover:brightness-110 ' +
+    'dark:from-[#FCA5A5] dark:via-[#F87171] dark:to-[#FECACA] ' +
+    'dark:text-[#1A0A0A]',
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -97,29 +108,14 @@ const sizeStyles: Record<ButtonSize, string> = {
   xl: 'h-14 px-7 text-base gap-2.5',
 };
 
-const interactiveVariants: Variants = {
-  rest: { scale: 1 },
-  hover: { scale: 1.015 },
-  tap: { scale: 0.97 },
-};
-
-const interactiveMotionProps: Pick<
-  MotionProps,
-  'initial' | 'whileHover' | 'whileTap' | 'transition'
-> = {
-  initial: 'rest',
-  whileHover: 'hover',
-  whileTap: 'tap',
-  transition: { type: 'spring', stiffness: 400, damping: 25 },
-};
-
 /**
  * Button — the workhorse interactive primitive.
  *
  * Polymorphic: pass `as="a"` or `as={Link}` to render as a link/anchor
  * with all the same styling.
  *
- * Honors `prefers-reduced-motion` by removing scale feedback.
+ * Pure CSS animations (hover scale, active press) — no JS animation library.
+ * Honors `prefers-reduced-motion` via Tailwind's built-in handling.
  */
 export const Button = forwardRef<HTMLElement, ButtonProps>(
   function Button(props, ref) {
@@ -138,7 +134,6 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(
       ? { 'aria-busy': true, 'aria-live': true }
       : {};
 
-    // Extract own props so we can forward the rest to motion.
     const {
       variant: _v,
       size: _s,
@@ -154,12 +149,9 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(
       ...rest
     } = props;
 
-    // Build a motion-wrapped component for the requested tag.
-    const Comp = motion(Tag) as typeof motion.button;
-
     return (
-      <Comp
-        ref={ref as React.Ref<HTMLButtonElement>}
+      <Tag
+        ref={ref}
         className={twMerge(
           clsx(
             baseStyles,
@@ -170,11 +162,10 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(
             className,
           ),
         )}
-        disabled={isDisabled}
-        variants={interactiveVariants}
-        {...interactiveMotionProps}
+        disabled={isDisabled || undefined}
+        aria-disabled={isDisabled || undefined}
         {...a11y}
-        {...(rest as MotionProps)}
+        {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
       >
         {isLoading && (
           <span
@@ -190,7 +181,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(
         {!isLoading && rightIcon && (
           <span className="inline-flex shrink-0">{rightIcon as ReactNode}</span>
         )}
-      </Comp>
+      </Tag>
     );
   },
 );

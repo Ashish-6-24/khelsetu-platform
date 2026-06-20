@@ -1,6 +1,4 @@
-import { useReducedMotion } from '@features/accessibility';
 import { clsx } from 'clsx';
-import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
 import { useState } from 'react';
@@ -28,7 +26,6 @@ export const Accordion = ({
   const [openIds, setOpenIds] = useState<Set<string>>(
     () => new Set(defaultOpen ? [defaultOpen] : []),
   );
-  const reducedMotion = useReducedMotion();
 
   const toggle = (id: string) => {
     setOpenIds((prev) => {
@@ -47,7 +44,7 @@ export const Accordion = ({
           <div
             key={item.id}
             className={clsx(
-              'overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] transition-shadow',
+              'rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] transition-shadow',
               isOpen && 'shadow-sm',
             )}
           >
@@ -65,37 +62,20 @@ export const Accordion = ({
                 aria-hidden
               />
             </button>
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  key="content"
-                  initial={
-                    reducedMotion
-                      ? { opacity: 0, height: 'auto' }
-                      : { height: 0, opacity: 0 }
-                  }
-                  animate={
-                    reducedMotion
-                      ? { opacity: 1, height: 'auto' }
-                      : { height: 'auto', opacity: 1 }
-                  }
-                  exit={
-                    reducedMotion
-                      ? { opacity: 0, height: 'auto' }
-                      : { height: 0, opacity: 0 }
-                  }
-                  transition={{
-                    duration: reducedMotion ? 0 : 0.25,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  className="overflow-hidden"
-                >
-                  <div className="border-t border-[var(--border-subtle)] px-4 pb-4 pt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                    {item.content}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* CSS Grid animation: 0fr → 1fr for butter-smooth height transition */}
+            <div
+              className="grid transition-[grid-template-rows] duration-250 ease-out"
+              style={{
+                gridTemplateRows: isOpen ? '1fr' : '0fr',
+                transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+              }}
+            >
+              <div className="overflow-hidden">
+                <div className="border-t border-[var(--border-subtle)] px-4 pb-4 pt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                  {item.content}
+                </div>
+              </div>
+            </div>
           </div>
         );
       })}

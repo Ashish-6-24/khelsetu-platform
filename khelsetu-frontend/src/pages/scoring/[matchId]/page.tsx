@@ -97,7 +97,7 @@ export const ScoringMatchPage = () => {
               <p className="text-lg font-semibold text-gray-900 dark:text-white">
                 Ready to start scoring?
               </p>
-              <Button onClick={handleStartMatch}>Start Match</Button>
+              <Button variant="live" onClick={handleStartMatch}>Start Match</Button>
             </div>
           </CardBody>
         </Card>
