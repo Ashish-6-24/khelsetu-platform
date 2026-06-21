@@ -1,7 +1,14 @@
 import { clsx } from 'clsx';
-import { type ReactNode, useCallback } from 'react';
-import { Link, type LinkProps, useNavigate, type NavigateOptions } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
+
+import { type ReactNode, useCallback } from 'react';
+
+import {
+  Link,
+  type LinkProps,
+  type NavigateOptions,
+  useNavigate,
+} from 'react-router-dom';
 
 interface ViewTransitionLinkProps extends LinkProps {
   children: ReactNode;
@@ -24,9 +31,9 @@ export const ViewTransitionLink = ({
     if (
       typeof document !== 'undefined' &&
       'startViewTransition' in document &&
-      typeof (document as any).startViewTransition === 'function'
+      typeof document.startViewTransition === 'function'
     ) {
-      (document as any).startViewTransition(() => {
+      document.startViewTransition(() => {
         onClick?.(e);
       });
     } else {
@@ -58,9 +65,9 @@ export function useViewTransitionNavigate() {
       if (
         typeof document !== 'undefined' &&
         'startViewTransition' in document &&
-        typeof (document as any).startViewTransition === 'function'
+        typeof document.startViewTransition === 'function'
       ) {
-        (document as any).startViewTransition(() => {
+        document.startViewTransition(() => {
           navigate(to, options);
         });
       } else {

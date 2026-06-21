@@ -8,7 +8,14 @@ import { useAuthStore } from '@store/authStore';
 import { useMutation } from '@tanstack/react-query';
 import type { User } from '@types-domain/auth';
 import { clsx } from 'clsx';
-import { Loader2, Moon, Phone, Save, Sun, User as UserIcon } from 'lucide-react';
+import {
+  Loader2,
+  Moon,
+  Phone,
+  Save,
+  Sun,
+  User as UserIcon,
+} from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -56,6 +63,7 @@ const SaveButton = ({
 
   useEffect(() => {
     if (isLoading) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setState('loading');
     } else if (state === 'loading') {
       setState('success');
@@ -63,7 +71,7 @@ const SaveButton = ({
       const timer = setTimeout(() => setState('idle'), 2000);
       return () => clearTimeout(timer);
     }
-  }, [isLoading]);
+  }, [isLoading, state, onSuccess]);
 
   return (
     <button
@@ -80,11 +88,17 @@ const SaveButton = ({
           : 'bg-gradient-to-br from-[#B91C1C] via-[#991B1B] to-[#7F1D1D] text-white shadow-[0_4px_14px_-2px_rgb(153_27_27/0.45)] hover:from-[#991B1B] hover:via-[#7F1D1D] hover:to-[#450A0A] hover:shadow-[0_8px_28px_-4px_rgb(153_27_27/0.55)] hover:brightness-110',
       )}
     >
-      {state === 'loading' && (
-        <Loader2 className="h-4 w-4 animate-spin" />
-      )}
+      {state === 'loading' && <Loader2 className="h-4 w-4 animate-spin" />}
       {state === 'success' && (
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          className="h-4 w-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <polyline points="20 6 9 17 4 12" className="check-draw" />
         </svg>
       )}
@@ -209,7 +223,13 @@ export const SettingsPage = () => {
               <div className="flex gap-2">
                 <SaveButton
                   isLoading={isProfileSubmitting}
-                  onSuccess={() => addToast({ title: 'Profile updated', type: 'success', message: 'Profile updated successfully' })}
+                  onSuccess={() =>
+                    addToast({
+                      title: 'Profile updated',
+                      type: 'success',
+                      message: 'Profile updated successfully',
+                    })
+                  }
                 />
                 <Button
                   type="button"
@@ -260,7 +280,11 @@ export const SettingsPage = () => {
                     isLoading={isPasswordSubmitting}
                     label="Update Password"
                     onSuccess={() => {
-                      addToast({ title: 'Password updated', type: 'success', message: 'Password updated successfully' });
+                      addToast({
+                        title: 'Password updated',
+                        type: 'success',
+                        message: 'Password updated successfully',
+                      });
                       setShowPasswordForm(false);
                       resetPassword();
                     }}

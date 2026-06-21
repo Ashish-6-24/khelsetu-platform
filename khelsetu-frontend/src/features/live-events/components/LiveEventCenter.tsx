@@ -1,14 +1,19 @@
 import { Badge } from '@components/ui/Badge';
 import { clsx } from 'clsx';
 
+import { useCallback, useState } from 'react';
+
 import { useMatchTimer } from '../hooks/useMatchTimer';
-import type { LiveMatchEvent, LiveEventType, SportType, TeamInfo } from '../types';
+import type {
+  LiveEventType,
+  LiveMatchEvent,
+  SportType,
+  TeamInfo,
+} from '../types';
 import { createLiveMatchEvent } from '../utils/eventCreators';
 import { EventInputPanel } from './EventInputPanel';
 import { LiveTimeline } from './LiveTimeline';
 import { MatchControls } from './MatchControls';
-
-import { useCallback, useState } from 'react';
 
 interface LiveEventCenterProps {
   matchId: string;
@@ -45,7 +50,14 @@ export const LiveEventCenter = ({
       );
       setEvents((prev) => [...prev, newEvent]);
     },
-    [matchId, sport, timer.currentMinute, timer.phase, selectedTeam],
+    [
+      matchId,
+      sport,
+      timer.currentMinute,
+      timer.currentSecond,
+      timer.phase,
+      selectedTeam,
+    ],
   );
 
   const isMatchActive =
