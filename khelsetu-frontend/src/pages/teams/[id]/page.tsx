@@ -121,7 +121,11 @@ export const TeamDetailPage = () => {
           </p>
         </div>
         <div className="flex gap-3">
-          <Button variant="create" leftIcon={<Plus className="h-4 w-4" />} onClick={() => setShowAddPlayerModal(true)}>
+          <Button
+            variant="create"
+            leftIcon={<Plus className="h-4 w-4" />}
+            onClick={() => setShowAddPlayerModal(true)}
+          >
             Add Player
           </Button>
         </div>

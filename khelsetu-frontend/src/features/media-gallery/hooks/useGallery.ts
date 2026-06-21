@@ -1,6 +1,8 @@
-import { useState, useCallback, useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { mediaService } from '@services/api/media';
+import { useQuery } from '@tanstack/react-query';
+
+import { useCallback, useMemo, useState } from 'react';
+
 import { GalleryFilters } from '../types';
 import { filterMedia } from '../utils/galleryUtils';
 

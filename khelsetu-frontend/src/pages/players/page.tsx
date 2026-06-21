@@ -98,7 +98,7 @@ export const PlayersPage = () => {
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             {searchQuery
               ? 'Try a different search term'
-              : 'Add players to your teams and they\'ll show up here'}
+              : "Add players to your teams and they'll show up here"}
           </p>
         </div>
       ) : (

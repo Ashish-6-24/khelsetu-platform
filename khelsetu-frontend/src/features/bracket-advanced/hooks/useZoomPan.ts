@@ -24,9 +24,7 @@ interface UseZoomPanReturn {
   };
 }
 
-export function useZoomPan(
-  options?: UseZoomPanOptions,
-): UseZoomPanReturn {
+export function useZoomPan(options?: UseZoomPanOptions): UseZoomPanReturn {
   const { minScale = 0.25, maxScale = 3, step = 0.15 } = options ?? {};
 
   const [scale, setScale] = useState(1);

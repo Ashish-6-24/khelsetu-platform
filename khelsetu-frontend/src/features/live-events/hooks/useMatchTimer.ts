@@ -157,7 +157,8 @@ export const useMatchTimer = () => {
 
   const canStart = state.phase === 'not_started';
   const canPause = state.isRunning && state.phase !== 'completed';
-  const canResume = !state.isRunning && state.pausedAt !== null && state.phase !== 'completed';
+  const canResume =
+    !state.isRunning && state.pausedAt !== null && state.phase !== 'completed';
   const canEnd = state.phase !== 'not_started' && state.phase !== 'completed';
   const canAdvance =
     !state.isRunning &&

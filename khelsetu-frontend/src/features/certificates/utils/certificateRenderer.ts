@@ -39,7 +39,9 @@ export async function renderCertificateToPng(): Promise<string> {
   return canvas.toDataURL('image/png');
 }
 
-export async function renderCertificateToPdf(data: CertificateData): Promise<void> {
+export async function renderCertificateToPdf(
+  data: CertificateData,
+): Promise<void> {
   const { jsPDF } = await import('jspdf');
   const { default: html2canvas } = await import('html2canvas');
   const element = document.getElementById('certificate-preview');

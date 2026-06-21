@@ -1,7 +1,8 @@
-import { NewsCard } from './NewsCard';
 import { Skeleton } from '@components/ui/Skeleton';
-import type { NewsArticle } from '../types';
 import { Newspaper } from 'lucide-react';
+
+import type { NewsArticle } from '../types';
+import { NewsCard } from './NewsCard';
 
 interface NewsFeedProps {
   articles: NewsArticle[];

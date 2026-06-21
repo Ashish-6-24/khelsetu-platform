@@ -1,10 +1,17 @@
-import { getCategoryColor, getCategoryLabel, formatDate } from '../utils/newsUtils';
-import type { NewsArticle } from '../types';
+import { ROUTES } from '@utils/constants';
 import { clsx } from 'clsx';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { ROUTES } from '@utils/constants';
+
 import { useCallback, useEffect, useState } from 'react';
+
+import { Link } from 'react-router-dom';
+
+import type { NewsArticle } from '../types';
+import {
+  formatDate,
+  getCategoryColor,
+  getCategoryLabel,
+} from '../utils/newsUtils';
 
 interface NewsCarouselProps {
   articles: NewsArticle[];

@@ -73,7 +73,11 @@ export const Navbar = () => {
             </Button>
           </Link>
           <Link to={ROUTES.REGISTER}>
-            <Button variant="create" size="sm" rightIcon={<span aria-hidden>→</span>}>
+            <Button
+              variant="create"
+              size="sm"
+              rightIcon={<span aria-hidden>→</span>}
+            >
               Get started
             </Button>
           </Link>
@@ -126,7 +130,9 @@ export const Navbar = () => {
                   </Button>
                 </Link>
                 <Link to={ROUTES.REGISTER} onClick={() => setOpen(false)}>
-                  <Button variant="create" fullWidth>Get started</Button>
+                  <Button variant="create" fullWidth>
+                    Get started
+                  </Button>
                 </Link>
               </div>
             </div>

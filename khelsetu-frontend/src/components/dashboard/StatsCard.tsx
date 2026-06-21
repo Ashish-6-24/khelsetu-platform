@@ -43,6 +43,7 @@ function AnimatedNumber({
 
   useEffect(() => {
     if (!isNumeric || reducedMotion) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setDisplay(n);
       return;
     }

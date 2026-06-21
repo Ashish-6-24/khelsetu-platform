@@ -1,6 +1,7 @@
 import { clsx } from 'clsx';
-import { useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import { useMemo } from 'react';
 
 interface BallEvent {
   runs?: number;
@@ -18,8 +19,10 @@ interface BallTimelineProps {
 
 const ballColor = (event: BallEvent): string => {
   if (event.wicket) return 'bg-red-500';
-  if (event.extra === 'wide' || event.extra === 'no-ball') return 'bg-yellow-500';
-  if (event.extra === 'byes' || event.extra === 'leg-byes') return 'bg-blue-400';
+  if (event.extra === 'wide' || event.extra === 'no-ball')
+    return 'bg-yellow-500';
+  if (event.extra === 'byes' || event.extra === 'leg-byes')
+    return 'bg-blue-400';
   if (event.runs === undefined) return 'bg-gray-400';
   if (event.runs === 0) return 'bg-gray-400';
   if (event.runs === 4) return 'bg-blue-600';
@@ -50,12 +53,7 @@ export const BallTimeline = ({
 
   return (
     <div
-      className={twMerge(
-        clsx(
-          'flex items-center gap-1 flex-wrap',
-          className,
-        ),
-      )}
+      className={twMerge(clsx('flex items-center gap-1 flex-wrap', className))}
       role="list"
       aria-label="Ball-by-ball timeline"
     >
@@ -109,7 +107,10 @@ export const BallTimeline = ({
 export const BallLegend = ({ className }: { className?: string }) => (
   <div
     className={twMerge(
-      clsx('flex items-center gap-3 text-[10px] text-[var(--text-muted)]', className),
+      clsx(
+        'flex items-center gap-3 text-[10px] text-[var(--text-muted)]',
+        className,
+      ),
     )}
   >
     <span className="inline-flex items-center gap-1">

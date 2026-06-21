@@ -1,6 +1,7 @@
 import type { LiveMatchEvent } from '@features/live-events/types';
-import type { MatchReport } from '../types';
 import { StatComparisonBar } from '@features/match-statistics/components/StatComparisonBar';
+
+import type { MatchReport } from '../types';
 
 interface MatchReportProps {
   report: MatchReport;
@@ -14,7 +15,11 @@ function formatMinute(event: LiveMatchEvent): string {
     : `${event.minute}'`;
 }
 
-export function MatchReport({ report, teamAName, teamBName }: MatchReportProps) {
+export function MatchReport({
+  report,
+  teamAName,
+  teamBName,
+}: MatchReportProps) {
   return (
     <div className="space-y-4 print:space-y-4 sm:space-y-6">
       {/* Report Header */}
@@ -31,7 +36,9 @@ export function MatchReport({ report, teamAName, teamBName }: MatchReportProps) 
                 {report.finalScore.teamA}
               </p>
             </div>
-            <div className="text-xl font-light text-white/60 sm:text-2xl">vs</div>
+            <div className="text-xl font-light text-white/60 sm:text-2xl">
+              vs
+            </div>
             <div className="text-center">
               <p className="text-sm font-semibold sm:text-lg">{teamBName}</p>
               <p className="mt-1 text-4xl font-bold tabular-nums sm:mt-2 sm:text-6xl">
@@ -119,9 +126,7 @@ export function MatchReport({ report, teamAName, teamBName }: MatchReportProps) 
                 <div className="flex items-center gap-3">
                   <span
                     className={`h-5 w-4 rounded-sm ${
-                      card.type === 'red_card'
-                        ? 'bg-red-500'
-                        : 'bg-yellow-400'
+                      card.type === 'red_card' ? 'bg-red-500' : 'bg-yellow-400'
                     }`}
                     aria-hidden="true"
                   />
@@ -246,16 +251,28 @@ export function MatchReport({ report, teamAName, teamBName }: MatchReportProps) 
             <table className="w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-gray-200 dark:border-gray-700">
-                  <th scope="col" className="pb-3 font-semibold text-gray-900 dark:text-white">
+                  <th
+                    scope="col"
+                    className="pb-3 font-semibold text-gray-900 dark:text-white"
+                  >
                     Player
                   </th>
-                  <th scope="col" className="pb-3 font-semibold text-gray-900 dark:text-white">
+                  <th
+                    scope="col"
+                    className="pb-3 font-semibold text-gray-900 dark:text-white"
+                  >
                     Team
                   </th>
-                  <th scope="col" className="pb-3 text-center font-semibold text-gray-900 dark:text-white">
+                  <th
+                    scope="col"
+                    className="pb-3 text-center font-semibold text-gray-900 dark:text-white"
+                  >
                     Rating
                   </th>
-                  <th scope="col" className="pb-3 font-semibold text-gray-900 dark:text-white">
+                  <th
+                    scope="col"
+                    className="pb-3 font-semibold text-gray-900 dark:text-white"
+                  >
                     Highlights
                   </th>
                 </tr>

@@ -1,8 +1,12 @@
-import type { BenchPlayer, FormationPlayer, FormationType, TacticalDrawing } from '../types/index';
-
 import { Button } from '@components/ui/Button';
 import { Card, CardBody } from '@components/ui/Card';
 
+import type {
+  BenchPlayer,
+  FormationPlayer,
+  FormationType,
+  TacticalDrawing,
+} from '../types/index';
 import { DraggablePlayer } from './DraggablePlayer';
 import { FootballPitch } from './FootballPitch';
 import { FormationSelector } from './FormationSelector';
@@ -52,7 +56,10 @@ export const FormationBuilder = ({
                 plays.
               </p>
             </div>
-            <FormationSelector value={formationType} onChange={onFormationChange} />
+            <FormationSelector
+              value={formationType}
+              onChange={onFormationChange}
+            />
           </div>
         </CardBody>
       </Card>
@@ -88,18 +95,10 @@ export const FormationBuilder = ({
           <PlayerBench players={bench} />
 
           <div className="flex gap-3">
-            <Button
-              variant="primary"
-              onClick={onSave}
-              className="flex-1"
-            >
+            <Button variant="primary" onClick={onSave} className="flex-1">
               Save Formation
             </Button>
-            <Button
-              variant="outline"
-              onClick={onReset}
-              className="flex-1"
-            >
+            <Button variant="outline" onClick={onReset} className="flex-1">
               Reset
             </Button>
           </div>

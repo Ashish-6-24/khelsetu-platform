@@ -4,7 +4,9 @@ interface SkeletonMatchCardProps {
   compact?: boolean;
 }
 
-export const SkeletonMatchCard = ({ compact = false }: SkeletonMatchCardProps) => {
+export const SkeletonMatchCard = ({
+  compact = false,
+}: SkeletonMatchCardProps) => {
   if (compact) {
     return (
       <div className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-3">

@@ -1,14 +1,16 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
+
 import type { CertificateData, CertificateType } from '../types';
 import {
+  downloadPng,
   generateCertificateId,
   generateVerificationUrl,
   renderCertificateToPdf,
-  downloadPng,
 } from '../utils/certificateRenderer';
 
 export function useCertificate() {
-  const [certificateData, setCertificateData] = useState<CertificateData | null>(null);
+  const [certificateData, setCertificateData] =
+    useState<CertificateData | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
   const generateCertificate = useCallback(

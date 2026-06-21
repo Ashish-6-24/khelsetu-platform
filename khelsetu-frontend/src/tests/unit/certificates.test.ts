@@ -1,4 +1,7 @@
-import { generateCertificateId, generateVerificationUrl } from '@features/certificates/utils/certificateRenderer';
+import {
+  generateCertificateId,
+  generateVerificationUrl,
+} from '@features/certificates/utils/certificateRenderer';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('Certificate Utils', () => {
@@ -28,7 +31,7 @@ describe('Certificate Utils', () => {
           origin: 'https://khelsetu.com',
         },
       });
-      
+
       const url = generateVerificationUrl('CERT-123');
       expect(url).toBe('https://khelsetu.com/certificates/verify/CERT-123');
     });
@@ -39,7 +42,7 @@ describe('Certificate Utils', () => {
           origin: 'https://example.com',
         },
       });
-      
+
       const certId = 'TEST-456';
       const url = generateVerificationUrl(certId);
       expect(url).toContain(certId);

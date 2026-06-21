@@ -1,6 +1,7 @@
 import { Badge } from '@components/ui/Badge';
 import { Button } from '@components/ui/Button';
 import { Card, CardBody } from '@components/ui/Card';
+
 import type { MatchPhase, MatchTimerState } from '../types';
 
 interface MatchControlsProps {
@@ -76,11 +77,7 @@ export const MatchControls = ({ timer }: MatchControlsProps) => {
           <div className="flex-1 w-full">
             <div className="flex flex-wrap items-center justify-center gap-2">
               {timer.canStart && (
-                <Button
-                  variant="success"
-                  size="md"
-                  onClick={timer.startMatch}
-                >
+                <Button variant="success" size="md" onClick={timer.startMatch}>
                   Start Match
                 </Button>
               )}
@@ -97,21 +94,13 @@ export const MatchControls = ({ timer }: MatchControlsProps) => {
               )}
 
               {timer.canResume && (
-                <Button
-                  variant="success"
-                  size="md"
-                  onClick={timer.resumeMatch}
-                >
+                <Button variant="success" size="md" onClick={timer.resumeMatch}>
                   Resume
                 </Button>
               )}
 
               {timer.canEnd && (
-                <Button
-                  variant="danger"
-                  size="md"
-                  onClick={timer.endMatch}
-                >
+                <Button variant="danger" size="md" onClick={timer.endMatch}>
                   End Match
                 </Button>
               )}
@@ -147,11 +136,7 @@ export const MatchControls = ({ timer }: MatchControlsProps) => {
               )}
 
               {timer.canAdvance && timer.phase === 'second_half' && (
-                <Button
-                  variant="gold"
-                  size="md"
-                  onClick={timer.startPenalties}
-                >
+                <Button variant="gold" size="md" onClick={timer.startPenalties}>
                   Penalties
                 </Button>
               )}

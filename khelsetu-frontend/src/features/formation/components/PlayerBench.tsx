@@ -1,9 +1,9 @@
-import type { BenchPlayer } from '../types/index';
-import { POSITION_COLORS } from '../utils/formations';
-
 import { Badge } from '@components/ui/Badge';
 import { Card, CardBody } from '@components/ui/Card';
 import { clsx } from 'clsx';
+
+import type { BenchPlayer } from '../types/index';
+import { POSITION_COLORS } from '../utils/formations';
 
 interface PlayerBenchProps {
   players: BenchPlayer[];
@@ -64,7 +64,9 @@ export const PlayerBench = ({ players, onSelectPlayer }: PlayerBenchProps) => {
             return (
               <div key={status} className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm" aria-hidden="true">{config.icon}</span>
+                  <span className="text-sm" aria-hidden="true">
+                    {config.icon}
+                  </span>
                   <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">
                     {config.label}
                   </span>

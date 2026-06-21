@@ -1,4 +1,4 @@
-import type { TeamStatistics, PlayerMatchStat } from '../types';
+import type { PlayerMatchStat, TeamStatistics } from '../types';
 
 export function calculatePossession(
   teamA: TeamStatistics,

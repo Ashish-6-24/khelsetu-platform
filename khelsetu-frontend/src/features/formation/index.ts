@@ -16,7 +16,11 @@ export {
   getFormationByType,
 } from './utils/formations';
 
-export { snapToGrid, clampPosition, getPositionLabel } from './utils/pitchPositions';
+export {
+  snapToGrid,
+  clampPosition,
+  getPositionLabel,
+} from './utils/pitchPositions';
 
 export type {
   FormationType,

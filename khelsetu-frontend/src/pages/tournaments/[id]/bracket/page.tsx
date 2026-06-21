@@ -93,7 +93,12 @@ export const TournamentBracketPage = () => {
               ? 'round-robin'
               : tournament.format === 'knockout'
                 ? 'single-elimination'
-                : tournament.format as 'single-elimination' | 'double-elimination' | 'knockout' | 'round-robin' | 'group-to-knockout'
+                : (tournament.format as
+                    | 'single-elimination'
+                    | 'double-elimination'
+                    | 'knockout'
+                    | 'round-robin'
+                    | 'group-to-knockout')
           }
           tournamentName={tournament.name}
         />

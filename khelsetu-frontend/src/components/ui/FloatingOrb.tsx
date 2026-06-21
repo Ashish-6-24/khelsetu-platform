@@ -57,10 +57,7 @@ export const ConnectedDots = ({
   }));
 
   return (
-    <div
-      className={twMerge(clsx('relative h-32 w-32', className))}
-      aria-hidden
-    >
+    <div className={twMerge(clsx('relative h-32 w-32', className))} aria-hidden>
       <svg className="absolute inset-0 h-full w-full" viewBox="-60 -60 120 120">
         {positions.map((pos, i) => {
           const next = positions[(i + 1) % positions.length]!;
@@ -144,12 +141,7 @@ export const AnimatedNumber = ({
 };
 
 /** Simple count-up animation using requestAnimationFrame */
-function CountUpAnimated({
-  target,
-}: {
-  target: number;
-  duration?: number;
-}) {
+function CountUpAnimated({ target }: { target: number; duration?: number }) {
   // This is a placeholder - in production, use a hook like useCountUp
   // For now, just render the target value
   return <>{target.toLocaleString()}</>;

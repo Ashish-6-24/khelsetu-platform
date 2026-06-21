@@ -24,7 +24,12 @@ export const AnimatedBackground = ({
   if (variant === 'particles') {
     return (
       <div
-        className={twMerge(clsx('pointer-events-none absolute inset-0 -z-10 overflow-hidden', className))}
+        className={twMerge(
+          clsx(
+            'pointer-events-none absolute inset-0 -z-10 overflow-hidden',
+            className,
+          ),
+        )}
         aria-hidden
       >
         {Array.from({ length: count }).map((_, i) => (
@@ -51,7 +56,9 @@ export const AnimatedBackground = ({
   if (variant === 'grid') {
     return (
       <div
-        className={twMerge(clsx('pointer-events-none absolute inset-0 -z-10', className))}
+        className={twMerge(
+          clsx('pointer-events-none absolute inset-0 -z-10', className),
+        )}
         aria-hidden
       >
         <div
@@ -71,7 +78,9 @@ export const AnimatedBackground = ({
   if (variant === 'dots') {
     return (
       <div
-        className={twMerge(clsx('pointer-events-none absolute inset-0 -z-10', className))}
+        className={twMerge(
+          clsx('pointer-events-none absolute inset-0 -z-10', className),
+        )}
         aria-hidden
       >
         <div
@@ -88,7 +97,12 @@ export const AnimatedBackground = ({
   // waves
   return (
     <div
-      className={twMerge(clsx('pointer-events-none absolute inset-0 -z-10 overflow-hidden', className))}
+      className={twMerge(
+        clsx(
+          'pointer-events-none absolute inset-0 -z-10 overflow-hidden',
+          className,
+        ),
+      )}
       aria-hidden
     >
       <svg

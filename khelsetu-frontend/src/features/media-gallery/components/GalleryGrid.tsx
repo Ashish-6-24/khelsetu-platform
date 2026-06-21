@@ -1,6 +1,7 @@
+import { Image, Play } from 'lucide-react';
+
 import { MediaItem } from '../types';
 import { formatDuration } from '../utils/galleryUtils';
-import { Image, Play } from 'lucide-react';
 
 interface GalleryGridProps {
   items: MediaItem[];
@@ -19,8 +20,12 @@ export function GalleryGrid({ items, onItemClick }: GalleryGridProps) {
     return (
       <div className="flex flex-col items-center justify-center py-16">
         <Image className="mb-4 h-16 w-16 text-gray-300 dark:text-gray-600" />
-        <p className="text-lg font-medium text-gray-500 dark:text-gray-400">No media found</p>
-        <p className="text-sm text-gray-400 dark:text-gray-500">Try adjusting your filters</p>
+        <p className="text-lg font-medium text-gray-500 dark:text-gray-400">
+          No media found
+        </p>
+        <p className="text-sm text-gray-400 dark:text-gray-500">
+          Try adjusting your filters
+        </p>
       </div>
     );
   }
@@ -46,7 +51,9 @@ export function GalleryGrid({ items, onItemClick }: GalleryGridProps) {
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
             <div className="absolute left-2 top-2">
-              <span className={`rounded-full px-2 py-1 text-xs font-medium text-white ${typeBadgeColors[item.type]}`}>
+              <span
+                className={`rounded-full px-2 py-1 text-xs font-medium text-white ${typeBadgeColors[item.type]}`}
+              >
                 {item.type.replace('-', ' ')}
               </span>
             </div>
@@ -68,9 +75,13 @@ export function GalleryGrid({ items, onItemClick }: GalleryGridProps) {
             )}
 
             <div className="absolute bottom-0 left-0 right-0 p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-              <p className="truncate text-sm font-medium text-white">{item.title}</p>
+              <p className="truncate text-sm font-medium text-white">
+                {item.title}
+              </p>
               {item.playerName && (
-                <p className="truncate text-xs text-gray-200">{item.playerName}</p>
+                <p className="truncate text-xs text-gray-200">
+                  {item.playerName}
+                </p>
               )}
             </div>
           </button>

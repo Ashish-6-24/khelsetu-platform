@@ -164,7 +164,9 @@ export const WicketModal = ({
               <Button variant="outline" onClick={() => setStep(2)}>
                 Back
               </Button>
-              <Button variant="create" onClick={handleConfirm}>Confirm Wicket</Button>
+              <Button variant="create" onClick={handleConfirm}>
+                Confirm Wicket
+              </Button>
             </div>
           </div>
         )}

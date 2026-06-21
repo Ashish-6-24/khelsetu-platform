@@ -1,12 +1,13 @@
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { matchService } from '@services/api/tournament';
 import {
   StatisticsDashboard,
-  StatisticsDashboardSkeleton,
   StatisticsDashboardEmpty,
+  StatisticsDashboardSkeleton,
 } from '@features/match-statistics/components/StatisticsDashboard';
 import { useMatchStatistics } from '@features/match-statistics/hooks/useMatchStatistics';
+import { matchService } from '@services/api/tournament';
+import { useQuery } from '@tanstack/react-query';
+
+import { useParams } from 'react-router-dom';
 
 export const MatchStatisticsPage = () => {
   const { matchId } = useParams<{ matchId: string }>();

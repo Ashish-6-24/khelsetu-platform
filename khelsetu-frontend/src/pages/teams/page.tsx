@@ -93,7 +93,13 @@ export const TeamsPage = () => {
             Manage teams and player rosters
           </p>
         </div>
-        <Button variant="create" leftIcon={<Plus className="h-4 w-4" />} onClick={() => setShowCreateModal(true)}>Create Team</Button>
+        <Button
+          variant="create"
+          leftIcon={<Plus className="h-4 w-4" />}
+          onClick={() => setShowCreateModal(true)}
+        >
+          Create Team
+        </Button>
       </div>
 
       <Tabs

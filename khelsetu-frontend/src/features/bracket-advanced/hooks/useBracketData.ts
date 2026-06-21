@@ -16,10 +16,7 @@ interface UseBracketDataOptions {
 
 interface UseBracketDataReturn {
   bracket: BracketData | null;
-  advanceWinner: (
-    matchId: string,
-    winner: 'teamA' | 'teamB',
-  ) => void;
+  advanceWinner: (matchId: string, winner: 'teamA' | 'teamB') => void;
   stats: {
     totalMatches: number;
     completedMatches: number;
@@ -82,8 +79,7 @@ export function useBracketData({
     return {
       totalMatches: total,
       completedMatches: completed,
-      completionPercent:
-        total > 0 ? Math.round((completed / total) * 100) : 0,
+      completionPercent: total > 0 ? Math.round((completed / total) * 100) : 0,
       totalRounds: activeBracket.rounds.length,
     };
   }, [activeBracket]);

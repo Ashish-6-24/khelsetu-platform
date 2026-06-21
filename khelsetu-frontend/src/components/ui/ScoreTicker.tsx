@@ -1,6 +1,7 @@
 import { clsx } from 'clsx';
-import { type ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import { type ReactNode } from 'react';
 
 export interface TickerItem {
   id: string;
@@ -87,10 +88,7 @@ export const ScoreTicker = ({
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[var(--bg-surface)] to-transparent" />
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[var(--bg-surface)] to-transparent" />
 
-      <div
-        className="marquee-track"
-        style={{ animationDuration: duration }}
-      >
+      <div className="marquee-track" style={{ animationDuration: duration }}>
         {/* Duplicate items for seamless loop */}
         {items.map((item) =>
           renderItem ? (

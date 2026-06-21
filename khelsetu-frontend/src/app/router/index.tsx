@@ -4,15 +4,16 @@ import { LandingLayout } from '@app/layouts/LandingLayout';
 import { ErrorBoundary } from '@components/error/ErrorBoundary';
 import { LoginPage } from '@pages/auth/login/page';
 import { RegisterPage } from '@pages/auth/register/page';
+import { DashboardPage } from '@pages/dashboard/page';
 import { LandingPage } from '@pages/landing/page';
 import { NotFoundPage } from '@pages/not-found/page';
-import { TournamentsPage } from '@pages/tournaments/page';
 import { TeamsPage } from '@pages/teams/page';
-import { DashboardPage } from '@pages/dashboard/page';
+import { TournamentsPage } from '@pages/tournaments/page';
 import { useAuthStore } from '@store/authStore';
 import { ROUTES } from '@utils/constants';
 
 import { Suspense, lazy } from 'react';
+
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 const LoadingFallback = () => (
@@ -21,55 +22,164 @@ const LoadingFallback = () => (
   </div>
 );
 
-const withSuspense = (Component: React.LazyExoticComponent<React.ComponentType>) => (
+const withSuspense = (
+  Component: React.LazyExoticComponent<React.ComponentType>,
+) => (
   <Suspense fallback={<LoadingFallback />}>
     <Component />
   </Suspense>
 );
 
-const lazyPage = (importFn: () => Promise<Record<string, React.ComponentType>>, name: string) =>
-  lazy(() => importFn().then((m) => ({ default: m[name] as React.ComponentType })));
+const lazyPage = (
+  importFn: () => Promise<Record<string, React.ComponentType>>,
+  name: string,
+) =>
+  lazy(() =>
+    importFn().then((m) => ({ default: m[name] as React.ComponentType })),
+  );
 
 const AboutPage = lazyPage(() => import('@pages/about/page'), 'AboutPage');
-const ContactPage = lazyPage(() => import('@pages/contact/page'), 'ContactPage');
-const TournamentCreatePage = lazyPage(() => import('@pages/tournaments/create/page'), 'TournamentCreatePage');
-const TournamentDetailPage = lazyPage(() => import('@pages/tournaments/[id]/page'), 'TournamentDetailPage');
-const TournamentEditPage = lazyPage(() => import('@pages/tournaments/[id]/edit/page'), 'TournamentEditPage');
-const TournamentBracketPage = lazyPage(() => import('@pages/tournaments/[id]/bracket/page'), 'TournamentBracketPage');
-const TeamDetailPage = lazyPage(() => import('@pages/teams/[id]/page'), 'TeamDetailPage');
-const ScoringPage = lazyPage(() => import('@pages/scoring/page'), 'ScoringPage');
-const ScoringMatchPage = lazyPage(() => import('@pages/scoring/[matchId]/page'), 'ScoringMatchPage');
-const StandingsPage = lazyPage(() => import('@pages/standings/page'), 'StandingsPage');
-const NotificationsPage = lazyPage(() => import('@pages/notifications/page'), 'NotificationsPage');
-const PlayersPage = lazyPage(() => import('@pages/players/page'), 'PlayersPage');
-const PlayerDetailPage = lazyPage(() => import('@pages/players/[id]/page'), 'PlayerDetailPage');
-const PlayerEditPage = lazyPage(() => import('@pages/players/[id]/edit/page'), 'PlayerEditPage');
-const AnalyticsPage = lazyPage(() => import('@pages/analytics/page'), 'AnalyticsPage');
-const BillingPage = lazyPage(() => import('@pages/billing/page'), 'BillingPage');
-const OfflineSyncPage = lazyPage(() => import('@pages/offline-sync/page'), 'OfflineSyncPage');
-const AccessibilityPage = lazyPage(() => import('@pages/accessibility/page'), 'AccessibilityPage');
+const ContactPage = lazyPage(
+  () => import('@pages/contact/page'),
+  'ContactPage',
+);
+const TournamentCreatePage = lazyPage(
+  () => import('@pages/tournaments/create/page'),
+  'TournamentCreatePage',
+);
+const TournamentDetailPage = lazyPage(
+  () => import('@pages/tournaments/[id]/page'),
+  'TournamentDetailPage',
+);
+const TournamentEditPage = lazyPage(
+  () => import('@pages/tournaments/[id]/edit/page'),
+  'TournamentEditPage',
+);
+const TournamentBracketPage = lazyPage(
+  () => import('@pages/tournaments/[id]/bracket/page'),
+  'TournamentBracketPage',
+);
+const TeamDetailPage = lazyPage(
+  () => import('@pages/teams/[id]/page'),
+  'TeamDetailPage',
+);
+const ScoringPage = lazyPage(
+  () => import('@pages/scoring/page'),
+  'ScoringPage',
+);
+const ScoringMatchPage = lazyPage(
+  () => import('@pages/scoring/[matchId]/page'),
+  'ScoringMatchPage',
+);
+const StandingsPage = lazyPage(
+  () => import('@pages/standings/page'),
+  'StandingsPage',
+);
+const NotificationsPage = lazyPage(
+  () => import('@pages/notifications/page'),
+  'NotificationsPage',
+);
+const PlayersPage = lazyPage(
+  () => import('@pages/players/page'),
+  'PlayersPage',
+);
+const PlayerDetailPage = lazyPage(
+  () => import('@pages/players/[id]/page'),
+  'PlayerDetailPage',
+);
+const PlayerEditPage = lazyPage(
+  () => import('@pages/players/[id]/edit/page'),
+  'PlayerEditPage',
+);
+const AnalyticsPage = lazyPage(
+  () => import('@pages/analytics/page'),
+  'AnalyticsPage',
+);
+const BillingPage = lazyPage(
+  () => import('@pages/billing/page'),
+  'BillingPage',
+);
+const OfflineSyncPage = lazyPage(
+  () => import('@pages/offline-sync/page'),
+  'OfflineSyncPage',
+);
+const AccessibilityPage = lazyPage(
+  () => import('@pages/accessibility/page'),
+  'AccessibilityPage',
+);
 const SearchPage = lazyPage(() => import('@pages/search/page'), 'SearchPage');
-const ReportsPage = lazyPage(() => import('@pages/reports/page'), 'ReportsPage');
-const UserRolesPage = lazyPage(() => import('@pages/user-roles/page'), 'UserRolesPage');
+const ReportsPage = lazyPage(
+  () => import('@pages/reports/page'),
+  'ReportsPage',
+);
+const UserRolesPage = lazyPage(
+  () => import('@pages/user-roles/page'),
+  'UserRolesPage',
+);
 const I18nPage = lazyPage(() => import('@pages/i18n/page'), 'I18nPage');
-const LiveBroadcastPage = lazyPage(() => import('@pages/live-broadcast/page'), 'LiveBroadcastPage');
+const LiveBroadcastPage = lazyPage(
+  () => import('@pages/live-broadcast/page'),
+  'LiveBroadcastPage',
+);
 const MediaPage = lazyPage(() => import('@pages/media/page'), 'MediaPage');
-const SchedulePage = lazyPage(() => import('@pages/schedule/page'), 'SchedulePage');
+const SchedulePage = lazyPage(
+  () => import('@pages/schedule/page'),
+  'SchedulePage',
+);
 const VenuesPage = lazyPage(() => import('@pages/venues/page'), 'VenuesPage');
-const CommunicationPage = lazyPage(() => import('@pages/communication/page'), 'CommunicationPage');
-const AuditLogPage = lazyPage(() => import('@pages/audit-log/page'), 'AuditLogPage');
-const DataImportPage = lazyPage(() => import('@pages/data-import/page'), 'DataImportPage');
-const OverlaysPage = lazyPage(() => import('@pages/overlays/page'), 'OverlaysPage');
-const ScoreboardOverlay = lazyPage(() => import('@pages/overlays/scoreboard/[matchId]/page'), 'ScoreboardOverlay');
-const SettingsPage = lazyPage(() => import('@pages/settings/page'), 'SettingsPage');
+const CommunicationPage = lazyPage(
+  () => import('@pages/communication/page'),
+  'CommunicationPage',
+);
+const AuditLogPage = lazyPage(
+  () => import('@pages/audit-log/page'),
+  'AuditLogPage',
+);
+const DataImportPage = lazyPage(
+  () => import('@pages/data-import/page'),
+  'DataImportPage',
+);
+const OverlaysPage = lazyPage(
+  () => import('@pages/overlays/page'),
+  'OverlaysPage',
+);
+const ScoreboardOverlay = lazyPage(
+  () => import('@pages/overlays/scoreboard/[matchId]/page'),
+  'ScoreboardOverlay',
+);
+const SettingsPage = lazyPage(
+  () => import('@pages/settings/page'),
+  'SettingsPage',
+);
 const NewsPage = lazyPage(() => import('@pages/news/page'), 'NewsPage');
-const NewsDetailPage = lazyPage(() => import('@pages/news/[id]/page'), 'NewsDetailPage');
-const CertificatesPage = lazyPage(() => import('@pages/certificates/page'), 'CertificatesPage');
-const FormationPage = lazyPage(() => import('@pages/formation/[matchId]/page'), 'FormationPage');
-const LiveEventCenterPage = lazyPage(() => import('@pages/live-events/[matchId]/page'), 'LiveEventCenterPage');
-const MatchStatisticsPage = lazyPage(() => import('@pages/match-statistics/[matchId]/page'), 'MatchStatisticsPage');
-const MatchReportPage = lazyPage(() => import('@pages/match-reports/[matchId]/page'), 'MatchReportPage');
-const MediaGalleryPage = lazyPage(() => import('@pages/media-gallery/page'), 'MediaGalleryPage');
+const NewsDetailPage = lazyPage(
+  () => import('@pages/news/[id]/page'),
+  'NewsDetailPage',
+);
+const CertificatesPage = lazyPage(
+  () => import('@pages/certificates/page'),
+  'CertificatesPage',
+);
+const FormationPage = lazyPage(
+  () => import('@pages/formation/[matchId]/page'),
+  'FormationPage',
+);
+const LiveEventCenterPage = lazyPage(
+  () => import('@pages/live-events/[matchId]/page'),
+  'LiveEventCenterPage',
+);
+const MatchStatisticsPage = lazyPage(
+  () => import('@pages/match-statistics/[matchId]/page'),
+  'MatchStatisticsPage',
+);
+const MatchReportPage = lazyPage(
+  () => import('@pages/match-reports/[matchId]/page'),
+  'MatchReportPage',
+);
+const MediaGalleryPage = lazyPage(
+  () => import('@pages/media-gallery/page'),
+  'MediaGalleryPage',
+);
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -109,9 +219,7 @@ export const AppRouter = () => {
         path={ROUTES.ABOUT}
         element={
           <ErrorBoundary>
-            <LandingLayout>
-              {withSuspense(AboutPage)}
-            </LandingLayout>
+            <LandingLayout>{withSuspense(AboutPage)}</LandingLayout>
           </ErrorBoundary>
         }
       />
@@ -120,9 +228,7 @@ export const AppRouter = () => {
         path={ROUTES.CONTACT}
         element={
           <ErrorBoundary>
-            <LandingLayout>
-              {withSuspense(ContactPage)}
-            </LandingLayout>
+            <LandingLayout>{withSuspense(ContactPage)}</LandingLayout>
           </ErrorBoundary>
         }
       />
@@ -230,9 +336,7 @@ export const AppRouter = () => {
         path={ROUTES.TEAM_DETAIL}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(TeamDetailPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(TeamDetailPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -241,9 +345,7 @@ export const AppRouter = () => {
         path={ROUTES.SCORING}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(ScoringPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(ScoringPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -252,9 +354,7 @@ export const AppRouter = () => {
         path={ROUTES.SCORING_MATCH}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(ScoringMatchPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(ScoringMatchPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -263,9 +363,7 @@ export const AppRouter = () => {
         path={ROUTES.STANDINGS}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(StandingsPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(StandingsPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -274,9 +372,7 @@ export const AppRouter = () => {
         path={ROUTES.NOTIFICATIONS}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(NotificationsPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(NotificationsPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -285,9 +381,7 @@ export const AppRouter = () => {
         path={ROUTES.PLAYERS}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(PlayersPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(PlayersPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -296,9 +390,7 @@ export const AppRouter = () => {
         path={ROUTES.PLAYER_DETAIL}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(PlayerDetailPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(PlayerDetailPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -307,9 +399,7 @@ export const AppRouter = () => {
         path={ROUTES.PLAYER_EDIT}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(PlayerEditPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(PlayerEditPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -318,9 +408,7 @@ export const AppRouter = () => {
         path={ROUTES.ANALYTICS}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(AnalyticsPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(AnalyticsPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -329,9 +417,7 @@ export const AppRouter = () => {
         path={ROUTES.BILLING}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(BillingPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(BillingPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -340,9 +426,7 @@ export const AppRouter = () => {
         path={ROUTES.OFFLINE_SYNC}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(OfflineSyncPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(OfflineSyncPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -351,9 +435,7 @@ export const AppRouter = () => {
         path={ROUTES.ACCESSIBILITY}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(AccessibilityPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(AccessibilityPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -362,9 +444,7 @@ export const AppRouter = () => {
         path={ROUTES.SEARCH}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(SearchPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(SearchPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -373,9 +453,7 @@ export const AppRouter = () => {
         path={ROUTES.REPORTS}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(ReportsPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(ReportsPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -384,9 +462,7 @@ export const AppRouter = () => {
         path={ROUTES.USER_ROLES}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(UserRolesPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(UserRolesPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -395,9 +471,7 @@ export const AppRouter = () => {
         path={ROUTES.I18N}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(I18nPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(I18nPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -406,9 +480,7 @@ export const AppRouter = () => {
         path={ROUTES.LIVE_BROADCAST}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(LiveBroadcastPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(LiveBroadcastPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -417,9 +489,7 @@ export const AppRouter = () => {
         path={ROUTES.MEDIA}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(MediaPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(MediaPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -428,9 +498,7 @@ export const AppRouter = () => {
         path={ROUTES.SCHEDULE}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(SchedulePage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(SchedulePage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -439,9 +507,7 @@ export const AppRouter = () => {
         path={ROUTES.VENUES}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(VenuesPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(VenuesPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -450,9 +516,7 @@ export const AppRouter = () => {
         path={ROUTES.COMMUNICATION}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(CommunicationPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(CommunicationPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -461,9 +525,7 @@ export const AppRouter = () => {
         path={ROUTES.AUDIT_LOG}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(AuditLogPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(AuditLogPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -472,9 +534,7 @@ export const AppRouter = () => {
         path={ROUTES.DATA_IMPORT}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(DataImportPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(DataImportPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -483,9 +543,7 @@ export const AppRouter = () => {
         path={ROUTES.OVERLAYS}
         element={
           <ErrorBoundary>
-            <ProtectedRoute>
-              {withSuspense(OverlaysPage)}
-            </ProtectedRoute>
+            <ProtectedRoute>{withSuspense(OverlaysPage)}</ProtectedRoute>
           </ErrorBoundary>
         }
       />
@@ -493,9 +551,7 @@ export const AppRouter = () => {
       <Route
         path={ROUTES.OVERLAY_SCOREBOARD}
         element={
-          <ErrorBoundary>
-            {withSuspense(ScoreboardOverlay)}
-          </ErrorBoundary>
+          <ErrorBoundary>{withSuspense(ScoreboardOverlay)}</ErrorBoundary>
         }
       />
 
@@ -503,9 +559,7 @@ export const AppRouter = () => {
         path={ROUTES.SETTINGS}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(SettingsPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(SettingsPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -514,9 +568,7 @@ export const AppRouter = () => {
         path={ROUTES.NEWS}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(NewsPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(NewsPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -524,9 +576,7 @@ export const AppRouter = () => {
         path={ROUTES.NEWS_DETAIL}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(NewsDetailPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(NewsDetailPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -534,9 +584,7 @@ export const AppRouter = () => {
         path={ROUTES.CERTIFICATES}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(CertificatesPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(CertificatesPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -544,9 +592,7 @@ export const AppRouter = () => {
         path={ROUTES.FORMATION}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(FormationPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(FormationPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -574,9 +620,7 @@ export const AppRouter = () => {
         path={ROUTES.MATCH_REPORTS}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(MatchReportPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(MatchReportPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -584,9 +628,7 @@ export const AppRouter = () => {
         path={ROUTES.MEDIA_GALLERY}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(MediaGalleryPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(MediaGalleryPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />

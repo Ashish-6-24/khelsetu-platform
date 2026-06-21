@@ -1,5 +1,14 @@
-import { FORMATION_TEMPLATES, getFormationByType, POSITION_COLORS, POSITION_LABELS } from '@features/formation/utils/formations';
-import { snapToGrid, clampPosition, getPositionLabel } from '@features/formation/utils/pitchPositions';
+import {
+  FORMATION_TEMPLATES,
+  POSITION_COLORS,
+  POSITION_LABELS,
+  getFormationByType,
+} from '@features/formation/utils/formations';
+import {
+  clampPosition,
+  getPositionLabel,
+  snapToGrid,
+} from '@features/formation/utils/pitchPositions';
 import { describe, expect, it } from 'vitest';
 
 describe('Formation Utils', () => {
@@ -9,7 +18,7 @@ describe('Formation Utils', () => {
     });
 
     it('should have correct structure for each template', () => {
-      FORMATION_TEMPLATES.forEach(template => {
+      FORMATION_TEMPLATES.forEach((template) => {
         expect(template).toHaveProperty('name');
         expect(template).toHaveProperty('type');
         expect(template).toHaveProperty('positions');
@@ -18,7 +27,7 @@ describe('Formation Utils', () => {
     });
 
     it('should include 4-3-3 formation', () => {
-      const template = FORMATION_TEMPLATES.find(t => t.type === '4-3-3');
+      const template = FORMATION_TEMPLATES.find((t) => t.type === '4-3-3');
       expect(template).toBeDefined();
       expect(template?.positions.length).toBe(11);
     });
@@ -39,8 +48,21 @@ describe('Formation Utils', () => {
 
   describe('POSITION_COLORS', () => {
     it('should have color for each position', () => {
-      const positions = ['GK', 'LB', 'RB', 'CB', 'LWB', 'RWB', 'CDM', 'CM', 'CAM', 'LW', 'RW', 'ST'];
-      positions.forEach(pos => {
+      const positions = [
+        'GK',
+        'LB',
+        'RB',
+        'CB',
+        'LWB',
+        'RWB',
+        'CDM',
+        'CM',
+        'CAM',
+        'LW',
+        'RW',
+        'ST',
+      ];
+      positions.forEach((pos) => {
         expect(POSITION_COLORS).toHaveProperty(pos);
       });
     });
@@ -48,8 +70,21 @@ describe('Formation Utils', () => {
 
   describe('POSITION_LABELS', () => {
     it('should have label for each position', () => {
-      const positions = ['GK', 'LB', 'RB', 'CB', 'LWB', 'RWB', 'CDM', 'CM', 'CAM', 'LW', 'RW', 'ST'];
-      positions.forEach(pos => {
+      const positions = [
+        'GK',
+        'LB',
+        'RB',
+        'CB',
+        'LWB',
+        'RWB',
+        'CDM',
+        'CM',
+        'CAM',
+        'LW',
+        'RW',
+        'ST',
+      ];
+      positions.forEach((pos) => {
         expect(POSITION_LABELS).toHaveProperty(pos);
       });
     });
@@ -92,6 +127,7 @@ describe('Pitch Positions', () => {
     });
 
     it('should handle unknown position', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(getPositionLabel('UNKNOWN' as any)).toBe('UNKNOWN');
     });
   });

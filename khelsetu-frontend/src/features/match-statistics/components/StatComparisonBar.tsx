@@ -52,7 +52,11 @@ export const StatComparisonBar = ({
           {unit}
         </span>
       </div>
-      <div className="flex h-2.5 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700" role="group" aria-label={`${label} comparison: Team A ${teamAValue}${unit}, Team B ${teamBValue}${unit}`}>
+      <div
+        className="flex h-2.5 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700"
+        role="group"
+        aria-label={`${label} comparison: Team A ${teamAValue}${unit}, Team B ${teamBValue}${unit}`}
+      >
         <div
           role="progressbar"
           aria-valuenow={teamAValue}

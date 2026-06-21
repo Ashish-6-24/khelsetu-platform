@@ -1,17 +1,27 @@
-import { getCategoryColor, getCategoryLabel, formatDate } from '../utils/newsUtils';
-import type { NewsArticle as NewsArticleType } from '../types';
-import { clsx } from 'clsx';
-import { Clock, Eye, Share2, User, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { ROUTES } from '@utils/constants';
-import { useState, useEffect, useRef } from 'react';
+import { clsx } from 'clsx';
+import { ArrowLeft, Clock, Eye, Share2, User } from 'lucide-react';
+
+import { useEffect, useRef, useState } from 'react';
+
+import { Link } from 'react-router-dom';
+
+import type { NewsArticle as NewsArticleType } from '../types';
+import {
+  formatDate,
+  getCategoryColor,
+  getCategoryLabel,
+} from '../utils/newsUtils';
 
 interface NewsArticleProps {
   article: NewsArticleType;
   relatedArticles?: NewsArticleType[];
 }
 
-export function NewsArticle({ article, relatedArticles = [] }: NewsArticleProps) {
+export function NewsArticle({
+  article,
+  relatedArticles = [],
+}: NewsArticleProps) {
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const lightboxRef = useRef<HTMLDivElement>(null);
 

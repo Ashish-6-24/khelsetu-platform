@@ -1,6 +1,6 @@
+import { AdvancedBracketView } from '@features/bracket-advanced/components/AdvancedBracketView';
 import { render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { AdvancedBracketView } from '@features/bracket-advanced/components/AdvancedBracketView';
 
 vi.mock('@features/bracket-advanced/hooks/useBracketData', () => ({
   useBracketData: () => ({
@@ -46,7 +46,7 @@ describe('AdvancedBracketView', () => {
         format="single-elimination"
         teams={[]}
         tournamentName="Test Tournament"
-      />
+      />,
     );
     expect(container).toBeDefined();
   });

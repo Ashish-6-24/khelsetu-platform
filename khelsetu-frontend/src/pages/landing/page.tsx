@@ -2,9 +2,9 @@ import { CountUp, CursorGlow, Reveal } from '@components/animations';
 import { Accordion } from '@components/ui/Accordion';
 import { AnimatedBackground } from '@components/ui/AnimatedBackground';
 import { FloatingOrb } from '@components/ui/FloatingOrb';
-import { GradientMesh } from '@components/ui/PremiumCard';
 import { GlowPulse } from '@components/ui/GlowPulse';
 import { Logo } from '@components/ui/Logo';
+import { GradientMesh } from '@components/ui/PremiumCard';
 import { ScoreTicker, type TickerItem } from '@components/ui/ScoreTicker';
 import { SportIcon } from '@components/ui/SportIcon';
 import { ROUTES } from '@utils/constants';
@@ -51,12 +51,60 @@ export const LandingPage = () => {
 
 const Hero = () => {
   const liveScores: TickerItem[] = [
-    { id: '1', label: 'T20', teamA: 'Tigers', teamB: 'Eagles', scoreA: '142/3', scoreB: '128/5', status: 'live' },
-    { id: '2', label: 'ODI', teamA: 'Rhinos', teamB: 'Lions', scoreA: '245/6', scoreB: '198/4', status: 'live' },
-    { id: '3', label: 'T10', teamA: 'Hawks', teamB: 'Wolves', scoreA: '87/2', scoreB: '64/4', status: 'live' },
-    { id: '4', label: 'T20', teamA: 'Kings', teamB: 'Knights', scoreA: '156/4', scoreB: '156/8', status: 'completed' },
-    { id: '5', label: 'League', teamA: 'Phoenix', teamB: 'Dragons', scoreA: '—', scoreB: '—', status: 'upcoming' },
-    { id: '6', label: 'T20', teamA: 'Strikers', teamB: 'Warriors', scoreA: '178/5', scoreB: '162/7', status: 'live' },
+    {
+      id: '1',
+      label: 'T20',
+      teamA: 'Tigers',
+      teamB: 'Eagles',
+      scoreA: '142/3',
+      scoreB: '128/5',
+      status: 'live',
+    },
+    {
+      id: '2',
+      label: 'ODI',
+      teamA: 'Rhinos',
+      teamB: 'Lions',
+      scoreA: '245/6',
+      scoreB: '198/4',
+      status: 'live',
+    },
+    {
+      id: '3',
+      label: 'T10',
+      teamA: 'Hawks',
+      teamB: 'Wolves',
+      scoreA: '87/2',
+      scoreB: '64/4',
+      status: 'live',
+    },
+    {
+      id: '4',
+      label: 'T20',
+      teamA: 'Kings',
+      teamB: 'Knights',
+      scoreA: '156/4',
+      scoreB: '156/8',
+      status: 'completed',
+    },
+    {
+      id: '5',
+      label: 'League',
+      teamA: 'Phoenix',
+      teamB: 'Dragons',
+      scoreA: '—',
+      scoreB: '—',
+      status: 'upcoming',
+    },
+    {
+      id: '6',
+      label: 'T20',
+      teamA: 'Strikers',
+      teamB: 'Warriors',
+      scoreA: '178/5',
+      scoreB: '162/7',
+      status: 'live',
+    },
   ];
 
   return (
@@ -64,12 +112,30 @@ const Hero = () => {
       <CursorGlow />
       <GradientMesh variant="premium" />
       <AnimatedBackground variant="dots" color="#7F1D1D" density="sparse" />
-      
+
       {/* Floating orbs for connected feel */}
-      <FloatingOrb color="#7F1D1D" size={300} delay={0} duration={25} className="-left-32 top-1/4" />
-      <FloatingOrb color="#B8860B" size={250} delay={2} duration={20} className="-right-20 top-1/3" />
-      <FloatingOrb color="#7F1D1D" size={180} delay={4} duration={22} className="left-1/4 -bottom-20" />
-      
+      <FloatingOrb
+        color="#7F1D1D"
+        size={300}
+        delay={0}
+        duration={25}
+        className="-left-32 top-1/4"
+      />
+      <FloatingOrb
+        color="#B8860B"
+        size={250}
+        delay={2}
+        duration={20}
+        className="-right-20 top-1/3"
+      />
+      <FloatingOrb
+        color="#7F1D1D"
+        size={180}
+        delay={4}
+        duration={22}
+        className="left-1/4 -bottom-20"
+      />
+
       <div
         className="absolute inset-0 -z-10 gradient-animate"
         style={{
@@ -99,14 +165,15 @@ const Hero = () => {
 
       <div className="mx-auto max-w-7xl px-4 pb-20 pt-20 sm:px-6 sm:pt-28 lg:px-8 lg:pt-32">
         {/* Live score ticker */}
-        <div className="animate-fade-in-up mx-auto mb-10 max-w-3xl" style={{ animationDelay: '0ms' }}>
+        <div
+          className="animate-fade-in-up mx-auto mb-10 max-w-3xl"
+          style={{ animationDelay: '0ms' }}
+        >
           <ScoreTicker items={liveScores} speed={35} />
         </div>
 
         <div className="animate-stagger mx-auto max-w-3xl text-center">
-          <div
-            className="animate-fade-in-up mx-auto inline-flex items-center gap-2 rounded-full border border-[#7F1D1D]/15 bg-white/80 px-3 py-1 text-xs font-semibold text-[#7F1D1D] backdrop-blur dark:border-[#FCA5A5]/20 dark:bg-[#7F1D1D]/10 dark:text-[#FCA5A5]"
-          >
+          <div className="animate-fade-in-up mx-auto inline-flex items-center gap-2 rounded-full border border-[#7F1D1D]/15 bg-white/80 px-3 py-1 text-xs font-semibold text-[#7F1D1D] backdrop-blur dark:border-[#FCA5A5]/20 dark:bg-[#7F1D1D]/10 dark:text-[#FCA5A5]">
             <Sparkles className="h-3.5 w-3.5 text-[#B8860B]" />
             KhelSetu · नेपालको लागि
           </div>
@@ -258,8 +325,18 @@ const Hero = () => {
                   </div>
                   <div className="space-y-3">
                     {[
-                      { name: 'Tigers', score: '142/3', overs: '15.2 ov', pct: 80 },
-                      { name: 'Eagles', score: '128/5', overs: '14.4 ov', pct: 65 },
+                      {
+                        name: 'Tigers',
+                        score: '142/3',
+                        overs: '15.2 ov',
+                        pct: 80,
+                      },
+                      {
+                        name: 'Eagles',
+                        score: '128/5',
+                        overs: '14.4 ov',
+                        pct: 65,
+                      },
                     ].map((t, i) => (
                       <div key={t.name}>
                         <div className="flex items-center justify-between mb-1.5">
@@ -1464,8 +1541,20 @@ const CTA = () => {
               }}
             />
             {/* Floating orbs for premium feel */}
-            <FloatingOrb color="#B8860B" size={280} delay={0} duration={18} className="-left-20 -top-20" />
-            <FloatingOrb color="#7F1D1D" size={220} delay={3} duration={22} className="-right-16 -bottom-16" />
+            <FloatingOrb
+              color="#B8860B"
+              size={280}
+              delay={0}
+              duration={18}
+              className="-left-20 -top-20"
+            />
+            <FloatingOrb
+              color="#7F1D1D"
+              size={220}
+              delay={3}
+              duration={22}
+              className="-right-16 -bottom-16"
+            />
             <div className="relative">
               <div
                 className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-lg"

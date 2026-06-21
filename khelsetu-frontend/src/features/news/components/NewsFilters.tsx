@@ -1,6 +1,7 @@
-import { getCategoryLabel } from '../utils/newsUtils';
-import type { NewsCategory } from '../types';
 import { clsx } from 'clsx';
+
+import type { NewsCategory } from '../types';
+import { getCategoryLabel } from '../utils/newsUtils';
 
 const CATEGORIES: NewsCategory[] = [
   'football',

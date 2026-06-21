@@ -24,13 +24,7 @@ export const FootballPitch = ({ children, className }: FootballPitchProps) => {
         className="absolute inset-0 h-full w-full"
         preserveAspectRatio="xMidYMid meet"
       >
-        <rect
-          x="0"
-          y="0"
-          width="680"
-          height="1050"
-          fill="transparent"
-        />
+        <rect x="0" y="0" width="680" height="1050" fill="transparent" />
 
         {/* Outer boundary */}
         <rect

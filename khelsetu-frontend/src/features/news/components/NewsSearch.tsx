@@ -1,5 +1,6 @@
 import { Search, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+
+import { useEffect, useState } from 'react';
 
 interface NewsSearchProps {
   value: string;
@@ -18,6 +19,7 @@ export function NewsSearch({ value, onChange, resultCount }: NewsSearchProps) {
   }, [localValue, onChange]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLocalValue(value);
   }, [value]);
 

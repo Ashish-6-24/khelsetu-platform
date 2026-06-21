@@ -112,7 +112,10 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
           </div>
 
           <div className="my-auto">
-            <div className="mx-auto w-full max-w-md animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            <div
+              className="mx-auto w-full max-w-md animate-fade-in-up"
+              style={{ animationDelay: '0.1s' }}
+            >
               {children}
             </div>
           </div>

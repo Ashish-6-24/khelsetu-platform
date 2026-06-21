@@ -422,8 +422,12 @@
 
   /* Checkmark draw-in animation */
   @keyframes check-draw {
-    0% { stroke-dashoffset: 20; }
-    100% { stroke-dashoffset: 0; }
+    0% {
+      stroke-dashoffset: 20;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
   }
   .check-draw {
     stroke-dasharray: 20;
@@ -433,8 +437,13 @@
 
   /* Idle shimmer — subtle pulse when there are unsaved changes */
   @keyframes idle-shimmer {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.85; }
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.85;
+    }
   }
   .btn-save-unsaved {
     animation: idle-shimmer 2s ease-in-out infinite;
@@ -648,9 +657,15 @@
 
 /* Score bounce — scale spring on value change */
 @keyframes score-bounce {
-  0% { transform: scale(1); }
-  40% { transform: scale(1.12); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .score-bounce {
@@ -659,8 +674,12 @@
 
 /* Score background flash — team color fades out */
 @keyframes score-bg-flash {
-  0% { opacity: 0.3; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .score-bg-flash {
@@ -669,24 +688,53 @@
 
 /* Triple-layer live pulse — ring expands and fades */
 @keyframes live-pulse-ring {
-  0% { opacity: 0.75; transform: scale(1); }
-  70% { opacity: 0.15; transform: scale(3); }
-  100% { opacity: 0; transform: scale(3); }
+  0% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+  70% {
+    opacity: 0.15;
+    transform: scale(3);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3);
+  }
 }
 
 /* Triple-layer live pulse — soft glow */
 @keyframes live-pulse-glow {
-  0% { opacity: 0; transform: scale(1); }
-  15% { opacity: 0.4; transform: scale(1.4); }
-  60% { opacity: 0; transform: scale(3); }
-  100% { opacity: 0; transform: scale(3); }
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  15% {
+    opacity: 0.4;
+    transform: scale(1.4);
+  }
+  60% {
+    opacity: 0;
+    transform: scale(3);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3);
+  }
 }
 
 /* Ball entrance bounce */
 @keyframes ball-enter {
-  0% { transform: scale(0); opacity: 0; }
-  60% { transform: scale(1.2); }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .ball-enter {
@@ -695,8 +743,13 @@
 
 /* Clock colon blink — 1Hz step */
 @keyframes colon-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
 }
 
 .clock-colon {
@@ -705,8 +758,12 @@
 
 /* Momentum chart SVG line draw */
 @keyframes momentum-line-draw {
-  from { stroke-dashoffset: 1000; }
-  to { stroke-dashoffset: 0; }
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 .momentum-line-draw {
@@ -725,7 +782,12 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
   transform: translateX(-100%);
   transition: transform 0.35s ease;
   pointer-events: none;
@@ -835,12 +897,24 @@
 }
 
 /* Stagger delays for child elements */
-.animate-stagger > *:nth-child(1) { animation-delay: 0ms; }
-.animate-stagger > *:nth-child(2) { animation-delay: 60ms; }
-.animate-stagger > *:nth-child(3) { animation-delay: 120ms; }
-.animate-stagger > *:nth-child(4) { animation-delay: 180ms; }
-.animate-stagger > *:nth-child(5) { animation-delay: 240ms; }
-.animate-stagger > *:nth-child(6) { animation-delay: 300ms; }
+.animate-stagger > *:nth-child(1) {
+  animation-delay: 0ms;
+}
+.animate-stagger > *:nth-child(2) {
+  animation-delay: 60ms;
+}
+.animate-stagger > *:nth-child(3) {
+  animation-delay: 120ms;
+}
+.animate-stagger > *:nth-child(4) {
+  animation-delay: 180ms;
+}
+.animate-stagger > *:nth-child(5) {
+  animation-delay: 240ms;
+}
+.animate-stagger > *:nth-child(6) {
+  animation-delay: 300ms;
+}
 
 /* CSS Scroll-Driven Animation utilities */
 @supports (animation-timeline: view()) {
@@ -901,7 +975,7 @@
     top: 0;
     left: 0;
     height: 3px;
-    background: linear-gradient(90deg, #7F1D1D, #B8860B);
+    background: linear-gradient(90deg, #7f1d1d, #b8860b);
     z-index: 100;
     transform-origin: left;
     animation: scroll-progress-grow linear;
@@ -909,15 +983,23 @@
   }
 
   @keyframes scroll-progress-grow {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
   }
 }
 
 /* Shimmer text gradient sweep */
 @keyframes shimmer-text-sweep {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 .gradient-shimmer-text {
@@ -958,18 +1040,36 @@
 
 /* Live card animations — subtle breathing glow for dashboard match cards */
 @keyframes live-card-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0), 0 1px 2px 0 rgb(var(--shadow-color) / 0.04); }
-  50% { box-shadow: 0 0 12px 2px rgba(239, 68, 68, 0.15), 0 1px 2px 0 rgb(var(--shadow-color) / 0.04); }
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(239, 68, 68, 0),
+      0 1px 2px 0 rgb(var(--shadow-color) / 0.04);
+  }
+  50% {
+    box-shadow:
+      0 0 12px 2px rgba(239, 68, 68, 0.15),
+      0 1px 2px 0 rgb(var(--shadow-color) / 0.04);
+  }
 }
 
 @keyframes live-score-pop {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
 }
 
 @keyframes live-border-shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 
 .live-card {
@@ -981,7 +1081,9 @@
 }
 
 .live-card .live-score {
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    color 0.2s ease;
 }
 
 .live-card .live-score.pop {
@@ -989,16 +1091,29 @@
 }
 
 .live-card-border {
-  background: linear-gradient(90deg, transparent 0%, rgba(239, 68, 68, 0.3) 50%, transparent 100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(239, 68, 68, 0.3) 50%,
+    transparent 100%
+  );
   background-size: 200% 100%;
   animation: live-border-shimmer 3s linear infinite;
 }
 
 /* Score flash — bounce on score display */
 @keyframes score-flash-in {
-  0% { transform: scale(0.8); opacity: 0; }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .score-flash {
@@ -1007,17 +1122,27 @@
 
 /* Progress bar grow animation */
 @keyframes progress-grow {
-  0% { width: 0%; }
+  0% {
+    width: 0%;
+  }
 }
 
 /* Live card staggered entry */
 @keyframes live-card-enter {
-  0% { transform: translateY(12px) scale(0.97); opacity: 0; }
-  100% { transform: translateY(0) scale(1); opacity: 1; }
+  0% {
+    transform: translateY(12px) scale(0.97);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
 }
 
 .live-card {
-  animation: live-card-glow 3s ease-in-out infinite, live-card-enter 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation:
+    live-card-glow 3s ease-in-out infinite,
+    live-card-enter 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
 /* ===== SPRING PHYSICS EASING CURVES ===== */
@@ -1044,12 +1169,24 @@
 
 /* ===== SCORE MICRO-ANIMATIONS ===== */
 @keyframes score-update {
-  0% { transform: scale(1); }
-  15% { transform: scale(1.15) translateY(-2px); }
-  30% { transform: scale(0.95); }
-  45% { transform: scale(1.05); }
-  60% { transform: scale(0.98); }
-  100% { transform: scale(1) translateY(0); }
+  0% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.15) translateY(-2px);
+  }
+  30% {
+    transform: scale(0.95);
+  }
+  45% {
+    transform: scale(1.05);
+  }
+  60% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
 }
 
 .score-update {
@@ -1058,23 +1195,41 @@
 
 /* Wicket fall animation */
 @keyframes wicket-fall {
-  0% { transform: rotate(0deg) scale(1); opacity: 1; }
-  25% { transform: rotate(-15deg) scale(1.1); }
-  50% { transform: rotate(10deg) scale(0.9); }
-  75% { transform: rotate(-5deg) scale(1.05); }
-  100% { transform: rotate(0deg) scale(1); opacity: 1; }
+  0% {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: rotate(-15deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(10deg) scale(0.9);
+  }
+  75% {
+    transform: rotate(-5deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
 }
 
 .wicket-fall {
   animation: wicket-fall 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-  color: #DC2626;
+  color: #dc2626;
 }
 
 /* Run scored pulse */
 @keyframes run-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(127, 29, 29, 0.4); }
-  70% { box-shadow: 0 0 0 8px rgba(127, 29, 29, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(127, 29, 29, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(127, 29, 29, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(127, 29, 29, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(127, 29, 29, 0);
+  }
 }
 
 .run-pulse {
@@ -1083,11 +1238,21 @@
 
 /* Four/Six special animation */
 @keyframes boundary-flash {
-  0% { background-color: transparent; }
-  25% { background-color: rgba(127, 29, 29, 0.15); }
-  50% { background-color: transparent; }
-  75% { background-color: rgba(127, 29, 29, 0.1); }
-  100% { background-color: transparent; }
+  0% {
+    background-color: transparent;
+  }
+  25% {
+    background-color: rgba(127, 29, 29, 0.15);
+  }
+  50% {
+    background-color: transparent;
+  }
+  75% {
+    background-color: rgba(127, 29, 29, 0.1);
+  }
+  100% {
+    background-color: transparent;
+  }
 }
 
 .boundary-flash {
@@ -1096,26 +1261,52 @@
 
 /* ===== STAGGERED LIST ENTRY ===== */
 @keyframes stagger-in {
-  0% { transform: translateY(16px); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
+  0% {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .stagger-item {
   animation: stagger-in 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
-.stagger-item:nth-child(1) { animation-delay: 0ms; }
-.stagger-item:nth-child(2) { animation-delay: 60ms; }
-.stagger-item:nth-child(3) { animation-delay: 120ms; }
-.stagger-item:nth-child(4) { animation-delay: 180ms; }
-.stagger-item:nth-child(5) { animation-delay: 240ms; }
-.stagger-item:nth-child(6) { animation-delay: 300ms; }
-.stagger-item:nth-child(7) { animation-delay: 360ms; }
-.stagger-item:nth-child(8) { animation-delay: 420ms; }
+.stagger-item:nth-child(1) {
+  animation-delay: 0ms;
+}
+.stagger-item:nth-child(2) {
+  animation-delay: 60ms;
+}
+.stagger-item:nth-child(3) {
+  animation-delay: 120ms;
+}
+.stagger-item:nth-child(4) {
+  animation-delay: 180ms;
+}
+.stagger-item:nth-child(5) {
+  animation-delay: 240ms;
+}
+.stagger-item:nth-child(6) {
+  animation-delay: 300ms;
+}
+.stagger-item:nth-child(7) {
+  animation-delay: 360ms;
+}
+.stagger-item:nth-child(8) {
+  animation-delay: 420ms;
+}
 
 /* ===== ORGANIC SKELETON LOADERS ===== */
 @keyframes skeleton-wave {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 .skeleton-organic {
@@ -1146,10 +1337,19 @@
 
 /* ===== GRADIENT MESH BACKGROUNDS ===== */
 @keyframes mesh-drift {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(2%, -1%) scale(1.02); }
-  50% { transform: translate(-1%, 2%) scale(0.98); }
-  75% { transform: translate(1%, -2%) scale(1.01); }
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(2%, -1%) scale(1.02);
+  }
+  50% {
+    transform: translate(-1%, 2%) scale(0.98);
+  }
+  75% {
+    transform: translate(1%, -2%) scale(1.01);
+  }
 }
 
 .gradient-mesh {
@@ -1221,8 +1421,16 @@
 .cert-paper {
   position: relative;
   background:
-    radial-gradient(ellipse at 20% 20%, rgba(184, 134, 11, 0.03) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(184, 134, 11, 0.03) 0%, transparent 50%),
+    radial-gradient(
+      ellipse at 20% 20%,
+      rgba(184, 134, 11, 0.03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 80%,
+      rgba(184, 134, 11, 0.03) 0%,
+      transparent 50%
+    ),
     linear-gradient(135deg, #fefdf8 0%, #fdf8ee 50%, #fefdf8 100%);
 }
 
@@ -1276,10 +1484,25 @@
   top: 0;
 }
 
-.cert-corner--tl { top: 12px; left: 12px; }
-.cert-corner--tr { top: 12px; right: 12px; transform: scaleX(-1); }
-.cert-corner--bl { bottom: 12px; left: 12px; transform: scaleY(-1); }
-.cert-corner--br { bottom: 12px; right: 12px; transform: scale(-1); }
+.cert-corner--tl {
+  top: 12px;
+  left: 12px;
+}
+.cert-corner--tr {
+  top: 12px;
+  right: 12px;
+  transform: scaleX(-1);
+}
+.cert-corner--bl {
+  bottom: 12px;
+  left: 12px;
+  transform: scaleY(-1);
+}
+.cert-corner--br {
+  bottom: 12px;
+  right: 12px;
+  transform: scale(-1);
+}
 
 /* Inner corner dots */
 .cert-corner-dot {
@@ -1291,10 +1514,22 @@
   z-index: 2;
 }
 
-.cert-corner--tl .cert-corner-dot { top: 38px; left: 0; }
-.cert-corner--tr .cert-corner-dot { top: 38px; right: 0; }
-.cert-corner--bl .cert-corner-dot { bottom: 38px; left: 0; }
-.cert-corner--br .cert-corner-dot { bottom: 38px; right: 0; }
+.cert-corner--tl .cert-corner-dot {
+  top: 38px;
+  left: 0;
+}
+.cert-corner--tr .cert-corner-dot {
+  top: 38px;
+  right: 0;
+}
+.cert-corner--bl .cert-corner-dot {
+  bottom: 38px;
+  left: 0;
+}
+.cert-corner--br .cert-corner-dot {
+  bottom: 38px;
+  right: 0;
+}
 
 /* Gold shimmer text */
 .cert-gold-text {
@@ -1314,8 +1549,13 @@
 }
 
 @keyframes certShimmer {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 /* Gold seal */
@@ -1324,7 +1564,14 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #b8860b, #d4a017, #f5d060, #d4a017, #b8860b);
+  background: linear-gradient(
+    135deg,
+    #b8860b,
+    #d4a017,
+    #f5d060,
+    #d4a017,
+    #b8860b
+  );
   background-size: 300% 300%;
   animation: sealPulse 3s ease-in-out infinite;
   box-shadow:
@@ -1354,8 +1601,13 @@
 }
 
 @keyframes sealPulse {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 /* Signature line */
@@ -1407,8 +1659,14 @@
 
 /* Confetti on download */
 @keyframes certConfetti {
-  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(-200px) rotate(720deg); opacity: 0; }
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-200px) rotate(720deg);
+    opacity: 0;
+  }
 }
 
 .cert-confetti {
@@ -1421,8 +1679,9 @@
 
 /* Button press depth — spring bounce + shadow shift */
 .btn-premium {
-  transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 200ms ease-out;
+  transition:
+    transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 200ms ease-out;
 }
 .btn-premium:hover {
   transform: translateY(-2px) scale(1.02);
@@ -1437,12 +1696,13 @@
 
 /* Card hover lift — Tier 1 subtle */
 .card-lift {
-  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-  transition: transform 180ms cubic-bezier(.2,.8,.2,1),
-              box-shadow 180ms ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 180ms ease;
 }
 .card-lift:hover {
-  box-shadow: 0 12px 28px rgba(0,0,0,0.16);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
   transform: translateY(-4px);
 }
 .card-lift:active {
@@ -1451,29 +1711,46 @@
 
 /* Card hover lift — Tier 2 floating */
 .card-float {
-  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
-  transition: transform 200ms ease, box-shadow 200ms ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
 }
 .card-float:hover {
   transform: translateY(-8px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 16px 40px rgba(0,0,0,0.12);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    0 16px 40px rgba(0, 0, 0, 0.12);
 }
 
 /* Premium focus ring — maroon with white gap (replaces outline-based) */
 *:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #7F1D1D;
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 4px #7f1d1d;
   transition: box-shadow 150ms ease-out;
 }
 .dark *:focus-visible {
-  box-shadow: 0 0 0 2px #0F172A, 0 0 0 4px #FCA5A5;
+  box-shadow:
+    0 0 0 2px #0f172a,
+    0 0 0 4px #fca5a5;
 }
 
 /* Score pulse — brief flash on change */
 @keyframes scorePulse {
-  0% { transform: scale(1); text-shadow: 0 0 0 transparent; }
-  50% { transform: scale(1.15); text-shadow: 0 0 20px rgba(255,255,255,0.5); }
-  100% { transform: scale(1); text-shadow: 0 0 0 transparent; }
+  0% {
+    transform: scale(1);
+    text-shadow: 0 0 0 transparent;
+  }
+  50% {
+    transform: scale(1.15);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 0 transparent;
+  }
 }
 .score-pulse {
   animation: scorePulse 0.6s ease-out;
@@ -1481,8 +1758,15 @@
 
 /* Live badge pulse — breathing animation */
 @keyframes livePulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(2.5); opacity: 0; }
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
 }
 .live-dot {
   width: 8px;
@@ -1525,14 +1809,18 @@
   background: #1f2937;
 }
 @keyframes shimmerWave {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 /* Tabular numerics — prevents layout shift in scores */
 .tabular-nums {
   font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum";
+  font-feature-settings: 'tnum';
 }
 
 /* Empty state — empathetic, premium */

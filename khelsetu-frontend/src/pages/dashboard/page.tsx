@@ -2,10 +2,10 @@ import { ActivityFeed } from '@components/dashboard/ActivityFeed';
 import type { ActivityItem } from '@components/dashboard/ActivityFeed';
 import { LiveMatchesPanel } from '@components/dashboard/LiveMatchesPanel';
 import { OnboardingChecklist } from '@components/dashboard/OnboardingChecklist';
-import { GradientMesh, GlowStatCard } from '@components/ui/PremiumCard';
-import { FloatingOrb } from '@components/ui/FloatingOrb';
-import { Button } from '@components/ui/Button';
 import { Badge } from '@components/ui/Badge';
+import { Button } from '@components/ui/Button';
+import { FloatingOrb } from '@components/ui/FloatingOrb';
+import { GlowStatCard, GradientMesh } from '@components/ui/PremiumCard';
 import { Skeleton, SkeletonStatsCard } from '@components/ui/Skeleton';
 import { matchService, tournamentService } from '@services/api/tournament';
 import { useAuthStore } from '@store/authStore';
@@ -106,12 +106,22 @@ export const DashboardPage = () => {
   return (
     <div className="relative space-y-6">
       <GradientMesh variant="brand" />
-      <FloatingOrb color="#7F1D1D" size={200} delay={0} duration={20} className="-right-16 top-0" />
-      <FloatingOrb color="#B8860B" size={150} delay={2} duration={18} className="-left-12 bottom-0" />
-      
-      <section
-        className="relative overflow-hidden rounded-3xl border border-[var(--border-subtle)] bg-gradient-to-br from-[#7F1D1D] via-[#991B1B] to-[#450A0A] p-6 text-white shadow-[var(--shadow-lg)] sm:p-8 animate-fade-in-up"
-      >
+      <FloatingOrb
+        color="#7F1D1D"
+        size={200}
+        delay={0}
+        duration={20}
+        className="-right-16 top-0"
+      />
+      <FloatingOrb
+        color="#B8860B"
+        size={150}
+        delay={2}
+        duration={18}
+        className="-left-12 bottom-0"
+      />
+
+      <section className="relative overflow-hidden rounded-3xl border border-[var(--border-subtle)] bg-gradient-to-br from-[#7F1D1D] via-[#991B1B] to-[#450A0A] p-6 text-white shadow-[var(--shadow-lg)] sm:p-8 animate-fade-in-up">
         <div className="pointer-events-none absolute inset-0 -z-0 opacity-30">
           <div className="absolute -left-10 -top-10 h-40 w-40 rounded-full bg-white/20 blur-3xl" />
           <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-[#B8860B]/20 blur-3xl" />
@@ -200,7 +210,10 @@ export const DashboardPage = () => {
       </div>
 
       {liveMatches > 0 && (
-        <section className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+        <section
+          className="animate-fade-in-up"
+          style={{ animationDelay: '0.2s' }}
+        >
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-base font-semibold flex items-center gap-2 text-slate-900 dark:text-white">
               <span className="inline-flex h-2 w-2 animate-pulse rounded-full bg-red-500" />
@@ -225,7 +238,10 @@ export const DashboardPage = () => {
                 const progressA = (scoreA / maxScore) * 100;
                 const progressB = (scoreB / maxScore) * 100;
 
-                const formatScore = (innings?: typeof inningsA, total?: number) => {
+                const formatScore = (
+                  innings?: typeof inningsA,
+                  total?: number,
+                ) => {
                   if (innings) {
                     return `${innings.runs}/${innings.wickets}`;
                   }
@@ -246,7 +262,9 @@ export const DashboardPage = () => {
                   >
                     <div className="absolute inset-x-0 top-0 h-0.5 rounded-t-2xl live-card-border" />
                     <div className="flex items-center justify-between mb-3">
-                      <Badge variant="live" pulse size="sm">LIVE</Badge>
+                      <Badge variant="live" pulse size="sm">
+                        LIVE
+                      </Badge>
                       <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                         Match {idx + 1}
                       </span>

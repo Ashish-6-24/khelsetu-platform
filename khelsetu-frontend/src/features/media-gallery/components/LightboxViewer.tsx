@@ -1,7 +1,17 @@
-import { useEffect, useCallback, useRef } from 'react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Download,
+  Maximize,
+  Minimize,
+  Share2,
+  X,
+} from 'lucide-react';
+
+import { useCallback, useEffect, useRef } from 'react';
+
 import { MediaItem } from '../types';
 import { formatDuration } from '../utils/galleryUtils';
-import { X, ChevronLeft, ChevronRight, Download, Share2, Maximize, Minimize } from 'lucide-react';
 
 interface LightboxViewerProps {
   item: MediaItem;
@@ -44,7 +54,7 @@ export function LightboxViewer({
           break;
       }
     },
-    [isOpen, onClose, onNext, onPrevious]
+    [isOpen, onClose, onNext, onPrevious],
   );
 
   useEffect(() => {
@@ -76,7 +86,10 @@ export function LightboxViewer({
 
   if (!isOpen || !item) return null;
 
-  const isVideo = item.type === 'video' || item.type === 'highlight' || item.type === 'press-conference';
+  const isVideo =
+    item.type === 'video' ||
+    item.type === 'highlight' ||
+    item.type === 'press-conference';
 
   return (
     <div
@@ -94,7 +107,10 @@ export function LightboxViewer({
         <X className="h-6 w-6" />
       </button>
 
-      <div className="absolute left-4 top-4 z-50 text-sm text-white/70" aria-live="polite">
+      <div
+        className="absolute left-4 top-4 z-50 text-sm text-white/70"
+        aria-live="polite"
+      >
         {currentIndex + 1} of {total}
       </div>
 
@@ -146,7 +162,11 @@ export function LightboxViewer({
           </button>
           <button
             onClick={handleFullscreen}
-            aria-label={document.fullscreenElement ? 'Exit fullscreen' : 'Enter fullscreen'}
+            aria-label={
+              document.fullscreenElement
+                ? 'Exit fullscreen'
+                : 'Enter fullscreen'
+            }
             className="rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 min-h-[44px] min-w-[44px] flex items-center justify-center"
           >
             {document.fullscreenElement ? (

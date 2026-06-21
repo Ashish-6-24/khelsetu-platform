@@ -1,12 +1,13 @@
 import {
   NewsCarousel,
   NewsFeed,
-  NewsSearch,
   NewsFilters,
+  NewsSearch,
 } from '@features/news/components';
-import { useNews, useFeaturedNews } from '@features/news/hooks/useNews';
+import { useFeaturedNews, useNews } from '@features/news/hooks/useNews';
 import type { NewsCategory } from '@features/news/types';
-import { useState, useCallback, useMemo } from 'react';
+
+import { useCallback, useMemo, useState } from 'react';
 
 export function NewsPage() {
   const [category, setCategory] = useState<NewsCategory | undefined>();
@@ -52,7 +53,10 @@ export function NewsPage() {
       )}
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <NewsFilters activeCategory={category} onChange={handleCategoryChange} />
+        <NewsFilters
+          activeCategory={category}
+          onChange={handleCategoryChange}
+        />
         <div className="w-full sm:w-72">
           <NewsSearch
             value={search}
