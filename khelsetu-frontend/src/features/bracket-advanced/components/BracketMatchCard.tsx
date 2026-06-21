@@ -1,7 +1,7 @@
 import { Badge } from '@components/ui/Badge';
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
-import { MapPin, Clock } from 'lucide-react';
+import { Clock, MapPin } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
 
 import type { BracketMatch } from '../types';
@@ -108,9 +108,10 @@ export const BracketMatchCard = ({
                 alt={`${match.teamA.shortName || match.teamA.name} logo`}
                 className="h-5 w-5 rounded-full object-cover flex-shrink-0"
               />
-            ) : match.teamA?.seed != null ? (
+            ) : match.teamA?.seed !== null &&
+              match.teamA?.seed !== undefined ? (
               <span className="h-5 w-5 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-[10px] font-bold text-gray-500 dark:text-gray-300 flex-shrink-0">
-                {match.teamA.seed}
+                {match.teamA?.seed}
               </span>
             ) : null}
             <span
@@ -124,7 +125,7 @@ export const BracketMatchCard = ({
               {match.teamA?.shortName || match.teamA?.name || 'TBD'}
             </span>
           </div>
-          {match.scoreA != null && (
+          {match.scoreA !== null && (
             <span
               className={clsx(
                 'text-sm font-bold tabular-nums',
@@ -163,9 +164,10 @@ export const BracketMatchCard = ({
                 alt={`${match.teamB.shortName || match.teamB.name} logo`}
                 className="h-5 w-5 rounded-full object-cover flex-shrink-0"
               />
-            ) : match.teamB?.seed != null ? (
+            ) : match.teamB?.seed !== null &&
+              match.teamB?.seed !== undefined ? (
               <span className="h-5 w-5 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-[10px] font-bold text-gray-500 dark:text-gray-300 flex-shrink-0">
-                {match.teamB.seed}
+                {match.teamB?.seed}
               </span>
             ) : null}
             <span
@@ -179,7 +181,7 @@ export const BracketMatchCard = ({
               {match.teamB?.shortName || match.teamB?.name || 'TBD'}
             </span>
           </div>
-          {match.scoreB != null && (
+          {match.scoreB !== null && (
             <span
               className={clsx(
                 'text-sm font-bold tabular-nums',

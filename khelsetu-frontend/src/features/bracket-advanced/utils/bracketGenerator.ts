@@ -15,9 +15,7 @@ function nextPow2(n: number): number {
   return p;
 }
 
-export function generateSingleElimination(
-  teams: BracketTeam[],
-): BracketData {
+export function generateSingleElimination(teams: BracketTeam[]): BracketData {
   const totalSlots = nextPow2(teams.length);
   const totalRounds = Math.log2(totalSlots);
   const rounds: BracketRound[] = [];
@@ -43,9 +41,9 @@ export function generateSingleElimination(
     const matches: BracketMatch[] = [];
 
     for (let m = 0; m < matchCount; m++) {
-      let teamA: BracketTeam | null = null;
-      let teamB: BracketTeam | null = null;
-      let status: BracketMatch['status'] = 'pending';
+      let teamA: BracketTeam | null;
+      let teamB: BracketTeam | null;
+      let status: BracketMatch['status'];
 
       if (r === 0) {
         teamA = seeded[m * 2] ?? null;
@@ -53,8 +51,10 @@ export function generateSingleElimination(
       } else {
         const prevA = prevRoundMatches[m * 2];
         const prevB = prevRoundMatches[m * 2 + 1];
-        teamA = prevA?.winner === 'teamA' ? prevA.teamA : prevA?.teamB ?? null;
-        teamB = prevB?.winner === 'teamA' ? prevB.teamA : prevB?.teamB ?? null;
+        teamA =
+          prevA?.winner === 'teamA' ? prevA.teamA : (prevA?.teamB ?? null);
+        teamB =
+          prevB?.winner === 'teamA' ? prevB.teamA : (prevB?.teamB ?? null);
       }
 
       if (!teamA && teamB) {
@@ -66,7 +66,8 @@ export function generateSingleElimination(
       } else {
         status =
           teamA && teamB
-            ? r === 0 && (m >= teams.length / 2 || teams.length <= totalSlots / 2)
+            ? r === 0 &&
+              (m >= teams.length / 2 || teams.length <= totalSlots / 2)
               ? 'pending'
               : 'pending'
             : 'pending';
@@ -125,13 +126,11 @@ export function generateSingleElimination(
   };
 }
 
-export function generateDoubleElimination(
-  teams: BracketTeam[],
-): BracketData {
+export function generateDoubleElimination(teams: BracketTeam[]): BracketData {
   const upperBracket = generateSingleElimination(teams);
 
   const loserRounds: BracketRound[] = [];
-  let losersBracketSize = Math.floor(teams.length / 2);
+  const losersBracketSize = Math.floor(teams.length / 2);
 
   for (let r = 0; r < upperBracket.rounds.length - 1; r++) {
     const matchCount = Math.max(1, losersBracketSize / Math.pow(2, r + 1));
@@ -273,8 +272,7 @@ export function advanceWinner(
   for (const round of newRounds) {
     for (const match of round.matches) {
       if (match.nextMatchId && match.winner) {
-        const winnerTeam =
-          match.winner === 'teamA' ? match.teamA : match.teamB;
+        const winnerTeam = match.winner === 'teamA' ? match.teamA : match.teamB;
         for (const r2 of newRounds) {
           for (const m2 of r2.matches) {
             if (m2.id === match.nextMatchId) {
