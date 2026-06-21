@@ -1,11 +1,11 @@
-import { 
-  FOOTBALL_EVENT_CONFIG, 
-  CRICKET_EVENT_CONFIG, 
+import {
+  CRICKET_EVENT_CONFIG,
+  FOOTBALL_EVENT_CONFIG,
   VOLLEYBALL_EVENT_CONFIG,
-  getEventConfig, 
-  getSportEvents, 
-  createLiveMatchEvent, 
-  formatLiveMinute 
+  createLiveMatchEvent,
+  formatLiveMinute,
+  getEventConfig,
+  getSportEvents,
 } from '@features/live-events/utils/eventCreators';
 import { describe, expect, it } from 'vitest';
 
@@ -36,6 +36,7 @@ describe('Live Events Utils', () => {
     });
 
     it('should return default config for unknown event', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const config = getEventConfig('football', 'unknown_event' as any);
       expect(config.icon).toBe('📝');
     });
@@ -70,9 +71,9 @@ describe('Live Events Utils', () => {
         'goal',
         'team-1',
         'Team A',
-        { playerName: 'Player 1' }
+        { playerName: 'Player 1' },
       );
-      
+
       expect(event).toBeDefined();
       expect(event.matchId).toBe('match-1');
       expect(event.minute).toBe(45);
@@ -82,8 +83,22 @@ describe('Live Events Utils', () => {
     });
 
     it('should generate unique IDs', () => {
-      const event1 = createLiveMatchEvent('match-1', 'football', 10, 'goal', 'team-1', 'Team A');
-      const event2 = createLiveMatchEvent('match-1', 'football', 20, 'goal', 'team-1', 'Team A');
+      const event1 = createLiveMatchEvent(
+        'match-1',
+        'football',
+        10,
+        'goal',
+        'team-1',
+        'Team A',
+      );
+      const event2 = createLiveMatchEvent(
+        'match-1',
+        'football',
+        20,
+        'goal',
+        'team-1',
+        'Team A',
+      );
       expect(event1.id).not.toBe(event2.id);
     });
   });

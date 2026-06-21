@@ -1,5 +1,10 @@
-import { getCategoryColor, getCategoryLabel, formatDate, getRelatedArticles } from '@features/news/utils/newsUtils';
 import type { NewsArticle, NewsCategory } from '@features/news/types';
+import {
+  formatDate,
+  getCategoryColor,
+  getCategoryLabel,
+  getRelatedArticles,
+} from '@features/news/utils/newsUtils';
 import { describe, expect, it } from 'vitest';
 
 describe('News Utils', () => {
@@ -55,11 +60,23 @@ describe('News Utils', () => {
   describe('getRelatedArticles', () => {
     it('should return related articles based on tags', () => {
       const articles: NewsArticle[] = [
-        { id: '1', tags: ['football', 'premier-league'], title: 'Article 1' } as NewsArticle,
-        { id: '2', tags: ['cricket', 'world-cup'], title: 'Article 2' } as NewsArticle,
-        { id: '3', tags: ['football', 'champions-league'], title: 'Article 3' } as NewsArticle,
+        {
+          id: '1',
+          tags: ['football', 'premier-league'],
+          title: 'Article 1',
+        } as NewsArticle,
+        {
+          id: '2',
+          tags: ['cricket', 'world-cup'],
+          title: 'Article 2',
+        } as NewsArticle,
+        {
+          id: '3',
+          tags: ['football', 'champions-league'],
+          title: 'Article 3',
+        } as NewsArticle,
       ];
-      
+
       const related = getRelatedArticles(articles, '1', ['football']);
       expect(related).toHaveLength(2);
       expect(related[0]?.id).toBe('3'); // More matching tags
@@ -70,7 +87,7 @@ describe('News Utils', () => {
         { id: '1', tags: ['football'], title: 'Article 1' } as NewsArticle,
         { id: '2', tags: ['football'], title: 'Article 2' } as NewsArticle,
       ];
-      
+
       const related = getRelatedArticles(articles, '1', ['football']);
       expect(related).toHaveLength(1);
       expect(related[0]?.id).toBe('2');
@@ -82,19 +99,30 @@ describe('News Utils', () => {
         tags: ['football'],
         title: `Article ${i + 1}`,
       })) as NewsArticle[];
-      
+
       const related = getRelatedArticles(articles, '1', ['football']);
       expect(related).toHaveLength(3);
     });
 
     it('should sort by relevance', () => {
       const articles: NewsArticle[] = [
-        { id: '1', tags: ['football', 'premier-league'], title: 'Article 1' } as NewsArticle,
-        { id: '2', tags: ['football', 'premier-league', 'champions-league'], title: 'Article 2' } as NewsArticle,
+        {
+          id: '1',
+          tags: ['football', 'premier-league'],
+          title: 'Article 1',
+        } as NewsArticle,
+        {
+          id: '2',
+          tags: ['football', 'premier-league', 'champions-league'],
+          title: 'Article 2',
+        } as NewsArticle,
         { id: '3', tags: ['football'], title: 'Article 3' } as NewsArticle,
       ];
-      
-      const related = getRelatedArticles(articles, '1', ['football', 'premier-league']);
+
+      const related = getRelatedArticles(articles, '1', [
+        'football',
+        'premier-league',
+      ]);
       expect(related[0]?.id).toBe('2'); // Most matching tags
     });
   });

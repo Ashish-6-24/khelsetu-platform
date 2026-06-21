@@ -32,8 +32,10 @@ export const BracketControls = ({
   tournamentName,
   bracketElementId,
 }: BracketControlsProps) => {
-  const handleExportPdf = () => exportBracketAsPdf(bracketElementId, tournamentName);
-  const handleExportImage = () => exportBracketAsImage(bracketElementId, tournamentName);
+  const handleExportPdf = () =>
+    exportBracketAsPdf(bracketElementId, tournamentName);
+  const handleExportImage = () =>
+    exportBracketAsImage(bracketElementId, tournamentName);
   const handlePrint = () => printBracket(bracketElementId);
   const handleShare = () => shareBracket(tournamentName);
 

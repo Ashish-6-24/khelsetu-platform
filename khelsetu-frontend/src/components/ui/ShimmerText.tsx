@@ -1,6 +1,7 @@
 import { clsx } from 'clsx';
-import { type ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import { type ReactNode } from 'react';
 
 interface ShimmerTextProps {
   children: ReactNode;

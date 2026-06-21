@@ -1,5 +1,10 @@
-import { getMediaTypeIcon, formatDuration, filterMedia, getMediaStats } from '@features/media-gallery/utils/galleryUtils';
-import type { MediaItem, GalleryFilters } from '@features/media-gallery/types';
+import type { GalleryFilters, MediaItem } from '@features/media-gallery/types';
+import {
+  filterMedia,
+  formatDuration,
+  getMediaStats,
+  getMediaTypeIcon,
+} from '@features/media-gallery/utils/galleryUtils';
 import { describe, expect, it } from 'vitest';
 
 describe('Gallery Utils', () => {
@@ -40,9 +45,33 @@ describe('Gallery Utils', () => {
 
   describe('filterMedia', () => {
     const items: MediaItem[] = [
-      { id: '1', type: 'image', title: 'Photo 1', tags: ['football'], tournamentId: 't1', teamId: 'team1', season: '2024' } as MediaItem,
-      { id: '2', type: 'video', title: 'Video 1', tags: ['cricket'], tournamentId: 't2', teamId: 'team2', season: '2024' } as MediaItem,
-      { id: '3', type: 'image', title: 'Photo 2', tags: ['football'], tournamentId: 't1', teamId: 'team1', season: '2023' } as MediaItem,
+      {
+        id: '1',
+        type: 'image',
+        title: 'Photo 1',
+        tags: ['football'],
+        tournamentId: 't1',
+        teamId: 'team1',
+        season: '2024',
+      } as MediaItem,
+      {
+        id: '2',
+        type: 'video',
+        title: 'Video 1',
+        tags: ['cricket'],
+        tournamentId: 't2',
+        teamId: 'team2',
+        season: '2024',
+      } as MediaItem,
+      {
+        id: '3',
+        type: 'image',
+        title: 'Photo 2',
+        tags: ['football'],
+        tournamentId: 't1',
+        teamId: 'team1',
+        season: '2023',
+      } as MediaItem,
     ];
 
     it('should filter by type', () => {
@@ -91,7 +120,7 @@ describe('Gallery Utils', () => {
         { id: '4', type: 'press-conference' } as MediaItem,
         { id: '5', type: 'image' } as MediaItem,
       ];
-      
+
       const stats = getMediaStats(items);
       expect(stats.images).toBe(2);
       expect(stats.videos).toBe(1);

@@ -1,6 +1,7 @@
 import { clsx } from 'clsx';
-import { type ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import { type ReactNode } from 'react';
 
 interface GradientMeshProps {
   className?: string;
@@ -44,7 +45,11 @@ export const GradientMesh = ({
   const styles = variantStyles[variant];
 
   return (
-    <div className={twMerge(clsx('pointer-events-none absolute inset-0 -z-10', className))}>
+    <div
+      className={twMerge(
+        clsx('pointer-events-none absolute inset-0 -z-10', className),
+      )}
+    >
       <div
         className={clsx(
           'absolute inset-0 opacity-100 dark:opacity-100',

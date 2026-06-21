@@ -1,8 +1,8 @@
-import type { FormationPlayer } from '../types/index';
-import { POSITION_COLORS } from '../utils/formations';
-
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
+
+import type { FormationPlayer } from '../types/index';
+import { POSITION_COLORS } from '../utils/formations';
 
 interface DraggablePlayerProps {
   player: FormationPlayer;

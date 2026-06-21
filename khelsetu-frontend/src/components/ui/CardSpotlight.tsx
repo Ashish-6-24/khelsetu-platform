@@ -1,6 +1,7 @@
 import { clsx } from 'clsx';
-import { type ReactNode, useRef, useState, useCallback } from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import { type ReactNode, useCallback, useRef, useState } from 'react';
 
 interface CardSpotlightProps {
   children: ReactNode;
@@ -19,19 +20,16 @@ export const CardSpotlight = ({
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      const container = containerRef.current;
-      if (!container) return;
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const container = containerRef.current;
+    if (!container) return;
 
-      const rect = container.getBoundingClientRect();
-      setPosition({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      });
-    },
-    [],
-  );
+    const rect = container.getBoundingClientRect();
+    setPosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  }, []);
 
   return (
     <div

@@ -1,6 +1,7 @@
 import { clsx } from 'clsx';
-import { type ReactNode, forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import { type ReactNode, forwardRef } from 'react';
 
 interface ShimmerCardProps {
   children: ReactNode;

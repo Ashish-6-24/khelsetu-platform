@@ -1,8 +1,9 @@
+import { clsx } from 'clsx';
+
+import { useState } from 'react';
+
 import type { TacticalDrawing } from '../types/index';
 import { TACTICAL_COLORS } from '../utils/formations';
-
-import { clsx } from 'clsx';
-import { useState } from 'react';
 
 interface TacticalBoardProps {
   drawings: TacticalDrawing[];
@@ -24,7 +25,8 @@ export const TacticalBoard = ({
   onClearDrawings,
 }: TacticalBoardProps) => {
   const [isDrawing, setIsDrawing] = useState(false);
-  const [activeTool, setActiveTool] = useState<TacticalDrawing['type']>('arrow');
+  const [activeTool, setActiveTool] =
+    useState<TacticalDrawing['type']>('arrow');
   const [activeColor, setActiveColor] = useState('#ffffff');
   const [currentPoints, setCurrentPoints] = useState<
     Array<{ x: number; y: number }>

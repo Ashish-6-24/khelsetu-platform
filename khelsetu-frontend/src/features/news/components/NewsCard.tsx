@@ -1,9 +1,15 @@
-import { getCategoryColor, getCategoryLabel, formatDate } from '../utils/newsUtils';
-import type { NewsArticle } from '../types';
+import { ROUTES } from '@utils/constants';
 import { clsx } from 'clsx';
 import { Clock, Eye, Flame, User } from 'lucide-react';
+
 import { Link } from 'react-router-dom';
-import { ROUTES } from '@utils/constants';
+
+import type { NewsArticle } from '../types';
+import {
+  formatDate,
+  getCategoryColor,
+  getCategoryLabel,
+} from '../utils/newsUtils';
 
 interface NewsCardProps {
   article: NewsArticle;

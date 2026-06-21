@@ -1,5 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
 import { newsService } from '@services/api/news';
+import { useQuery } from '@tanstack/react-query';
+
 import type { NewsFilters } from '../types';
 
 export function useNews(filters?: NewsFilters) {
@@ -11,7 +12,8 @@ export function useNews(filters?: NewsFilters) {
 
   return useQuery({
     queryKey: ['news', filters],
-    queryFn: () => newsService.getAll(Object.keys(params).length > 0 ? params : undefined),
+    queryFn: () =>
+      newsService.getAll(Object.keys(params).length > 0 ? params : undefined),
   });
 }
 

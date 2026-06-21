@@ -1,8 +1,9 @@
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
 import { RotateCcw, ZoomIn, ZoomOut } from 'lucide-react';
-import type { ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import type { ReactNode } from 'react';
 
 import { useZoomPan } from '../hooks/useZoomPan';
 

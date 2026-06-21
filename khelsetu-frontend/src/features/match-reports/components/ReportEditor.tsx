@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import type { MatchReport as MatchReportData } from '../types';
 import { MatchReport as MatchReportView } from './MatchReport';
 
@@ -6,7 +7,9 @@ interface ReportEditorProps {
   report: MatchReportData;
   teamAName: string;
   teamBName: string;
-  onSave: (updates: Partial<Pick<MatchReportData, 'title' | 'summary' | 'highlights'>>) => void;
+  onSave: (
+    updates: Partial<Pick<MatchReportData, 'title' | 'summary' | 'highlights'>>,
+  ) => void;
   onPublish: () => void;
   isSaving: boolean;
   isPublishing: boolean;
@@ -81,7 +84,11 @@ export function ReportEditor({
       </div>
 
       {showPreview ? (
-        <MatchReportView report={editedReport} teamAName={teamAName} teamBName={teamBName} />
+        <MatchReportView
+          report={editedReport}
+          teamAName={teamAName}
+          teamBName={teamBName}
+        />
       ) : (
         <div className="space-y-6">
           {/* Title Field */}

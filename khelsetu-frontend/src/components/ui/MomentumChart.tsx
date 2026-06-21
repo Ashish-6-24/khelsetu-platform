@@ -1,6 +1,7 @@
 import { clsx } from 'clsx';
-import { useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import { useMemo } from 'react';
 
 interface MomentumPoint {
   over: number;
@@ -145,48 +146,49 @@ export const MomentumChart = ({
         />
 
         {/* Current position dot — pulsing glow */}
-        {data.length > 0 && (() => {
-          const maxOver = Math.max(...data.map((d) => d.over), 1);
-          const padding = 2;
-          const lastPt = data[data.length - 1];
-          if (!lastPt) return null;
-          const cx = padding + (lastPt.over / maxOver) * (400 - padding * 2);
-          const cy = height - (lastPt.winProbability / 100) * height;
-          return (
-            <g>
-              {/* Outer glow — pulses */}
-              <circle
-                cx={cx}
-                cy={cy}
-                r="10"
-                fill={teamAColor}
-                opacity="0.2"
-                className="animate-pulse"
-              />
-              {/* Inner glow ring */}
-              <circle
-                cx={cx}
-                cy={cy}
-                r="6"
-                fill="none"
-                stroke={teamAColor}
-                strokeWidth="1.5"
-                opacity="0.4"
-                className="animate-pulse"
-                style={{ animationDelay: '0.3s' }}
-              />
-              {/* Solid dot */}
-              <circle
-                cx={cx}
-                cy={cy}
-                r="4"
-                fill={teamAColor}
-                stroke="white"
-                strokeWidth="2"
-              />
-            </g>
-          );
-        })()}
+        {data.length > 0 &&
+          (() => {
+            const maxOver = Math.max(...data.map((d) => d.over), 1);
+            const padding = 2;
+            const lastPt = data[data.length - 1];
+            if (!lastPt) return null;
+            const cx = padding + (lastPt.over / maxOver) * (400 - padding * 2);
+            const cy = height - (lastPt.winProbability / 100) * height;
+            return (
+              <g>
+                {/* Outer glow — pulses */}
+                <circle
+                  cx={cx}
+                  cy={cy}
+                  r="10"
+                  fill={teamAColor}
+                  opacity="0.2"
+                  className="animate-pulse"
+                />
+                {/* Inner glow ring */}
+                <circle
+                  cx={cx}
+                  cy={cy}
+                  r="6"
+                  fill="none"
+                  stroke={teamAColor}
+                  strokeWidth="1.5"
+                  opacity="0.4"
+                  className="animate-pulse"
+                  style={{ animationDelay: '0.3s' }}
+                />
+                {/* Solid dot */}
+                <circle
+                  cx={cx}
+                  cy={cy}
+                  r="4"
+                  fill={teamAColor}
+                  stroke="white"
+                  strokeWidth="2"
+                />
+              </g>
+            );
+          })()}
       </svg>
 
       {/* Labels */}

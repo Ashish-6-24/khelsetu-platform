@@ -1,5 +1,10 @@
-import { generateSingleElimination, generateDoubleElimination, generateRoundRobin, advanceWinner } from '@features/bracket-advanced/utils/bracketGenerator';
 import type { BracketTeam } from '@features/bracket-advanced/types';
+import {
+  advanceWinner,
+  generateDoubleElimination,
+  generateRoundRobin,
+  generateSingleElimination,
+} from '@features/bracket-advanced/utils/bracketGenerator';
 import { describe, expect, it } from 'vitest';
 
 const createTeam = (id: string, name: string): BracketTeam => ({
@@ -18,7 +23,7 @@ describe('Bracket Generator', () => {
         createTeam('4', 'Team D'),
       ];
       const bracket = generateSingleElimination(teams);
-      
+
       expect(bracket).toBeDefined();
       expect(bracket.format).toBe('single-elimination');
       expect(bracket.rounds).toHaveLength(2); // Semi-finals and Final
@@ -27,32 +32,29 @@ describe('Bracket Generator', () => {
     });
 
     it('should generate a single elimination bracket for 8 teams', () => {
-      const teams = Array.from({ length: 8 }, (_, i) => 
-        createTeam(String(i + 1), `Team ${String.fromCharCode(65 + i)}`)
+      const teams = Array.from({ length: 8 }, (_, i) =>
+        createTeam(String(i + 1), `Team ${String.fromCharCode(65 + i)}`),
       );
       const bracket = generateSingleElimination(teams);
-      
+
       expect(bracket.rounds).toHaveLength(3); // Quarter, Semi, Final
       expect(bracket.totalMatches).toBe(7);
     });
 
     it('should handle power of 2 teams correctly', () => {
-      const teams = [
-        createTeam('1', 'Team A'),
-        createTeam('2', 'Team B'),
-      ];
+      const teams = [createTeam('1', 'Team A'), createTeam('2', 'Team B')];
       const bracket = generateSingleElimination(teams);
-      
+
       expect(bracket.rounds).toHaveLength(1);
       expect(bracket.totalMatches).toBe(1);
     });
 
     it('should assign round names correctly', () => {
-      const teams = Array.from({ length: 8 }, (_, i) => 
-        createTeam(String(i + 1), `Team ${String.fromCharCode(65 + i)}`)
+      const teams = Array.from({ length: 8 }, (_, i) =>
+        createTeam(String(i + 1), `Team ${String.fromCharCode(65 + i)}`),
       );
       const bracket = generateSingleElimination(teams);
-      
+
       expect(bracket.rounds[0]?.name).toBe('Quarter-Final');
       expect(bracket.rounds[1]?.name).toBe('Semi-Final');
       expect(bracket.rounds[2]?.name).toBe('Final');
@@ -68,7 +70,7 @@ describe('Bracket Generator', () => {
         createTeam('4', 'Team D'),
       ];
       const bracket = generateDoubleElimination(teams);
-      
+
       expect(bracket).toBeDefined();
       expect(bracket.format).toBe('double-elimination');
       expect(bracket.rounds.length).toBeGreaterThan(2);
@@ -85,7 +87,7 @@ describe('Bracket Generator', () => {
         createTeam('4', 'Team D'),
       ];
       const bracket = generateRoundRobin(teams);
-      
+
       expect(bracket).toBeDefined();
       expect(bracket.format).toBe('round-robin');
       expect(bracket.rounds).toHaveLength(3); // n-1 rounds for n teams
@@ -100,8 +102,8 @@ describe('Bracket Generator', () => {
         createTeam('4', 'Team D'),
       ];
       const bracket = generateRoundRobin(teams);
-      
-      bracket.rounds.forEach(round => {
+
+      bracket.rounds.forEach((round) => {
         expect(round.matches).toHaveLength(2); // n/2 matches per round
       });
     });
@@ -117,10 +119,16 @@ describe('Bracket Generator', () => {
       ];
       const bracket = generateSingleElimination(teams);
       const firstMatch = bracket.rounds[0]?.matches[0];
-      
-      const updatedBracket = advanceWinner(bracket, firstMatch?.id ?? '', 'teamA');
-      const updatedMatch = updatedBracket.rounds[0]?.matches.find(m => m.id === firstMatch?.id);
-      
+
+      const updatedBracket = advanceWinner(
+        bracket,
+        firstMatch?.id ?? '',
+        'teamA',
+      );
+      const updatedMatch = updatedBracket.rounds[0]?.matches.find(
+        (m) => m.id === firstMatch?.id,
+      );
+
       expect(updatedMatch?.winner).toBe('teamA');
       expect(updatedMatch?.status).toBe('completed');
     });
@@ -134,10 +142,14 @@ describe('Bracket Generator', () => {
       ];
       const bracket = generateSingleElimination(teams);
       const firstMatch = bracket.rounds[0]?.matches[0];
-      
-      const updatedBracket = advanceWinner(bracket, firstMatch?.id ?? '', 'teamA');
+
+      const updatedBracket = advanceWinner(
+        bracket,
+        firstMatch?.id ?? '',
+        'teamA',
+      );
       const secondRoundMatch = updatedBracket.rounds[1]?.matches[0];
-      
+
       expect(secondRoundMatch?.teamA).toBeDefined();
     });
   });

@@ -1,5 +1,9 @@
-import { sortPlayersByRating, getRatingColor, getRatingBg } from '../utils/statCalculations';
 import type { PlayerMatchStat } from '../types';
+import {
+  getRatingBg,
+  getRatingColor,
+  sortPlayersByRating,
+} from '../utils/statCalculations';
 
 interface PlayerStatsTableProps {
   players: PlayerMatchStat[];
@@ -24,25 +28,46 @@ export const PlayerStatsTable = ({ players }: PlayerStatsTableProps) => {
         <table className="w-full text-sm" aria-label="Player statistics">
           <thead>
             <tr className="border-b border-gray-200 bg-gray-50/50 dark:border-gray-700 dark:bg-gray-900/50">
-              <th scope="col" className="px-4 py-3 text-left font-semibold text-gray-500 dark:text-gray-400">
+              <th
+                scope="col"
+                className="px-4 py-3 text-left font-semibold text-gray-500 dark:text-gray-400"
+              >
                 Player
               </th>
-              <th scope="col" className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400">
+              <th
+                scope="col"
+                className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400"
+              >
                 Min
               </th>
-              <th scope="col" className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400">
+              <th
+                scope="col"
+                className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400"
+              >
                 G
               </th>
-              <th scope="col" className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400">
+              <th
+                scope="col"
+                className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400"
+              >
                 A
               </th>
-              <th scope="col" className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400">
+              <th
+                scope="col"
+                className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400"
+              >
                 Pass%
               </th>
-              <th scope="col" className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400">
+              <th
+                scope="col"
+                className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400"
+              >
                 Tkl
               </th>
-              <th scope="col" className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400">
+              <th
+                scope="col"
+                className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400"
+              >
                 Rating
               </th>
             </tr>

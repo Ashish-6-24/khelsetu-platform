@@ -1,11 +1,12 @@
-import { useParams } from 'react-router-dom';
-import { NewsArticle } from '@features/news/components';
-import { useNewsArticle, useNews } from '@features/news/hooks/useNews';
-import { getRelatedArticles } from '@features/news/utils/newsUtils';
 import { Skeleton } from '@components/ui/Skeleton';
-import { AlertCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { NewsArticle } from '@features/news/components';
+import { useNews, useNewsArticle } from '@features/news/hooks/useNews';
+import { getRelatedArticles } from '@features/news/utils/newsUtils';
 import { ROUTES } from '@utils/constants';
+import { AlertCircle } from 'lucide-react';
+
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export function NewsDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -51,13 +52,7 @@ export function NewsDetailPage() {
     );
   }
 
-  const related = getRelatedArticles(
-    allArticles,
-    article.id,
-    article.tags,
-  );
+  const related = getRelatedArticles(allArticles, article.id, article.tags);
 
-  return (
-    <NewsArticle article={article} relatedArticles={related} />
-  );
+  return <NewsArticle article={article} relatedArticles={related} />;
 }

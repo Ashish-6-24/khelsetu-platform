@@ -117,7 +117,10 @@ export const createLiveMatchEvent = (
   timestamp: new Date().toISOString(),
 });
 
-export const formatLiveMinute = (minute: number, extraMinute?: number): string => {
+export const formatLiveMinute = (
+  minute: number,
+  extraMinute?: number,
+): string => {
   if (extraMinute && extraMinute > 0) return `${minute}+${extraMinute}'`;
   return `${minute}'`;
 };

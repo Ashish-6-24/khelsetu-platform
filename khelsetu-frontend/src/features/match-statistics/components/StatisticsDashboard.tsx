@@ -1,9 +1,10 @@
 import { Card, CardBody } from '@components/ui/Card';
 import { Skeleton } from '@components/ui/Skeleton';
-import { StatComparisonBar } from './StatComparisonBar';
-import { StatChart } from './StatChart';
-import { PlayerStatsTable } from './PlayerStatsTable';
+
 import type { MatchStatistics } from '../types';
+import { PlayerStatsTable } from './PlayerStatsTable';
+import { StatChart } from './StatChart';
+import { StatComparisonBar } from './StatComparisonBar';
 
 interface StatisticsDashboardProps {
   data: MatchStatistics;
@@ -177,8 +178,8 @@ export const StatisticsDashboardEmpty = () => (
         No Statistics Available
       </h3>
       <p className="mt-2 max-w-sm text-sm text-gray-500 dark:text-gray-400">
-        Match statistics will appear here once the match has started and data
-        is being recorded.
+        Match statistics will appear here once the match has started and data is
+        being recorded.
       </p>
     </div>
   </div>

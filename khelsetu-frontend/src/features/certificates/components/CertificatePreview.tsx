@@ -20,10 +20,18 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
       <div className="cert-watermark">{template.icon}</div>
 
       {/* Corner flourishes */}
-      <div className="cert-corner cert-corner--tl"><div className="cert-corner-dot" /></div>
-      <div className="cert-corner cert-corner--tr"><div className="cert-corner-dot" /></div>
-      <div className="cert-corner cert-corner--bl"><div className="cert-corner-dot" /></div>
-      <div className="cert-corner cert-corner--br"><div className="cert-corner-dot" /></div>
+      <div className="cert-corner cert-corner--tl">
+        <div className="cert-corner-dot" />
+      </div>
+      <div className="cert-corner cert-corner--tr">
+        <div className="cert-corner-dot" />
+      </div>
+      <div className="cert-corner cert-corner--bl">
+        <div className="cert-corner-dot" />
+      </div>
+      <div className="cert-corner cert-corner--br">
+        <div className="cert-corner-dot" />
+      </div>
 
       {/* Content */}
       <div className="flex h-full flex-col items-center justify-between p-8 md:p-12">
@@ -39,9 +47,7 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
 
         {/* Title */}
         <div className="text-center">
-          <h1
-            className="cert-gold-text font-championship text-4xl font-bold md:text-5xl"
-          >
+          <h1 className="cert-gold-text font-championship text-4xl font-bold md:text-5xl">
             {template.title}
           </h1>
           <div className="cert-divider my-2">
@@ -66,16 +72,26 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
         {/* Details */}
         <div className="grid grid-cols-3 gap-6 text-center text-sm">
           <div>
-            <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400">Team</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400">
+              Team
+            </p>
             <p className="mt-0.5 font-medium text-gray-700">{data.teamName}</p>
           </div>
           <div>
-            <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400">Tournament</p>
-            <p className="mt-0.5 font-medium text-gray-700">{data.tournamentName}</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400">
+              Tournament
+            </p>
+            <p className="mt-0.5 font-medium text-gray-700">
+              {data.tournamentName}
+            </p>
           </div>
           <div>
-            <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400">Date</p>
-            <p className="mt-0.5 font-medium text-gray-700">{getFormattedDate(data.date)}</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400">
+              Date
+            </p>
+            <p className="mt-0.5 font-medium text-gray-700">
+              {getFormattedDate(data.date)}
+            </p>
           </div>
         </div>
 
@@ -83,13 +99,17 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
         <div className="flex w-full items-end justify-between">
           {/* Left signature */}
           <div className="cert-signature text-center">
-            <p className="text-sm font-medium text-gray-700">{data.organizer}</p>
+            <p className="text-sm font-medium text-gray-700">
+              {data.organizer}
+            </p>
             <p className="text-[10px] text-gray-400">Organizer</p>
           </div>
 
           {/* Center seal */}
           <div className="cert-seal mx-8 flex items-center justify-center">
-            <span className="relative z-10 text-2xl font-bold text-accent-950/70">KS</span>
+            <span className="relative z-10 text-2xl font-bold text-accent-950/70">
+              KS
+            </span>
           </div>
 
           {/* Right signature */}

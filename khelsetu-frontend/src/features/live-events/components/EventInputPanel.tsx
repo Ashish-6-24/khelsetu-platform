@@ -1,8 +1,8 @@
 import { Card, CardBody, CardHeader } from '@components/ui/Card';
 import { clsx } from 'clsx';
 
-import { getSportEvents, getEventConfig } from '../utils/eventCreators';
 import type { LiveEventType, SportType } from '../types';
+import { getEventConfig, getSportEvents } from '../utils/eventCreators';
 
 interface EventInputPanelProps {
   sport: SportType;

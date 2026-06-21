@@ -1,6 +1,7 @@
 import { clsx } from 'clsx';
-import { useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import { useEffect, useRef, useState } from 'react';
 
 interface LiveMatchClockProps {
   startTime: number | string | Date;
@@ -36,7 +37,7 @@ export const LiveMatchClock = ({
 }: LiveMatchClockProps) => {
   const start = new Date(startTime).getTime();
   const end = countdownTo ? new Date(countdownTo).getTime() : 0;
-  const [now, setNow] = useState(Date.now());
+  const [now, setNow] = useState(() => Date.now());
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
@@ -52,7 +53,9 @@ export const LiveMatchClock = ({
   const elapsed = now - start;
   const remaining = end - now;
   const display =
-    format === 'countdown' ? formatCountdown(remaining) : formatElapsed(elapsed);
+    format === 'countdown'
+      ? formatCountdown(remaining)
+      : formatElapsed(elapsed);
 
   const isOvertime = format === 'countdown' && remaining <= 0;
 

@@ -32,22 +32,10 @@ export { LanguageToggle } from './LanguageToggle';
 // Premium animated components
 export { ShimmerCard } from './ShimmerCard';
 export { GlowPulse } from './GlowPulse';
-export {
-  FloatingOrb,
-  ConnectedDots,
-  AnimatedNumber,
-} from './FloatingOrb';
-export {
-  GradientMesh,
-  PremiumCard,
-  GlowStatCard,
-} from './PremiumCard';
+export { FloatingOrb, ConnectedDots, AnimatedNumber } from './FloatingOrb';
+export { GradientMesh, PremiumCard, GlowStatCard } from './PremiumCard';
 export { AnimatedBackground } from './AnimatedBackground';
-export {
-  LiveIndicator,
-  GradientBadge,
-  ScoreBadge,
-} from './LiveIndicator';
+export { LiveIndicator, GradientBadge, ScoreBadge } from './LiveIndicator';
 
 // Dynamic sports components
 export { ScoreTicker } from './ScoreTicker';

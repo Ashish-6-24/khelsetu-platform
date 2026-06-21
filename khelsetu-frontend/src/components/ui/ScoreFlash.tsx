@@ -1,6 +1,7 @@
 import { clsx } from 'clsx';
-import { useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import { useEffect, useRef, useState } from 'react';
 
 interface ScoreFlashProps {
   value: number;
@@ -49,10 +50,14 @@ export const ScoreFlash = ({
   }, [value, positiveColor, negativeColor]);
 
   const formatted =
-    format === 'cricket' ? `${Math.floor(value / 100)}.${value % 100}` : String(value);
+    format === 'cricket'
+      ? `${Math.floor(value / 100)}.${value % 100}`
+      : String(value);
 
   return (
-    <span className={twMerge(clsx('relative inline-flex items-center', className))}>
+    <span
+      className={twMerge(clsx('relative inline-flex items-center', className))}
+    >
       {/* Background flash — fades out */}
       {flash && (
         <span

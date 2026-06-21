@@ -4,8 +4,8 @@ import { Skeleton } from '@components/ui/Skeleton';
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
 import { Trophy } from 'lucide-react';
-import { useMemo, useState } from 'react';
 
+import { useMemo, useState } from 'react';
 
 import { useBracketData } from '../hooks/useBracketData';
 import type { BracketFormat, BracketTeam } from '../types';
@@ -188,9 +188,7 @@ export const AdvancedBracketView = ({
           {bracket.rounds.map((round, roundIdx) => {
             // Offset rounds vertically for visual hierarchy
             const verticalOffset =
-              roundIdx > 0
-                ? Math.min(roundIdx * 32, roundIdx * 40)
-                : 0;
+              roundIdx > 0 ? Math.min(roundIdx * 32, roundIdx * 40) : 0;
 
             return (
               <motion.div

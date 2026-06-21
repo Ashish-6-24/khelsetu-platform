@@ -1,5 +1,5 @@
-import { Skeleton } from '@components/ui/Skeleton';
 import { Card, CardBody } from '@components/ui/Card';
+import { Skeleton } from '@components/ui/Skeleton';
 import { FormationBuilder } from '@features/formation/components/FormationBuilder';
 import { useFormation } from '@features/formation/hooks/useFormation';
 import { matchService } from '@services/api/tournament';
@@ -8,11 +8,41 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 
 const DEMO_BENCH = [
-  { playerId: 'b1', playerName: 'Rai Sub', jerseyNumber: 13, position: 'CM' as const, status: 'substitute' as const },
-  { playerId: 'b2', playerName: 'Tamang Res', jerseyNumber: 14, position: 'CB' as const, status: 'reserve' as const },
-  { playerId: 'b3', playerName: 'Gurung Res', jerseyNumber: 15, position: 'LW' as const, status: 'reserve' as const },
-  { playerId: 'b4', playerName: 'Magar Inj', jerseyNumber: 16, position: 'ST' as const, status: 'injured' as const },
-  { playerId: 'b5', playerName: 'Sharma Sus', jerseyNumber: 17, position: 'RB' as const, status: 'suspended' as const },
+  {
+    playerId: 'b1',
+    playerName: 'Rai Sub',
+    jerseyNumber: 13,
+    position: 'CM' as const,
+    status: 'substitute' as const,
+  },
+  {
+    playerId: 'b2',
+    playerName: 'Tamang Res',
+    jerseyNumber: 14,
+    position: 'CB' as const,
+    status: 'reserve' as const,
+  },
+  {
+    playerId: 'b3',
+    playerName: 'Gurung Res',
+    jerseyNumber: 15,
+    position: 'LW' as const,
+    status: 'reserve' as const,
+  },
+  {
+    playerId: 'b4',
+    playerName: 'Magar Inj',
+    jerseyNumber: 16,
+    position: 'ST' as const,
+    status: 'injured' as const,
+  },
+  {
+    playerId: 'b5',
+    playerName: 'Sharma Sus',
+    jerseyNumber: 17,
+    position: 'RB' as const,
+    status: 'suspended' as const,
+  },
 ];
 
 export const FormationPage = () => {
@@ -104,7 +134,9 @@ export const FormationPage = () => {
           <ul className="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-400">
             <li>• Select a formation template above to arrange players</li>
             <li>• Drag players on the pitch to fine-tune positions</li>
-            <li>• Use the tactical drawing tools to sketch plays and movements</li>
+            <li>
+              • Use the tactical drawing tools to sketch plays and movements
+            </li>
             <li>• Click a player to select/deselect</li>
           </ul>
         </CardBody>

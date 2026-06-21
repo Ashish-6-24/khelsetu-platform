@@ -1,6 +1,7 @@
 import { clsx } from 'clsx';
-import { type ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import { type ReactNode } from 'react';
 
 interface GlowPulseProps {
   children?: ReactNode;
@@ -55,13 +56,12 @@ export const GlowPulse = ({
   const sizes = sizeMap[size];
 
   return (
-    <span className={twMerge(clsx('relative inline-flex items-center', className))}>
+    <span
+      className={twMerge(clsx('relative inline-flex items-center', className))}
+    >
       {/* Glow halo — blinks with the dot */}
       <span
-        className={clsx(
-          'absolute rounded-full animate-pulse',
-          sizes.glow,
-        )}
+        className={clsx('absolute rounded-full animate-pulse', sizes.glow)}
         style={{
           background: `radial-gradient(circle, ${colors.glowBg} 0%, transparent 70%)`,
         }}

@@ -27,7 +27,9 @@ export const TournamentsPage = () => {
             <Skeleton className="h-8 w-48" />
             <Skeleton className="h-4 w-64 mt-2" />
           </div>
-          <Button variant="create" leftIcon={<Trophy className="h-4 w-4" />}>Create Tournament</Button>
+          <Button variant="create" leftIcon={<Trophy className="h-4 w-4" />}>
+            Create Tournament
+          </Button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
@@ -50,7 +52,9 @@ export const TournamentsPage = () => {
               Failed to load tournaments
             </p>
           </div>
-          <Button variant="create" leftIcon={<Trophy className="h-4 w-4" />}>Create Tournament</Button>
+          <Button variant="create" leftIcon={<Trophy className="h-4 w-4" />}>
+            Create Tournament
+          </Button>
         </div>
       </div>
     );
@@ -67,7 +71,9 @@ export const TournamentsPage = () => {
             Manage your tournaments
           </p>
         </div>
-        <Button variant="create" leftIcon={<Trophy className="h-4 w-4" />}>Create Tournament</Button>
+        <Button variant="create" leftIcon={<Trophy className="h-4 w-4" />}>
+          Create Tournament
+        </Button>
       </div>
 
       {tournaments && tournaments.length > 0 ? (

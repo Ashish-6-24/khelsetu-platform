@@ -5,7 +5,14 @@ interface CertConfettiProps {
   onComplete?: () => void;
 }
 
-const COLORS = ['#b8860b', '#d4a017', '#f5d060', '#7f1d1d', '#b91c1c', '#fef3c7'];
+const COLORS = [
+  '#b8860b',
+  '#d4a017',
+  '#f5d060',
+  '#7f1d1d',
+  '#b91c1c',
+  '#fef3c7',
+];
 
 interface Particle {
   id: number;
@@ -28,7 +35,10 @@ function generateParticles(): Particle[] {
 }
 
 export function CertConfetti({ trigger, onComplete }: CertConfettiProps) {
-  const particles = useMemo(() => (trigger ? generateParticles() : []), [trigger]);
+  const particles = useMemo(
+    () => (trigger ? generateParticles() : []),
+    [trigger],
+  );
 
   useEffect(() => {
     if (!trigger) return;
@@ -39,7 +49,10 @@ export function CertConfetti({ trigger, onComplete }: CertConfettiProps) {
   if (!trigger || particles.length === 0) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden" aria-hidden="true">
+    <div
+      className="pointer-events-none fixed inset-0 z-50 overflow-hidden"
+      aria-hidden="true"
+    >
       {particles.map((p) => (
         <div
           key={p.id}

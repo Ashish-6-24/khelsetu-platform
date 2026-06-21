@@ -1,3 +1,5 @@
+import { useCallback, useState } from 'react';
+
 import type {
   BenchPlayer,
   FormationPlayer,
@@ -6,8 +8,6 @@ import type {
   TacticalDrawing,
 } from '../types/index';
 import { FORMATION_TEMPLATES } from '../utils/formations';
-
-import { useCallback, useState } from 'react';
 
 const generateId = () => Math.random().toString(36).substring(2, 10);
 
@@ -24,43 +24,34 @@ export function useFormation(initialMatchId?: string) {
       const template = FORMATION_TEMPLATES.find((t) => t.type === type);
       if (!template) return;
 
-      const newPlayers: FormationPlayer[] = template.positions.map(
-        (pos, i) => {
-          const existing = players[i];
-          return {
-            playerId: existing?.playerId ?? generateId(),
-            playerName: existing?.playerName ?? `Player ${i + 1}`,
-            jerseyNumber: existing?.jerseyNumber ?? i + 1,
-            position: pos.position,
-            x: pos.x,
-            y: pos.y,
-            isCaptain: existing?.isCaptain ?? false,
-          };
-        },
-      );
+      const newPlayers: FormationPlayer[] = template.positions.map((pos, i) => {
+        const existing = players[i];
+        return {
+          playerId: existing?.playerId ?? generateId(),
+          playerName: existing?.playerName ?? `Player ${i + 1}`,
+          jerseyNumber: existing?.jerseyNumber ?? i + 1,
+          position: pos.position,
+          x: pos.x,
+          y: pos.y,
+          isCaptain: existing?.isCaptain ?? false,
+        };
+      });
 
       setPlayers(newPlayers);
     },
     [players],
   );
 
-  const movePlayer = useCallback(
-    (playerId: string, x: number, y: number) => {
-      setPlayers((prev) =>
-        prev.map((p) =>
-          p.playerId === playerId ? { ...p, x, y } : p,
-        ),
-      );
-    },
-    [],
-  );
+  const movePlayer = useCallback((playerId: string, x: number, y: number) => {
+    setPlayers((prev) =>
+      prev.map((p) => (p.playerId === playerId ? { ...p, x, y } : p)),
+    );
+  }, []);
 
   const changePlayerPosition = useCallback(
     (playerId: string, position: Position) => {
       setPlayers((prev) =>
-        prev.map((p) =>
-          p.playerId === playerId ? { ...p, position } : p,
-        ),
+        prev.map((p) => (p.playerId === playerId ? { ...p, position } : p)),
       );
     },
     [],
@@ -101,12 +92,9 @@ export function useFormation(initialMatchId?: string) {
     [players, bench],
   );
 
-  const addDrawing = useCallback(
-    (drawing: Omit<TacticalDrawing, 'id'>) => {
-      setDrawings((prev) => [...prev, { ...drawing, id: generateId() }]);
-    },
-    [],
-  );
+  const addDrawing = useCallback((drawing: Omit<TacticalDrawing, 'id'>) => {
+    setDrawings((prev) => [...prev, { ...drawing, id: generateId() }]);
+  }, []);
 
   const removeDrawing = useCallback((drawingId: string) => {
     setDrawings((prev) => prev.filter((d) => d.id !== drawingId));

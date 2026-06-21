@@ -1,7 +1,7 @@
+import { clsx } from 'clsx';
+
 import type { FormationType } from '../types/index';
 import { FORMATION_TEMPLATES } from '../utils/formations';
-
-import { clsx } from 'clsx';
 
 interface FormationSelectorProps {
   value: FormationType;

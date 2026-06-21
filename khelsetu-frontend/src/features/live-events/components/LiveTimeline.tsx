@@ -1,8 +1,8 @@
 import { Card, CardBody, CardHeader } from '@components/ui/Card';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { getEventConfig } from '../utils/eventCreators';
 import type { LiveMatchEvent, SportType } from '../types';
+import { getEventConfig } from '../utils/eventCreators';
 
 interface LiveTimelineProps {
   events: LiveMatchEvent[];
@@ -37,7 +37,11 @@ export const LiveTimeline = ({ events, sport }: LiveTimelineProps) => {
             </p>
           </div>
         ) : (
-          <div className="space-y-1.5 max-h-[420px] overflow-y-auto pr-1" aria-live="polite" aria-label="Live match events">
+          <div
+            className="space-y-1.5 max-h-[420px] overflow-y-auto pr-1"
+            aria-live="polite"
+            aria-label="Live match events"
+          >
             <AnimatePresence initial={false}>
               {sorted.map((event) => {
                 const config = getEventConfig(sport, event.type);

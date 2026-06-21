@@ -1,4 +1,5 @@
 import type { LiveMatchEvent } from '@features/live-events/types';
+
 import type { MatchReport } from '../types';
 
 export function generateMatchReport(
@@ -106,11 +107,17 @@ function generateHighlights(
       ? `${goal.minute}+${goal.extraMinute}`
       : `${goal.minute}`;
     if (goal.type === 'own_goal') {
-      highlights.push(`${minute}' - Own goal by ${goal.playerName ?? 'Unknown'} (${goal.teamName})`);
+      highlights.push(
+        `${minute}' - Own goal by ${goal.playerName ?? 'Unknown'} (${goal.teamName})`,
+      );
     } else if (goal.type === 'penalty_goal') {
-      highlights.push(`${minute}' - Penalty scored by ${goal.playerName ?? 'Unknown'} (${goal.teamName})`);
+      highlights.push(
+        `${minute}' - Penalty scored by ${goal.playerName ?? 'Unknown'} (${goal.teamName})`,
+      );
     } else {
-      highlights.push(`${minute}' - Goal by ${goal.playerName ?? 'Unknown'} (${goal.teamName})`);
+      highlights.push(
+        `${minute}' - Goal by ${goal.playerName ?? 'Unknown'} (${goal.teamName})`,
+      );
     }
   }
 
@@ -119,7 +126,9 @@ function generateHighlights(
       ? `${card.minute}+${card.extraMinute}`
       : `${card.minute}`;
     const cardType = card.type === 'red_card' ? 'Red card' : 'Yellow card';
-    highlights.push(`${minute}' - ${cardType} shown to ${card.playerName ?? 'Unknown'} (${card.teamName})`);
+    highlights.push(
+      `${minute}' - ${cardType} shown to ${card.playerName ?? 'Unknown'} (${card.teamName})`,
+    );
   }
 
   return highlights.sort((a, b) => {

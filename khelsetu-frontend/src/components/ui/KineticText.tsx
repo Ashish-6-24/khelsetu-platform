@@ -1,6 +1,7 @@
 import { clsx } from 'clsx';
-import { useRef, useState, useEffect } from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import { useEffect, useRef, useState } from 'react';
 
 interface KineticTextProps {
   children: string;
@@ -51,9 +52,7 @@ export const KineticText = ({
             className={clsx(
               'inline-block mr-[0.3em]',
               'transition-all duration-500',
-              visible
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-4',
+              visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4',
             )}
             style={{
               transitionDelay: visible ? `${delay + i * stagger}ms` : '0ms',

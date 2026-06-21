@@ -1,6 +1,8 @@
 import { clsx } from 'clsx';
-import { type ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import { type ReactNode } from 'react';
+
 import { GlowPulse } from './GlowPulse';
 
 interface LiveIndicatorProps {

@@ -51,7 +51,11 @@ export const LiveMatchesPanel = ({
             description="No matches live right now. Start a scoring session to bring the game to your fans."
             action={
               <Link to={ROUTES.SCORING}>
-                <Button size="sm" variant="live" leftIcon={<Radio className="h-4 w-4" />}>
+                <Button
+                  size="sm"
+                  variant="live"
+                  leftIcon={<Radio className="h-4 w-4" />}
+                >
                   Start scoring
                 </Button>
               </Link>

@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
+
+import { useEffect, useState } from 'react';
 
 interface CertificateQRProps {
   value: string;

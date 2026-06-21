@@ -1,12 +1,15 @@
-import { 
-  calculatePossession, 
-  calculatePassAccuracy, 
-  calculatePlayerRating, 
-  getRatingColor, 
-  getRatingBg, 
-  sortPlayersByRating 
+import type {
+  PlayerMatchStat,
+  TeamStatistics,
+} from '@features/match-statistics/types';
+import {
+  calculatePassAccuracy,
+  calculatePlayerRating,
+  calculatePossession,
+  getRatingBg,
+  getRatingColor,
+  sortPlayersByRating,
 } from '@features/match-statistics/utils/statCalculations';
-import type { TeamStatistics, PlayerMatchStat } from '@features/match-statistics/types';
 import { describe, expect, it } from 'vitest';
 
 describe('Stat Calculations', () => {
@@ -14,7 +17,7 @@ describe('Stat Calculations', () => {
     it('should calculate possession correctly', () => {
       const teamA: TeamStatistics = { totalPasses: 300 } as TeamStatistics;
       const teamB: TeamStatistics = { totalPasses: 200 } as TeamStatistics;
-      
+
       const possession = calculatePossession(teamA, teamB);
       expect(possession.teamA).toBe(60);
       expect(possession.teamB).toBe(40);
@@ -23,7 +26,7 @@ describe('Stat Calculations', () => {
     it('should handle equal passes', () => {
       const teamA: TeamStatistics = { totalPasses: 100 } as TeamStatistics;
       const teamB: TeamStatistics = { totalPasses: 100 } as TeamStatistics;
-      
+
       const possession = calculatePossession(teamA, teamB);
       expect(possession.teamA).toBe(50);
       expect(possession.teamB).toBe(50);
@@ -32,7 +35,7 @@ describe('Stat Calculations', () => {
     it('should handle zero passes', () => {
       const teamA: TeamStatistics = { totalPasses: 0 } as TeamStatistics;
       const teamB: TeamStatistics = { totalPasses: 0 } as TeamStatistics;
-      
+
       const possession = calculatePossession(teamA, teamB);
       expect(possession.teamA).toBe(50);
       expect(possession.teamB).toBe(50);
@@ -68,7 +71,7 @@ describe('Stat Calculations', () => {
         shotsOnTarget: 3,
         rating: 0,
       } as PlayerMatchStat;
-      
+
       const rating = calculatePlayerRating(stat);
       expect(rating).toBeGreaterThanOrEqual(0);
       expect(rating).toBeLessThanOrEqual(10);
@@ -87,12 +90,12 @@ describe('Stat Calculations', () => {
         shotsOnTarget: 0,
         rating: 0,
       } as PlayerMatchStat;
-      
+
       const statWithoutCards: PlayerMatchStat = {
         ...statWithYellow,
         yellowCards: 0,
       };
-      
+
       const ratingWith = calculatePlayerRating(statWithYellow);
       const ratingWithout = calculatePlayerRating(statWithoutCards);
       expect(ratingWith).toBeLessThan(ratingWithout);
@@ -111,12 +114,12 @@ describe('Stat Calculations', () => {
         shotsOnTarget: 5,
         rating: 0,
       } as PlayerMatchStat;
-      
+
       const statWithoutGoals: PlayerMatchStat = {
         ...statWithGoals,
         goals: 0,
       };
-      
+
       const ratingWith = calculatePlayerRating(statWithGoals);
       const ratingWithout = calculatePlayerRating(statWithoutGoals);
       expect(ratingWith).toBeGreaterThan(ratingWithout);
@@ -159,7 +162,7 @@ describe('Stat Calculations', () => {
         { rating: 9.2 } as PlayerMatchStat,
         { rating: 6.8 } as PlayerMatchStat,
       ];
-      
+
       const sorted = sortPlayersByRating(players);
       expect(sorted[0]?.rating).toBe(9.2);
       expect(sorted[1]?.rating).toBe(7.5);
@@ -171,7 +174,7 @@ describe('Stat Calculations', () => {
         { rating: 7.5 } as PlayerMatchStat,
         { rating: 9.2 } as PlayerMatchStat,
       ];
-      
+
       const original = [...players];
       sortPlayersByRating(players);
       expect(players).toEqual(original);

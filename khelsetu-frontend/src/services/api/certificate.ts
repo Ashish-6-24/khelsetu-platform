@@ -1,5 +1,5 @@
-import { api } from '@lib/axios';
 import type { CertificateData } from '@features/certificates/types';
+import { api } from '@lib/axios';
 
 export const certificateService = {
   generate: async (data: CertificateData) => {
@@ -8,7 +8,9 @@ export const certificateService = {
   },
 
   verify: async (id: string) => {
-    const response = await api.get<CertificateData>(`/api/certificates/verify/${id}`);
+    const response = await api.get<CertificateData>(
+      `/api/certificates/verify/${id}`,
+    );
     return response.data;
   },
 

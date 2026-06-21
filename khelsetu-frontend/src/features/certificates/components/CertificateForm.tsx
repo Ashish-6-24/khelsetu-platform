@@ -1,5 +1,7 @@
-import { useState } from 'react';
 import { Button } from '@components/ui/Button';
+
+import { useState } from 'react';
+
 import type { CertificateType } from '../types';
 import { CERTIFICATE_TEMPLATES } from '../types';
 
@@ -17,12 +19,17 @@ interface CertificateFormProps {
 
 const certificateTypes = Object.values(CERTIFICATE_TEMPLATES);
 
-export function CertificateForm({ onSubmit, isGenerating }: CertificateFormProps) {
+export function CertificateForm({
+  onSubmit,
+  isGenerating,
+}: CertificateFormProps) {
   const [type, setType] = useState<CertificateType>('champion');
   const [playerName, setPlayerName] = useState('');
   const [teamName, setTeamName] = useState('');
   const [tournamentName, setTournamentName] = useState('');
-  const [date, setDate] = useState(new Date().toISOString().split('T')[0] ?? '');
+  const [date, setDate] = useState(
+    new Date().toISOString().split('T')[0] ?? '',
+  );
   const [organizer, setOrganizer] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {

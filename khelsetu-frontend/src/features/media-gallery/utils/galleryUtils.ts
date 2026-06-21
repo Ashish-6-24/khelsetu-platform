@@ -1,4 +1,4 @@
-import { MediaType, MediaItem, GalleryFilters } from '../types';
+import { GalleryFilters, MediaItem, MediaType } from '../types';
 
 export function getMediaTypeIcon(type: MediaType): string {
   const icons: Record<MediaType, string> = {
@@ -16,10 +16,14 @@ export function formatDuration(seconds: number): string {
   return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
-export function filterMedia(items: MediaItem[], filters: GalleryFilters): MediaItem[] {
+export function filterMedia(
+  items: MediaItem[],
+  filters: GalleryFilters,
+): MediaItem[] {
   return items.filter((item) => {
     if (filters.type && item.type !== filters.type) return false;
-    if (filters.tournamentId && item.tournamentId !== filters.tournamentId) return false;
+    if (filters.tournamentId && item.tournamentId !== filters.tournamentId)
+      return false;
     if (filters.teamId && item.teamId !== filters.teamId) return false;
     if (filters.playerId && item.playerId !== filters.playerId) return false;
     if (filters.season && item.season !== filters.season) return false;
