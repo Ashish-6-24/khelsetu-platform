@@ -1,7 +1,9 @@
 import { api } from '@lib/axios';
 import type {
+  CreateMatchInput,
   CreateTournamentInput,
   Match,
+  ScoreUpdateInput,
   Team,
   Tournament,
 } from '@types-domain/tournament';
@@ -76,7 +78,7 @@ export const matchService = {
     return response.data;
   },
 
-  create: async (data: Record<string, unknown>) => {
+  create: async (data: CreateMatchInput) => {
     const response = await api.post<Match>(API_ENDPOINTS.MATCHES.CREATE, data);
     return response.data;
   },
@@ -89,7 +91,7 @@ export const matchService = {
     return response.data;
   },
 
-  updateScore: async (id: string, score: Record<string, unknown>) => {
+  updateScore: async (id: string, score: ScoreUpdateInput) => {
     const response = await api.post<Match>(
       API_ENDPOINTS.MATCHES.SCORE(id),
       score,

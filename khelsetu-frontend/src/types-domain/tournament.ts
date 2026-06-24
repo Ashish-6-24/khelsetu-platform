@@ -114,3 +114,19 @@ export interface CreateTournamentInput {
   prizePool?: number;
   entryFee?: number;
 }
+
+export interface CreateMatchInput {
+  tournamentId: string;
+  teamAId: string;
+  teamBId: string;
+  scheduledAt: string;
+  venue: string;
+  round?: string;
+}
+
+export interface ScoreUpdateInput {
+  teamAScore: number;
+  teamBScore: number;
+  teamAInnings?: Innings[];
+  teamBInnings?: Innings[];
+}

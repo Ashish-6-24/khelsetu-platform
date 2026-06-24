@@ -137,9 +137,12 @@ export const calculatePartnership = (
 };
 
 export const formatOvers = (overs: number, balls: number): string => {
-  const completedOvers = overs;
-  const remainingBalls = balls;
-  return `${completedOvers}.${remainingBalls}`;
+  const extraOvers = Math.floor(balls / 6);
+  const remainingBalls = balls % 6;
+  const totalOvers = overs + extraOvers;
+  return remainingBalls > 0
+    ? `${totalOvers}.${remainingBalls}`
+    : `${totalOvers}`;
 };
 
 export const getBallDisplay = (ball: CricketBall): string => {

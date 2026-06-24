@@ -2,6 +2,8 @@ import type { AuthState, AuthTokens, User } from '@types-domain/auth';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import { useScoringStore } from './scoringStore';
+
 interface AuthStore extends AuthState {
   setUser: (user: User | null) => void;
   setTokens: (tokens: AuthTokens | null) => void;
@@ -34,6 +36,7 @@ export const useAuthStore = create<AuthStore>()(
 
       logout: () => {
         localStorage.removeItem('auth_token');
+        useScoringStore.getState().resetScoring();
         set({
           user: null,
           tokens: null,

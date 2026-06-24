@@ -1,4 +1,6 @@
-export type Role = 'admin' | 'organizer' | 'scorer' | 'viewer';
+import type { UserRole as Role } from '@types-domain/auth';
+
+export type { Role };
 
 export interface Permission {
   resource: string;
