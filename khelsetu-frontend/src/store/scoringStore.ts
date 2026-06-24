@@ -32,7 +32,8 @@ interface ScoringState {
   activeSport: SportType | null;
   isScoring: boolean;
   lastUpdate: string | null;
-  history: unknown[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  history: Array<{ type: string; data?: any; snapshot: Partial<ScoringState> }>;
   cricket: CricketScoringState;
   football: FootballScoringState;
   volleyball: VolleyballScoringState;
@@ -82,6 +83,10 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
       isScoring: false,
       lastUpdate: new Date().toISOString(),
       history: [],
+      cricket: { score: null },
+      football: { score: null },
+      volleyball: { score: null },
+      basketball: { score: null },
     }),
 
   setScoring: (isScoring) =>
@@ -103,8 +108,14 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
   undoLastAction: () => {
     set((state) => {
       if (state.history.length === 0) return state;
+      const lastEntry = state.history[state.history.length - 1];
+      if (!lastEntry) return state;
       const newHistory = state.history.slice(0, -1);
-      return { history: newHistory, lastUpdate: new Date().toISOString() };
+      return {
+        ...lastEntry.snapshot,
+        history: newHistory,
+        lastUpdate: new Date().toISOString(),
+      };
     });
   },
 
@@ -137,7 +148,14 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
             lastBalls: updatedInnings.lastBalls,
           },
         },
-        history: [...state.history, { type: 'cricket_ball', data: ball }],
+        history: [
+          ...state.history,
+          {
+            type: 'cricket_ball',
+            data: ball,
+            snapshot: { cricket: { score: state.cricket.score } },
+          },
+        ],
         lastUpdate: new Date().toISOString(),
       };
     }),
@@ -156,7 +174,14 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
             events: updatedEvents,
           },
         },
-        history: [...state.history, { type: 'football_event', data: event }],
+        history: [
+          ...state.history,
+          {
+            type: 'football_event',
+            data: event,
+            snapshot: { football: { score: state.football.score } },
+          },
+        ],
         lastUpdate: new Date().toISOString(),
       };
     }),
@@ -198,7 +223,14 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
         volleyball: {
           score: { ...state.volleyball.score, currentPoint: newPoint },
         },
-        history: [...state.history, { type: 'volleyball_point', team }],
+        history: [
+          ...state.history,
+          {
+            type: 'volleyball_point',
+            team,
+            snapshot: { volleyball: { score: state.volleyball.score } },
+          },
+        ],
         lastUpdate: new Date().toISOString(),
       };
     }),
@@ -232,7 +264,14 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
             servingTeam: winner === 'teamA' ? 'teamB' : 'teamA',
           },
         },
-        history: [...state.history, { type: 'volleyball_set_end', winner }],
+        history: [
+          ...state.history,
+          {
+            type: 'volleyball_set_end',
+            winner,
+            snapshot: { volleyball: { score: state.volleyball.score } },
+          },
+        ],
         lastUpdate: new Date().toISOString(),
       };
     }),
@@ -268,7 +307,14 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
             events: updatedEvents,
           },
         },
-        history: [...state.history, { type: 'basketball_event', data: event }],
+        history: [
+          ...state.history,
+          {
+            type: 'basketball_event',
+            data: event,
+            snapshot: { basketball: { score: state.basketball.score } },
+          },
+        ],
         lastUpdate: new Date().toISOString(),
       };
     }),
@@ -297,7 +343,13 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
             shotClock: 24,
           },
         },
-        history: [...state.history, { type: 'basketball_quarter_end' }],
+        history: [
+          ...state.history,
+          {
+            type: 'basketball_quarter_end',
+            snapshot: { basketball: { score: state.basketball.score } },
+          },
+        ],
         lastUpdate: new Date().toISOString(),
       };
     }),

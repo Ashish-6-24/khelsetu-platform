@@ -38,11 +38,15 @@ export function NewsArticle({
 
   const handleShare = async () => {
     if (navigator.share) {
-      await navigator.share({
-        title: article.title,
-        text: article.description,
-        url: window.location.href,
-      });
+      try {
+        await navigator.share({
+          title: article.title,
+          text: article.description,
+          url: window.location.href,
+        });
+      } catch {
+        // User cancelled or share failed — silent fallback
+      }
     }
   };
 

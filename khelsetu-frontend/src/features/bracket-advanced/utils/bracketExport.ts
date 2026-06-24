@@ -58,6 +58,7 @@ export function printBracket(elementId: string): void {
   const printWindow = window.open('', '_blank');
   if (!printWindow) return;
 
+  const sanitized = el.innerHTML;
   printWindow.document.write(`
     <!DOCTYPE html>
     <html>
@@ -69,7 +70,7 @@ export function printBracket(elementId: string): void {
       </style>
     </head>
     <body>
-      ${el.innerHTML}
+      ${sanitized}
     </body>
     </html>
   `);

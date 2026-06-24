@@ -5,6 +5,7 @@ import { useToast } from '@components/ui/toast-context';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { authService } from '@services/api/auth';
 import { useAuthStore } from '@store/authStore';
+import { useUIStore } from '@store/uiStore';
 import { useMutation } from '@tanstack/react-query';
 import type { User } from '@types-domain/auth';
 import { clsx } from 'clsx';
@@ -111,10 +112,11 @@ const SaveButton = ({
 export const SettingsPage = () => {
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
+  const theme = useUIStore((state) => state.theme);
+  const setTheme = useUIStore((state) => state.setTheme);
   const { addToast } = useToast();
 
   const [emailNotifications, setEmailNotifications] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
   const [showPasswordForm, setShowPasswordForm] = useState(false);
 
   const {
@@ -143,6 +145,7 @@ export const SettingsPage = () => {
     mutationFn: (data: Partial<User>) => authService.updateProfile(data),
     onSuccess: (updatedUser) => {
       setUser(updatedUser);
+      resetProfile({ name: updatedUser.name, phone: updatedUser.phone ?? '' });
       addToast({ type: 'success', message: 'Profile updated successfully' });
     },
     onError: () => {
@@ -343,7 +346,7 @@ export const SettingsPage = () => {
             <div className="flex items-center justify-between py-3">
               <div>
                 <p className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
-                  {darkMode ? (
+                  {theme === 'dark' ? (
                     <Moon className="w-4 h-4" />
                   ) : (
                     <Sun className="w-4 h-4" />
@@ -355,19 +358,18 @@ export const SettingsPage = () => {
                 </p>
               </div>
               <button
-                onClick={() => {
-                  setDarkMode(!darkMode);
-                  document.documentElement.classList.toggle('dark');
-                }}
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                 className={clsx(
                   'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
-                  darkMode ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600',
+                  theme === 'dark'
+                    ? 'bg-blue-600'
+                    : 'bg-gray-300 dark:bg-gray-600',
                 )}
               >
                 <span
                   className={clsx(
                     'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
-                    darkMode ? 'translate-x-6' : 'translate-x-1',
+                    theme === 'dark' ? 'translate-x-6' : 'translate-x-1',
                   )}
                 />
               </button>

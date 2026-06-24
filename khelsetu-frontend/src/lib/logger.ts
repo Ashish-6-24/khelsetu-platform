@@ -19,12 +19,14 @@ class Logger {
     return `[${timestamp}] [${this.prefix}] [${level.toUpperCase()}] ${message}`;
   }
 
-  debug(_message: string, ..._args: unknown[]): void {
+  debug(message: string, ...args: unknown[]): void {
     if (!this.shouldLog('debug')) return;
+    console.debug(this.formatMessage('debug', message), ...args);
   }
 
-  info(_message: string, ..._args: unknown[]): void {
+  info(message: string, ...args: unknown[]): void {
     if (!this.shouldLog('info')) return;
+    console.info(this.formatMessage('info', message), ...args);
   }
 
   warn(message: string, ...args: unknown[]): void {

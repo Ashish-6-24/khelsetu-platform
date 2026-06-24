@@ -20,7 +20,7 @@ export const useOfflineSyncStore = create<OfflineSyncState>()(
           const newEntry: SyncEntry = {
             ...entry,
             id: generateId(),
-            status: state.queue.isOnline ? 'pending' : 'pending',
+            status: 'pending' as const,
             createdAt: new Date().toISOString(),
             retryCount: 0,
           };

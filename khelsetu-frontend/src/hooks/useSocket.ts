@@ -1,53 +1,58 @@
-import { logger } from '@lib/logger';
 import { wsService } from '@services/websocket';
 import { useScoringStore } from '@store/scoringStore';
 import type { WebSocketEvent } from '@types-domain/websocket';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export const useSocket = (events: WebSocketEvent[] = []) => {
   const setScoring = useScoringStore((state) => state.setScoring);
   const [isConnected, setIsConnected] = useState(false);
+  const isConnectedRef = useRef(false);
 
   useEffect(() => {
-    let mounted = true;
-
-    const init = async () => {
-      try {
-        await wsService.connect();
-        if (mounted) {
-          setIsConnected(true);
-        }
-      } catch (error) {
-        logger.error('Failed to connect WebSocket:', error);
-      }
+    const handleConnect = () => {
+      isConnectedRef.current = true;
+      setIsConnected(true);
+    };
+    const handleDisconnect = () => {
+      isConnectedRef.current = false;
+      setIsConnected(false);
     };
 
-    void init();
+    wsService.on('connect', handleConnect);
+    wsService.on('disconnect', handleDisconnect);
+
+    const connected = wsService.isConnected();
+    if (connected !== isConnectedRef.current) {
+      isConnectedRef.current = connected;
+      setIsConnected(connected);
+    }
 
     return () => {
-      mounted = false;
-      wsService.disconnect();
-      setIsConnected(false);
+      wsService.off('connect', handleConnect);
+      wsService.off('disconnect', handleDisconnect);
     };
   }, []);
 
   useEffect(() => {
-    const handleScoreUpdate = (_data: unknown) => {
-      setScoring(true);
-    };
+    const handlers = new Map<WebSocketEvent, (data: unknown) => void>();
 
     events.forEach((event) => {
-      if (event === 'score_update') {
-        wsService.on(event, handleScoreUpdate);
-      }
+      const handler =
+        event === 'score_update'
+          ? (_data: unknown) => {
+              setScoring(true);
+            }
+          : (_data: unknown) => {
+              // Events are forwarded via wsService listeners
+            };
+      handlers.set(event, handler);
+      wsService.on(event, handler);
     });
 
     return () => {
-      events.forEach((event) => {
-        if (event === 'score_update') {
-          wsService.off(event, handleScoreUpdate);
-        }
+      handlers.forEach((handler, event) => {
+        wsService.off(event, handler);
       });
     };
   }, [events, setScoring]);
