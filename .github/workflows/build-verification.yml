@@ -5,6 +5,13 @@ on:
     - cron: '0 12 * * *'
   workflow_dispatch:
 
+concurrency:
+  group: build-verify-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 env:
   NODE_VERSION: '22'
 
@@ -13,14 +20,15 @@ jobs:
     name: Build (Node ${{ matrix.node-version }})
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         node-version: [20, 22]
     defaults:
       run:
         working-directory: khelsetu-frontend
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
