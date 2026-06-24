@@ -70,11 +70,6 @@ jobs:
           cache-dependency-path: khelsetu-frontend/package-lock.json
       - run: npm ci
       - run: npx vitest run --shard=${{ matrix.shard }}/2
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        if: always()
-        with:
-          name: test-results-shard-${{ matrix.shard }}
-          path: khelsetu-frontend/test-results/
 
   coverage:
     name: Test Coverage
@@ -90,11 +85,6 @@ jobs:
           cache-dependency-path: khelsetu-frontend/package-lock.json
       - run: npm ci
       - run: npm run test:coverage
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        if: always()
-        with:
-          name: coverage
-          path: khelsetu-frontend/coverage/
 
   circular:
     name: Circular Dependencies
@@ -126,11 +116,6 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npx size-limit
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        if: always()
-        with:
-          name: build
-          path: khelsetu-frontend/dist/
 
   e2e:
     name: E2E Tests
@@ -149,11 +134,6 @@ jobs:
       - run: npx playwright install chromium --with-deps
       - run: npm run build
       - run: npm run test:e2e
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        if: always()
-        with:
-          name: e2e-results
-          path: khelsetu-frontend/playwright-report/
 
   security:
     name: Security Audit
