@@ -1,0 +1,34 @@
+name: Auto Format
+
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  format:
+    name: Auto-Format Code
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: khelsetu-frontend
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: khelsetu-frontend/package-lock.json
+      - run: npm ci
+      - run: npm run lint:fix
+      - run: npm run format
+      - name: Create PR if changes
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: 'style: auto-format code'
+          title: 'chore: auto-format codebase'
+          body: Automated code formatting and lint fixes.
+          branch: chore/auto-format
+          labels: chore,code-quality
