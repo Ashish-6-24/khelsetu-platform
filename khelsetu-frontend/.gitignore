@@ -5,6 +5,7 @@ build/
 coverage/
 .vscode/
 .env
+.env.*
 *.log
 
 *storybook.log
@@ -14,3 +15,18 @@ storybook-static
 test-results/
 playwright-report/
 playwright/.cache/
+
+# Tool-specific (not project code - never commit to public repo)
+.cursorrules
+AGENTS.md
+CLAUDE.md
+CLAUDE.local.md
+graphify-out/
+.opencode/
+.cursor/
+.claude/
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
