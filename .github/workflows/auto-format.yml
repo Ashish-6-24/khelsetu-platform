@@ -25,7 +25,7 @@ jobs:
       - run: npm run lint:fix
       - run: npm run format
       - name: Create PR if changes
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: 'style: auto-format code'
           title: 'chore: auto-format codebase'
