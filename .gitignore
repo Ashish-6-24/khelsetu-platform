@@ -1,7 +1,28 @@
 # Developer productivity tools (not for public repo)
 graphify-out/
 .opencode/
+.cursor/
+.claude/
 
-# Environment
+# AI config files (tool-specific, not project code)
+.cursorrules
+AGENTS.md
+CLAUDE.md
+CLAUDE.local.md
+
+# Environment & secrets
 .env
+.env.*
 *.log
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE (should not be in public repo)
+.idea/
+.vscode/
+*.swp
+*.swo
+*~

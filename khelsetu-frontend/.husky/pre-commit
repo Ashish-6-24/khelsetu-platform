@@ -1,5 +1,16 @@
 #!/usr/bin/env sh
 
+# Block sensitive files from ever being committed
+BLOCKED_PATTERNS=".cursorrules$|AGENTS\.md$|CLAUDE\.md$|\.env$|\.env\.local$|\.env\.prod$|\.env\.dev$|graphify-out/|\.opencode/|\.cursor/|\.claude/"
+BLOCKED=$(git diff --cached --name-only --diff-filter=ACM | grep -E "$BLOCKED_PATTERNS" || true)
+if [ -n "$BLOCKED" ]; then
+  echo "BLOCKED: These files must not be committed to a public repo:"
+  echo "$BLOCKED"
+  echo ""
+  echo "Remove them from staging: git reset HEAD <file>"
+  exit 1
+fi
+
 echo "Running lint-staged (ESLint + Prettier)..."
 npx lint-staged
 
