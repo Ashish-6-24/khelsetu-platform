@@ -25,6 +25,7 @@ graphify-out/
 .opencode/
 .cursor/
 .claude/
+.superpowers/
 
 # OS files
 .DS_Store

@@ -3,6 +3,7 @@ graphify-out/
 .opencode/
 .cursor/
 .claude/
+.superpowers/
 
 # AI config files (tool-specific, not project code)
 .cursorrules
