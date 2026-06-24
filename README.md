@@ -1,6 +1,6 @@
 # KhelSetu Frontend
 
-Production-grade realtime multi-tenant sports tournament management platform for Nepal.
+Production-grade real-time multi-tenant sports tournament management platform for Nepal.
 
 ## Tech Stack
 
