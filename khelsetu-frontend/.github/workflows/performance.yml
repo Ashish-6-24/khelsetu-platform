@@ -1,0 +1,28 @@
+name: Performance Check
+
+on:
+  schedule:
+    - cron: '0 10 * * *'
+  pull_request:
+    branches: [master, main]
+
+env:
+  NODE_VERSION: '22'
+
+jobs:
+  bundle-size:
+    name: Bundle Size Check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: khelsetu-frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: khelsetu-frontend/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - run: npx size-limit

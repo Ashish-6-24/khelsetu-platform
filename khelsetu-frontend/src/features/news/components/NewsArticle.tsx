@@ -1,5 +1,6 @@
 import { ROUTES } from '@utils/constants';
 import { clsx } from 'clsx';
+import DOMPurify from 'dompurify';
 import { ArrowLeft, Clock, Eye, Share2, User } from 'lucide-react';
 
 import { useEffect, useRef, useState } from 'react';
@@ -132,7 +133,9 @@ export function NewsArticle({
       <div className="prose prose-lg dark:prose-invert mt-8 max-w-none">
         <div
           className="text-[#0F172A] dark:text-[#CBD5E1]"
-          dangerouslySetInnerHTML={{ __html: article.content }}
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(article.content),
+          }}
         />
       </div>
 
@@ -140,7 +143,9 @@ export function NewsArticle({
         <div className="mt-8 overflow-hidden rounded-2xl">
           <div
             className="aspect-video"
-            dangerouslySetInnerHTML={{ __html: article.videoEmbed }}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(article.videoEmbed),
+            }}
           />
         </div>
       )}
