@@ -9,6 +9,7 @@ interface GradientMeshProps {
   animated?: boolean;
 }
 
+// RGBA kept — CSS vars can't handle per-channel opacity in radial-gradient overlays
 const variantStyles = {
   brand: {
     light:
@@ -87,8 +88,9 @@ export const PremiumCard = ({
   elevation = 2,
   glass = false,
   gradientBorder = false,
-  glowColor = '#7F1D1D',
+  glowColor = 'var(--brand-primary)',
 }: PremiumCardProps) => {
+  // RGBA kept — shadow values require specific opacity
   const elevationStyles = {
     1: 'shadow-[0_2px_8px_-2px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.1)]',
     2: 'shadow-[0_4px_16px_-4px_rgba(0,0,0,0.1)] hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.15)]',
@@ -102,7 +104,7 @@ export const PremiumCard = ({
           'group relative overflow-hidden rounded-2xl transition-all duration-300',
           'hover:-translate-y-0.5',
           glass
-            ? 'border border-white/20 bg-white/70 backdrop-blur-xl dark:border-white/10 dark:bg-[#13131A]/70'
+            ? 'border border-white/20 bg-white/70 backdrop-blur-xl dark:border-white/10 dark:bg-[var(--bg-surface)]/70'
             : 'border border-[var(--border-subtle)] bg-[var(--bg-surface)]',
           elevationStyles[elevation],
           gradientBorder && 'gradient-border-glow',
@@ -139,7 +141,7 @@ export const GlowStatCard = ({
   value,
   change,
   icon,
-  glowColor = '#7F1D1D',
+  glowColor = 'var(--brand-primary)',
   className,
 }: GlowStatCardProps) => {
   return (
@@ -174,8 +176,8 @@ export const GlowStatCard = ({
               className={clsx(
                 'mt-1 text-xs font-semibold',
                 change.isPositive
-                  ? 'text-[#15803D] dark:text-[#4ADE80]'
-                  : 'text-[#DC2626] dark:text-[#F87171]',
+                  ? 'text-[var(--color-success)] dark:text-[var(--color-success)]'
+                  : 'text-[var(--color-live)] dark:text-[var(--color-live)]',
               )}
             >
               {change.isPositive ? '+' : ''}

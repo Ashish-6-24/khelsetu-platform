@@ -20,8 +20,8 @@ export const MomentumChart = ({
   data,
   className,
   height = 80,
-  teamAColor = '#7F1D1D',
-  teamBColor: _teamBColor = '#B8860B',
+  teamAColor = 'var(--brand-primary)',
+  teamBColor: _teamBColor = 'var(--brand-accent)',
 }: MomentumChartProps) => {
   const svgPath = useMemo(() => {
     if (data.length === 0) return '';

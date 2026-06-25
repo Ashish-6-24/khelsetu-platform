@@ -26,8 +26,8 @@ export const LiveIndicator = ({
           size === 'sm' && 'px-2 py-0.5 text-[10px]',
           size === 'md' && 'px-2.5 py-1 text-xs',
           size === 'lg' && 'px-3 py-1.5 text-sm',
-          'bg-[#DC2626]/10 font-semibold text-[#DC2626]',
-          'dark:bg-[#DC2626]/15 dark:text-[#F87171]',
+          'bg-[var(--color-live-soft)] font-semibold text-[var(--color-live)]',
+          'dark:bg-[var(--color-live-soft)] dark:text-[var(--color-live)]',
           className,
         ),
       )}
@@ -46,10 +46,10 @@ interface GradientBadgeProps {
 }
 
 const badgeVariants = {
-  brand: 'from-[#7F1D1D] to-[#991B1B]',
-  gold: 'from-[#B8860B] to-[#9A7209]',
-  success: 'from-[#15803D] to-[#166534]',
-  warning: 'from-[#D97706] to-[#B45309]',
+  brand: 'from-[var(--brand-primary)] to-[var(--brand-primary-hover)]',
+  gold: 'from-[var(--brand-accent)] to-[var(--brand-accent-hover)]',
+  success: 'from-[var(--color-success)] to-[var(--color-success)]',
+  warning: 'from-[var(--color-warning)] to-[var(--color-warning)]',
 };
 
 export const GradientBadge = ({
@@ -94,7 +94,7 @@ export const ScoreBadge = ({
           'relative inline-flex items-center justify-center rounded-lg px-3 py-1.5 font-mono text-lg font-bold tabular-nums',
           'bg-[var(--bg-surface)] text-[var(--text-primary)]',
           'border border-[var(--border-subtle)]',
-          'dark:bg-[#13131A] dark:text-white',
+          'dark:bg-[var(--bg-surface)] dark:text-white',
           isChanged && 'score-flash',
           className,
         ),
@@ -105,7 +105,7 @@ export const ScoreBadge = ({
         <span
           className={clsx(
             'absolute -right-1 -top-1 h-2 w-2 rounded-full',
-            score > (previousScore ?? 0) ? 'bg-[#15803D]' : 'bg-[#DC2626]',
+            score > (previousScore ?? 0) ? 'bg-[var(--color-success)]' : 'bg-[var(--color-live)]',
           )}
         />
       )}

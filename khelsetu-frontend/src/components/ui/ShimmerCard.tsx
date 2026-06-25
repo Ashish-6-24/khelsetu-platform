@@ -32,6 +32,7 @@ export const ShimmerCard = forwardRef<HTMLDivElement, ShimmerCardProps>(
     },
     ref,
   ) {
+    // RGBA kept — shadow values require specific opacity
     const depthStyles = {
       1: 'shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04)]',
       2: 'shadow-[0_4px_12px_-2px_rgba(0,0,0,0.08),0_2px_4px_-2px_rgba(0,0,0,0.04)]',
@@ -46,7 +47,7 @@ export const ShimmerCard = forwardRef<HTMLDivElement, ShimmerCardProps>(
           clsx(
             'group relative overflow-hidden rounded-2xl transition-all duration-300',
             glass
-              ? 'border border-white/20 bg-white/80 backdrop-blur-xl dark:border-white/10 dark:bg-[#13131A]/80'
+              ? 'border border-white/20 bg-white/80 backdrop-blur-xl dark:border-white/10 dark:bg-[var(--bg-surface)]/80'
               : 'border border-[var(--border-subtle)] bg-[var(--bg-surface)]',
             depthStyles[depth],
             tilt && 'tilt-card',
@@ -62,6 +63,7 @@ export const ShimmerCard = forwardRef<HTMLDivElement, ShimmerCardProps>(
             className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
             style={{
               background:
+                // RGBA kept — CSS vars can't handle per-channel opacity in conic-gradient
                 'conic-gradient(from 180deg, transparent, rgba(127,29,29,0.15), transparent 40%, rgba(184,134,11,0.12), transparent 80%)',
             }}
             aria-hidden
@@ -72,6 +74,7 @@ export const ShimmerCard = forwardRef<HTMLDivElement, ShimmerCardProps>(
             className="pointer-events-none absolute inset-0 -translate-x-full opacity-0 transition-all duration-700 group-hover:translate-x-full group-hover:opacity-100"
             style={{
               background:
+                // RGBA kept — CSS vars can't handle per-channel opacity in linear-gradient
                 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%)',
             }}
             aria-hidden

@@ -28,7 +28,9 @@ export const ScoreFlash = ({
   size = 'md',
   showDelta = true,
   format = 'number',
+  // RGBA kept — CSS vars can't handle per-channel opacity for flash backgrounds
   positiveColor = 'rgba(21, 128, 61, 0.25)',
+  // RGBA kept — CSS vars can't handle per-channel opacity for flash backgrounds
   negativeColor = 'rgba(220, 38, 38, 0.25)',
 }: ScoreFlashProps) => {
   const [flash, setFlash] = useState(false);

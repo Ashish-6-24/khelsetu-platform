@@ -21,7 +21,7 @@ const variantStyles = {
   success: 'bg-emerald-600',
   warning: 'bg-amber-500',
   error: 'bg-red-600',
-  gradient: 'bg-gradient-to-r from-[#7F1D1D] via-[#991B1B] to-[#B8860B]',
+  gradient: 'bg-gradient-to-r from-[var(--brand-primary)] via-[var(--brand-primary-hover)] to-[var(--brand-accent)]',
 };
 
 export const Progress = ({

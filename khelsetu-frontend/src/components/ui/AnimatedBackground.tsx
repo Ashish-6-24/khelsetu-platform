@@ -11,7 +11,7 @@ interface AnimatedBackgroundProps {
 export const AnimatedBackground = ({
   className,
   variant = 'particles',
-  color = '#7F1D1D',
+  color = 'var(--brand-primary)',
   density = 'normal',
 }: AnimatedBackgroundProps) => {
   const densityMap = {

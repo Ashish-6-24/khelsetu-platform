@@ -13,6 +13,7 @@ interface CardSpotlightProps {
 export const CardSpotlight = ({
   children,
   className,
+  // RGBA kept — CSS vars can't handle per-channel opacity in radial-gradient
   spotlightColor = 'rgba(184, 134, 11, 0.12)',
   size = 300,
 }: CardSpotlightProps) => {

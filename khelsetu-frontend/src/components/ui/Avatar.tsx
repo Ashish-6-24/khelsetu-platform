@@ -36,7 +36,7 @@ const statusSize = {
 };
 
 const gradients = [
-  'from-[#7F1D1D] to-[#991B1B]',
+  'from-[var(--brand-primary)] to-[var(--brand-primary-hover)]',
   'from-emerald-500 to-teal-600',
   'from-violet-500 to-purple-600',
   'from-rose-500 to-pink-600',

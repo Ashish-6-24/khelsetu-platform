@@ -14,29 +14,29 @@ interface GlowPulseProps {
 
 const colorMap = {
   red: {
-    dot: 'bg-[#DC2626]',
-    glow: 'shadow-[0_0_8px_rgba(220,38,38,0.6)]',
-    glowBg: 'rgba(220,38,38,0.4)',
+    dot: 'bg-[var(--color-live)]',
+    glow: 'shadow-[0_0_8px_rgba(220,38,38,0.6)]', // RGBA kept — shadow opacity
+    glowBg: 'rgba(220,38,38,0.4)', // RGBA kept — radial-gradient opacity
   },
   green: {
-    dot: 'bg-[#15803D]',
-    glow: 'shadow-[0_0_8px_rgba(21,128,61,0.6)]',
-    glowBg: 'rgba(21,128,61,0.4)',
+    dot: 'bg-[var(--color-success)]',
+    glow: 'shadow-[0_0_8px_rgba(21,128,61,0.6)]', // RGBA kept — shadow opacity
+    glowBg: 'rgba(21,128,61,0.4)', // RGBA kept — radial-gradient opacity
   },
   blue: {
-    dot: 'bg-[#2563EB]',
-    glow: 'shadow-[0_0_8px_rgba(37,99,235,0.6)]',
-    glowBg: 'rgba(37,99,235,0.4)',
+    dot: 'bg-[var(--color-info)]',
+    glow: 'shadow-[0_0_8px_rgba(37,99,235,0.6)]', // RGBA kept — shadow opacity
+    glowBg: 'rgba(37,99,235,0.4)', // RGBA kept — radial-gradient opacity
   },
   gold: {
-    dot: 'bg-[#B8860B]',
-    glow: 'shadow-[0_0_8px_rgba(184,134,11,0.6)]',
-    glowBg: 'rgba(184,134,11,0.4)',
+    dot: 'bg-[var(--brand-accent)]',
+    glow: 'shadow-[0_0_8px_rgba(184,134,11,0.6)]', // RGBA kept — shadow opacity
+    glowBg: 'rgba(184,134,11,0.4)', // RGBA kept — radial-gradient opacity
   },
   brand: {
-    dot: 'bg-[#7F1D1D]',
-    glow: 'shadow-[0_0_8px_rgba(127,29,29,0.6)]',
-    glowBg: 'rgba(127,29,29,0.4)',
+    dot: 'bg-[var(--brand-primary)]',
+    glow: 'shadow-[0_0_8px_rgba(127,29,29,0.6)]', // RGBA kept — shadow opacity
+    glowBg: 'rgba(127,29,29,0.4)', // RGBA kept — radial-gradient opacity
   },
 };
 

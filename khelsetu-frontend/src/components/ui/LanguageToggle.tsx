@@ -72,7 +72,7 @@ export const LanguageToggle = ({
           'inline-flex items-center gap-1 rounded-md px-2.5 font-semibold transition-colors duration-200',
           size === 'sm' ? 'h-6' : 'h-8',
           locale === 'en'
-            ? 'bg-white text-[#7F1D1D] shadow-xs dark:bg-[var(--bg-surface)] dark:text-[#FCA5A5]'
+            ? 'bg-white text-[var(--brand-primary)] shadow-xs dark:bg-[var(--bg-surface)] dark:text-[var(--brand-primary)]'
             : 'text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]',
         )}
       >
@@ -88,7 +88,7 @@ export const LanguageToggle = ({
           'inline-flex items-center gap-1 rounded-md px-2.5 font-semibold transition-colors duration-200',
           size === 'sm' ? 'h-6' : 'h-8',
           locale === 'ne'
-            ? 'bg-white text-[#7F1D1D] shadow-xs dark:bg-[var(--bg-surface)] dark:text-[#FCA5A5]'
+            ? 'bg-white text-[var(--brand-primary)] shadow-xs dark:bg-[var(--bg-surface)] dark:text-[var(--brand-primary)]'
             : 'text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]',
         )}
       >

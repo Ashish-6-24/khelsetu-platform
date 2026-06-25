@@ -15,25 +15,25 @@ const typeStyles: Record<
   { wrap: string; icon: string; ring: string; Icon: typeof Info }
 > = {
   success: {
-    wrap: 'bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100',
+    wrap: 'bg-[var(--bg-surface)] text-[var(--text-primary)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-primary)]',
     icon: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
     ring: 'ring-emerald-500/20',
     Icon: CheckCircle2,
   },
   error: {
-    wrap: 'bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100',
+    wrap: 'bg-[var(--bg-surface)] text-[var(--text-primary)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-primary)]',
     icon: 'bg-red-500/10 text-red-600 dark:text-red-400',
     ring: 'ring-red-500/20',
     Icon: XCircle,
   },
   warning: {
-    wrap: 'bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100',
+    wrap: 'bg-[var(--bg-surface)] text-[var(--text-primary)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-primary)]',
     icon: 'bg-amber-500/10 text-amber-600 dark:text-amber-400',
     ring: 'ring-amber-500/20',
     Icon: AlertTriangle,
   },
   info: {
-    wrap: 'bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100',
+    wrap: 'bg-[var(--bg-surface)] text-[var(--text-primary)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-primary)]',
     icon: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
     ring: 'ring-blue-500/20',
     Icon: Info,
@@ -70,11 +70,11 @@ function ProgressBar({
 
   return (
     <div
-      className="pointer-events-none absolute inset-x-0 bottom-0 h-0.5 bg-slate-200/60 dark:bg-slate-700/40"
+      className="pointer-events-none absolute inset-x-0 bottom-0 h-0.5 bg-[var(--bg-surface-sunken)]/60 dark:bg-[var(--bg-surface-raised)]/40"
       aria-hidden
     >
       <div
-        className="h-full bg-gradient-to-r from-[#7F1D1D] to-[#B8860B] transition-[width] ease-linear"
+        className="h-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)] transition-[width] ease-linear"
         style={{ width: `${width}%`, transitionDuration: '120ms' }}
       />
     </div>
@@ -130,7 +130,7 @@ function ToastItem({
         )}
         <p
           className={clsx(
-            'text-sm leading-5 text-slate-600 dark:text-slate-300',
+            'text-sm leading-5 text-[var(--text-secondary)] dark:text-[var(--text-secondary)]',
             toast.title && 'mt-0.5',
           )}
         >
@@ -152,7 +152,7 @@ function ToastItem({
       <button
         onClick={() => onDismiss(toast.id)}
         aria-label="Dismiss notification"
-        className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+        className="rounded-lg p-1.5 text-[var(--text-tertiary)] transition-colors hover:bg-[var(--bg-surface-sunken)] hover:text-[var(--text-secondary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-[var(--text-primary)]"
       >
         <X className="h-4 w-4" />
       </button>
@@ -184,7 +184,7 @@ function ToastContainer({
       className="pointer-events-none fixed inset-x-0 bottom-4 z-[60] flex flex-col items-center gap-2 px-4 sm:bottom-6 sm:right-6 sm:left-auto sm:items-end"
     >
       {overflow > 0 && (
-        <div className="pointer-events-auto rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-3 py-1 text-xs font-semibold text-slate-600 shadow-sm dark:text-slate-300">
+        <div className="pointer-events-auto rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-3 py-1 text-xs font-semibold text-[var(--text-secondary)] shadow-sm dark:text-[var(--text-secondary)]">
           +{overflow} more notification{overflow === 1 ? '' : 's'}
         </div>
       )}

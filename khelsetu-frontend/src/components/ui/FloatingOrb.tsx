@@ -11,7 +11,7 @@ interface FloatingOrbProps {
 
 export const FloatingOrb = ({
   className,
-  color = '#7F1D1D',
+  color = 'var(--brand-primary)',
   size = 200,
   delay = 0,
   duration = 20,
@@ -48,7 +48,7 @@ interface ConnectedDotsProps {
 export const ConnectedDots = ({
   className,
   dots = 6,
-  color = '#7F1D1D',
+  color = 'var(--brand-primary)',
   spacing = 48,
 }: ConnectedDotsProps) => {
   const positions = Array.from({ length: dots }, (_, i) => ({
