@@ -92,9 +92,9 @@ export const PremiumCard = ({
 }: PremiumCardProps) => {
   // RGBA kept — shadow values require specific opacity
   const elevationStyles = {
-    1: 'shadow-[0_2px_8px_-2px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.1)]',
-    2: 'shadow-[0_4px_16px_-4px_rgba(0,0,0,0.1)] hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.15)]',
-    3: 'shadow-[0_8px_32px_-8px_rgba(0,0,0,0.15)] hover:shadow-[0_24px_48px_-12px_rgba(0,0,0,0.2)]',
+    1: 'shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-lg)]',
+    2: 'shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-xl)]',
+    3: 'shadow-[var(--shadow-lg)] hover:shadow-[var(--shadow-xl)]',
   };
 
   return (
@@ -149,8 +149,7 @@ export const GlowStatCard = ({
       className={twMerge(
         clsx(
           'group relative overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-5 transition-all duration-300',
-          'hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.12)]',
-          'dark:hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.5)]',
+          'hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)]',
           className,
         ),
       )}

@@ -1,26 +1,17 @@
 import { Logo } from '@components/ui/Logo';
-import { ROUTES, STORAGE_KEYS } from '@utils/constants';
+import { ROUTES } from '@utils/constants';
+import { useUIStore } from '@store/uiStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronsLeft, ChevronsRight } from 'lucide-react';
-
-import { useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
 import { SidebarContent } from './SidebarContent';
 
 export const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return localStorage.getItem(STORAGE_KEYS.SIDEBAR_COLLAPSED) === '1';
-  });
-
-  useEffect(() => {
-    localStorage.setItem(
-      STORAGE_KEYS.SIDEBAR_COLLAPSED,
-      isCollapsed ? '1' : '0',
-    );
-  }, [isCollapsed]);
+  const sidebarState = useUIStore((s) => s.sidebarState);
+  const toggleSidebar = useUIStore((s) => s.toggleSidebar);
+  const isCollapsed = sidebarState === 'collapsed';
 
   return (
     <motion.aside
@@ -59,9 +50,9 @@ export const Sidebar = () => {
           )}
         </AnimatePresence>
         <button
-          onClick={() => setIsCollapsed(!isCollapsed)}
+          onClick={toggleSidebar}
           aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          className="hidden h-8 w-8 min-h-11 min-w-11 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white lg:flex"
+          className="hidden h-8 w-8 min-h-11 min-w-11 items-center justify-center rounded-lg text-[var(--text-tertiary)] transition-colors hover:bg-[var(--bg-surface-sunken)] hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] dark:text-[var(--text-tertiary)] dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-[var(--text-primary)] lg:flex"
         >
           {isCollapsed ? (
             <ChevronsRight className="h-4 w-4" />

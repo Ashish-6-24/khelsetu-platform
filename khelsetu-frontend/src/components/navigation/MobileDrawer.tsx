@@ -48,7 +48,7 @@ export const MobileDrawer = ({ open, onClose }: MobileDrawerProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="absolute inset-0 bg-slate-950/40 backdrop-blur-md dark:bg-slate-950/70"
+            className="absolute inset-0 bg-black/40 backdrop-blur-md dark:bg-black/70"
             onClick={onClose}
             aria-hidden
           />
@@ -69,7 +69,7 @@ export const MobileDrawer = ({ open, onClose }: MobileDrawerProps) => {
               <button
                 onClick={onClose}
                 aria-label="Close navigation"
-                className="flex h-10 w-10 min-h-11 min-w-11 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
+                className="flex h-10 w-10 min-h-11 min-w-11 items-center justify-center rounded-lg text-[var(--text-tertiary)] transition-colors hover:bg-[var(--bg-surface-sunken)] hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] dark:text-[var(--text-tertiary)] dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-[var(--text-primary)]"
               >
                 <X className="h-5 w-5" />
               </button>

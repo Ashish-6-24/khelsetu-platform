@@ -16,12 +16,15 @@ const MobileDrawerWrapper = () => {
 };
 
 export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+  const sidebarState = useUIStore((s) => s.sidebarState);
+  const sidebarWidth = sidebarState === 'collapsed' ? 'lg:pl-20' : 'lg:pl-64';
+
   return (
     <div className="min-h-screen bg-[var(--bg-app)]">
       <SkipLink />
       <Sidebar />
       <MobileDrawerWrapper />
-      <div className="lg:pl-64">
+      <div className={sidebarWidth}>
         <Header />
         <main
           id="main-content"

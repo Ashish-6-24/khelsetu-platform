@@ -37,7 +37,7 @@ export const SidebarContent = ({
         {NAV_GROUPS.map((group) => (
           <div key={group.title} className="mb-5 last:mb-0">
             {!collapsed && (
-              <h3 className="mb-1.5 px-2.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+              <h3 className="mb-1.5 px-2.5 text-[11px] font-semibold uppercase tracking-wider text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                 {group.title}
               </h3>
             )}
@@ -62,7 +62,7 @@ export const SidebarContent = ({
                         'group relative flex items-center gap-3 rounded-xl px-2.5 py-2 text-sm font-medium transition-all duration-150',
                         'min-h-11',
                         active
-                          ? 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300'
+                          ? 'bg-[var(--brand-primary-soft)] text-[var(--brand-primary)] dark:bg-[var(--brand-primary)]/15 dark:text-[var(--brand-primary)]'
                           : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-sunken)]/70 hover:text-[var(--text-primary)] dark:text-[var(--text-secondary)] dark:hover:bg-[var(--bg-surface)]/60 dark:hover:text-[var(--text-primary)]',
                         collapsed && 'justify-center px-0',
                         isPending && 'opacity-70',
@@ -75,7 +75,7 @@ export const SidebarContent = ({
                         className={clsx(
                           'h-[18px] w-[18px] shrink-0 transition-colors',
                           active
-                            ? 'text-blue-600 dark:text-blue-400'
+                            ? 'text-[var(--brand-primary)]'
                             : 'text-[var(--text-tertiary)] group-hover:text-[var(--text-secondary)] dark:text-[var(--text-tertiary)] dark:group-hover:text-[var(--text-secondary)]',
                         )}
                         aria-hidden
@@ -84,7 +84,7 @@ export const SidebarContent = ({
                         <>
                           <span className="flex-1 truncate">{item.name}</span>
                           {item.badge && (
-                            <span className="rounded-full bg-blue-100 px-1.5 text-[10px] font-semibold text-blue-700 dark:bg-blue-500/20 dark:text-blue-300">
+                            <span className="rounded-full bg-[var(--brand-primary-soft)] px-1.5 text-[10px] font-semibold text-[var(--brand-primary)] dark:bg-[var(--brand-primary)]/20 dark:text-[var(--brand-primary)]">
                               {item.badge}
                             </span>
                           )}
@@ -100,7 +100,7 @@ export const SidebarContent = ({
 
         {!collapsed && (
           <div className="mx-1 mt-2 rounded-2xl border border-[var(--border-subtle)] bg-gradient-to-br from-[var(--brand-primary-soft)] via-[var(--bg-surface)] to-[var(--brand-accent-soft)]/40 p-4 dark:from-[var(--brand-primary)]/10 dark:via-[var(--bg-surface-raised)] dark:to-[var(--brand-accent)]/10">
-            <div className="flex items-center gap-2 text-xs font-semibold text-blue-700 dark:text-blue-300">
+            <div className="flex items-center gap-2 text-xs font-semibold text-[var(--brand-primary)] dark:text-[var(--brand-primary)]">
               <Sparkles className="h-3.5 w-3.5" />
               Upgrade to Pro
             </div>

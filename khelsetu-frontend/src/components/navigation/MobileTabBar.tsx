@@ -65,8 +65,8 @@ export const MobileTabBar = () => {
                   className={clsx(
                     'group relative flex h-full w-full flex-col items-center justify-center gap-0.5 rounded-lg text-[10px] font-semibold tracking-wide transition-colors',
                     active
-                      ? 'text-blue-600 dark:text-blue-400'
-                      : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white',
+                      ? 'text-[var(--text-link)]'
+                      : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)] dark:text-[var(--text-tertiary)] dark:hover:text-[var(--text-primary)]',
                   )}
                 >
                   {active && (
