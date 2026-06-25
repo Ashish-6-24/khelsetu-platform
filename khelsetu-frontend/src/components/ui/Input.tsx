@@ -16,7 +16,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const strengthLabels = ['Too weak', 'Weak', 'Fair', 'Good', 'Strong'] as const;
 const strengthColors = [
-  'bg-slate-200 dark:bg-slate-700',
+  'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)]',
   'bg-red-500',
   'bg-amber-500',
   'bg-blue-500',
@@ -46,7 +46,7 @@ const PasswordStrength = ({ level }: { level: 0 | 1 | 2 | 3 | 4 }) => {
               'h-1 flex-1 rounded-full transition-colors duration-300',
               i < level
                 ? strengthColors[level]
-                : 'bg-slate-200/80 dark:bg-slate-700/60',
+                : 'bg-[var(--bg-surface-sunken)]/80 dark:bg-[var(--bg-surface-raised)]/60',
             )}
           />
         ))}
@@ -91,13 +91,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <div className="mb-1.5 flex items-center justify-between">
             <label
               htmlFor={inputId}
-              className="text-sm font-medium text-slate-700 dark:text-slate-300"
+              className="text-sm font-medium text-[var(--text-secondary)] dark:text-[var(--text-secondary)]"
             >
               {label}
               {!optional && <span className="ml-0.5 text-red-500">*</span>}
             </label>
             {optional && (
-              <span className="text-xs text-slate-400 dark:text-slate-500">
+              <span className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                 Optional
               </span>
             )}
@@ -114,12 +114,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             id={inputId}
             type={actualType}
             className={clsx(
-              'block w-full rounded-xl border bg-white text-sm text-slate-900 placeholder:text-slate-400',
+              'block w-full rounded-xl border bg-[var(--bg-surface)] text-sm text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)]',
               'h-11 transition-all duration-200',
               'border-[var(--border-subtle)] hover:border-[var(--border-strong)]',
-              'focus:border-[#7F1D1D] focus:outline-none focus:ring-4 focus:ring-[#7F1D1D]/12',
+              'focus:border-[var(--brand-primary)] focus:outline-none focus:ring-4 focus:ring-[var(--brand-primary)]/12',
               'dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface-sunken)] dark:text-white dark:placeholder:text-slate-500',
-              'dark:hover:border-[var(--border-strong)] dark:focus:border-[#FCA5A5] dark:focus:ring-[#FCA5A5]/15',
+              'dark:hover:border-[var(--border-strong)] dark:focus:border-[var(--brand-primary)] dark:focus:ring-[var(--brand-primary)]/15',
               'disabled:cursor-not-allowed disabled:opacity-50',
               leftIcon ? 'pl-10' : 'pl-3.5',
               rightIcon || isPassword ? 'pr-12' : 'pr-3.5',
@@ -144,7 +144,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               tabIndex={-1}
               aria-label={showPassword ? 'Hide password' : 'Show password'}
               aria-pressed={showPassword}
-              className="absolute inset-y-0 right-0 flex min-h-11 min-w-11 items-center justify-center pr-3 text-slate-400 transition-colors hover:text-slate-600 focus-visible:rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7F1D1D] dark:hover:text-slate-200"
+              className="absolute inset-y-0 right-0 flex min-h-11 min-w-11 items-center justify-center pr-3 text-slate-400 transition-colors hover:text-slate-600 focus-visible:rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] dark:hover:text-slate-200"
             >
               {showPassword ? (
                 <EyeOff className="h-4 w-4" />
@@ -173,7 +173,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         ) : helperText ? (
           <p
             id={`${inputId}-help`}
-            className="mt-1.5 text-sm text-slate-500 dark:text-slate-400"
+            className="mt-1.5 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]"
           >
             {helperText}
           </p>

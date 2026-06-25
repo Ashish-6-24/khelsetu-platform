@@ -39,7 +39,7 @@ const baseStyles =
   'relative inline-flex items-center justify-center font-semibold tracking-tight ' +
   'rounded-xl whitespace-nowrap select-none align-middle ' +
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ' +
-  'focus-visible:ring-[#7F1D1D] dark:focus-visible:ring-[#FCA5A5] dark:focus-visible:ring-offset-slate-900 ' +
+  'focus-visible:ring-[var(--brand-primary)] dark:focus-visible:ring-[var(--brand-primary)] dark:focus-visible:ring-offset-slate-900 ' +
   'disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none ' +
   'transition-[transform,background-color,box-shadow,color,border-color] duration-200 ease-out ' +
   'active:translate-y-px hover:scale-[1.02] active:scale-[0.97] ' +
@@ -47,57 +47,57 @@ const baseStyles =
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    'bg-gradient-to-br from-[#991B1B] via-[#7F1D1D] to-[#450A0A] text-white ' +
-    'shadow-[0_4px_14px_-2px_rgb(127_29_29/0.45)] ' +
-    'hover:from-[#7F1D1D] hover:via-[#7F1D1D] hover:to-[#450A0A] ' +
+    'bg-gradient-to-br from-[var(--brand-primary-hover)] via-[var(--brand-primary)] to-[var(--brand-primary-active)] text-white ' +
+    'shadow-[0_4px_14px_-2px_rgb(127_29_29/0.45)] /* brand-primary shadow */ ' +
+    'hover:from-[var(--brand-primary)] hover:via-[var(--brand-primary)] hover:to-[var(--brand-primary-active)] ' +
     'hover:shadow-[0_8px_24px_-4px_rgb(127_29_29/0.55)] hover:brightness-110 ' +
-    'dark:from-[#FCA5A5] dark:via-[#FCA5A5] dark:to-[#FECACA] ' +
-    'dark:text-[#1A0A0A]',
+    'dark:from-[var(--brand-primary)] dark:via-[var(--brand-primary)] dark:to-[var(--brand-primary-hover)] ' +
+    'dark:text-[var(--brand-primary-ink)]',
   secondary:
-    'bg-[#0F172A] text-white hover:bg-[#1E293B] ' +
+    'bg-[var(--bg-inverse)] text-white hover:bg-[var(--bg-surface-raised)] ' +
     'shadow-sm hover:shadow-md ' +
-    'dark:bg-[#F1F5F9] dark:text-[#0F172A] dark:hover:bg-white',
+    'dark:bg-[var(--text-primary)] dark:text-[var(--bg-inverse)] dark:hover:bg-white',
   outline:
-    'border border-[#E7E5E4] bg-white text-[#0F172A] hover:bg-[#F5F5F4] hover:border-[#D6D3D1] ' +
-    'dark:border-[#3F3F46] dark:bg-[#13131A] dark:text-[#F1F5F9] dark:hover:bg-[#1A1A23] dark:hover:border-[#52525B]',
+    'border border-[var(--border-subtle)] bg-white text-[var(--text-primary)] hover:bg-[var(--bg-surface-sunken)] hover:border-[var(--border-strong)] ' +
+    'dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-primary)] dark:hover:bg-[var(--bg-surface-raised)] dark:hover:border-[var(--border-strong)]',
   ghost:
-    'text-[#0F172A] hover:bg-[#F5F5F4] ' +
-    'dark:text-[#F1F5F9] dark:hover:bg-[#1A1A23]',
+    'text-[var(--text-primary)] hover:bg-[var(--bg-surface-sunken)] ' +
+    'dark:text-[var(--text-primary)] dark:hover:bg-[var(--bg-surface-raised)]',
   danger:
-    'bg-gradient-to-br from-[#B91C1C] to-[#7F1D1D] text-white ' +
-    'shadow-[0_4px_14px_-2px_rgb(185_28_28/0.45)] ' +
-    'hover:from-[#7F1D1D] hover:to-[#450A0A]',
+    'bg-gradient-to-br from-[var(--color-danger)] to-[var(--brand-primary)] text-white ' +
+    'shadow-[0_4px_14px_-2px_rgb(185_28_28/0.45)] /* danger shadow */ ' +
+    'hover:from-[var(--brand-primary)] hover:to-[var(--brand-primary-active)]',
   success:
-    'bg-gradient-to-br from-[#15803D] to-[#166534] text-white ' +
-    'shadow-[0_4px_14px_-2px_rgb(21_128_61/0.45)] ' +
-    'hover:from-[#166534] hover:to-[#14532D]',
+    'bg-gradient-to-br from-[var(--color-success)] to-[var(--color-success)] text-white ' +
+    'shadow-[0_4px_14px_-2px_rgb(21_128_61/0.45)] /* success shadow */ ' +
+    'hover:from-[var(--color-success)] hover:to-[var(--color-success)]',
   glass:
-    'bg-white/80 backdrop-blur-xl text-[#0F172A] border border-white/60 ' +
+    'bg-white/80 backdrop-blur-xl text-[var(--text-primary)] border border-white/60 ' +
     'shadow-[0_4px_20px_-4px_rgb(15_23_42/0.1)] ' +
     'hover:bg-white/95 ' +
-    'dark:bg-[#13131A]/80 dark:text-white dark:border-white/10 dark:hover:bg-[#1A1A23]/95',
+    'dark:bg-[var(--bg-surface)]/80 dark:text-white dark:border-white/10 dark:hover:bg-[var(--bg-surface-raised)]/95',
   gold:
-    'bg-gradient-to-br from-[#B8860B] via-[#A07A0A] to-[#7A5A08] text-[#1A0A0A] ' +
-    'shadow-[0_4px_14px_-2px_rgb(184_134_11/0.45)] ' +
-    'hover:from-[#C4930A] hover:via-[#B8860B] hover:to-[#8B6709] ' +
-    'hover:shadow-[0_8px_24px_-4px_rgb(184_134_11/0.55)] ' +
-    'dark:from-[#E5B547] dark:via-[#D1A73D] dark:to-[#B8860B] dark:text-[#1A0A0A]',
+    'bg-gradient-to-br from-[var(--brand-accent)] via-[var(--brand-accent-hover)] to-[var(--brand-accent-hover)] text-[var(--brand-primary-ink)] ' +
+    'shadow-[0_4px_14px_-2px_rgb(184_134_11/0.45)] /* brand-accent shadow */ ' +
+    'hover:from-[var(--brand-accent-hover)] hover:via-[var(--brand-accent)] hover:to-[var(--brand-accent-hover)] ' +
+    'hover:shadow-[0_8px_24px_-4px_rgb(184_134_11/0.55)] /* brand-accent shadow */ ' +
+    'dark:from-[var(--brand-accent)] dark:via-[var(--brand-accent-hover)] dark:to-[var(--brand-accent)] dark:text-[var(--brand-primary-ink)]',
   live:
-    'bg-gradient-to-br from-[#B91C1C] via-[#991B1B] to-[#7F1D1D] text-white ' +
-    'shadow-[0_4px_14px_-2px_rgb(185_28_28/0.5)] ' +
-    'hover:from-[#991B1B] hover:via-[#7F1D1D] hover:to-[#450A0A] ' +
-    'hover:shadow-[0_8px_28px_-4px_rgb(185_28_28/0.6),0_0_50px_10px_rgb(185_28_28/0.2)] ' +
+    'bg-gradient-to-br from-[var(--color-danger)] via-[var(--brand-primary-hover)] to-[var(--brand-primary)] text-white ' +
+    'shadow-[0_4px_14px_-2px_rgb(185_28_28/0.5)] /* live shadow */ ' +
+    'hover:from-[var(--brand-primary-hover)] hover:via-[var(--brand-primary)] hover:to-[var(--brand-primary-active)] ' +
+    'hover:shadow-[0_8px_28px_-4px_rgb(185_28_28/0.6),0_0_50px_10px_rgb(185_28_28/0.2)] /* live hover shadow */ ' +
     'hover:brightness-110 ' +
-    'dark:from-[#FCA5A5] dark:via-[#F87171] dark:to-[#FECACA] ' +
-    'dark:text-[#1A0A0A]',
+    'dark:from-[var(--brand-primary)] dark:via-[var(--color-live)] dark:to-[var(--brand-primary-hover)] ' +
+    'dark:text-[var(--brand-primary-ink)]',
   create:
-    'bg-gradient-to-br from-[#B91C1C] via-[#991B1B] to-[#7F1D1D] text-white ' +
-    'shadow-[0_4px_14px_-2px_rgb(153_27_27/0.45)] ' +
-    'hover:from-[#991B1B] hover:via-[#7F1D1D] hover:to-[#450A0A] ' +
-    'hover:shadow-[0_8px_28px_-4px_rgb(153_27_27/0.55),0_0_0_2px_rgb(153_27_27/0.15)] ' +
+    'bg-gradient-to-br from-[var(--color-danger)] via-[var(--brand-primary-hover)] to-[var(--brand-primary)] text-white ' +
+    'shadow-[0_4px_14px_-2px_rgb(153_27_27/0.45)] /* create shadow */ ' +
+    'hover:from-[var(--brand-primary-hover)] hover:via-[var(--brand-primary)] hover:to-[var(--brand-primary-active)] ' +
+    'hover:shadow-[0_8px_28px_-4px_rgb(153_27_27/0.55),0_0_0_2px_rgb(153_27_27/0.15)] /* create hover shadow */ ' +
     'hover:brightness-110 ' +
-    'dark:from-[#FCA5A5] dark:via-[#F87171] dark:to-[#FECACA] ' +
-    'dark:text-[#1A0A0A]',
+    'dark:from-[var(--brand-primary)] dark:via-[var(--color-live)] dark:to-[var(--brand-primary-hover)] ' +
+    'dark:text-[var(--brand-primary-ink)]',
 };
 
 const sizeStyles: Record<ButtonSize, string> = {

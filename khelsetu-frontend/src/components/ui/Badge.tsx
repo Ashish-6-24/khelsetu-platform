@@ -26,7 +26,7 @@ interface BadgeProps {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  default: 'bg-[#F5F5F4] text-[#0F172A] dark:bg-[#1A1A23] dark:text-[#F1F5F9]',
+  default: 'bg-[var(--bg-surface-sunken)] text-[var(--text-primary)] dark:bg-[var(--bg-surface-raised)] dark:text-[var(--text-primary)]',
   success:
     'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20 dark:bg-emerald-500/10 dark:text-emerald-400 dark:ring-emerald-400/30',
   warning:
@@ -35,12 +35,12 @@ const variantStyles: Record<BadgeVariant, string> = {
     'bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20 dark:bg-red-500/10 dark:text-red-400 dark:ring-red-400/30',
   info: 'bg-sky-50 text-sky-700 ring-1 ring-inset ring-sky-600/20 dark:bg-sky-500/10 dark:text-sky-400 dark:ring-sky-400/30',
   // AA-safe live badge: deep maroon-red bg + white text + warm glow ring
-  live: 'bg-[#DC2626] text-white shadow-[0_0_0_3px_rgb(220_38_38/0.18),0_2px_8px_-2px_rgb(220_38_38/0.45)]',
+  live: 'bg-[var(--color-live)] text-white shadow-[0_0_0_3px_rgb(220_38_38/0.18),0_2px_8px_-2px_rgb(220_38_38/0.45)] /* live shadow */',
   // Gold = premium tier, awards, verified
-  gold: 'bg-gradient-to-r from-[#B8860B] via-[#C4930A] to-[#B8860B] text-[#1A0A0A] shadow-sm ring-1 ring-inset ring-[#7A5A08]/30',
+  gold: 'bg-gradient-to-r from-[var(--brand-accent)] via-[var(--brand-accent-hover)] to-[var(--brand-accent)] text-[var(--brand-primary-ink)] shadow-sm ring-1 ring-inset ring-[var(--brand-accent-hover)]/30',
   // Brand = primary callout, maroon
   brand:
-    'bg-[#7F1D1D] text-white shadow-sm ring-1 ring-inset ring-[#5B1414]/40',
+    'bg-[var(--brand-primary)] text-white shadow-sm ring-1 ring-inset ring-[var(--brand-primary-active)]/40',
   // Sport accents
   'sport-cricket':
     'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20',
@@ -51,7 +51,7 @@ const variantStyles: Record<BadgeVariant, string> = {
   'sport-basketball':
     'bg-orange-50 text-orange-700 ring-1 ring-inset ring-orange-600/20',
   outline:
-    'border border-[#E7E5E4] text-[#0F172A] dark:border-[#3F3F46] dark:text-[#F1F5F9]',
+    'border border-[var(--border-subtle)] text-[var(--text-primary)] dark:border-[var(--border-strong)] dark:text-[var(--text-primary)]',
 };
 
 const sizeStyles = {
