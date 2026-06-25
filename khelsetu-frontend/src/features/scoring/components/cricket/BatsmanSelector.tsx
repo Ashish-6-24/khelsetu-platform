@@ -20,13 +20,13 @@ export const BatsmanSelector = ({
   return (
     <div className="space-y-3">
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label className="block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-1">
           Striker
         </label>
         <select
           value={strikerId}
           onChange={(e) => onSelectStriker(e.target.value)}
-          className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className="w-full rounded-xl border border-[var(--border-strong)] bg-[var(--bg-surface)] px-3 py-2 text-sm dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface)] dark:text-white"
         >
           {availableBatsmen.map((b) => (
             <option key={b.playerId} value={b.playerId}>
@@ -36,13 +36,13 @@ export const BatsmanSelector = ({
         </select>
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label className="block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-1">
           Non-Striker
         </label>
         <select
           value={nonStrikerId}
           onChange={(e) => onSelectNonStriker(e.target.value)}
-          className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className="w-full rounded-xl border border-[var(--border-strong)] bg-[var(--bg-surface)] px-3 py-2 text-sm dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface)] dark:text-white"
         >
           {availableBatsmen
             .filter((b) => b.playerId !== strikerId)

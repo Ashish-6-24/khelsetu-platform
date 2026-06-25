@@ -30,7 +30,7 @@ export const PerformanceCard = ({ title, metrics }: PerformanceCardProps) => {
               {metric.trend && (
                 <span
                   className={
-                    metric.trend === 'up' ? 'text-green-600' : 'text-red-600'
+                    metric.trend === 'up' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
                   }
                 >
                   {metric.trend === 'up' ? '↑' : '↓'}

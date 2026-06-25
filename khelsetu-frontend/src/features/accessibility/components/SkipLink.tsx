@@ -56,7 +56,7 @@ export const SkipLink = ({
       onClick={handleClick}
       className={clsx(
         'fixed top-4 left-4 z-[9999] px-4 py-2 text-sm font-medium rounded-lg',
-        'bg-blue-600 text-white shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
+        'bg-blue-600 dark:bg-blue-500 text-white shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900',
         'transition-all duration-200',
         isVisible ? 'translate-y-0 opacity-100' : '-translate-y-20 opacity-0',
       )}

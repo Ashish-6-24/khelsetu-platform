@@ -30,13 +30,13 @@ export const MatchCard = ({
         className="cursor-pointer"
         onClick={onClick}
       >
-        <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between p-3 bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
           <div className="flex items-center gap-3 flex-1">
-            <span className="text-sm font-medium text-gray-900 dark:text-white">
+            <span className="text-sm font-medium text-[var(--text-primary)] dark:text-white">
               {match.teamA.shortName}
             </span>
-            <span className="text-xs text-gray-500">vs</span>
-            <span className="text-sm font-medium text-gray-900 dark:text-white">
+            <span className="text-xs text-[var(--text-tertiary)]">vs</span>
+            <span className="text-sm font-medium text-[var(--text-primary)] dark:text-white">
               {match.teamB.shortName}
             </span>
           </div>
@@ -57,7 +57,7 @@ export const MatchCard = ({
       className="cursor-pointer"
       onClick={onClick}
     >
-      <div className="p-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
+      <div className="p-4 bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] rounded-2xl border border-[var(--border-subtle)] dark:border-[var(--border-subtle)] shadow-sm">
         <div className="flex items-center justify-between mb-3">
           <Badge
             variant={statusVariantMap[match.status]}
@@ -65,7 +65,7 @@ export const MatchCard = ({
           >
             {match.status === 'live' ? 'LIVE' : match.status}
           </Badge>
-          <span className="text-xs text-gray-500 dark:text-gray-400">
+          <span className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             {formatDate(match.scheduledAt)} at {formatTime(match.scheduledAt)}
           </span>
         </div>
@@ -77,14 +77,14 @@ export const MatchCard = ({
               size="md"
               className="mx-auto mb-2"
             />
-            <p className="font-semibold text-gray-900 dark:text-white">
+            <p className="font-semibold text-[var(--text-primary)] dark:text-white">
               {match.teamA.name}
             </p>
           </div>
           <div className="px-6">
             {match.score ? (
               <div className="text-center">
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                <p className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
                   {match.score.teamAScore} - {match.score.teamBScore}
                 </p>
                 {match.winner && (
@@ -94,7 +94,7 @@ export const MatchCard = ({
                 )}
               </div>
             ) : (
-              <p className="text-sm text-gray-500 dark:text-gray-400">vs</p>
+              <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">vs</p>
             )}
           </div>
           <div className="flex-1 text-center">
@@ -103,7 +103,7 @@ export const MatchCard = ({
               size="md"
               className="mx-auto mb-2"
             />
-            <p className="font-semibold text-gray-900 dark:text-white">
+            <p className="font-semibold text-[var(--text-primary)] dark:text-white">
               {match.teamB.name}
             </p>
           </div>

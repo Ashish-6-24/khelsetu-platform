@@ -12,12 +12,12 @@ export const RunRateMeter = ({
   maxRate = 15,
 }: RunRateMeterProps) => {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+    <div className="bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] rounded-xl p-4 border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+        <span className="text-sm font-medium text-[var(--text-secondary)] dark:text-[var(--text-secondary)]">
           Run Rate
         </span>
-        <span className="text-lg font-bold text-gray-900 dark:text-white">
+        <span className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
           {currentRunRate.toFixed(2)}
         </span>
       </div>
@@ -34,13 +34,13 @@ export const RunRateMeter = ({
         }
       />
       {requiredRunRate !== undefined && (
-        <div className="mt-2 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+        <div className="mt-2 flex items-center justify-between text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
           <span>Required: {requiredRunRate.toFixed(2)}</span>
           <span
             className={
               currentRunRate >= requiredRunRate
-                ? 'text-green-600'
-                : 'text-red-600'
+                ? 'text-green-600 dark:text-green-400'
+                : 'text-red-600 dark:text-red-400'
             }
           >
             {currentRunRate >= requiredRunRate ? 'On track' : 'Behind'}

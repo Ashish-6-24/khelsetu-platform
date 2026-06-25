@@ -26,34 +26,34 @@ export const VolleyballScoringPanel = ({
       <div className="bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 rounded-lg p-4">
         <div className="flex items-center justify-between">
           <div className="text-center flex-1">
-            <p className="text-lg font-bold text-gray-900 dark:text-white">
+            <p className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
               {score.teamAName}
             </p>
             <p className="text-4xl font-bold text-orange-600 dark:text-orange-400 mt-1">
               {score.currentPoint.teamA}
             </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
               Sets: {score.teamASetsWon}
             </p>
           </div>
           <div className="text-center px-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
               Set {score.currentSet}
             </p>
-            <p className="text-xs text-gray-400 dark:text-gray-500">
+            <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
               {score.servingTeam === 'teamA'
                 ? `${score.teamAName} serving`
                 : `${score.teamBName} serving`}
             </p>
           </div>
           <div className="text-center flex-1">
-            <p className="text-lg font-bold text-gray-900 dark:text-white">
+            <p className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
               {score.teamBName}
             </p>
             <p className="text-4xl font-bold text-orange-600 dark:text-orange-400 mt-1">
               {score.currentPoint.teamB}
             </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
               Sets: {score.teamBSetsWon}
             </p>
           </div>
@@ -100,17 +100,17 @@ export const VolleyballScoringPanel = ({
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className="flex items-center gap-3 p-2 bg-gray-50 dark:bg-gray-800 rounded"
+                  className="flex items-center gap-3 p-2 bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface)] rounded"
                 >
                   <span className="text-lg">
                     {getEventTypeIcon(event.type)}
                   </span>
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">
+                    <p className="text-sm font-medium text-[var(--text-primary)] dark:text-white">
                       {event.playerName ?? event.teamName}
                     </p>
                   </div>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                  <span className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                     Point {event.pointNumber}
                   </span>
                 </motion.div>

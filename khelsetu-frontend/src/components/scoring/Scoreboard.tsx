@@ -10,7 +10,7 @@ export const Scoreboard = ({ score }: ScoreboardProps) => {
   if (!currentInnings) {
     return (
       <div className="text-center py-8">
-        <p className="text-gray-500 dark:text-gray-400">
+        <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
           No innings data available
         </p>
       </div>
@@ -20,7 +20,7 @@ export const Scoreboard = ({ score }: ScoreboardProps) => {
   const oversDisplay = `${currentInnings.overs}.${currentInnings.balls.length % 6}`;
 
   return (
-    <div className="bg-gray-900 text-white rounded-xl p-6">
+    <div className="bg-[var(--bg-canvas)] text-white rounded-xl p-6">
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-bold">
@@ -29,12 +29,12 @@ export const Scoreboard = ({ score }: ScoreboardProps) => {
           <p className="text-4xl font-bold text-green-400">
             {currentInnings.runs}/{currentInnings.wickets}
           </p>
-          <p className="text-sm text-gray-400">({oversDisplay} ov)</p>
+          <p className="text-sm text-[var(--text-tertiary)]">({oversDisplay} ov)</p>
         </div>
       </div>
 
       {score.lastBalls.length > 0 && (
-        <div className="mt-6 pt-6 border-t border-gray-700">
+        <div className="mt-6 pt-6 border-t border-[var(--border-subtle)]">
           <h4 className="text-sm font-semibold mb-3">Last 6 balls</h4>
           <div className="flex gap-2">
             {score.lastBalls.slice(-6).map((ball, idx) => (
@@ -47,7 +47,7 @@ export const Scoreboard = ({ score }: ScoreboardProps) => {
                       ? 'bg-green-500'
                       : ball.runs === 4
                         ? 'bg-blue-500'
-                        : 'bg-gray-700'
+                        : 'bg-[var(--bg-surface-raised)]'
                 }`}
               >
                 {ball.isWicket ? 'W' : ball.runs}

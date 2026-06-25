@@ -18,20 +18,20 @@ export const LiveScoreCard = ({
 
   if (variant === 'compact') {
     return (
-      <div className="bg-gray-900 text-white rounded-lg p-3">
+      <div className="bg-[var(--bg-canvas)] text-white rounded-lg p-3">
         <p className="text-sm font-semibold">
           {currentInnings.battingTeamName}
         </p>
         <p className="text-2xl font-bold text-green-400">
           {currentInnings.runs}/{currentInnings.wickets}
         </p>
-        <p className="text-xs text-gray-400">({oversDisplay})</p>
+        <p className="text-xs text-[var(--text-tertiary)]">({oversDisplay})</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-900 text-white rounded-xl p-4">
+    <div className="bg-[var(--bg-canvas)] text-white rounded-xl p-4">
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-bold">
@@ -40,13 +40,13 @@ export const LiveScoreCard = ({
           <p className="text-3xl font-bold text-green-400">
             {currentInnings.runs}/{currentInnings.wickets}
           </p>
-          <p className="text-sm text-gray-400">({oversDisplay} ov)</p>
+          <p className="text-sm text-[var(--text-tertiary)]">({oversDisplay} ov)</p>
         </div>
       </div>
 
       {currentInnings.partnership && (
-        <div className="mt-4 pt-4 border-t border-gray-700">
-          <p className="text-sm text-gray-400">Partnership</p>
+        <div className="mt-4 pt-4 border-t border-[var(--border-subtle)]">
+          <p className="text-sm text-[var(--text-tertiary)]">Partnership</p>
           <p className="text-lg font-semibold">
             {currentInnings.partnership.runs} (
             {currentInnings.partnership.balls})
