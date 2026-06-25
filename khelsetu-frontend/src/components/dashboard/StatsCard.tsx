@@ -17,7 +17,7 @@ interface StatsCardProps {
 }
 
 const accentMap: Record<NonNullable<StatsCardProps['accent']>, string> = {
-  blue: 'from-[#7F1D1D] to-[#991B1B] shadow-[#7F1D1D]/25',
+  blue: 'from-[var(--brand-primary)] to-[var(--brand-primary-hover)] shadow-[var(--brand-primary)]/25',
   green: 'from-emerald-500 to-teal-600 shadow-emerald-500/25',
   amber: 'from-amber-500 to-orange-600 shadow-amber-500/25',
   red: 'from-red-500 to-rose-600 shadow-red-500/25',
@@ -96,7 +96,7 @@ export const StatsCard = ({
       style={{ animationDelay: `${delay}s`, animationFillMode: 'both' }}
     >
       <Card hover elevated className="group relative overflow-hidden">
-        <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-gradient-to-br from-[#7F1D1D]/0 to-[#B8860B]/0 transition-all duration-500 group-hover:from-[#7F1D1D]/5 group-hover:to-[#B8860B]/10" />
+        <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-gradient-to-br from-[var(--brand-primary)]/0 to-[var(--brand-accent)]/0 transition-all duration-500 group-hover:from-[var(--brand-primary)]/5 group-hover:to-[var(--brand-accent)]/10" />
         <CardBody>
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0 flex-1">

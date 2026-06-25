@@ -72,7 +72,7 @@ export const MobileTabBar = () => {
                   {active && (
                     <motion.span
                       layoutId="tabbar-active-pill"
-                      className="absolute inset-x-2 top-0 h-0.5 rounded-b-full bg-gradient-to-r from-[#7F1D1D] to-[#B8860B]"
+                      className="absolute inset-x-2 top-0 h-0.5 rounded-b-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)]"
                       transition={{
                         type: 'spring',
                         stiffness: 380,

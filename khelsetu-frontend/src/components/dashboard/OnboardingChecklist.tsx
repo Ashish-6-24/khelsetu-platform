@@ -112,27 +112,27 @@ export const OnboardingChecklist = ({
       >
         <Card elevated className="relative overflow-hidden">
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#7F1D1D]/[0.04] via-transparent to-[#B8860B]/[0.04]"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[var(--brand-primary)]/[0.04] via-transparent to-[var(--brand-accent)]/[0.04]"
             aria-hidden
           />
           <button
             type="button"
             onClick={dismiss}
             aria-label="Dismiss onboarding"
-            className="absolute right-3 top-3 z-10 flex h-8 w-8 min-h-11 min-w-11 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+            className="absolute right-3 top-3 z-10 flex h-8 w-8 min-h-11 min-w-11 items-center justify-center rounded-lg text-[var(--text-tertiary)] transition-colors hover:bg-[var(--bg-surface-sunken)] hover:text-[var(--text-secondary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-[var(--text-primary)]"
           >
             <X className="h-4 w-4" />
           </button>
           <CardHeader divided className="!pr-12">
             <div className="flex items-start gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#7F1D1D] to-[#991B1B] text-white shadow-md">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-white shadow-md">
                 <Sparkles className="h-5 w-5" aria-hidden />
               </div>
               <div>
                 <h3 className="text-base font-semibold tracking-tight text-slate-900 dark:text-white">
                   Get set up in 4 steps
                 </h3>
-                <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+                <p className="mt-0.5 text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   <span className="font-semibold text-blue-600 dark:text-blue-400">
                     {completedCount} of {steps.length}
                   </span>{' '}
@@ -148,7 +148,7 @@ export const OnboardingChecklist = ({
                     'h-1 flex-1 rounded-full transition-colors duration-500',
                     s.done
                       ? 'bg-emerald-500'
-                      : 'bg-slate-200 dark:bg-slate-700',
+                      : 'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)]',
                   )}
                   aria-hidden
                 />
@@ -163,14 +163,14 @@ export const OnboardingChecklist = ({
                   <li key={step.id}>
                     <Link
                       to={step.href}
-                      className="group flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-slate-50/70 focus-visible:bg-slate-50/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 dark:hover:bg-slate-800/40"
+                      className="group flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-[var(--bg-surface-sunken)]/70 focus-visible:bg-[var(--bg-surface-sunken)]/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 dark:hover:bg-[var(--bg-surface)]/40"
                     >
                       <span
                         className={clsx(
                           'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ring-1 transition-colors',
                           step.done
                             ? 'bg-emerald-500/10 text-emerald-600 ring-emerald-500/20 dark:text-emerald-400'
-                            : 'bg-slate-100 text-slate-500 ring-[var(--border-subtle)] group-hover:bg-blue-500/10 group-hover:text-blue-600 dark:bg-slate-800 dark:text-slate-400 dark:group-hover:bg-blue-500/15 dark:group-hover:text-blue-400',
+                            : 'bg-[var(--bg-surface-sunken)] text-[var(--text-tertiary)] ring-[var(--border-subtle)] group-hover:bg-blue-500/10 group-hover:text-blue-600 dark:bg-[var(--bg-surface)] dark:text-[var(--text-tertiary)] dark:group-hover:bg-blue-500/15 dark:group-hover:text-blue-400',
                         )}
                         aria-hidden
                       >
@@ -185,13 +185,13 @@ export const OnboardingChecklist = ({
                           className={clsx(
                             'truncate text-sm font-semibold',
                             step.done
-                              ? 'text-slate-400 line-through dark:text-slate-500'
+                              ? 'text-[var(--text-tertiary)] line-through dark:text-[var(--text-tertiary)]'
                               : 'text-slate-900 dark:text-white',
                           )}
                         >
                           {step.title}
                         </p>
-                        <p className="truncate text-xs text-slate-500 dark:text-slate-400">
+                        <p className="truncate text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                           {step.description}
                         </p>
                       </div>

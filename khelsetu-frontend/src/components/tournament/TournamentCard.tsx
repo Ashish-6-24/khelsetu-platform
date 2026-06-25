@@ -28,14 +28,14 @@ export const TournamentCard = ({
       onClick={onClick}
     >
       <Card hover className="overflow-hidden">
-        <div className="h-2 bg-gradient-to-r from-[#7F1D1D] to-[#B8860B]" />
+        <div className="h-2 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)]" />
         <CardBody>
           <div className="flex items-start justify-between">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-lg font-semibold text-[var(--text-primary)] dark:text-white">
                 {tournament.name}
               </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-1">
                 {tournament.sport} • {tournament.format}
               </p>
             </div>
@@ -47,15 +47,15 @@ export const TournamentCard = ({
             </Badge>
           </div>
           <div className="mt-4 flex items-center justify-between text-sm">
-            <span className="text-gray-500 dark:text-gray-400">
+            <span className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
               {formatDate(tournament.startDate)}
             </span>
-            <span className="text-gray-500 dark:text-gray-400">
+            <span className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
               {tournament.currentTeams}/{tournament.maxTeams} teams
             </span>
           </div>
           <div className="mt-3">
-            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+            <div className="w-full bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)] rounded-full h-2">
               <div
                 className="bg-blue-600 h-2 rounded-full transition-all duration-500"
                 style={{
