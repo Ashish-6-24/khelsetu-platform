@@ -6,9 +6,13 @@ import {
   Circle,
   Eye,
   Layers,
+  Maximize2,
+  Megaphone,
   Monitor,
+  PanelBottom,
   Plus,
   Trash2,
+  Trophy,
   Video,
   VideoOff,
 } from 'lucide-react';
@@ -98,6 +102,13 @@ interface OverlayControlProps {
   onToggle: (id: string) => void;
 }
 
+const overlayIcons: Record<OverlayType, React.ReactNode> = {
+  scoreboard: <Trophy className="w-5 h-5" />,
+  'lower-third': <PanelBottom className="w-5 h-5" />,
+  'full-screen': <Maximize2 className="w-5 h-5" />,
+  ticker: <Megaphone className="w-5 h-5" />,
+};
+
 export const OverlayControl = ({
   overlays,
   onAdd,
@@ -115,7 +126,7 @@ export const OverlayControl = ({
     <Card>
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Layers className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+          <Layers className="w-5 h-5 text-[#7F1D1D] dark:text-[#FCA5A5]" />
           <h3 className="text-lg font-bold text-gray-900 dark:text-white">
             Overlays
           </h3>
@@ -123,18 +134,26 @@ export const OverlayControl = ({
       </CardHeader>
       <CardBody>
         <div className="space-y-3">
-          <div className="grid grid-cols-2 gap-2">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+              Add Overlay
+            </span>
+          </div>
+          <div className="space-y-2">
             {overlayTypes.map((type) => (
-              <Button
+              <button
                 key={type}
-                variant="outline"
-                size="sm"
                 onClick={() => onAdd(type)}
-                className="capitalize"
+                className="group flex items-center gap-3 w-full px-4 py-3 rounded-xl bg-[#F5F5F4] border border-[#E7E5E4] hover:bg-[#FEF2F2] hover:border-[#7F1D1D]/30 hover:shadow-[0_0_20px_-4px_rgba(127,29,29,0.2)] active:bg-[#FEE2E2] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)] transition-all duration-200 ease-out cursor-pointer dark:bg-[#13131A] dark:border-white/[0.06] dark:hover:bg-[#1A1A23] dark:hover:border-[#7F1D1D]/30 dark:hover:shadow-[0_0_20px_-4px_rgba(127,29,29,0.2)] dark:active:bg-[#0F0F17]"
               >
-                <Plus className="w-4 h-4 mr-1" />
-                {type}
-              </Button>
+                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-[#7F1D1D]/10 text-[#7F1D1D] group-hover:bg-[#7F1D1D]/20 group-hover:text-[#991B1B] dark:bg-[#7F1D1D]/10 dark:text-[#FCA5A5] dark:group-hover:bg-[#7F1D1D]/20 dark:group-hover:text-white transition-all duration-200">
+                  {overlayIcons[type]}
+                </div>
+                <span className="text-sm font-medium text-[#0F172A] capitalize dark:text-[#F1F5F9]">
+                  {type.replace('-', ' ')}
+                </span>
+                <Plus className="w-4 h-4 ml-auto text-[#94A3B8] group-hover:text-[#7F1D1D] dark:text-[#94A3B8] dark:group-hover:text-[#FCA5A5] transition-colors duration-200" />
+              </button>
             ))}
           </div>
 

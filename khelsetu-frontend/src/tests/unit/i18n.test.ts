@@ -22,7 +22,6 @@ describe('i18n Utilities', () => {
   it('should have translations for all supported languages', () => {
     expect(translations).toHaveProperty('en');
     expect(translations).toHaveProperty('ne');
-    expect(translations).toHaveProperty('hi');
   });
 
   it('should resolve nested translation keys correctly', () => {
@@ -35,9 +34,7 @@ describe('i18n Utilities', () => {
   it('should have consistent keys across languages', () => {
     const enKeys = JSON.stringify(Object.keys(translations.en));
     const neKeys = JSON.stringify(Object.keys(translations.ne));
-    const hiKeys = JSON.stringify(Object.keys(translations.hi));
     expect(enKeys).toBe(neKeys);
-    expect(enKeys).toBe(hiKeys);
   });
 
   it('should return key as fallback for missing translations', () => {

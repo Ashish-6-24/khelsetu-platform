@@ -26,13 +26,13 @@ export const I18nPage = () => {
             <h3 className="text-lg font-bold text-gray-900 dark:text-white">
               Available Languages
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {availableLanguages.map((lang) => (
                 <div
                   key={lang.code}
                   className={`p-4 rounded-lg border ${
                     language === lang.code
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                      ? 'border-[#7F1D1D] bg-[#FEF2F2] dark:bg-[rgb(127_29_29/0.18)]'
                       : 'border-gray-200 dark:border-gray-700'
                   }`}
                 >
@@ -43,7 +43,7 @@ export const I18nPage = () => {
                     Code: {lang.code.toUpperCase()}
                   </p>
                   {language === lang.code && (
-                    <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
+                    <p className="text-xs text-[#7F1D1D] dark:text-[#FCA5A5] mt-1">
                       Active
                     </p>
                   )}

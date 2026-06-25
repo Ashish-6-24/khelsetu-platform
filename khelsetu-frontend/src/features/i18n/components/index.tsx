@@ -18,7 +18,7 @@ export const LanguageSwitcher = () => {
             onClick={() => setLanguage(lang.code)}
             className={`px-2 py-1 text-xs rounded-lg transition-colors ${
               language === lang.code
-                ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 font-medium'
+                ? 'bg-[#FEF2F2] text-[#7F1D1D] dark:bg-[rgb(127_29_29/0.18)] dark:text-[#FCA5A5] font-medium'
                 : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
             }`}
             title={lang.name}
@@ -34,7 +34,7 @@ export const LanguageSwitcher = () => {
 export const I18nDemo = () => {
   const { t, language, setLanguage } = useI18n();
 
-  const languages: Language[] = ['en', 'ne', 'hi'];
+  const languages: Language[] = ['en', 'ne'];
 
   return (
     <Card>
