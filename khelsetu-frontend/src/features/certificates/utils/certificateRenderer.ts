@@ -33,7 +33,7 @@ export async function renderCertificateToPng(): Promise<string> {
     scale: 2,
     useCORS: true,
     allowTaint: true,
-    backgroundColor: '#fef3c7',
+    backgroundColor: 'var(--brand-accent-soft)',
   });
 
   return canvas.toDataURL('image/png');
@@ -51,7 +51,7 @@ export async function renderCertificateToPdf(
     scale: 2,
     useCORS: true,
     allowTaint: true,
-    backgroundColor: '#fef3c7',
+    backgroundColor: 'var(--brand-accent-soft)',
   });
 
   const imgData = canvas.toDataURL('image/png');

@@ -53,7 +53,7 @@ export const PlayerBench = ({ players, onSelectPlayer }: PlayerBenchProps) => {
     <Card className="h-full">
       <CardBody padding="sm">
         <div className="space-y-4">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             Bench ({players.length})
           </h3>
 
@@ -67,7 +67,7 @@ export const PlayerBench = ({ players, onSelectPlayer }: PlayerBenchProps) => {
                   <span className="text-sm" aria-hidden="true">
                     {config.icon}
                   </span>
-                  <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                  <span className="text-xs font-semibold text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
                     {config.label}
                   </span>
                   <Badge variant={config.badgeVariant} size="sm">
@@ -102,10 +102,10 @@ export const PlayerBench = ({ players, onSelectPlayer }: PlayerBenchProps) => {
                         {player.jerseyNumber}
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                        <p className="truncate text-sm font-medium text-[var(--text-primary)] dark:text-white">
                           {player.playerName}
                         </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                        <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                           {player.position}
                         </p>
                       </div>
@@ -122,7 +122,7 @@ export const PlayerBench = ({ players, onSelectPlayer }: PlayerBenchProps) => {
           })}
 
           {players.length === 0 && (
-            <div className="py-6 text-center text-sm text-gray-400 dark:text-gray-500">
+            <div className="py-6 text-center text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
               No bench players
             </div>
           )}

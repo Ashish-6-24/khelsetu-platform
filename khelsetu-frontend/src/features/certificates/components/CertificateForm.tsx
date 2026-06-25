@@ -46,7 +46,7 @@ export function CertificateForm({
         <select
           value={type}
           onChange={(e) => setType(e.target.value as CertificateType)}
-          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[#7f1d1d] focus:outline-none focus:ring-1 focus:ring-[#7f1d1d] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         >
           {certificateTypes.map((t) => (
             <option key={t.type} value={t.type}>
@@ -66,7 +66,7 @@ export function CertificateForm({
           onChange={(e) => setPlayerName(e.target.value)}
           placeholder="Enter recipient name"
           required
-          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[#7f1d1d] focus:outline-none focus:ring-1 focus:ring-[#7f1d1d] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
       </div>
 
@@ -80,7 +80,7 @@ export function CertificateForm({
           onChange={(e) => setTeamName(e.target.value)}
           placeholder="Enter team name"
           required
-          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[#7f1d1d] focus:outline-none focus:ring-1 focus:ring-[#7f1d1d] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
       </div>
 
@@ -94,7 +94,7 @@ export function CertificateForm({
           onChange={(e) => setTournamentName(e.target.value)}
           placeholder="Enter tournament name"
           required
-          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[#7f1d1d] focus:outline-none focus:ring-1 focus:ring-[#7f1d1d] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
       </div>
 
@@ -107,7 +107,7 @@ export function CertificateForm({
           value={date}
           onChange={(e) => setDate(e.target.value)}
           required
-          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[#7f1d1d] focus:outline-none focus:ring-1 focus:ring-[#7f1d1d] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
       </div>
 
@@ -121,7 +121,7 @@ export function CertificateForm({
           onChange={(e) => setOrganizer(e.target.value)}
           placeholder="Enter organizer name"
           required
-          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[#7f1d1d] focus:outline-none focus:ring-1 focus:ring-[#7f1d1d] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
       </div>
 
@@ -130,7 +130,7 @@ export function CertificateForm({
         variant="primary"
         size="lg"
         isLoading={isGenerating}
-        className="w-full bg-gradient-to-r from-[#7f1d1d] to-[#991b1b] text-white hover:from-[#991b1b] hover:to-[#b91c1c]"
+        className="w-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-white hover:from-[var(--brand-primary-hover)] hover:to-[var(--color-danger)]"
       >
         Generate Certificate
       </Button>

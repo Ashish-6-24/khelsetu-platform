@@ -89,9 +89,9 @@ export const FORMATION_TEMPLATES: FormationTemplate[] = [
 ];
 
 export const POSITION_COLORS: Record<Position, string> = {
-  GK: '#f59e0b',
-  LB: '#3b82f6',
-  RB: '#3b82f6',
+  GK: 'var(--brand-accent)',
+  LB: 'var(--color-info)',
+  RB: 'var(--color-info)',
   CB: '#1d4ed8',
   LWB: '#8b5cf6',
   RWB: '#8b5cf6',
@@ -100,7 +100,7 @@ export const POSITION_COLORS: Record<Position, string> = {
   CAM: '#f97316',
   LW: '#ef4444',
   RW: '#ef4444',
-  ST: '#dc2626',
+  ST: 'var(--color-live)',
 };
 
 export const POSITION_LABELS: Record<Position, string> = {
@@ -121,9 +121,9 @@ export const POSITION_LABELS: Record<Position, string> = {
 export const TACTICAL_COLORS = [
   '#ffffff',
   '#ef4444',
-  '#3b82f6',
+  'var(--color-info)',
   '#22c55e',
-  '#f59e0b',
+  'var(--brand-accent)',
 ];
 
 export const TACTICAL_TOOL_TYPES = [

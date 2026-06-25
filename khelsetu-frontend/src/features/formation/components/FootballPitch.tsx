@@ -27,6 +27,7 @@ export const FootballPitch = ({ children, className }: FootballPitchProps) => {
         <rect x="0" y="0" width="680" height="1050" fill="transparent" />
 
         {/* Outer boundary */}
+        {/* white pitch lines — not theme-dependent */}
         <rect
           x="40"
           y="40"

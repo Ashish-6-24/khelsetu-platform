@@ -23,8 +23,8 @@ export const FormationSelector = ({
             'rounded-xl px-4 py-2 text-sm font-semibold transition-all duration-200',
             'border',
             value === template.type
-              ? 'border-amber-400 bg-gradient-to-r from-[#7f1d1d] to-[#991b1b] text-white shadow-md'
-              : 'border-[var(--border-subtle)] bg-[var(--bg-surface)] text-gray-700 hover:border-gray-300 hover:bg-[var(--bg-surface-2)] dark:text-gray-300 dark:hover:border-gray-600',
+              ? 'border-amber-400 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-white shadow-md'
+              : 'border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-primary)] hover:border-[var(--border-strong)] hover:bg-[var(--bg-surface-2)] dark:text-[var(--text-secondary)] dark:hover:border-gray-600',
           )}
         >
           {template.name}
@@ -36,9 +36,9 @@ export const FormationSelector = ({
         className={clsx(
           'rounded-xl px-4 py-2 text-sm font-semibold transition-all duration-200',
           'border',
-          value === 'custom'
-            ? 'border-amber-400 bg-gradient-to-r from-[#b8860b] to-[#d4a017] text-black shadow-md'
-            : 'border-[var(--border-subtle)] bg-[var(--bg-surface)] text-gray-700 hover:border-gray-300 hover:bg-[var(--bg-surface-2)] dark:text-gray-300 dark:hover:border-gray-600',
+            value === 'custom'
+            ? 'border-amber-400 bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-accent-hover)] text-black shadow-md'
+            : 'border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-primary)] hover:border-[var(--border-strong)] hover:bg-[var(--bg-surface-2)] dark:text-[var(--text-secondary)] dark:hover:border-gray-600',
         )}
       >
         Custom

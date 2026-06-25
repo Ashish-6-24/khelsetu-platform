@@ -76,15 +76,15 @@ export const TacticalBoard = ({
 
   return (
     <div className="absolute bottom-3 left-3 right-3 z-20">
-      <div className="flex flex-wrap items-center gap-2 rounded-xl bg-white/90 px-3 py-2 shadow-lg backdrop-blur-xl dark:bg-gray-800/90">
+      <div className="flex flex-wrap items-center gap-2 rounded-xl bg-[var(--bg-surface)]/90 px-3 py-2 shadow-lg backdrop-blur-xl dark:bg-[var(--bg-surface)]/90">
         <button
           onClick={() => setIsDrawing(!isDrawing)}
           aria-pressed={isDrawing}
           className={clsx(
             'rounded-lg px-3 py-1.5 text-xs font-semibold transition-all',
             isDrawing
-              ? 'bg-gradient-to-r from-[#7f1d1d] to-[#991b1b] text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600',
+              ? 'bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-white'
+              : 'bg-gray-100 text-[var(--text-primary)] hover:bg-gray-200 dark:bg-[var(--bg-surface-raised)] dark:text-[var(--text-secondary)] dark:hover:bg-gray-600',
           )}
         >
           {isDrawing ? 'Drawing ON' : 'Draw'}
@@ -104,8 +104,8 @@ export const TacticalBoard = ({
                   className={clsx(
                     'flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg text-sm transition-all',
                     activeTool === tool.type
-                      ? 'bg-[#7f1d1d] text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600',
+                      ? 'bg-[var(--brand-primary)] text-white'
+                      : 'bg-gray-100 text-[var(--text-secondary)] hover:bg-gray-200 dark:bg-[var(--bg-surface-raised)] dark:text-[var(--text-tertiary)] dark:hover:bg-gray-600',
                   )}
                 >
                   {tool.icon}
@@ -126,7 +126,7 @@ export const TacticalBoard = ({
                     'flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg transition-all',
                     activeColor === color
                       ? 'bg-gray-200 dark:bg-gray-600'
-                      : 'hover:bg-gray-100 dark:hover:bg-gray-700',
+                      : 'hover:bg-gray-100 dark:hover:bg-[var(--bg-surface-raised)]',
                   )}
                 >
                   <span
@@ -134,7 +134,7 @@ export const TacticalBoard = ({
                       'h-5 w-5 rounded-full border-2',
                       activeColor === color
                         ? 'border-gray-900 scale-110 dark:border-white'
-                        : 'border-gray-300 dark:border-gray-600',
+                        : 'border-[var(--border-strong)] dark:border-[var(--border-strong)]',
                     )}
                     style={{ backgroundColor: color }}
                   />
@@ -155,7 +155,7 @@ export const TacticalBoard = ({
         )}
 
         {drawings.length > 0 && (
-          <span className="ml-auto text-[11px] text-gray-500 dark:text-gray-400">
+          <span className="ml-auto text-[11px] text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             {drawings.length} drawing{drawings.length !== 1 ? 's' : ''}
           </span>
         )}

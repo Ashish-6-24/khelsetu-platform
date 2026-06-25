@@ -6,12 +6,12 @@ interface CertConfettiProps {
 }
 
 const COLORS = [
-  '#b8860b',
-  '#d4a017',
+  'var(--brand-accent)',
+  'var(--brand-accent-hover)',
   '#f5d060',
-  '#7f1d1d',
-  '#b91c1c',
-  '#fef3c7',
+  'var(--brand-primary)',
+  'var(--color-danger)',
+  'var(--brand-accent-soft)',
 ];
 
 interface Particle {

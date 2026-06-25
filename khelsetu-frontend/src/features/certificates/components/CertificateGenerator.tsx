@@ -88,7 +88,7 @@ export function CertificateGenerator() {
                     variant="primary"
                     size="md"
                     onClick={() => handleDownload(downloadPdf)}
-                    className="flex-1 bg-gradient-to-r from-[#7f1d1d] to-[#991b1b] text-white hover:from-[#991b1b] hover:to-[#b91c1c]"
+                    className="flex-1 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-white hover:from-[var(--brand-primary-hover)] hover:to-[var(--color-danger)]"
                   >
                     Download PDF
                   </Button>
