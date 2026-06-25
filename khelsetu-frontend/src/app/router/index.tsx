@@ -2,13 +2,8 @@ import { AuthLayout } from '@app/layouts/AuthLayout';
 import { DashboardLayout } from '@app/layouts/DashboardLayout';
 import { LandingLayout } from '@app/layouts/LandingLayout';
 import { ErrorBoundary } from '@components/error/ErrorBoundary';
-import { LoginPage } from '@pages/auth/login/page';
-import { RegisterPage } from '@pages/auth/register/page';
-import { DashboardPage } from '@pages/dashboard/page';
 import { LandingPage } from '@pages/landing/page';
 import { NotFoundPage } from '@pages/not-found/page';
-import { TeamsPage } from '@pages/teams/page';
-import { TournamentsPage } from '@pages/tournaments/page';
 import { useAuthStore } from '@store/authStore';
 import { ROUTES } from '@utils/constants';
 
@@ -37,6 +32,21 @@ const lazyPage = (
   lazy(() =>
     importFn().then((m) => ({ default: m[name] as React.ComponentType })),
   );
+
+const LoginPage = lazyPage(() => import('@pages/auth/login/page'), 'LoginPage');
+const RegisterPage = lazyPage(
+  () => import('@pages/auth/register/page'),
+  'RegisterPage',
+);
+const DashboardPage = lazyPage(
+  () => import('@pages/dashboard/page'),
+  'DashboardPage',
+);
+const TournamentsPage = lazyPage(
+  () => import('@pages/tournaments/page'),
+  'TournamentsPage',
+);
+const TeamsPage = lazyPage(() => import('@pages/teams/page'), 'TeamsPage');
 
 const AboutPage = lazyPage(() => import('@pages/about/page'), 'AboutPage');
 const ContactPage = lazyPage(
@@ -238,7 +248,7 @@ export const AppRouter = () => {
         element={
           <PublicRoute>
             <AuthLayout>
-              <LoginPage />
+              {withSuspense(LoginPage)}
             </AuthLayout>
           </PublicRoute>
         }
@@ -249,7 +259,7 @@ export const AppRouter = () => {
         element={
           <PublicRoute>
             <AuthLayout>
-              <RegisterPage />
+              {withSuspense(RegisterPage)}
             </AuthLayout>
           </PublicRoute>
         }
@@ -260,7 +270,7 @@ export const AppRouter = () => {
         element={
           <ProtectedRoute>
             <DashboardLayout>
-              <DashboardPage />
+              {withSuspense(DashboardPage)}
             </DashboardLayout>
           </ProtectedRoute>
         }
@@ -271,7 +281,7 @@ export const AppRouter = () => {
         element={
           <ProtectedRoute>
             <DashboardLayout>
-              <TournamentsPage />
+              {withSuspense(TournamentsPage)}
             </DashboardLayout>
           </ProtectedRoute>
         }
@@ -326,7 +336,7 @@ export const AppRouter = () => {
         element={
           <ProtectedRoute>
             <DashboardLayout>
-              <TeamsPage />
+              {withSuspense(TeamsPage)}
             </DashboardLayout>
           </ProtectedRoute>
         }
