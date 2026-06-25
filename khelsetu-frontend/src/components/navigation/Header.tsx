@@ -1,3 +1,4 @@
+import { ThemeToggle } from '@components/ThemeToggle';
 import { useCommandPalette } from '@components/command/palette-context';
 import { Avatar } from '@components/ui/Avatar';
 import { BadgeDot } from '@components/ui/Badge';
@@ -12,11 +13,9 @@ import {
   ChevronDown,
   LogOut,
   Menu,
-  Moon,
   Search,
   Settings,
   Sparkles,
-  Sun,
   User,
 } from 'lucide-react';
 
@@ -24,16 +23,10 @@ import { useEffect, useRef, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-type Theme = 'light' | 'dark' | 'system';
-
-const THEME_ORDER: Theme[] = ['light', 'dark', 'system'];
-
 export const Header = () => {
   const user = useAuthStore((state) => state.user);
   const { logout } = useAuth();
   const navigate = useNavigate();
-  const theme = useUIStore((state) => state.theme);
-  const setTheme = useUIStore((state) => state.setTheme);
   const setMobileMenuOpen = useUIStore((state) => state.setMobileMenuOpen);
   const { setOpen: openCommandPalette } = useCommandPalette();
 
@@ -55,16 +48,6 @@ export const Header = () => {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const cycleTheme = () => {
-    const current: Theme = theme ?? 'system';
-    const idx = THEME_ORDER.indexOf(current);
-    const next = THEME_ORDER[(idx + 1) % THEME_ORDER.length] as Theme;
-    setTheme(next);
-  };
-
-  const currentTheme: Theme = theme ?? 'system';
-  const ThemeIcon =
-    currentTheme === 'light' ? Sun : currentTheme === 'dark' ? Moon : Sparkles;
   const greeting = (() => {
     const h = new Date().getHours();
     if (h < 12) return 'Good morning';
@@ -120,15 +103,7 @@ export const Header = () => {
           <Search className="h-5 w-5" />
         </Button>
 
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={cycleTheme}
-          aria-label={`Theme: ${currentTheme}. Click to change.`}
-          iconOnly
-        >
-          <ThemeIcon className="h-4 w-4" />
-        </Button>
+        <ThemeToggle />
 
         <div className="relative" ref={notifRef}>
           <Button

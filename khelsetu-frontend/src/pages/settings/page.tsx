@@ -1,3 +1,4 @@
+import { ThemeToggleSegmented } from '@components/ThemeToggle';
 import { Button } from '@components/ui/Button';
 import { Card, CardBody } from '@components/ui/Card';
 import { Input } from '@components/ui/Input';
@@ -113,7 +114,6 @@ export const SettingsPage = () => {
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
   const theme = useUIStore((state) => state.theme);
-  const setTheme = useUIStore((state) => state.setTheme);
   const { addToast } = useToast();
 
   const [emailNotifications, setEmailNotifications] = useState(true);
@@ -357,22 +357,7 @@ export const SettingsPage = () => {
                   Toggle dark theme
                 </p>
               </div>
-              <button
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className={clsx(
-                  'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
-                  theme === 'dark'
-                    ? 'bg-blue-600'
-                    : 'bg-gray-300 dark:bg-gray-600',
-                )}
-              >
-                <span
-                  className={clsx(
-                    'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
-                    theme === 'dark' ? 'translate-x-6' : 'translate-x-1',
-                  )}
-                />
-              </button>
+              <ThemeToggleSegmented />
             </div>
           </div>
         </CardBody>

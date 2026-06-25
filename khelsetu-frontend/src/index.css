@@ -1,5 +1,52 @@
 @import 'tailwindcss';
 
+/* @property declarations for smooth theme transitions */
+@property --bg-app {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #f8fafc;
+}
+@property --bg-surface {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #ffffff;
+}
+@property --bg-surface-2 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #f9fafb;
+}
+@property --bg-surface-3 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #f3f4f6;
+}
+@property --bg-elevated {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #ffffff;
+}
+@property --text-primary {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #0f172a;
+}
+@property --text-secondary {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #475569;
+}
+@property --text-tertiary {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #64748b;
+}
+@property --border-subtle {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #e2e8f0;
+}
+
 @theme {
   /* Typography */
   --font-sans:
@@ -89,13 +136,13 @@
   }
 
   .dark {
-    --bg-app: #020617;
-    --bg-surface: #0b1220;
-    --bg-surface-2: #0f172a;
+    --bg-app: #0a0a0f;
+    --bg-surface: #0f1420;
+    --bg-surface-2: #161d2e;
     --bg-surface-3: #1e293b;
-    --bg-elevated: #111c2f;
-    --bg-glass: rgba(11, 18, 32, 0.72);
-    --bg-glass-strong: rgba(11, 18, 32, 0.88);
+    --bg-elevated: #1a2136;
+    --bg-glass: rgba(15, 20, 32, 0.85);
+    --bg-glass-strong: rgba(15, 20, 32, 0.92);
 
     --text-primary: #f8fafc;
     --text-secondary: #cbd5e1;
@@ -103,18 +150,21 @@
     --text-muted: #64748b;
     --text-on-primary: #ffffff;
 
-    --border-subtle: rgba(148, 163, 184, 0.12);
-    --border-default: rgba(148, 163, 184, 0.2);
-    --border-strong: rgba(148, 163, 184, 0.3);
+    --border-subtle: rgba(148, 163, 184, 0.08);
+    --border-default: rgba(148, 163, 184, 0.15);
+    --border-strong: rgba(148, 163, 184, 0.25);
 
-    --shadow-color: 0 0% 0%;
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+    --shadow-color: 210 40% 6%;
+    --shadow-sm: 0 1px 2px 0 rgb(8 11 20 / 0.3);
     --shadow-md:
-      0 4px 12px -2px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+      0 4px 12px -2px rgb(8 11 20 / 0.5),
+      0 2px 4px -2px rgb(8 11 20 / 0.3);
     --shadow-lg:
-      0 12px 32px -8px rgb(0 0 0 / 0.6), 0 4px 12px -4px rgb(0 0 0 / 0.4);
+      0 12px 32px -8px rgb(8 11 20 / 0.6),
+      0 4px 12px -4px rgb(8 11 20 / 0.4);
     --shadow-xl:
-      0 24px 48px -12px rgb(0 0 0 / 0.7), 0 8px 16px -4px rgb(0 0 0 / 0.5);
+      0 24px 48px -12px rgb(8 11 20 / 0.7),
+      0 8px 16px -4px rgb(8 11 20 / 0.5);
     --shadow-glow:
       0 0 0 1px rgb(252 165 165 / 0.25), 0 12px 40px -8px rgb(127 29 29 / 0.5);
 
@@ -142,8 +192,8 @@
     background-color: var(--bg-app);
     color: var(--text-primary);
     transition:
-      background-color 200ms ease,
-      color 200ms ease;
+      background-color 500ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      color 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
   ::selection {

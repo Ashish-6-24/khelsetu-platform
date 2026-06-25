@@ -108,30 +108,30 @@
   --brand-secondary-soft: #1e293b;
   --brand-secondary-ink: #0f172a;
 
-  --brand-accent: #e5b547;
-  --brand-accent-hover: #f0c969;
+  --brand-accent: #f0c95b; /* warmer gold for dark mode */
+  --brand-accent-hover: #f5d77a;
   --brand-accent-soft: rgb(184 134 11 / 0.2);
   --brand-accent-ink: #1a0a0a;
 
-  /* Surfaces */
+  /* Surfaces — slightly cooler tones */
   --bg-canvas: #0a0a0f;
-  --bg-surface: #13131a;
-  --bg-surface-raised: #1a1a23;
-  --bg-surface-sunken: #0f0f14;
+  --bg-surface: #0f1420;
+  --bg-surface-raised: #161d2e;
+  --bg-surface-sunken: #080c14;
   --bg-inverse: #fafaf9;
-  --bg-glass: rgba(19, 19, 26, 0.7);
+  --bg-glass: rgba(15, 20, 32, 0.85);
 
   /* Text */
-  --text-primary: #fafaf9;
+  --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-tertiary: #94a3b8;
   --text-on-brand: #1a0a0a;
   --text-on-accent: #1a0a0a;
   --text-link: #fca5a5;
 
-  /* Borders */
-  --border-subtle: #27272a;
-  --border-strong: #3f3f46;
+  /* Borders — semi-transparent for depth */
+  --border-subtle: rgba(148, 163, 184, 0.08);
+  --border-strong: rgba(148, 163, 184, 0.15);
   --border-brand: #fca5a5;
 
   /* Functional */
@@ -152,14 +152,12 @@
   --sport-volleyball: #fbbf24;
   --sport-basketball: #fb923c;
 
-  /* Shadows (heavier opacity for dark) */
-  --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.2);
-  --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.25), 0 1px 2px rgb(0 0 0 / 0.2);
-  --shadow-md: 0 4px 8px -2px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.2);
-  --shadow-lg:
-    0 12px 24px -6px rgb(0 0 0 / 0.4), 0 4px 8px -2px rgb(0 0 0 / 0.25);
-  --shadow-xl:
-    0 24px 48px -12px rgb(0 0 0 / 0.5), 0 8px 16px -4px rgb(0 0 0 / 0.3);
-  --shadow-brand: 0 8px 24px -8px rgb(252 165 165 / 0.2);
-  --shadow-gold: 0 8px 24px -8px rgb(229 181 71 / 0.3);
+  /* Shadows — tinted dark blue for premium feel */
+  --shadow-xs: 0 1px 2px rgb(8 11 20 / 0.3);
+  --shadow-sm: 0 1px 3px rgb(8 11 20 / 0.4), 0 1px 2px rgb(8 11 20 / 0.3);
+  --shadow-md: 0 4px 8px -2px rgb(8 11 20 / 0.5), 0 2px 4px -2px rgb(8 11 20 / 0.3);
+  --shadow-lg: 0 12px 24px -6px rgb(8 11 20 / 0.6), 0 4px 8px -2px rgb(8 11 20 / 0.4);
+  --shadow-xl: 0 24px 48px -12px rgb(8 11 20 / 0.7), 0 8px 16px -4px rgb(8 11 20 / 0.5);
+  --shadow-brand: 0 8px 24px -8px rgb(252 165 165 / 0.25);
+  --shadow-gold: 0 8px 24px -8px rgb(240 201 91 / 0.35);
 }
