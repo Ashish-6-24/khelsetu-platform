@@ -1320,20 +1320,6 @@ const Pricing = () => {
                       aria-hidden
                     />
                   )}
-                  {p.highlight && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      <span
-                        className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold text-[#1A0A0A] shadow-sm"
-                        style={{
-                          background:
-                            'linear-gradient(90deg, #B8860B 0%, #9A7209 100%)',
-                        }}
-                      >
-                        <Sparkles className="h-3 w-3" />
-                        Most popular
-                      </span>
-                    </div>
-                  )}
                   <h3 className="text-base font-semibold text-[#0F172A] dark:text-white">
                     {p.name}
                   </h3>
