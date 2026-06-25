@@ -43,10 +43,10 @@ export function MediaGallery({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
             Media Gallery
           </h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             {items.length} items
           </p>
         </div>
@@ -62,21 +62,21 @@ export function MediaGallery({
       />
 
       <div className="flex flex-wrap gap-3 text-sm sm:gap-4">
-        <div className="flex items-center gap-2 rounded-lg bg-white/80 px-3 py-2 backdrop-blur-xl dark:bg-gray-800/80">
+        <div className="flex items-center gap-2 rounded-lg bg-[var(--bg-surface)]/80 px-3 py-2 backdrop-blur-xl dark:bg-[var(--bg-surface)]/80">
           <Image className="h-4 w-4 text-blue-500" />
-          <span className="text-gray-600 dark:text-gray-300">
+          <span className="text-[var(--text-secondary)] dark:text-[var(--text-secondary)]">
             {stats.images} images
           </span>
         </div>
-        <div className="flex items-center gap-2 rounded-lg bg-white/80 px-3 py-2 backdrop-blur-xl dark:bg-gray-800/80">
+        <div className="flex items-center gap-2 rounded-lg bg-[var(--bg-surface)]/80 px-3 py-2 backdrop-blur-xl dark:bg-[var(--bg-surface)]/80">
           <Video className="h-4 w-4 text-purple-500" />
-          <span className="text-gray-600 dark:text-gray-300">
+          <span className="text-[var(--text-secondary)] dark:text-[var(--text-secondary)]">
             {stats.videos} videos
           </span>
         </div>
-        <div className="flex items-center gap-2 rounded-lg bg-white/80 px-3 py-2 backdrop-blur-xl dark:bg-gray-800/80">
-          <Trophy className="h-4 w-4 text-[#b8860b]" />
-          <span className="text-gray-600 dark:text-gray-300">
+        <div className="flex items-center gap-2 rounded-lg bg-[var(--bg-surface)]/80 px-3 py-2 backdrop-blur-xl dark:bg-[var(--bg-surface)]/80">
+          <Trophy className="h-4 w-4 text-[var(--brand-accent)]" />
+          <span className="text-[var(--text-secondary)] dark:text-[var(--text-secondary)]">
             {stats.highlights} highlights
           </span>
         </div>
@@ -87,7 +87,7 @@ export function MediaGallery({
           {Array.from({ length: 8 }).map((_, i) => (
             <div
               key={i}
-              className="aspect-square animate-pulse rounded-xl bg-gray-200 dark:bg-gray-700"
+              className="aspect-square animate-pulse rounded-xl bg-gray-200 dark:bg-[var(--bg-surface-raised)]"
             />
           ))}
         </div>
@@ -96,7 +96,7 @@ export function MediaGallery({
           <p className="text-lg font-medium text-red-500">
             Error loading media
           </p>
-          <p className="text-sm text-gray-400">Please try again later</p>
+          <p className="text-sm text-[var(--text-tertiary)]">Please try again later</p>
         </div>
       ) : (
         <GalleryGrid items={items} onItemClick={openLightbox} />

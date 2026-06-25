@@ -19,7 +19,7 @@ export function NewsCard({ article }: NewsCardProps) {
   return (
     <Link
       to={`${ROUTES.NEWS}/${article.id}`}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-[#E7E5E4] bg-white transition-all hover:-translate-y-1 hover:shadow-[0_12px_24px_-6px_rgb(15_23_42/0.08)] dark:border-[#27272A] dark:bg-[#13131A]"
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-white transition-all hover:-translate-y-1 hover:shadow-[0_12px_24px_-6px_rgb(15_23_42/0.08)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface)]"
     >
       <div className="relative aspect-[16/10] overflow-hidden">
         <img
@@ -48,7 +48,7 @@ export function NewsCard({ article }: NewsCardProps) {
         )}
         {article.isFeatured && (
           <div className="absolute bottom-3 left-3">
-            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-[#B8860B] to-[#d4a017] px-2.5 py-1 text-xs font-semibold text-white shadow-lg">
+            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-accent-hover)] px-2.5 py-1 text-xs font-semibold text-white shadow-lg">
               Featured
             </span>
           </div>
@@ -56,19 +56,19 @@ export function NewsCard({ article }: NewsCardProps) {
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="line-clamp-2 text-lg font-bold tracking-tight text-[#0F172A] transition-colors group-hover:text-[#7F1D1D] dark:text-white dark:group-hover:text-[#FCA5A5]">
+        <h3 className="line-clamp-2 text-lg font-bold tracking-tight text-[var(--text-primary)] transition-colors group-hover:text-[var(--brand-primary)] dark:text-white dark:group-hover:text-[var(--brand-primary)]">
           {article.title}
         </h3>
-        <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-[#475569] dark:text-[#CBD5E1]">
+        <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-[var(--text-secondary)] dark:text-[var(--text-muted)]">
           {article.description}
         </p>
 
-        <div className="mt-4 flex items-center justify-between border-t border-[#E7E5E4] pt-4 dark:border-[#27272A]">
-          <div className="flex items-center gap-2 text-xs text-[#475569] dark:text-[#94A3B8]">
+        <div className="mt-4 flex items-center justify-between border-t border-[var(--border-subtle)] pt-4 dark:border-[var(--border-strong)]">
+          <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
             <User className="h-3.5 w-3.5" />
             <span>{article.author}</span>
           </div>
-          <div className="flex items-center gap-3 text-xs text-[#475569] dark:text-[#94A3B8]">
+          <div className="flex items-center gap-3 text-xs text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
             <span className="inline-flex items-center gap-1">
               <Clock className="h-3.5 w-3.5" />
               {formatDate(article.publishDate)}

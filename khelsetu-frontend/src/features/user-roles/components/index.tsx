@@ -14,7 +14,7 @@ const roleColors: Record<Role, string> = {
   organizer: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
   scorer:
     'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
-  viewer: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
+  viewer: 'bg-gray-100 text-[var(--text-primary)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-secondary)]',
 };
 
 interface RoleCardProps {
@@ -30,7 +30,7 @@ export const RoleCard = ({ role, onSelect, isSelected }: RoleCardProps) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
               {role.name}
             </h3>
           </div>
@@ -39,16 +39,16 @@ export const RoleCard = ({ role, onSelect, isSelected }: RoleCardProps) => {
       </CardHeader>
       <CardBody>
         <div className="space-y-3">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             {role.description}
           </p>
-          <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+          <div className="flex items-center gap-2 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             <Users className="w-4 h-4" />
             <span>{role.userCount} users</span>
           </div>
           <div className="space-y-1">
             {role.permissions.slice(0, 3).map((perm, i) => (
-              <div key={i} className="text-xs text-gray-600 dark:text-gray-400">
+              <div key={i} className="text-xs text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
                 <strong>{perm.resource}:</strong> {perm.actions.join(', ')}
               </div>
             ))}
@@ -80,16 +80,16 @@ export const UserRow = ({ user, onRoleChange }: UserRowProps) => {
   const roles: Role[] = ['admin', 'organizer', 'scorer', 'viewer'];
 
   return (
-    <div className="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-700">
+    <div className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
       <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#7F1D1D] to-[#991B1B] flex items-center justify-center text-white text-sm font-bold">
+        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-hover)] flex items-center justify-center text-white text-sm font-bold">
           {user.name.charAt(0)}
         </div>
         <div>
-          <p className="font-medium text-gray-900 dark:text-white text-sm">
+          <p className="font-medium text-[var(--text-primary)] dark:text-white text-sm">
             {user.name}
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
+          <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             {user.email}
           </p>
         </div>
@@ -103,7 +103,7 @@ export const UserRow = ({ user, onRoleChange }: UserRowProps) => {
         <select
           value={user.role}
           onChange={(e) => onRoleChange(user.id, e.target.value as Role)}
-          className="text-sm border border-gray-200 dark:border-gray-700 rounded-lg px-2 py-1 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+          className="text-sm border border-[var(--border-subtle)] dark:border-[var(--border-subtle)] rounded-lg px-2 py-1 bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] text-[var(--text-primary)] dark:text-white"
         >
           {roles.map((role) => (
             <option key={role} value={role} className="capitalize">
@@ -126,7 +126,7 @@ export const PermissionTable = ({ permissions }: PermissionTableProps) => {
   return (
     <Card>
       <CardHeader>
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+        <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
           Permissions Matrix
         </h3>
       </CardHeader>
@@ -134,14 +134,14 @@ export const PermissionTable = ({ permissions }: PermissionTableProps) => {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-700">
-                <th className="text-left py-2 px-3 text-gray-500 dark:text-gray-400">
+              <tr className="border-b border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
+                <th className="text-left py-2 px-3 text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   Resource
                 </th>
                 {actions.map((action) => (
                   <th
                     key={action}
-                    className="text-center py-2 px-3 text-gray-500 dark:text-gray-400 capitalize"
+                    className="text-center py-2 px-3 text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] capitalize"
                   >
                     {action}
                   </th>
@@ -152,9 +152,9 @@ export const PermissionTable = ({ permissions }: PermissionTableProps) => {
               {permissions.map((perm) => (
                 <tr
                   key={perm.resource}
-                  className="border-b border-gray-100 dark:border-gray-800"
+                  className="border-b border-gray-100 dark:border-[var(--border-subtle)]"
                 >
-                  <td className="py-2 px-3 font-medium text-gray-900 dark:text-white capitalize">
+                  <td className="py-2 px-3 font-medium text-[var(--text-primary)] dark:text-white capitalize">
                     {perm.resource}
                   </td>
                   {actions.map((action) => (
@@ -164,7 +164,7 @@ export const PermissionTable = ({ permissions }: PermissionTableProps) => {
                           ✓
                         </span>
                       ) : (
-                        <span className="text-gray-300 dark:text-gray-600">
+                        <span className="text-[var(--text-secondary)] dark:text-[var(--text-secondary)]">
                           ✗
                         </span>
                       )}

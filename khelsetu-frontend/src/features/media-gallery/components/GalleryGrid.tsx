@@ -11,7 +11,7 @@ interface GalleryGridProps {
 const typeBadgeColors = {
   image: 'bg-blue-500/80',
   video: 'bg-purple-500/80',
-  highlight: 'bg-[#b8860b]/80',
+  highlight: 'bg-[var(--brand-accent)]/80',
   'press-conference': 'bg-gray-500/80',
 };
 
@@ -19,11 +19,11 @@ export function GalleryGrid({ items, onItemClick }: GalleryGridProps) {
   if (items.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16">
-        <Image className="mb-4 h-16 w-16 text-gray-300 dark:text-gray-600" />
-        <p className="text-lg font-medium text-gray-500 dark:text-gray-400">
+        <Image className="mb-4 h-16 w-16 text-[var(--text-secondary)] dark:text-[var(--text-secondary)]" />
+        <p className="text-lg font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
           No media found
         </p>
-        <p className="text-sm text-gray-400 dark:text-gray-500">
+        <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
           Try adjusting your filters
         </p>
       </div>
@@ -40,7 +40,7 @@ export function GalleryGrid({ items, onItemClick }: GalleryGridProps) {
             key={item.id}
             onClick={() => onItemClick(index)}
             aria-label={`${item.type === 'video' || item.type === 'highlight' ? 'Play' : 'View'}: ${item.title}${item.playerName ? ` by ${item.playerName}` : ''}`}
-            className="group relative aspect-square overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800"
+            className="group relative aspect-square overflow-hidden rounded-xl bg-gray-100 dark:bg-[var(--bg-surface)]"
           >
             <img
               src={item.thumbnail}
@@ -68,8 +68,8 @@ export function GalleryGrid({ items, onItemClick }: GalleryGridProps) {
 
             {isVideo && (
               <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <div className="rounded-full bg-white/90 p-3 shadow-xl">
-                  <Play className="h-6 w-6 fill-gray-900 text-gray-900" />
+                <div className="rounded-full bg-[var(--bg-surface)]/90 p-3 shadow-xl">
+                  <Play className="h-6 w-6 fill-gray-900 text-[var(--text-primary)]" />
                 </div>
               </div>
             )}

@@ -43,15 +43,15 @@ export function GalleryFilters({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Filter className="h-4 w-4 text-gray-500" />
-          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <Filter className="h-4 w-4 text-[var(--text-tertiary)]" />
+          <span className="text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
             Filters
           </span>
         </div>
         {hasActiveFilters && (
           <button
             onClick={clearAll}
-            className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+            className="flex items-center gap-1 text-sm text-[var(--text-tertiary)] hover:text-[var(--text-primary)] dark:text-[var(--text-tertiary)] dark:hover:text-[var(--text-primary)]"
           >
             <X className="h-3 w-3" />
             Clear all
@@ -72,8 +72,8 @@ export function GalleryFilters({
             aria-checked={filters.type === type.value}
             className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-all ${
               filters.type === type.value
-                ? 'bg-gradient-to-r from-[#7f1d1d] to-[#991b1b] text-white shadow-lg'
-                : 'bg-white/80 text-gray-600 hover:bg-gray-100 dark:bg-gray-800/80 dark:text-gray-300 dark:hover:bg-gray-700'
+                ? 'bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-white shadow-lg'
+                : 'bg-[var(--bg-surface)]/80 text-[var(--text-secondary)] hover:bg-gray-100 dark:bg-[var(--bg-surface)]/80 dark:text-[var(--text-secondary)] dark:hover:bg-[var(--bg-surface-raised)]'
             }`}
           >
             {type.label}
@@ -88,7 +88,7 @@ export function GalleryFilters({
             onChange({ ...filters, tournamentId: e.target.value || undefined })
           }
           aria-label="Filter by tournament"
-          className="rounded-lg border border-gray-200 bg-white/80 px-3 py-2 text-sm backdrop-blur-xl focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] dark:border-gray-700 dark:bg-gray-800/80 dark:text-gray-300"
+          className="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 px-3 py-2 text-sm backdrop-blur-xl focus:border-[var(--brand-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-accent)] dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80 dark:text-[var(--text-secondary)]"
         >
           <option value="">All Tournaments</option>
           {tournaments.map((t) => (
@@ -104,7 +104,7 @@ export function GalleryFilters({
             onChange({ ...filters, teamId: e.target.value || undefined })
           }
           aria-label="Filter by team"
-          className="rounded-lg border border-gray-200 bg-white/80 px-3 py-2 text-sm backdrop-blur-xl focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] dark:border-gray-700 dark:bg-gray-800/80 dark:text-gray-300"
+          className="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 px-3 py-2 text-sm backdrop-blur-xl focus:border-[var(--brand-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-accent)] dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80 dark:text-[var(--text-secondary)]"
         >
           <option value="">All Teams</option>
           {teams.map((t) => (
@@ -120,7 +120,7 @@ export function GalleryFilters({
             onChange({ ...filters, playerId: e.target.value || undefined })
           }
           aria-label="Filter by player"
-          className="rounded-lg border border-gray-200 bg-white/80 px-3 py-2 text-sm backdrop-blur-xl focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] dark:border-gray-700 dark:bg-gray-800/80 dark:text-gray-300"
+          className="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 px-3 py-2 text-sm backdrop-blur-xl focus:border-[var(--brand-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-accent)] dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80 dark:text-[var(--text-secondary)]"
         >
           <option value="">All Players</option>
           {players.map((p) => (
@@ -136,7 +136,7 @@ export function GalleryFilters({
             onChange({ ...filters, season: e.target.value || undefined })
           }
           aria-label="Filter by season"
-          className="rounded-lg border border-gray-200 bg-white/80 px-3 py-2 text-sm backdrop-blur-xl focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] dark:border-gray-700 dark:bg-gray-800/80 dark:text-gray-300"
+          className="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 px-3 py-2 text-sm backdrop-blur-xl focus:border-[var(--brand-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-accent)] dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80 dark:text-[var(--text-secondary)]"
         >
           <option value="">All Seasons</option>
           {seasons.map((s) => (

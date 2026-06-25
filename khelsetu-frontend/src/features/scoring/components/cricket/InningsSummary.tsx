@@ -8,7 +8,7 @@ export const InningsSummary = ({ innings }: InningsSummaryProps) => {
   const oversDisplay = `${innings.overs}.${innings.balls.length % 6}`;
 
   return (
-    <div className="bg-gradient-to-r from-[#FEF2F2] to-[#FAFAF9] dark:from-[#7F1D1D]/15 dark:to-[#1A1A23] rounded-lg p-4 space-y-3">
+    <div className="bg-gradient-to-r from-[var(--brand-primary-soft)] to-[var(--bg-surface)] dark:from-[var(--brand-primary)]/15 dark:to-[var(--bg-surface-raised)] rounded-lg p-4 space-y-3">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-bold text-gray-900 dark:text-white">
           {innings.battingTeamName}

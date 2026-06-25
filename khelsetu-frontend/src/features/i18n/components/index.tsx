@@ -10,7 +10,7 @@ export const LanguageSwitcher = () => {
 
   return (
     <div className="flex items-center gap-2">
-      <Globe className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+      <Globe className="w-4 h-4 text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]" />
       <div className="flex gap-1">
         {availableLanguages.map((lang) => (
           <button
@@ -18,8 +18,8 @@ export const LanguageSwitcher = () => {
             onClick={() => setLanguage(lang.code)}
             className={`px-2 py-1 text-xs rounded-lg transition-colors ${
               language === lang.code
-                ? 'bg-[#FEF2F2] text-[#7F1D1D] dark:bg-[rgb(127_29_29/0.18)] dark:text-[#FCA5A5] font-medium'
-                : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                ? 'bg-[var(--brand-primary-soft)] text-[var(--brand-primary)] dark:bg-[rgb(127_29_29/0.18)] dark:text-[var(--brand-primary)] font-medium'
+                : 'text-[var(--text-secondary)] dark:text-[var(--text-tertiary)] hover:bg-gray-100 dark:hover:bg-[var(--bg-surface-raised)]'
             }`}
             title={lang.name}
           >
@@ -39,7 +39,7 @@ export const I18nDemo = () => {
   return (
     <Card>
       <CardHeader>
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+        <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
           {t('tournaments.title')}
         </h3>
       </CardHeader>
@@ -59,39 +59,39 @@ export const I18nDemo = () => {
           </div>
 
           <div className="space-y-2">
-            <h4 className="font-medium text-gray-900 dark:text-white">
+            <h4 className="font-medium text-[var(--text-primary)] dark:text-white">
               Translations:
             </h4>
             <div className="grid grid-cols-2 gap-2 text-sm">
-              <div className="p-2 bg-gray-50 dark:bg-gray-800 rounded">
-                <span className="text-gray-500 dark:text-gray-400">
+              <div className="p-2 bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface)] rounded">
+                <span className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   common.home:
                 </span>
-                <p className="font-medium text-gray-900 dark:text-white">
+                <p className="font-medium text-[var(--text-primary)] dark:text-white">
                   {t('common.home')}
                 </p>
               </div>
-              <div className="p-2 bg-gray-50 dark:bg-gray-800 rounded">
-                <span className="text-gray-500 dark:text-gray-400">
+              <div className="p-2 bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface)] rounded">
+                <span className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   common.search:
                 </span>
-                <p className="font-medium text-gray-900 dark:text-white">
+                <p className="font-medium text-[var(--text-primary)] dark:text-white">
                   {t('common.search')}
                 </p>
               </div>
-              <div className="p-2 bg-gray-50 dark:bg-gray-800 rounded">
-                <span className="text-gray-500 dark:text-gray-400">
+              <div className="p-2 bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface)] rounded">
+                <span className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   nav.tournaments:
                 </span>
-                <p className="font-medium text-gray-900 dark:text-white">
+                <p className="font-medium text-[var(--text-primary)] dark:text-white">
                   {t('nav.tournaments')}
                 </p>
               </div>
-              <div className="p-2 bg-gray-50 dark:bg-gray-800 rounded">
-                <span className="text-gray-500 dark:text-gray-400">
+              <div className="p-2 bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface)] rounded">
+                <span className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   auth.login:
                 </span>
-                <p className="font-medium text-gray-900 dark:text-white">
+                <p className="font-medium text-[var(--text-primary)] dark:text-white">
                   {t('auth.login')}
                 </p>
               </div>

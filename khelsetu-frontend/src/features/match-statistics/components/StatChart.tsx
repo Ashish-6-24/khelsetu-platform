@@ -83,8 +83,8 @@ const CustomTooltip = ({
 }) => {
   if (!active || !payload) return null;
   return (
-    <div className="rounded-xl border border-gray-200 bg-white/90 px-4 py-2.5 shadow-lg backdrop-blur-xl dark:border-gray-700 dark:bg-gray-800/90">
-      <p className="mb-1 text-xs font-semibold text-gray-500 dark:text-gray-400">
+    <div className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/90 px-4 py-2.5 shadow-lg backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/90">
+      <p className="mb-1 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
         {label}
       </p>
       {payload.map((entry) => (
@@ -111,8 +111,8 @@ export const StatChart = ({
   if (type === 'bar') {
     const data = buildBarData(teamA, teamB);
     return (
-      <div className="rounded-2xl border border-gray-200 bg-white/80 p-5 backdrop-blur-xl dark:border-gray-700 dark:bg-gray-800/80">
-        <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+      <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 p-5 backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80">
+        <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
           {title}
         </h3>
         <div
@@ -123,17 +123,17 @@ export const StatChart = ({
             <BarChart data={data} barGap={4}>
               <CartesianGrid
                 strokeDasharray="3 3"
-                stroke="#e5e7eb"
+                stroke="var(--border-subtle)"
                 vertical={false}
               />
               <XAxis
                 dataKey="stat"
-                tick={{ fontSize: 11, fill: '#9ca3af' }}
+                tick={{ fontSize: 11, fill: 'var(--text-tertiary)' }}
                 axisLine={false}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fontSize: 11, fill: '#9ca3af' }}
+                tick={{ fontSize: 11, fill: 'var(--text-tertiary)' }}
                 axisLine={false}
                 tickLine={false}
               />
@@ -148,8 +148,8 @@ export const StatChart = ({
                   value === 'teamA' ? teamAName : teamBName
                 }
               />
-              <Bar dataKey="teamA" fill="#3b82f6" radius={[6, 6, 0, 0]} />
-              <Bar dataKey="teamB" fill="#ef4444" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="teamA" fill="var(--color-info)" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="teamB" fill="var(--color-danger)" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -159,8 +159,8 @@ export const StatChart = ({
 
   const data = buildRadarData(teamA, teamB);
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white/80 p-5 backdrop-blur-xl dark:border-gray-700 dark:bg-gray-800/80">
-      <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+    <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 p-5 backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80">
+      <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
         {title}
       </h3>
       <div
@@ -169,12 +169,12 @@ export const StatChart = ({
       >
         <ResponsiveContainer width="100%" height={300}>
           <RadarChart data={data} outerRadius="75%">
-            <PolarGrid stroke="#e5e7eb" />
+            <PolarGrid stroke="var(--border-subtle)" />
             <PolarAngleAxis
               dataKey="subject"
-              tick={{ fontSize: 11, fill: '#6b7280' }}
+              tick={{ fontSize: 11, fill: 'var(--text-secondary)' }}
             />
-            <PolarRadiusAxis tick={{ fontSize: 10, fill: '#9ca3af' }} />
+            <PolarRadiusAxis tick={{ fontSize: 10, fill: 'var(--text-tertiary)' }} />
             <Tooltip
               content={
                 <CustomTooltip teamAName={teamAName} teamBName={teamBName} />
@@ -189,16 +189,16 @@ export const StatChart = ({
             <Radar
               name="teamA"
               dataKey="teamA"
-              stroke="#3b82f6"
-              fill="#3b82f6"
+              stroke="var(--color-info)"
+              fill="var(--color-info)"
               fillOpacity={0.15}
               strokeWidth={2}
             />
             <Radar
               name="teamB"
               dataKey="teamB"
-              stroke="#ef4444"
-              fill="#ef4444"
+              stroke="var(--color-danger)"
+              fill="var(--color-danger)"
               fillOpacity={0.15}
               strokeWidth={2}
             />

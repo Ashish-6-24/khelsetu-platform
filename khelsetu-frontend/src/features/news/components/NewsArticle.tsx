@@ -54,7 +54,7 @@ export function NewsArticle({
     <article className="mx-auto max-w-4xl">
       <Link
         to={ROUTES.NEWS}
-        className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-[#475569] transition-colors hover:text-[#7F1D1D] dark:text-[#94A3B8] dark:hover:text-[#FCA5A5]"
+        className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:text-[var(--brand-primary)] dark:text-[var(--text-tertiary)] dark:hover:text-[var(--brand-primary)]"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to News
@@ -89,18 +89,18 @@ export function NewsArticle({
 
       <div className="mt-8 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#7f1d1d] to-[#450a0a] text-sm font-semibold text-white">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-active)] text-sm font-semibold text-white">
             {article.author
               .split(' ')
               .map((n) => n[0])
               .join('')}
           </div>
           <div>
-            <div className="flex items-center gap-1.5 text-sm font-medium text-[#0F172A] dark:text-white">
+            <div className="flex items-center gap-1.5 text-sm font-medium text-[var(--text-primary)] dark:text-white">
               <User className="h-3.5 w-3.5" />
               {article.author}
             </div>
-            <div className="flex items-center gap-3 text-xs text-[#475569] dark:text-[#94A3B8]">
+            <div className="flex items-center gap-3 text-xs text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
               <span className="inline-flex items-center gap-1">
                 <Clock className="h-3 w-3" />
                 {formatDate(article.publishDate)}
@@ -114,7 +114,7 @@ export function NewsArticle({
         </div>
         <button
           onClick={handleShare}
-          className="inline-flex items-center gap-2 rounded-xl border border-[#E7E5E4] bg-white px-4 py-2 text-sm font-medium text-[#475569] transition-all hover:border-[#7F1D1D]/30 hover:text-[#7F1D1D] dark:border-[#27272A] dark:bg-[#13131A] dark:text-[#CBD5E1] dark:hover:border-[#FCA5A5]/30 dark:hover:text-[#FCA5A5]"
+          className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-subtle)] bg-white px-4 py-2 text-sm font-medium text-[var(--text-secondary)] transition-all hover:border-[var(--brand-primary)]/30 hover:text-[var(--brand-primary)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-muted)] dark:hover:border-[var(--brand-primary)]/30 dark:hover:text-[var(--brand-primary)]"
         >
           <Share2 className="h-4 w-4" />
           Share
@@ -126,7 +126,7 @@ export function NewsArticle({
           {article.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full bg-[#F5F5F4] px-3 py-1 text-xs font-medium text-[#475569] dark:bg-[#1A1A23] dark:text-[#94A3B8]"
+              className="rounded-full bg-[var(--bg-surface-sunken)] px-3 py-1 text-xs font-medium text-[var(--text-secondary)] dark:bg-[var(--bg-surface-raised)] dark:text-[var(--text-tertiary)]"
             >
               #{tag}
             </span>
@@ -136,7 +136,7 @@ export function NewsArticle({
 
       <div className="prose prose-lg dark:prose-invert mt-8 max-w-none">
         <div
-          className="text-[#0F172A] dark:text-[#CBD5E1]"
+          className="text-[var(--text-primary)] dark:text-[var(--text-muted)]"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(article.content),
           }}
@@ -156,7 +156,7 @@ export function NewsArticle({
 
       {article.gallery.length > 0 && (
         <div className="mt-8">
-          <h3 className="mb-4 text-lg font-bold text-[#0F172A] dark:text-white">
+          <h3 className="mb-4 text-lg font-bold text-[var(--text-primary)] dark:text-white">
             Gallery
           </h3>
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
@@ -179,8 +179,8 @@ export function NewsArticle({
       )}
 
       {relatedArticles.length > 0 && (
-        <div className="mt-12 border-t border-[#E7E5E4] pt-8 dark:border-[#27272A]">
-          <h3 className="mb-6 text-xl font-bold text-[#0F172A] dark:text-white">
+        <div className="mt-12 border-t border-[var(--border-subtle)] pt-8 dark:border-[var(--border-strong)]">
+          <h3 className="mb-6 text-xl font-bold text-[var(--text-primary)] dark:text-white">
             Related Articles
           </h3>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -188,7 +188,7 @@ export function NewsArticle({
               <Link
                 key={related.id}
                 to={`${ROUTES.NEWS}/${related.id}`}
-                className="group overflow-hidden rounded-xl border border-[#E7E5E4] transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-[#27272A]"
+                className="group overflow-hidden rounded-xl border border-[var(--border-subtle)] transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-[var(--border-strong)]"
               >
                 <div className="aspect-[16/10] overflow-hidden">
                   <img
@@ -198,10 +198,10 @@ export function NewsArticle({
                   />
                 </div>
                 <div className="p-3">
-                  <h4 className="line-clamp-2 text-sm font-semibold text-[#0F172A] dark:text-white">
+                  <h4 className="line-clamp-2 text-sm font-semibold text-[var(--text-primary)] dark:text-white">
                     {related.title}
                   </h4>
-                  <p className="mt-1 text-xs text-[#475569] dark:text-[#94A3B8]">
+                  <p className="mt-1 text-xs text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
                     {formatDate(related.publishDate)}
                   </p>
                 </div>

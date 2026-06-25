@@ -30,8 +30,8 @@ export function NewsFilters({ activeCategory, onChange }: NewsFiltersProps) {
         className={clsx(
           'shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-all',
           !activeCategory
-            ? 'bg-gradient-to-r from-[#7f1d1d] to-[#991b1b] text-white shadow-md'
-            : 'border border-[#E7E5E4] bg-white text-[#475569] hover:border-[#7F1D1D]/30 hover:text-[#7F1D1D] dark:border-[#27272A] dark:bg-[#13131A] dark:text-[#CBD5E1] dark:hover:border-[#FCA5A5]/30 dark:hover:text-[#FCA5A5]',
+            ? 'bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-white shadow-md'
+            : 'border border-[var(--border-subtle)] bg-white text-[var(--text-secondary)] hover:border-[var(--brand-primary)]/30 hover:text-[var(--brand-primary)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-muted)] dark:hover:border-[var(--brand-primary)]/30 dark:hover:text-[var(--brand-primary)]',
         )}
       >
         All
@@ -44,8 +44,8 @@ export function NewsFilters({ activeCategory, onChange }: NewsFiltersProps) {
           className={clsx(
             'shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-all',
             activeCategory === cat
-              ? 'bg-gradient-to-r from-[#7f1d1d] to-[#991b1b] text-white shadow-md'
-              : 'border border-[#E7E5E4] bg-white text-[#475569] hover:border-[#7F1D1D]/30 hover:text-[#7F1D1D] dark:border-[#27272A] dark:bg-[#13131A] dark:text-[#CBD5E1] dark:hover:border-[#FCA5A5]/30 dark:hover:text-[#FCA5A5]',
+              ? 'bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-white shadow-md'
+              : 'border border-[var(--border-subtle)] bg-white text-[var(--text-secondary)] hover:border-[var(--brand-primary)]/30 hover:text-[var(--brand-primary)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-muted)] dark:hover:border-[var(--brand-primary)]/30 dark:hover:text-[var(--brand-primary)]',
           )}
         >
           {getCategoryLabel(cat)}
