@@ -27,10 +27,10 @@ export const LiveMatchesPanel = ({
             <Radio className="h-4 w-4" size={18} />
           </div>
           <div>
-            <h3 className="text-base font-semibold tracking-tight text-slate-900 dark:text-white">
+            <h3 className="text-base font-semibold tracking-tight text-[var(--text-primary)]">
               Live Matches
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
               Real-time scoring updates
             </p>
           </div>
@@ -73,24 +73,24 @@ export const LiveMatchesPanel = ({
               >
                 <button
                   onClick={() => onMatchClick?.(match)}
-                  className="group flex w-full items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-slate-50/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset dark:hover:bg-slate-800/40"
+                  className="group flex w-full items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-[var(--bg-surface-sunken)]/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset dark:hover:bg-[var(--bg-surface)]/40"
                 >
                   <div className="flex flex-1 items-center gap-3.5">
                     <BadgeDot variant="error" pulse />
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
+                      <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                         {match.teamA.name}
                       </p>
-                      <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
+                      <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                         {match.teamB.name}
                       </p>
                     </div>
-                    <div className="text-right font-mono text-lg font-semibold tabular-nums leading-tight text-slate-900 dark:text-white">
+                    <div className="text-right font-mono text-lg font-semibold tabular-nums leading-tight text-[var(--text-primary)]">
                       <div>{match.score?.teamAScore ?? 0}</div>
                       <div>{match.score?.teamBScore ?? 0}</div>
                     </div>
                   </div>
-                  <ChevronRight className="h-4 w-4 shrink-0 text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-slate-600 dark:group-hover:text-slate-200" />
+                  <ChevronRight className="h-4 w-4 shrink-0 text-[var(--text-tertiary)] transition-transform group-hover:translate-x-0.5 group-hover:text-[var(--text-secondary)] dark:group-hover:text-[var(--text-primary)]" />
                 </button>
               </li>
             ))}

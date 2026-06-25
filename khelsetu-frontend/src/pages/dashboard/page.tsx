@@ -228,13 +228,13 @@ export const DashboardPage = () => {
           style={{ animationDelay: '0.2s' }}
         >
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-base font-semibold flex items-center gap-2 text-slate-900 dark:text-white">
+            <h2 className="text-base font-semibold flex items-center gap-2 text-[var(--text-primary)]">
               <span className="inline-flex h-2 w-2 animate-pulse rounded-full bg-red-500" />
               Live now
             </h2>
             <button
               onClick={() => navigate(ROUTES.SCORING)}
-              className="text-xs font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
+              className="text-xs font-medium text-[var(--text-link)]"
             >
               View all →
             </button>
@@ -278,55 +278,55 @@ export const DashboardPage = () => {
                       <Badge variant="live" pulse size="sm">
                         LIVE
                       </Badge>
-                      <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                      <span className="text-[10px] font-medium text-[var(--text-tertiary)] uppercase tracking-wider">
                         Match {idx + 1}
                       </span>
                     </div>
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="truncate text-sm font-medium text-slate-900 dark:text-white">
+                        <span className="truncate text-sm font-medium text-[var(--text-primary)]">
                           {match.teamA.name}
                         </span>
                         <div className="flex items-baseline gap-1.5">
-                          <span className="score-update score-flash tabular-nums text-base font-bold text-slate-900 dark:text-white">
+                          <span className="score-update score-flash tabular-nums text-base font-bold text-[var(--text-primary)]">
                             {formatScore(inningsA, scoreA)}
                           </span>
                           {inningsA && (
-                            <span className="text-[10px] text-slate-400 dark:text-slate-500 tabular-nums">
+                            <span className="text-[10px] text-[var(--text-tertiary)] tabular-nums">
                               {formatOvers(inningsA)}
                             </span>
                           )}
                         </div>
                       </div>
-                      <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+                      <div className="h-1.5 overflow-hidden rounded-full bg-[var(--bg-surface-sunken)]">
                         <div
                           className="h-full rounded-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)] transition-all duration-1000 ease-out"
                           style={{ width: `${progressA}%` }}
                         />
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="truncate text-sm font-medium text-slate-900 dark:text-white">
+                        <span className="truncate text-sm font-medium text-[var(--text-primary)]">
                           {match.teamB.name}
                         </span>
                         <div className="flex items-baseline gap-1.5">
-                          <span className="score-update score-flash tabular-nums text-base font-bold text-slate-900 dark:text-white">
+                          <span className="score-update score-flash tabular-nums text-base font-bold text-[var(--text-primary)]">
                             {formatScore(inningsB, scoreB)}
                           </span>
                           {inningsB && (
-                            <span className="text-[10px] text-slate-400 dark:text-slate-500 tabular-nums">
+                            <span className="text-[10px] text-[var(--text-tertiary)] tabular-nums">
                               {formatOvers(inningsB)}
                             </span>
                           )}
                         </div>
                       </div>
-                      <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+                      <div className="h-1.5 overflow-hidden rounded-full bg-[var(--bg-surface-sunken)]">
                         <div
                           className="h-full rounded-full bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-primary)] transition-all duration-1000 ease-out"
                           style={{ width: `${progressB}%` }}
                         />
                       </div>
                     </div>
-                    <div className="mt-3 flex items-center justify-end gap-1 text-xs font-medium text-blue-600 group-hover:text-blue-700 dark:text-blue-400">
+                    <div className="mt-3 flex items-center justify-end gap-1 text-xs font-medium text-[var(--text-link)] group-hover:text-[var(--text-link)]">
                       Open scoring
                       <ChevronRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
                     </div>
@@ -390,17 +390,17 @@ const UpcomingMatches = ({
             <Calendar className="h-4 w-4" size={18} />
           </div>
           <div>
-            <h2 className="text-base font-semibold tracking-tight text-slate-900 dark:text-white">
+            <h2 className="text-base font-semibold tracking-tight text-[var(--text-primary)]">
               Upcoming matches
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-[var(--text-secondary)]">
               Next fixtures on your schedule
             </p>
           </div>
         </div>
         <button
           onClick={onSeeAll}
-          className="inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
+          className="inline-flex items-center gap-1 text-xs font-medium text-[var(--text-link)]"
         >
           See all
           <ArrowRight className="h-3.5 w-3.5" />
@@ -408,13 +408,13 @@ const UpcomingMatches = ({
       </div>
       {matches.length === 0 ? (
         <div className="flex flex-col items-center justify-center px-6 py-10 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--bg-surface-sunken)] text-[var(--text-tertiary)]">
             <Calendar className="h-5 w-5" />
           </div>
-          <p className="mt-3 text-sm font-medium text-slate-900 dark:text-white">
+          <p className="mt-3 text-sm font-medium text-[var(--text-primary)]">
             No upcoming matches
           </p>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+          <p className="mt-1 text-xs text-[var(--text-secondary)]">
             Schedule matches from your tournament
           </p>
         </div>
@@ -423,17 +423,17 @@ const UpcomingMatches = ({
           {matches.map((m) => (
             <li
               key={m.id}
-              className="flex items-center gap-4 px-5 py-4 transition-colors hover:bg-slate-50/70 sm:px-6 dark:hover:bg-slate-800/40"
+              className="flex items-center gap-4 px-5 py-4 transition-colors hover:bg-[var(--bg-surface-sunken)] sm:px-6"
             >
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-xs font-semibold text-white">
                 VS
               </div>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium text-slate-900 dark:text-white">
-                  {m.teamA.name} <span className="text-slate-400">vs</span>{' '}
+                <p className="truncate text-sm font-medium text-[var(--text-primary)]">
+                  {m.teamA.name} <span className="text-[var(--text-tertiary)]">vs</span>{' '}
                   {m.teamB.name}
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
+                <p className="text-xs text-[var(--text-secondary)]">
                   {new Date(m.scheduledAt).toLocaleString(undefined, {
                     weekday: 'short',
                     hour: '2-digit',
@@ -462,10 +462,10 @@ const QuickActions = () => {
   return (
     <div className="overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] shadow-[var(--shadow-sm)]">
       <div className="border-b border-[var(--border-subtle)] px-5 py-4 sm:px-6">
-        <h2 className="text-base font-semibold tracking-tight text-slate-900 dark:text-white">
+        <h2 className="text-base font-semibold tracking-tight text-[var(--text-primary)]">
           Quick actions
         </h2>
-        <p className="text-xs text-slate-500 dark:text-slate-400">
+        <p className="text-xs text-[var(--text-secondary)]">
           Get things done faster
         </p>
       </div>
@@ -474,15 +474,15 @@ const QuickActions = () => {
           <button
             key={a.label}
             onClick={() => navigate(a.to)}
-            className="group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50"
+            className="group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-[var(--bg-surface-sunken)]"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-100 text-slate-600 transition-colors group-hover:bg-blue-500/10 group-hover:text-blue-600 dark:bg-slate-800 dark:text-slate-300 dark:group-hover:bg-blue-500/15 dark:group-hover:text-blue-400">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--bg-surface-sunken)] text-[var(--text-secondary)] transition-colors group-hover:bg-blue-500/10 group-hover:text-[var(--text-link)]">
               <a.icon className="h-4 w-4" />
             </div>
-            <span className="flex-1 text-sm font-medium text-slate-700 dark:text-slate-200">
+            <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">
               {a.label}
             </span>
-            <ArrowRight className="h-3.5 w-3.5 text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-slate-600 dark:group-hover:text-slate-200" />
+            <ArrowRight className="h-3.5 w-3.5 text-[var(--text-tertiary)] transition-transform group-hover:translate-x-0.5 group-hover:text-[var(--text-secondary)] dark:group-hover:text-[var(--text-primary)]" />
           </button>
         ))}
       </div>

@@ -70,10 +70,10 @@ export const Header = () => {
           <span>Open navigation</span>
         </Button>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm text-slate-500 dark:text-slate-400">
+          <p className="truncate text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             {greeting},
           </p>
-          <p className="truncate text-base font-semibold tracking-tight text-slate-900 dark:text-white">
+          <p className="truncate text-base font-semibold tracking-tight text-[var(--text-primary)]">
             {user?.name?.split(' ')[0] || 'Welcome back'}
             <BadgeDot variant="success" pulse className="ml-2 inline-block" />
           </p>
@@ -83,11 +83,11 @@ export const Header = () => {
           type="button"
           onClick={() => openCommandPalette(true)}
           aria-label="Open command palette"
-          className="hidden h-10 items-center gap-2.5 rounded-xl border border-[var(--border-subtle)] bg-slate-100/60 px-3.5 text-sm text-slate-500 transition-all hover:border-slate-200 hover:bg-white hover:text-slate-700 dark:bg-slate-800/50 dark:text-slate-400 dark:hover:border-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200 md:inline-flex md:w-64"
+          className="hidden h-10 items-center gap-2.5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface-sunken)]/60 px-3.5 text-sm text-[var(--text-tertiary)] transition-all hover:border-[var(--border-strong)] hover:bg-[var(--bg-surface)] hover:text-[var(--text-secondary)] dark:bg-[var(--bg-surface)]/50 dark:text-[var(--text-tertiary)] dark:hover:border-[var(--border-subtle)] dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-[var(--text-secondary)] md:inline-flex md:w-64"
         >
           <Search className="h-4 w-4" />
           <span className="flex-1 text-left">Search tournaments, teams…</span>
-          <kbd className="hidden rounded-md border border-slate-200 bg-white px-1.5 py-0.5 font-mono text-[10px] font-medium text-slate-500 sm:inline-block dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
+          <kbd className="hidden rounded-md border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-1.5 py-0.5 font-mono text-[10px] font-medium text-[var(--text-tertiary)] sm:inline-block dark:border-[var(--border-subtle)] dark:bg-[var(--bg-canvas)] dark:text-[var(--text-tertiary)]">
             ⌘K
           </kbd>
         </button>
@@ -127,14 +127,14 @@ export const Header = () => {
                 className="absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] shadow-[var(--shadow-xl)]"
               >
                 <div className="flex items-center justify-between border-b border-[var(--border-subtle)] px-4 py-3">
-                  <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
+                  <h3 className="text-sm font-semibold text-[var(--text-primary)]">
                     Notifications
                   </h3>
-                  <button className="text-xs font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400">
+                  <button className="text-xs font-semibold text-[var(--text-link)]">
                     Mark all read
                   </button>
                 </div>
-                <div className="px-4 py-8 text-center text-sm text-slate-500 dark:text-slate-400">
+                <div className="px-4 py-8 text-center text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   You&apos;re all caught up.
                 </div>
                 <button
@@ -142,7 +142,7 @@ export const Header = () => {
                     setNotifOpen(false);
                     navigate(ROUTES.NOTIFICATIONS);
                   }}
-                  className="block w-full border-t border-[var(--border-subtle)] py-2.5 text-center text-xs font-semibold text-blue-600 transition-colors hover:bg-slate-50 dark:text-blue-400 dark:hover:bg-slate-800/50"
+                  className="block w-full border-t border-[var(--border-subtle)] py-2.5 text-center text-xs font-semibold text-[var(--text-link)] transition-colors hover:bg-[var(--bg-surface-sunken)] dark:hover:bg-[var(--bg-surface)]/50"
                 >
                   View all notifications
                 </button>
@@ -160,7 +160,7 @@ export const Header = () => {
           >
             <Avatar name={user?.name || 'User'} size="sm" status="online" />
             <ChevronDown
-              className={`h-3.5 w-3.5 text-slate-500 transition-transform ${
+              className={`h-3.5 w-3.5 text-[var(--text-secondary)] transition-transform ${
                 menuOpen ? 'rotate-180' : ''
               }`}
             />
@@ -175,10 +175,10 @@ export const Header = () => {
                 className="absolute right-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] shadow-[var(--shadow-xl)]"
               >
                 <div className="border-b border-[var(--border-subtle)] px-4 py-3.5">
-                  <p className="text-sm font-semibold text-slate-900 dark:text-white">
+                  <p className="text-sm font-semibold text-[var(--text-primary)]">
                     {user?.name}
                   </p>
-                  <p className="truncate text-xs text-slate-500 dark:text-slate-400">
+                  <p className="truncate text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                     {user?.email}
                   </p>
                 </div>
@@ -243,8 +243,8 @@ const MenuItem = ({
     onClick={onClick}
     className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
       danger
-        ? 'text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-500/10'
-        : 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800/60'
+        ? 'text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-[var(--color-danger-soft)]'
+        : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-sunken)] dark:text-[var(--text-primary)] dark:hover:bg-[var(--bg-surface)]/60'
     }`}
   >
     <Icon className="h-4 w-4" />

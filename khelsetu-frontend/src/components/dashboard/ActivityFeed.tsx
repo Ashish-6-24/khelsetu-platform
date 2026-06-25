@@ -76,10 +76,10 @@ export const ActivityFeed = ({ activities }: ActivityFeedProps) => {
             <Activity className="h-4 w-4" size={18} />
           </div>
           <div>
-            <h3 className="text-base font-semibold tracking-tight text-slate-900 dark:text-white">
+            <h3 className="text-base font-semibold tracking-tight text-[var(--text-primary)]">
               Recent Activity
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
               Latest events across your org
             </p>
           </div>
@@ -107,16 +107,16 @@ export const ActivityFeed = ({ activities }: ActivityFeedProps) => {
                   <Icon className="h-4 w-4" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-slate-900 dark:text-white">
+                  <p className="text-sm font-medium text-[var(--text-primary)]">
                     {activity.title}
                   </p>
                   {activity.description && (
-                    <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+                    <p className="mt-0.5 text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                       {activity.description}
                     </p>
                   )}
                 </div>
-                <span className="shrink-0 text-xs tabular-nums text-slate-400 dark:text-slate-500">
+                <span className="shrink-0 text-xs tabular-nums text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   <RelativeTime value={activity.time} />
                 </span>
               </motion.li>

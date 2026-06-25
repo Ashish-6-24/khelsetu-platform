@@ -100,10 +100,10 @@ export const StatsCard = ({
         <CardBody>
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+              <p className="text-sm font-medium text-[var(--text-tertiary)]">
                 {title}
               </p>
-              <p className="mt-2 text-3xl font-bold tabular-nums tracking-tight text-slate-900 dark:text-white">
+              <p className="mt-2 text-3xl font-bold tabular-nums tracking-tight text-[var(--text-primary)]">
                 <AnimatedNumber value={value} reducedMotion={reducedMotion} />
               </p>
               {change && (
@@ -121,7 +121,7 @@ export const StatsCard = ({
                     <ArrowDownRight className="h-3 w-3" />
                   )}
                   {change.value}%
-                  <span className="font-normal text-slate-500 dark:text-slate-400">
+                  <span className="font-normal text-[var(--text-tertiary)]">
                     vs last week
                   </span>
                 </div>
