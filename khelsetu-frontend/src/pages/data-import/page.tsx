@@ -107,7 +107,11 @@ export const DataImportPage = () => {
                     <span className="text-sm text-gray-700 dark:text-gray-300">
                       {type}
                     </span>
-                    <Button variant="gold" size="sm" className="group transition-all duration-200 hover:shadow-md hover:shadow-yellow-500/20 active:scale-[0.98]">
+                    <Button
+                      variant="gold"
+                      size="sm"
+                      className="group transition-all duration-200 hover:shadow-md hover:shadow-yellow-500/20 active:scale-[0.98]"
+                    >
                       <Download className="w-4 h-4 mr-1 transition-transform duration-200 group-hover:translate-y-0.5" />
                       Export
                     </Button>
