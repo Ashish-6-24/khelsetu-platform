@@ -62,7 +62,7 @@ export const GradientBadge = ({
       className={twMerge(
         clsx(
           'inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold text-white',
-          'shadow-[0_2px_8px_-2px_rgba(0,0,0,0.3)]',
+          'shadow-[0_2px_8px_-2px_rgba(0,0,0,0.3)]', // neutral shadow — not theme-dependent
           `bg-gradient-to-r ${badgeVariants[variant]}`,
           className,
         ),

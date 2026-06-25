@@ -67,7 +67,7 @@ export const EmptyState = ({
             )}
           />
           <span
-            className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-tr from-[#7F1D1D]/0 via-[#991B1B]/0 to-[#B8860B]/10 opacity-60 blur"
+            className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-tr from-[var(--brand-primary)]/0 via-[var(--brand-primary-hover)]/0 to-[var(--brand-accent)]/10 opacity-60 blur"
             aria-hidden
           />
         </div>
