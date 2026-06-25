@@ -21,11 +21,13 @@ class Logger {
 
   debug(message: string, ...args: unknown[]): void {
     if (!this.shouldLog('debug')) return;
+    // eslint-disable-next-line no-console
     console.debug(this.formatMessage('debug', message), ...args);
   }
 
   info(message: string, ...args: unknown[]): void {
     if (!this.shouldLog('info')) return;
+    // eslint-disable-next-line no-console
     console.info(this.formatMessage('info', message), ...args);
   }
 
