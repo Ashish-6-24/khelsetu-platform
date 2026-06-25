@@ -3,6 +3,8 @@ import { ROUTES } from '@utils/constants';
 import { clsx } from 'clsx';
 import { Sparkles } from 'lucide-react';
 
+import { useTransition } from 'react';
+
 import { Link, useLocation } from 'react-router-dom';
 
 interface SidebarContentProps {
@@ -15,6 +17,7 @@ export const SidebarContent = ({
   onItemClick,
 }: SidebarContentProps) => {
   const location = useLocation();
+  const [isPending, startTransition] = useTransition();
 
   const isActive = (href: string) => {
     if (href === ROUTES.DASHBOARD) {
@@ -46,7 +49,13 @@ export const SidebarContent = ({
                   <li key={item.name}>
                     <Link
                       to={item.href}
-                      onClick={onItemClick}
+                      onClick={() => {
+                        startTransition(() => {
+                          onItemClick?.();
+                        });
+                      }}
+                      onMouseEnter={item.preload}
+                      onFocus={item.preload}
                       aria-current={active ? 'page' : undefined}
                       title={collapsed ? item.name : undefined}
                       className={clsx(
@@ -56,6 +65,7 @@ export const SidebarContent = ({
                           ? 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300'
                           : 'text-slate-600 hover:bg-slate-100/70 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/60 dark:hover:text-white',
                         collapsed && 'justify-center px-0',
+                        isPending && 'opacity-70',
                       )}
                     >
                       {active && (
