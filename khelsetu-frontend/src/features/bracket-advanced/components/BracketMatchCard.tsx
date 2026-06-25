@@ -48,8 +48,8 @@ export const BracketMatchCard = ({
       className={twMerge(
         clsx(
           'w-64 rounded-xl border overflow-hidden',
-          'bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl',
-          'border-gray-200/60 dark:border-gray-700/60',
+          'bg-[var(--bg-surface)]/80 dark:bg-[var(--bg-surface)]/80 backdrop-blur-xl',
+          'border-gray-200/60 dark:border-[var(--border-subtle)]/60',
           'shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-lg)]',
           'transition-shadow duration-200',
           match.status === 'live' &&
@@ -63,10 +63,10 @@ export const BracketMatchCard = ({
         className={clsx(
           'px-3 py-1.5 flex items-center justify-between',
           match.status === 'live'
-            ? 'bg-gradient-to-r from-[#7f1d1d] to-[#991b1b]'
+            ? 'bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)]'
             : match.status === 'completed'
               ? 'bg-emerald-50 dark:bg-emerald-900/20'
-              : 'bg-gray-50 dark:bg-gray-700/30',
+              : 'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)]/30',
         )}
       >
         <Badge
@@ -82,7 +82,7 @@ export const BracketMatchCard = ({
               'text-[10px] font-medium uppercase tracking-wider',
               match.status === 'live'
                 ? 'text-white/80'
-                : 'text-gray-400 dark:text-gray-500',
+                : 'text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]',
             )}
           >
             R{match.round}
@@ -98,7 +98,7 @@ export const BracketMatchCard = ({
             'flex items-center justify-between p-2 rounded-lg transition-colors',
             isWinnerA
               ? 'bg-emerald-50 dark:bg-emerald-900/20'
-              : 'bg-gray-50 dark:bg-gray-700/40',
+              : 'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)]/40',
           )}
         >
           <div className="flex items-center gap-2 min-w-0">
@@ -110,7 +110,7 @@ export const BracketMatchCard = ({
               />
             ) : match.teamA?.seed !== null &&
               match.teamA?.seed !== undefined ? (
-              <span className="h-5 w-5 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-[10px] font-bold text-gray-500 dark:text-gray-300 flex-shrink-0">
+              <span className="h-5 w-5 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-[10px] font-bold text-[var(--text-tertiary)] dark:text-[var(--text-secondary)] flex-shrink-0">
                 {match.teamA?.seed}
               </span>
             ) : null}
@@ -119,7 +119,7 @@ export const BracketMatchCard = ({
                 'text-sm font-medium truncate',
                 isWinnerA
                   ? 'text-emerald-700 dark:text-emerald-400'
-                  : 'text-gray-900 dark:text-white',
+                  : 'text-[var(--text-primary)] dark:text-white',
               )}
             >
               {match.teamA?.shortName || match.teamA?.name || 'TBD'}
@@ -131,7 +131,7 @@ export const BracketMatchCard = ({
                 'text-sm font-bold tabular-nums',
                 isWinnerA
                   ? 'text-emerald-700 dark:text-emerald-400'
-                  : 'text-gray-500 dark:text-gray-400',
+                  : 'text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]',
               )}
             >
               {match.scoreA}
@@ -141,11 +141,11 @@ export const BracketMatchCard = ({
 
         {/* Divider */}
         <div className="flex items-center gap-2 px-2">
-          <div className="flex-1 h-px bg-gray-100 dark:bg-gray-700/50" />
-          <span className="text-[10px] font-semibold text-gray-300 dark:text-gray-600">
+          <div className="flex-1 h-px bg-gray-100 dark:bg-[var(--bg-surface-raised)]/50" />
+          <span className="text-[10px] font-semibold text-[var(--text-secondary)] dark:text-[var(--text-secondary)]">
             VS
           </span>
-          <div className="flex-1 h-px bg-gray-100 dark:bg-gray-700/50" />
+          <div className="flex-1 h-px bg-gray-100 dark:bg-[var(--bg-surface-raised)]/50" />
         </div>
 
         {/* Team B */}
@@ -154,7 +154,7 @@ export const BracketMatchCard = ({
             'flex items-center justify-between p-2 rounded-lg transition-colors',
             isWinnerB
               ? 'bg-emerald-50 dark:bg-emerald-900/20'
-              : 'bg-gray-50 dark:bg-gray-700/40',
+              : 'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)]/40',
           )}
         >
           <div className="flex items-center gap-2 min-w-0">
@@ -166,7 +166,7 @@ export const BracketMatchCard = ({
               />
             ) : match.teamB?.seed !== null &&
               match.teamB?.seed !== undefined ? (
-              <span className="h-5 w-5 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-[10px] font-bold text-gray-500 dark:text-gray-300 flex-shrink-0">
+              <span className="h-5 w-5 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-[10px] font-bold text-[var(--text-tertiary)] dark:text-[var(--text-secondary)] flex-shrink-0">
                 {match.teamB?.seed}
               </span>
             ) : null}
@@ -175,7 +175,7 @@ export const BracketMatchCard = ({
                 'text-sm font-medium truncate',
                 isWinnerB
                   ? 'text-emerald-700 dark:text-emerald-400'
-                  : 'text-gray-900 dark:text-white',
+                  : 'text-[var(--text-primary)] dark:text-white',
               )}
             >
               {match.teamB?.shortName || match.teamB?.name || 'TBD'}
@@ -187,7 +187,7 @@ export const BracketMatchCard = ({
                 'text-sm font-bold tabular-nums',
                 isWinnerB
                   ? 'text-emerald-700 dark:text-emerald-400'
-                  : 'text-gray-500 dark:text-gray-400',
+                  : 'text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]',
               )}
             >
               {match.scoreB}
@@ -198,7 +198,7 @@ export const BracketMatchCard = ({
 
       {/* Footer */}
       {(match.venue || match.scheduledAt) && (
-        <div className="px-3 py-2 border-t border-gray-100 dark:border-gray-700/50 bg-gray-50/50 dark:bg-gray-800/50 flex items-center gap-3 text-xs text-gray-400 dark:text-gray-500">
+        <div className="px-3 py-2 border-t border-gray-100 dark:border-[var(--border-subtle)]/50 bg-[var(--bg-surface-sunken)]/50 dark:bg-[var(--bg-surface)]/50 flex items-center gap-3 text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
           {match.venue && (
             <span className="flex items-center gap-1">
               <MapPin className="h-3 w-3" />

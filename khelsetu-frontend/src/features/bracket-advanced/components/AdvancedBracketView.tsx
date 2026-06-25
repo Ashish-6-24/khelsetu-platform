@@ -108,11 +108,11 @@ export const AdvancedBracketView = ({
       <Card>
         <CardBody>
           <div className="text-center py-16">
-            <Trophy className="h-12 w-12 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-            <p className="text-gray-500 dark:text-gray-400 text-lg font-medium">
+            <Trophy className="h-12 w-12 text-[var(--text-secondary)] dark:text-[var(--text-secondary)] mx-auto mb-4" />
+            <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] text-lg font-medium">
               No bracket data available
             </p>
-            <p className="text-gray-400 dark:text-gray-500 text-sm mt-1">
+            <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] text-sm mt-1">
               Add teams and matches to generate a bracket
             </p>
           </div>
@@ -135,18 +135,18 @@ export const AdvancedBracketView = ({
 
       {/* Progress bar */}
       <div className="flex items-center gap-3">
-        <div className="flex-1 h-2 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+        <div className="flex-1 h-2 rounded-full bg-gray-100 dark:bg-[var(--bg-surface)] overflow-hidden">
           <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-[#7f1d1d] to-[#b8860b]"
+            className="h-full rounded-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)]"
             initial={{ width: 0 }}
             animate={{ width: `${stats.completionPercent}%` }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
           />
         </div>
-        <span className="text-xs font-medium text-gray-500 dark:text-gray-400 tabular-nums whitespace-nowrap">
+        <span className="text-xs font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] tabular-nums whitespace-nowrap">
           {stats.completedMatches}/{stats.totalMatches} matches
           {stats.completionPercent > 0 && (
-            <span className="ml-1 text-[#b8860b]">
+            <span className="ml-1 text-[var(--brand-accent)]">
               ({stats.completionPercent}%)
             </span>
           )}
@@ -158,16 +158,16 @@ export const AdvancedBracketView = ({
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-3 rounded-xl bg-gradient-to-r from-[#b8860b] to-[#d4a017] p-4 shadow-[0_4px_20px_-4px_rgb(184_134_11/0.4)]"
+          className="flex items-center gap-3 rounded-xl bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-accent-hover)] p-4 shadow-[0_4px_20px_-4px_rgb(184_134_11/0.4)]"
         >
           <div className="flex items-center justify-center h-10 w-10 rounded-full bg-white/20">
-            <Trophy className="h-5 w-5 text-[#1A0A0A]" />
+            <Trophy className="h-5 w-5 text-[var(--brand-accent-ink)]" />
           </div>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#1A0A0A]/70">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--brand-accent-ink)]/70">
               Champion
             </p>
-            <p className="text-lg font-bold text-[#1A0A0A]">
+            <p className="text-lg font-bold text-[var(--brand-accent-ink)]">
               {bracket.champion.name}
             </p>
           </div>
@@ -177,7 +177,7 @@ export const AdvancedBracketView = ({
       {/* Bracket visualization */}
       <ZoomPanContainer
         id={BRACKET_ELEMENT_ID}
-        className="bg-[var(--bg-canvas)] border border-gray-200/60 dark:border-gray-700/60 rounded-2xl"
+        className="bg-[var(--bg-canvas)] border border-gray-200/60 dark:border-[var(--border-subtle)]/60 rounded-2xl"
       >
         <motion.div
           className="flex gap-8 p-6 sm:p-8 min-h-[400px] overflow-x-auto"
@@ -203,8 +203,8 @@ export const AdvancedBracketView = ({
                     className={clsx(
                       'text-sm font-bold uppercase tracking-wider',
                       roundIdx === bracket.rounds.length - 1
-                        ? 'text-[#b8860b]'
-                        : 'text-gray-500 dark:text-gray-400',
+                        ? 'text-[var(--brand-accent)]'
+                        : 'text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]',
                     )}
                   >
                     {round.name}
@@ -227,7 +227,7 @@ export const AdvancedBracketView = ({
       </ZoomPanContainer>
 
       {/* Stats footer */}
-      <div className="flex items-center justify-between text-xs text-gray-400 dark:text-gray-500">
+      <div className="flex items-center justify-between text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
         <span>
           {stats.totalRounds} round{stats.totalRounds !== 1 ? 's' : ''} ·{' '}
           {bracket.format.replace(/-/g, ' ')}

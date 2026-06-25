@@ -23,7 +23,7 @@ export function MatchReport({
   return (
     <div className="space-y-4 print:space-y-4 sm:space-y-6">
       {/* Report Header */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#7f1d1d] to-[#991b1b] p-4 text-white shadow-xl print:bg-gray-900 sm:p-8">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] p-4 text-white shadow-xl print:bg-gray-900 sm:p-8">
         <div className="absolute inset-0 bg-[url('/patterns/football.svg')] opacity-10" />
         <div className="relative">
           <h1 className="text-xl font-bold tracking-tight print:text-2xl sm:text-3xl">
@@ -60,43 +60,43 @@ export function MatchReport({
       </div>
 
       {/* Match Summary */}
-      <section className="rounded-xl border border-gray-200 bg-white/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-gray-700 dark:bg-gray-800/80 print:border-gray-300 print:bg-white sm:p-6">
-        <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-[#b8860b] to-[#d4a017] text-xs font-bold text-white">
+      <section className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80 print:border-[var(--border-strong)] print:bg-[var(--bg-surface)] sm:p-6">
+        <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold text-[var(--text-primary)] dark:text-white">
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-accent-hover)] text-xs font-bold text-white">
             1
           </span>
           Match Summary
         </h2>
-        <p className="leading-relaxed text-gray-600 dark:text-gray-300">
+        <p className="leading-relaxed text-[var(--text-secondary)] dark:text-[var(--text-secondary)]">
           {report.summary}
         </p>
       </section>
 
       {/* Goals Section */}
       {report.goals.length > 0 && (
-        <section className="rounded-xl border border-gray-200 bg-white/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-gray-700 dark:bg-gray-800/80 print:border-gray-300 print:bg-white sm:p-6">
-          <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-[#b8860b] to-[#d4a017] text-xs font-bold text-white">
+        <section className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80 print:border-[var(--border-strong)] print:bg-[var(--bg-surface)] sm:p-6">
+          <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-[var(--text-primary)] dark:text-white">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-accent-hover)] text-xs font-bold text-white">
               2
             </span>
             Goals
           </h2>
-          <div className="relative ml-4 border-l-2 border-gray-200 pl-6 dark:border-gray-700">
+          <div className="relative ml-4 border-l-2 border-[var(--border-subtle)] pl-6 dark:border-[var(--border-subtle)]">
             {report.goals.map((goal) => (
               <div key={goal.id} className="relative mb-6 last:mb-0">
-                <div className="absolute -left-[31px] flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-gradient-to-r from-[#7f1d1d] to-[#991b1b] text-xs font-bold text-white shadow-sm dark:border-gray-800">
+                <div className="absolute -left-[31px] flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-xs font-bold text-white shadow-sm dark:border-[var(--border-subtle)]">
                   ⚽
                 </div>
-                <div className="rounded-lg bg-gray-50 p-3 dark:bg-gray-700/50">
+                <div className="rounded-lg bg-[var(--bg-surface-sunken)] p-3 dark:bg-[var(--bg-surface-raised)]/50">
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold text-gray-900 dark:text-white">
+                    <span className="font-semibold text-[var(--text-primary)] dark:text-white">
                       {goal.playerName ?? 'Unknown'}
                     </span>
-                    <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    <span className="text-sm font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                       {formatMinute(goal)}
                     </span>
                   </div>
-                  <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                  <p className="mt-1 text-sm text-[var(--text-secondary)] dark:text-[var(--text-secondary)]">
                     {goal.teamName}
                     {goal.type === 'penalty_goal' && ' (Penalty)'}
                     {goal.type === 'own_goal' && ' (Own Goal)'}
@@ -110,9 +110,9 @@ export function MatchReport({
 
       {/* Cards Section */}
       {report.cards.length > 0 && (
-        <section className="rounded-xl border border-gray-200 bg-white/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-gray-700 dark:bg-gray-800/80 print:border-gray-300 print:bg-white sm:p-6">
-          <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-[#b8860b] to-[#d4a017] text-xs font-bold text-white">
+        <section className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80 print:border-[var(--border-strong)] print:bg-[var(--bg-surface)] sm:p-6">
+          <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-[var(--text-primary)] dark:text-white">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-accent-hover)] text-xs font-bold text-white">
               3
             </span>
             Cards
@@ -121,7 +121,7 @@ export function MatchReport({
             {report.cards.map((card) => (
               <div
                 key={card.id}
-                className="flex items-center justify-between rounded-lg bg-gray-50 p-3 dark:bg-gray-700/50"
+                className="flex items-center justify-between rounded-lg bg-[var(--bg-surface-sunken)] p-3 dark:bg-[var(--bg-surface-raised)]/50"
               >
                 <div className="flex items-center gap-3">
                   <span
@@ -133,14 +133,14 @@ export function MatchReport({
                   <span className="sr-only">
                     {card.type === 'red_card' ? 'Red card' : 'Yellow card'}
                   </span>
-                  <span className="font-medium text-gray-900 dark:text-white">
+                  <span className="font-medium text-[var(--text-primary)] dark:text-white">
                     {card.playerName ?? 'Unknown'}
                   </span>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                  <span className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                     {card.teamName}
                   </span>
                 </div>
-                <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                <span className="text-sm font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   {formatMinute(card)}
                 </span>
               </div>
@@ -151,9 +151,9 @@ export function MatchReport({
 
       {/* Substitutions Section */}
       {report.substitutions.length > 0 && (
-        <section className="rounded-xl border border-gray-200 bg-white/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-gray-700 dark:bg-gray-800/80 print:border-gray-300 print:bg-white sm:p-6">
-          <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-[#b8860b] to-[#d4a017] text-xs font-bold text-white">
+        <section className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80 print:border-[var(--border-strong)] print:bg-[var(--bg-surface)] sm:p-6">
+          <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-[var(--text-primary)] dark:text-white">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-accent-hover)] text-xs font-bold text-white">
               4
             </span>
             Substitutions
@@ -162,17 +162,17 @@ export function MatchReport({
             {report.substitutions.map((sub) => (
               <div
                 key={sub.id}
-                className="flex items-center justify-between rounded-lg bg-gray-50 p-3 dark:bg-gray-700/50"
+                className="flex items-center justify-between rounded-lg bg-[var(--bg-surface-sunken)] p-3 dark:bg-[var(--bg-surface-raised)]/50"
               >
                 <div className="flex items-center gap-3">
                   <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-400">
                     ↕
                   </span>
-                  <span className="font-medium text-gray-900 dark:text-white">
+                  <span className="font-medium text-[var(--text-primary)] dark:text-white">
                     {sub.description ?? sub.playerName ?? 'Substitution'}
                   </span>
                 </div>
-                <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                <span className="text-sm font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   {formatMinute(sub)}
                 </span>
               </div>
@@ -182,9 +182,9 @@ export function MatchReport({
       )}
 
       {/* Statistics Section */}
-      <section className="rounded-xl border border-gray-200 bg-white/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-gray-700 dark:bg-gray-800/80 print:border-gray-300 print:bg-white sm:p-6">
-        <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-[#b8860b] to-[#d4a017] text-xs font-bold text-white">
+      <section className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80 print:border-[var(--border-strong)] print:bg-[var(--bg-surface)] sm:p-6">
+        <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-[var(--text-primary)] dark:text-white">
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-accent-hover)] text-xs font-bold text-white">
             5
           </span>
           Statistics
@@ -217,9 +217,9 @@ export function MatchReport({
 
       {/* Highlights Section */}
       {report.highlights.length > 0 && (
-        <section className="rounded-xl border border-gray-200 bg-white/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-gray-700 dark:bg-gray-800/80 print:border-gray-300 print:bg-white sm:p-6">
-          <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-[#b8860b] to-[#d4a017] text-xs font-bold text-white">
+        <section className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80 print:border-[var(--border-strong)] print:bg-[var(--bg-surface)] sm:p-6">
+          <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-[var(--text-primary)] dark:text-white">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-accent-hover)] text-xs font-bold text-white">
               6
             </span>
             Highlights
@@ -228,9 +228,9 @@ export function MatchReport({
             {report.highlights.map((highlight, index) => (
               <li
                 key={index}
-                className="flex items-start gap-2 text-gray-700 dark:text-gray-300"
+                className="flex items-start gap-2 text-[var(--text-primary)] dark:text-[var(--text-secondary)]"
               >
-                <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-r from-[#b8860b] to-[#d4a017]" />
+                <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-accent-hover)]" />
                 {highlight}
               </li>
             ))}
@@ -240,9 +240,9 @@ export function MatchReport({
 
       {/* Player Performance Table */}
       {report.playerPerformance.length > 0 && (
-        <section className="rounded-xl border border-gray-200 bg-white/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-gray-700 dark:bg-gray-800/80 print:border-gray-300 print:bg-white sm:p-6">
-          <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-[#b8860b] to-[#d4a017] text-xs font-bold text-white">
+        <section className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 p-4 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80 print:border-[var(--border-strong)] print:bg-[var(--bg-surface)] sm:p-6">
+          <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-[var(--text-primary)] dark:text-white">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-accent-hover)] text-xs font-bold text-white">
               7
             </span>
             Player Performance
@@ -250,28 +250,28 @@ export function MatchReport({
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-gray-200 dark:border-gray-700">
+                <tr className="border-b border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
                   <th
                     scope="col"
-                    className="pb-3 font-semibold text-gray-900 dark:text-white"
+                    className="pb-3 font-semibold text-[var(--text-primary)] dark:text-white"
                   >
                     Player
                   </th>
                   <th
                     scope="col"
-                    className="pb-3 font-semibold text-gray-900 dark:text-white"
+                    className="pb-3 font-semibold text-[var(--text-primary)] dark:text-white"
                   >
                     Team
                   </th>
                   <th
                     scope="col"
-                    className="pb-3 text-center font-semibold text-gray-900 dark:text-white"
+                    className="pb-3 text-center font-semibold text-[var(--text-primary)] dark:text-white"
                   >
                     Rating
                   </th>
                   <th
                     scope="col"
-                    className="pb-3 font-semibold text-gray-900 dark:text-white"
+                    className="pb-3 font-semibold text-[var(--text-primary)] dark:text-white"
                   >
                     Highlights
                   </th>
@@ -280,10 +280,10 @@ export function MatchReport({
               <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
                 {report.playerPerformance.map((player) => (
                   <tr key={player.playerId}>
-                    <td className="py-3 font-medium text-gray-900 dark:text-white">
+                    <td className="py-3 font-medium text-[var(--text-primary)] dark:text-white">
                       {player.playerName}
                     </td>
-                    <td className="py-3 text-gray-600 dark:text-gray-400">
+                    <td className="py-3 text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
                       {player.teamName}
                     </td>
                     <td className="py-3 text-center">
@@ -301,7 +301,7 @@ export function MatchReport({
                         {player.rating}
                       </span>
                     </td>
-                    <td className="py-3 text-gray-600 dark:text-gray-400">
+                    <td className="py-3 text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
                       {player.highlights.join(', ') || '-'}
                     </td>
                   </tr>
@@ -318,22 +318,22 @@ export function MatchReport({
 export function MatchReportSkeleton() {
   return (
     <div className="space-y-6 animate-pulse">
-      <div className="h-48 rounded-2xl bg-gray-200 dark:bg-gray-700" />
-      <div className="h-32 rounded-xl bg-gray-200 dark:bg-gray-700" />
-      <div className="h-48 rounded-xl bg-gray-200 dark:bg-gray-700" />
-      <div className="h-48 rounded-xl bg-gray-200 dark:bg-gray-700" />
+      <div className="h-48 rounded-2xl bg-gray-200 dark:bg-[var(--bg-surface-raised)]" />
+      <div className="h-32 rounded-xl bg-gray-200 dark:bg-[var(--bg-surface-raised)]" />
+      <div className="h-48 rounded-xl bg-gray-200 dark:bg-[var(--bg-surface-raised)]" />
+      <div className="h-48 rounded-xl bg-gray-200 dark:bg-[var(--bg-surface-raised)]" />
     </div>
   );
 }
 
 export function MatchReportEmpty() {
   return (
-    <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50/50 p-12 text-center dark:border-gray-600 dark:bg-gray-800/50">
+    <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-[var(--border-strong)] bg-[var(--bg-surface-sunken)]/50 p-12 text-center dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface)]/50">
       <div className="mb-4 text-4xl">📋</div>
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+      <h3 className="text-lg font-semibold text-[var(--text-primary)] dark:text-white">
         No Report Available
       </h3>
-      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+      <p className="mt-1 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
         Generate a match report to see the summary here.
       </p>
     </div>

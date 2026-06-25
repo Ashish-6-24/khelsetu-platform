@@ -43,11 +43,11 @@ export const MatchControls = ({ timer }: MatchControlsProps) => {
       <CardBody padding="md">
         <div className="flex flex-col sm:flex-row items-center gap-6">
           <div className="flex flex-col items-center">
-            <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">
+            <p className="text-xs font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider mb-1">
               Timer
             </p>
             <p
-              className="text-4xl sm:text-5xl font-bold tabular-nums text-transparent bg-clip-text bg-gradient-to-r from-[#7f1d1d] to-[#b8860b] dark:from-red-400 dark:to-amber-400 font-mono"
+              className="text-4xl sm:text-5xl font-bold tabular-nums text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)] dark:from-red-400 dark:to-amber-400 font-mono"
               aria-live="polite"
               aria-atomic="true"
             >

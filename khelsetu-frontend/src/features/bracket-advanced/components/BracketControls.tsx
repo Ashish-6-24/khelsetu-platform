@@ -50,11 +50,11 @@ export const BracketControls = ({
           className={twMerge(
             clsx(
               'appearance-none rounded-xl border px-4 py-2 pr-9 text-sm font-medium',
-              'bg-white dark:bg-gray-800',
-              'border-gray-200 dark:border-gray-700',
-              'text-gray-900 dark:text-white',
+              'bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)]',
+              'border-[var(--border-subtle)] dark:border-[var(--border-subtle)]',
+              'text-[var(--text-primary)] dark:text-white',
               'shadow-[var(--shadow-sm)]',
-              'focus:outline-none focus:ring-2 focus:ring-[#7f1d1d]/30',
+              'focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/30',
               'cursor-pointer',
             ),
           )}
@@ -66,12 +66,12 @@ export const BracketControls = ({
           ))}
         </select>
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-          <Trophy className="h-4 w-4 text-gray-400" />
+          <Trophy className="h-4 w-4 text-[var(--text-tertiary)]" />
         </div>
       </div>
 
       {/* Export buttons */}
-      <div className="flex flex-wrap items-center gap-1.5 rounded-xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-200/60 dark:border-gray-700/60 p-1 shadow-[var(--shadow-sm)]">
+      <div className="flex flex-wrap items-center gap-1.5 rounded-xl bg-[var(--bg-surface)]/80 dark:bg-[var(--bg-surface)]/80 backdrop-blur-xl border border-gray-200/60 dark:border-[var(--border-subtle)]/60 p-1 shadow-[var(--shadow-sm)]">
         <Button
           variant="ghost"
           size="sm"

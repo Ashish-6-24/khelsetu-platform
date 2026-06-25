@@ -73,14 +73,14 @@ export const LiveEventCenter = ({
             className={clsx(
               'px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200',
               activeTeam === 'teamA'
-                ? 'bg-gradient-to-r from-[#7f1d1d] to-[#991b1b] text-white shadow-md'
-                : 'bg-white/60 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-white dark:hover:bg-gray-700',
+                ? 'bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-white shadow-md'
+                : 'bg-[var(--bg-surface)]/60 dark:bg-[var(--bg-surface)]/60 text-[var(--text-primary)] dark:text-[var(--text-secondary)] border border-[var(--border-subtle)] dark:border-[var(--border-subtle)] hover:bg-[var(--bg-surface)] dark:hover:bg-[var(--bg-surface-raised)]',
             )}
           >
             {teamA.name}
           </button>
 
-          <span className="text-xs font-bold text-gray-400 dark:text-gray-500">
+          <span className="text-xs font-bold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             VS
           </span>
 
@@ -90,8 +90,8 @@ export const LiveEventCenter = ({
             className={clsx(
               'px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200',
               activeTeam === 'teamB'
-                ? 'bg-gradient-to-r from-[#7f1d1d] to-[#991b1b] text-white shadow-md'
-                : 'bg-white/60 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-white dark:hover:bg-gray-700',
+                ? 'bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-white shadow-md'
+                : 'bg-[var(--bg-surface)]/60 dark:bg-[var(--bg-surface)]/60 text-[var(--text-primary)] dark:text-[var(--text-secondary)] border border-[var(--border-subtle)] dark:border-[var(--border-subtle)] hover:bg-[var(--bg-surface)] dark:hover:bg-[var(--bg-surface-raised)]',
             )}
           >
             {teamB.name}

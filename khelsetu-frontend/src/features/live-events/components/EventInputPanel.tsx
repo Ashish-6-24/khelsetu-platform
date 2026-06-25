@@ -20,7 +20,7 @@ export const EventInputPanel = ({
   return (
     <Card glass>
       <CardHeader>
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
+        <h3 className="text-sm font-semibold text-[var(--text-primary)] dark:text-white">
           Add Event
         </h3>
       </CardHeader>
@@ -36,19 +36,19 @@ export const EventInputPanel = ({
                 className={clsx(
                   'flex flex-col items-center gap-1.5 p-3 min-h-[44px] rounded-xl text-center',
                   'transition-all duration-200',
-                  'border border-gray-100 dark:border-gray-700/50',
-                  'bg-white/60 dark:bg-gray-800/60',
-                  'hover:bg-white dark:hover:bg-gray-700/60',
-                  'hover:border-gray-200 dark:hover:border-gray-600',
+                  'border border-gray-100 dark:border-[var(--border-subtle)]/50',
+                  'bg-[var(--bg-surface)]/60 dark:bg-[var(--bg-surface)]/60',
+                  'hover:bg-[var(--bg-surface)] dark:hover:bg-[var(--bg-surface-raised)]/60',
+                  'hover:border-[var(--border-subtle)] dark:hover:border-gray-600',
                   'hover:-translate-y-0.5 hover:shadow-md',
                   'active:translate-y-0',
-                  'focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7F1D1D]',
+                  'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]',
                   disabled &&
                     'opacity-40 cursor-not-allowed hover:translate-y-0 hover:shadow-none',
                 )}
               >
                 <span className="text-xl leading-none">{config.icon}</span>
-                <span className="text-xs font-medium text-gray-700 dark:text-gray-300 leading-tight">
+                <span className="text-xs font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] leading-tight">
                   {config.label}
                 </span>
               </button>

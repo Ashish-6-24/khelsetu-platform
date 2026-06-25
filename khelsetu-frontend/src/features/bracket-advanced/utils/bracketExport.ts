@@ -13,7 +13,7 @@ export async function exportBracketAsPdf(
   const canvas = await html2canvas(el, {
     scale: 2,
     useCORS: true,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#ffffff', /* PDF export background — not theme-dependent */
   });
 
   const imgData = canvas.toDataURL('image/png');
@@ -42,7 +42,7 @@ export async function exportBracketAsImage(
   const canvas = await html2canvas(el, {
     scale: 2,
     useCORS: true,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#ffffff', /* PDF export background — not theme-dependent */
   });
 
   const link = document.createElement('a');
