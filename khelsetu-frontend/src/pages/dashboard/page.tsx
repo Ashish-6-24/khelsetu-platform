@@ -24,6 +24,7 @@ import {
   Users,
 } from 'lucide-react';
 
+import { Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const HOUR = 60 * 60 * 1000;
@@ -74,10 +75,12 @@ export const DashboardPage = () => {
   >({
     queryKey: ['tournaments'],
     queryFn: () => tournamentService.getAll(),
+    staleTime: 2 * 60 * 1000,
   });
   const { data: matches, isLoading: loadingMatches } = useQuery<Match[]>({
     queryKey: ['matches'],
     queryFn: () => matchService.getAll(),
+    staleTime: 2 * 60 * 1000,
   });
 
   const isLoading = loadingTournaments || loadingMatches;
@@ -173,14 +176,16 @@ export const DashboardPage = () => {
         </div>
       </section>
 
-      <OnboardingChecklist
-        state={{
-          tournament: totalTournaments > 0,
-          team: totalTeams > 0,
-          scoring: false,
-          overlay: false,
-        }}
-      />
+      <Suspense fallback={<Skeleton className="h-24" variant="rounded" />}>
+        <OnboardingChecklist
+          state={{
+            tournament: totalTournaments > 0,
+            team: totalTeams > 0,
+            scoring: false,
+            overlay: false,
+          }}
+        />
+      </Suspense>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <GlowStatCard
@@ -334,17 +339,35 @@ export const DashboardPage = () => {
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
-          <UpcomingMatches
-            matches={upcomingMatches}
-            onSeeAll={() => navigate(ROUTES.SCHEDULE)}
-          />
-          <ActivityFeed activities={FALLBACK_ACTIVITIES} />
+          <Suspense
+            fallback={
+              <div className="h-80 rounded-2xl bg-[var(--bg-surface)] animate-pulse" />
+            }
+          >
+            <UpcomingMatches
+              matches={upcomingMatches}
+              onSeeAll={() => navigate(ROUTES.SCHEDULE)}
+            />
+          </Suspense>
+          <Suspense
+            fallback={
+              <div className="h-80 rounded-2xl bg-[var(--bg-surface)] animate-pulse" />
+            }
+          >
+            <ActivityFeed activities={FALLBACK_ACTIVITIES} />
+          </Suspense>
         </div>
         <div className="space-y-6">
-          <LiveMatchesPanel
-            matches={matches ?? []}
-            onMatchClick={(match) => navigate(`/scoring/${match.id}`)}
-          />
+          <Suspense
+            fallback={
+              <div className="h-80 rounded-2xl bg-[var(--bg-surface)] animate-pulse" />
+            }
+          >
+            <LiveMatchesPanel
+              matches={matches ?? []}
+              onMatchClick={(match) => navigate(`/scoring/${match.id}`)}
+            />
+          </Suspense>
           <QuickActions />
         </div>
       </div>
