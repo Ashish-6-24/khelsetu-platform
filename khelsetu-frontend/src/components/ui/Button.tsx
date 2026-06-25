@@ -39,7 +39,7 @@ const baseStyles =
   'relative inline-flex items-center justify-center font-semibold tracking-tight ' +
   'rounded-xl whitespace-nowrap select-none align-middle ' +
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ' +
-  'focus-visible:ring-[var(--brand-primary)] dark:focus-visible:ring-[var(--brand-primary)] dark:focus-visible:ring-offset-slate-900 ' +
+  'focus-visible:ring-[var(--brand-primary)] dark:focus-visible:ring-[var(--brand-primary)] dark:focus-visible:ring-offset-[var(--bg-canvas)] ' +
   'disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none ' +
   'transition-[transform,background-color,box-shadow,color,border-color] duration-200 ease-out ' +
   'active:translate-y-px hover:scale-[1.02] active:scale-[0.97] ' +
@@ -56,9 +56,9 @@ const variantStyles: Record<ButtonVariant, string> = {
   secondary:
     'bg-[var(--bg-inverse)] text-white hover:bg-[var(--bg-surface-raised)] ' +
     'shadow-sm hover:shadow-md ' +
-    'dark:bg-[var(--text-primary)] dark:text-[var(--bg-inverse)] dark:hover:bg-white',
+    'dark:bg-[var(--text-primary)] dark:text-[var(--bg-inverse)] dark:hover:bg-[var(--bg-surface-sunken)]',
   outline:
-    'border border-[var(--border-subtle)] bg-white text-[var(--text-primary)] hover:bg-[var(--bg-surface-sunken)] hover:border-[var(--border-strong)] ' +
+    'border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-primary)] hover:bg-[var(--bg-surface-sunken)] hover:border-[var(--border-strong)] ' +
     'dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-primary)] dark:hover:bg-[var(--bg-surface-raised)] dark:hover:border-[var(--border-strong)]',
   ghost:
     'text-[var(--text-primary)] hover:bg-[var(--bg-surface-sunken)] ' +
@@ -72,9 +72,9 @@ const variantStyles: Record<ButtonVariant, string> = {
     'shadow-[0_4px_14px_-2px_rgb(21_128_61/0.45)] /* success shadow */ ' +
     'hover:from-[var(--color-success)] hover:to-[var(--color-success)]',
   glass:
-    'bg-white/80 backdrop-blur-xl text-[var(--text-primary)] border border-white/60 ' +
+    'bg-[var(--bg-glass)] backdrop-blur-xl text-[var(--text-primary)] border border-[var(--border-subtle)] ' +
     'shadow-[0_4px_20px_-4px_rgb(15_23_42/0.1)] ' +
-    'hover:bg-white/95 ' +
+    'hover:bg-[var(--bg-glass-strong)] ' +
     'dark:bg-[var(--bg-surface)]/80 dark:text-white dark:border-white/10 dark:hover:bg-[var(--bg-surface-raised)]/95',
   gold:
     'bg-gradient-to-br from-[var(--brand-accent)] via-[var(--brand-accent-hover)] to-[var(--brand-accent-hover)] text-[var(--brand-primary-ink)] ' +

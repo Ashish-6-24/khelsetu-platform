@@ -12,7 +12,7 @@ export const Skeleton = ({
   return (
     <div
       className={clsx(
-        'relative overflow-hidden bg-slate-200/70 dark:bg-slate-800/60',
+        'relative overflow-hidden bg-[var(--bg-surface-sunken)]/70 dark:bg-[var(--bg-surface)]/60',
         variant === 'circular' && 'rounded-full',
         variant === 'rounded' && 'rounded-xl',
         variant === 'rectangular' && 'rounded-lg',

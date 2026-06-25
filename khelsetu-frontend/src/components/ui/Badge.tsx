@@ -43,13 +43,13 @@ const variantStyles: Record<BadgeVariant, string> = {
     'bg-[var(--brand-primary)] text-white shadow-sm ring-1 ring-inset ring-[var(--brand-primary-active)]/40',
   // Sport accents
   'sport-cricket':
-    'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20',
+    'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20 dark:bg-emerald-500/10 dark:text-emerald-400 dark:ring-emerald-400/30',
   'sport-football':
-    'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20',
+    'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20 dark:bg-blue-500/10 dark:text-blue-400 dark:ring-blue-400/30',
   'sport-volleyball':
-    'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20',
+    'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20 dark:bg-amber-500/10 dark:text-amber-400 dark:ring-amber-400/30',
   'sport-basketball':
-    'bg-orange-50 text-orange-700 ring-1 ring-inset ring-orange-600/20',
+    'bg-orange-50 text-orange-700 ring-1 ring-inset ring-orange-600/20 dark:bg-orange-500/10 dark:text-orange-400 dark:ring-orange-400/30',
   outline:
     'border border-[var(--border-subtle)] text-[var(--text-primary)] dark:border-[var(--border-strong)] dark:text-[var(--text-primary)]',
 };
