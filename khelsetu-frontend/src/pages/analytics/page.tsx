@@ -111,10 +111,10 @@ export const AnalyticsPage = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
             Analytics
           </h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             Tournament and platform insights
           </p>
         </div>
@@ -132,10 +132,10 @@ export const AnalyticsPage = () => {
           <CardBody>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   Tournaments
                 </p>
-                <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">
+                <p className="text-3xl font-bold text-[var(--text-primary)] dark:text-white mt-1">
                   {stats.totalTournaments}
                 </p>
               </div>
@@ -150,7 +150,7 @@ export const AnalyticsPage = () => {
           <CardBody>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   Live Now
                 </p>
                 <p className="text-3xl font-bold text-green-600 dark:text-green-400 mt-1">
@@ -168,7 +168,7 @@ export const AnalyticsPage = () => {
           <CardBody>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   Teams
                 </p>
                 <p className="text-3xl font-bold text-purple-600 dark:text-purple-400 mt-1">
@@ -186,7 +186,7 @@ export const AnalyticsPage = () => {
           <CardBody>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   Completed
                 </p>
                 <p className="text-3xl font-bold text-orange-600 dark:text-orange-400 mt-1">
@@ -204,7 +204,7 @@ export const AnalyticsPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardBody>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <h3 className="text-lg font-semibold text-[var(--text-primary)] dark:text-white mb-4">
               Tournaments by Sport
             </h3>
             {Object.keys(sportDistribution).length > 0 ? (
@@ -219,14 +219,14 @@ export const AnalyticsPage = () => {
                     return (
                       <div key={sport}>
                         <div className="flex items-center justify-between mb-1">
-                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300 capitalize">
+                          <span className="text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] capitalize">
                             {sport}
                           </span>
-                          <span className="text-sm text-gray-500 dark:text-gray-400">
+                          <span className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                             {count} ({percentage}%)
                           </span>
                         </div>
-                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div className="w-full bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded-full h-2">
                           <div
                             className="bg-blue-600 h-2 rounded-full transition-all duration-500"
                             style={{ width: `${percentage}%` }}
@@ -237,7 +237,7 @@ export const AnalyticsPage = () => {
                   })}
               </div>
             ) : (
-              <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-8">
+              <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] text-center py-8">
                 No tournament data available
               </p>
             )}
@@ -246,7 +246,7 @@ export const AnalyticsPage = () => {
 
         <Card>
           <CardBody>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <h3 className="text-lg font-semibold text-[var(--text-primary)] dark:text-white mb-4">
               Tournaments by Format
             </h3>
             {Object.keys(formatDistribution).length > 0 ? (
@@ -261,14 +261,14 @@ export const AnalyticsPage = () => {
                     return (
                       <div key={format}>
                         <div className="flex items-center justify-between mb-1">
-                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300 capitalize">
+                          <span className="text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] capitalize">
                             {format}
                           </span>
-                          <span className="text-sm text-gray-500 dark:text-gray-400">
+                          <span className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                             {count} ({percentage}%)
                           </span>
                         </div>
-                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div className="w-full bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded-full h-2">
                           <div
                             className="bg-indigo-600 h-2 rounded-full transition-all duration-500"
                             style={{ width: `${percentage}%` }}
@@ -279,7 +279,7 @@ export const AnalyticsPage = () => {
                   })}
               </div>
             ) : (
-              <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-8">
+              <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] text-center py-8">
                 No format data available
               </p>
             )}
@@ -289,7 +289,7 @@ export const AnalyticsPage = () => {
 
       <Card>
         <CardBody>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+          <h3 className="text-lg font-semibold text-[var(--text-primary)] dark:text-white mb-4">
             Tournament Status Overview
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -321,13 +321,13 @@ export const AnalyticsPage = () => {
                 <Badge variant="info">Scheduled</Badge>
               </div>
             </div>
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+            <div className="bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface)] rounded-lg p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
                     Completed
                   </p>
-                  <p className="text-2xl font-bold text-gray-700 dark:text-gray-300">
+                  <p className="text-2xl font-bold text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
                     {stats.completedTournaments}
                   </p>
                 </div>

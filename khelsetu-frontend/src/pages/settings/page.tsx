@@ -330,7 +330,7 @@ export const SettingsPage = () => {
                 className={clsx(
                   'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
                   emailNotifications
-                    ? 'bg-blue-600'
+                    ? 'bg-blue-600 dark:bg-blue-500'
                     : 'bg-gray-300 dark:bg-gray-600',
                 )}
               >

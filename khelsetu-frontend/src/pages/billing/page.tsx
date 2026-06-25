@@ -43,10 +43,10 @@ export const BillingPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
           Billing & Subscription
         </h1>
-        <p className="text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-1">
           Manage your plan, view invoices, and update payment methods
         </p>
       </div>
@@ -59,13 +59,13 @@ export const BillingPage = () => {
             <Card key={i}>
               <CardBody>
                 <div className="animate-pulse space-y-4">
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24" />
-                  <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-32" />
+                  <div className="h-4 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded w-24" />
+                  <div className="h-8 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded w-32" />
                   <div className="space-y-2">
                     {[1, 2, 3].map((j) => (
                       <div
                         key={j}
-                        className="h-3 bg-gray-200 dark:bg-gray-700 rounded"
+                        className="h-3 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded"
                       />
                     ))}
                   </div>
@@ -105,11 +105,11 @@ export const BillingPage = () => {
                 <Card>
                   <CardBody>
                     <div className="text-center py-12">
-                      <p className="text-gray-500 dark:text-gray-400">
+                      <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                         No active subscription
                       </p>
                       <button
-                        className="mt-4 text-blue-600 hover:underline"
+                        className="mt-4 text-blue-600 dark:text-blue-400 hover:underline"
                         onClick={() => setActiveTab('plans')}
                       >
                         Browse Plans

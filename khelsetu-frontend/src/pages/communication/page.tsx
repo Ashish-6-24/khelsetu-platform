@@ -43,10 +43,10 @@ export const CommunicationPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
           Communication
         </h1>
-        <p className="text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-1">
           Messages, announcements, and team chat
         </p>
       </div>
@@ -57,7 +57,7 @@ export const CommunicationPage = () => {
             <CardHeader>
               <div className="flex items-center gap-2">
                 <MessageCircle className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
                   Messages
                 </h3>
               </div>
@@ -67,17 +67,17 @@ export const CommunicationPage = () => {
                 {messages.map((msg) => (
                   <div
                     key={msg.id}
-                    className={`p-3 rounded-lg ${msg.type === 'announcement' ? 'bg-blue-50 dark:bg-blue-900/20' : msg.type === 'system' ? 'bg-gray-50 dark:bg-gray-800' : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700'}`}
+                    className={`p-3 rounded-lg ${msg.type === 'announcement' ? 'bg-blue-50 dark:bg-blue-900/20' : msg.type === 'system' ? 'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface)]' : 'bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]'}`}
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <span className="font-medium text-sm text-gray-900 dark:text-white">
+                      <span className="font-medium text-sm text-[var(--text-primary)] dark:text-white">
                         {msg.sender}
                       </span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                      <span className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                         {msg.timestamp}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-700 dark:text-gray-300">
+                    <p className="text-sm text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
                       {msg.content}
                     </p>
                   </div>
@@ -88,7 +88,7 @@ export const CommunicationPage = () => {
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="Type a message..."
-                  className="flex-1 px-3 py-2 border rounded-lg dark:bg-gray-800 dark:border-gray-700"
+                  className="flex-1 px-3 py-2 border rounded-lg dark:bg-[var(--bg-surface)] dark:border-[var(--border-subtle)]"
                 />
                 <Button variant="primary">
                   <Send className="w-4 h-4" />
@@ -100,7 +100,7 @@ export const CommunicationPage = () => {
 
         <Card>
           <CardHeader>
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
               Quick Actions
             </h3>
           </CardHeader>

@@ -52,10 +52,10 @@ export const DataImportPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
           Data Import/Export
         </h1>
-        <p className="text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-1">
           Bulk import and export data
         </p>
       </div>
@@ -63,21 +63,21 @@ export const DataImportPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
               Import Data
             </h3>
           </CardHeader>
           <CardBody>
-            <div className="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-8 text-center">
-              <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 dark:text-gray-400 mb-2">
+            <div className="border-2 border-dashed border-[var(--border-strong)] dark:border-[var(--border-subtle)] rounded-lg p-8 text-center">
+              <Upload className="w-12 h-12 text-[var(--text-tertiary)] mx-auto mb-4" />
+              <p className="text-[var(--text-secondary)] dark:text-[var(--text-tertiary)] mb-2">
                 Drag and drop CSV file here
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-500 mb-4">
+              <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mb-4">
                 or
               </p>
               <Button variant="primary">Browse Files</Button>
-              <p className="text-xs text-gray-500 dark:text-gray-500 mt-4">
+              <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-4">
                 Supported: CSV, JSON (max 10MB)
               </p>
             </div>
@@ -92,7 +92,7 @@ export const DataImportPage = () => {
 
         <Card>
           <CardHeader>
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
               Export Data
             </h3>
           </CardHeader>
@@ -102,9 +102,9 @@ export const DataImportPage = () => {
                 (type) => (
                   <div
                     key={type}
-                    className="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-700"
+                    className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]"
                   >
-                    <span className="text-sm text-gray-700 dark:text-gray-300">
+                    <span className="text-sm text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
                       {type}
                     </span>
                     <Button
@@ -125,7 +125,7 @@ export const DataImportPage = () => {
 
       <Card>
         <CardHeader>
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+          <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
             Import History
           </h3>
         </CardHeader>
@@ -134,33 +134,33 @@ export const DataImportPage = () => {
             {imports.map((job) => (
               <div
                 key={job.id}
-                className="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-700"
+                className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]"
               >
                 <div className="flex items-center gap-3">
                   {job.status === 'completed' ? (
-                    <CheckCircle className="w-5 h-5 text-green-600" />
+                    <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
                   ) : job.status === 'failed' ? (
-                    <AlertCircle className="w-5 h-5 text-red-600" />
+                    <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
                   ) : (
-                    <FileText className="w-5 h-5 text-gray-400" />
+                    <FileText className="w-5 h-5 text-[var(--text-tertiary)]" />
                   )}
                   <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">
+                    <p className="text-sm font-medium text-[var(--text-primary)] dark:text-white">
                       {job.fileName}
                     </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                       {job.type} • {job.date}
                     </p>
                   </div>
                 </div>
                 <div className="text-right">
                   <span
-                    className={`text-xs px-2 py-1 rounded-full capitalize ${job.status === 'completed' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300' : job.status === 'failed' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300' : 'bg-gray-100 text-gray-600'}`}
+                    className={`text-xs px-2 py-1 rounded-full capitalize ${job.status === 'completed' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300' : job.status === 'failed' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300' : 'bg-gray-100 text-[var(--text-secondary)]'}`}
                   >
                     {job.status}
                   </span>
                   {job.records > 0 && (
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-1">
                       {job.records} records
                     </p>
                   )}

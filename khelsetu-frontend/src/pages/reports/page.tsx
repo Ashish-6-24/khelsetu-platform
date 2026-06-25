@@ -24,10 +24,10 @@ export const ReportsPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
           Reports & Exports
         </h1>
-        <p className="text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-1">
           Generate and download reports for tournaments, teams, players, and
           matches
         </p>
@@ -43,13 +43,13 @@ export const ReportsPage = () => {
           {[1, 2].map((i) => (
             <div
               key={i}
-              className="animate-pulse h-48 bg-gray-200 dark:bg-gray-700 rounded-2xl"
+              className="animate-pulse h-48 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded-2xl"
             />
           ))}
         </div>
       ) : reports.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-500 dark:text-gray-400">
+          <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             No reports generated yet. Click a report type above to generate one.
           </p>
         </div>
@@ -68,15 +68,15 @@ export const ReportsPage = () => {
 
       {exportJobs.length > 0 && (
         <div className="space-y-3">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <h3 className="text-lg font-semibold text-[var(--text-primary)] dark:text-white">
             Export Jobs
           </h3>
           {exportJobs.map((job) => (
             <div
               key={job.id}
-              className="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-700"
+              className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]"
             >
-              <span className="text-sm text-gray-700 dark:text-gray-300">
+              <span className="text-sm text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
                 {job.format.toUpperCase()} export
               </span>
               <span

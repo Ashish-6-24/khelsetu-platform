@@ -50,10 +50,10 @@ export const SchedulePage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
           Schedule
         </h1>
-        <p className="text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-1">
           Match calendar and scheduling
         </p>
       </div>
@@ -62,7 +62,7 @@ export const SchedulePage = () => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Calendar className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
               Upcoming Matches
             </h3>
           </div>
@@ -72,21 +72,21 @@ export const SchedulePage = () => {
             {schedule.map((match) => (
               <div
                 key={match.id}
-                className="flex items-center justify-between p-4 rounded-lg border border-gray-200 dark:border-gray-700"
+                className="flex items-center justify-between p-4 rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]"
               >
                 <div className="flex-1">
                   <div className="flex items-center gap-3">
-                    <span className="font-medium text-gray-900 dark:text-white">
+                    <span className="font-medium text-[var(--text-primary)] dark:text-white">
                       {match.home}
                     </span>
-                    <span className="text-gray-500 dark:text-gray-400 text-sm">
+                    <span className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] text-sm">
                       vs
                     </span>
-                    <span className="font-medium text-gray-900 dark:text-white">
+                    <span className="font-medium text-[var(--text-primary)] dark:text-white">
                       {match.away}
                     </span>
                   </div>
-                  <div className="flex items-center gap-4 mt-2 text-sm text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center gap-4 mt-2 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                     <span className="flex items-center gap-1">
                       <Calendar className="w-3 h-3" />
                       {match.date}

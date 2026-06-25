@@ -96,10 +96,10 @@ export const TeamDetailPage = () => {
   if (!team) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
           Team Not Found
         </h1>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
           The team you are looking for does not exist.
         </p>
       </div>
@@ -112,10 +112,10 @@ export const TeamDetailPage = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
             {team.name}
           </h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             <Badge variant="info">{team.shortName}</Badge>
             {roster.length} players
           </p>
@@ -155,7 +155,7 @@ export const TeamDetailPage = () => {
                   <PlayerCard player={player} />
                   <button
                     onClick={() => removePlayer.mutate(player.id)}
-                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 bg-red-500 text-white rounded-full text-xs hover:bg-red-600"
+                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 bg-red-500 dark:bg-red-400 text-white rounded-full text-xs hover:bg-red-600 dark:hover:bg-red-300"
                     title="Remove player"
                   >
                     &times;
@@ -165,7 +165,7 @@ export const TeamDetailPage = () => {
             </div>
           ) : (
             <div className="text-center py-12">
-              <p className="text-gray-500 dark:text-gray-400">
+              <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                 No players on the roster yet. Add some to build your squad.
               </p>
             </div>
@@ -175,28 +175,28 @@ export const TeamDetailPage = () => {
 
       {activeTab === 'stats' && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+          <div className="p-4 bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
+            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
               Matches Played
             </p>
-            <p className="text-3xl font-bold text-gray-900 dark:text-white mt-2">
+            <p className="text-3xl font-bold text-[var(--text-primary)] dark:text-white mt-2">
               {team.stats.played}
             </p>
           </div>
-          <div className="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Won</p>
+          <div className="p-4 bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
+            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">Won</p>
             <p className="text-3xl font-bold text-green-600 dark:text-green-400 mt-2">
               {team.stats.won}
             </p>
           </div>
-          <div className="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Lost</p>
+          <div className="p-4 bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
+            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">Lost</p>
             <p className="text-3xl font-bold text-red-600 dark:text-red-400 mt-2">
               {team.stats.lost}
             </p>
           </div>
-          <div className="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Points</p>
+          <div className="p-4 bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
+            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">Points</p>
             <p className="text-3xl font-bold text-blue-600 dark:text-blue-400 mt-2">
               {team.stats.points}
             </p>
@@ -206,7 +206,7 @@ export const TeamDetailPage = () => {
 
       {activeTab === 'matches' && (
         <div className="text-center py-12">
-          <p className="text-gray-500 dark:text-gray-400">
+          <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             Match history will be available once the team has played matches.
           </p>
         </div>

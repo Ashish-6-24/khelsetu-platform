@@ -45,7 +45,7 @@ export const TournamentsPage = () => {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
               Tournaments
             </h1>
             <p className="mt-1 text-sm text-red-600 dark:text-red-400">
@@ -64,10 +64,10 @@ export const TournamentsPage = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
             Tournaments
           </h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             Manage your tournaments
           </p>
         </div>
@@ -88,7 +88,7 @@ export const TournamentsPage = () => {
         </div>
       ) : (
         <div className="text-center py-12">
-          <p className="text-gray-500 dark:text-gray-400">
+          <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             No tournaments yet. Kick things off by creating your first one.
           </p>
         </div>

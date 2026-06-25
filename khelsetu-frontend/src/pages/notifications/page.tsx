@@ -89,10 +89,10 @@ export const NotificationsPage = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
             Notifications
           </h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             {unreadCount > 0
               ? `${unreadCount} unread notification${unreadCount > 1 ? 's' : ''}`
               : 'All caught up'}
@@ -125,11 +125,11 @@ export const NotificationsPage = () => {
         <Card>
           <CardBody>
             <div className="text-center py-12">
-              <Bell className="w-12 h-12 mx-auto text-gray-400 dark:text-gray-600 mb-3" />
-              <p className="text-lg font-medium text-gray-900 dark:text-white">
+              <Bell className="w-12 h-12 mx-auto text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mb-3" />
+              <p className="text-lg font-medium text-[var(--text-primary)] dark:text-white">
                 No notifications
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-1">
                 {activeFilter === 'all'
                   ? 'You will see notifications here when they arrive'
                   : `No ${activeFilter.replace('_', ' ')} notifications`}
@@ -142,7 +142,7 @@ export const NotificationsPage = () => {
           {Object.entries(groupedNotifications).map(([date, items]) => (
             <Card key={date}>
               <CardBody className="p-0">
-                <div className="px-4 py-2 bg-gray-50 dark:bg-gray-800/50 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider border-b border-gray-200 dark:border-gray-700">
+                <div className="px-4 py-2 bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface)]/50 text-xs font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider border-b border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
                   {date}
                 </div>
                 {items.map((notification) => (

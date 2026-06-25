@@ -86,10 +86,10 @@ export const TeamsPage = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
             Teams
           </h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             Manage teams and player rosters
           </p>
         </div>
@@ -121,7 +121,7 @@ export const TeamsPage = () => {
         </div>
       ) : (
         <div className="text-center py-12">
-          <p className="text-gray-500 dark:text-gray-400">
+          <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             No teams yet. Build your first squad and get playing.
           </p>
         </div>

@@ -116,7 +116,7 @@ export const MediaPage = () => {
                     <Button variant="ghost" size="sm">
                       <Download className="w-3 h-3" />
                     </Button>
-                    <Button variant="ghost" size="sm" className="text-red-600">
+                    <Button variant="ghost" size="sm" className="text-red-600 dark:text-red-400">
                       <Trash2 className="w-3 h-3" />
                     </Button>
                   </div>

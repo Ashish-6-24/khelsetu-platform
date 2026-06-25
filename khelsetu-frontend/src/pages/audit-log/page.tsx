@@ -56,10 +56,10 @@ export const AuditLogPage = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
             Audit Log
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-1">
             Track all user actions and system events
           </p>
         </div>
@@ -73,7 +73,7 @@ export const AuditLogPage = () => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
               Activity Log
             </h3>
           </div>
@@ -82,20 +82,20 @@ export const AuditLogPage = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-200 dark:border-gray-700">
-                  <th className="text-left py-2 px-3 text-gray-500 dark:text-gray-400">
+                <tr className="border-b border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
+                  <th className="text-left py-2 px-3 text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                     User
                   </th>
-                  <th className="text-left py-2 px-3 text-gray-500 dark:text-gray-400">
+                  <th className="text-left py-2 px-3 text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                     Action
                   </th>
-                  <th className="text-left py-2 px-3 text-gray-500 dark:text-gray-400">
+                  <th className="text-left py-2 px-3 text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                     Resource
                   </th>
-                  <th className="text-left py-2 px-3 text-gray-500 dark:text-gray-400">
+                  <th className="text-left py-2 px-3 text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                     Time
                   </th>
-                  <th className="text-left py-2 px-3 text-gray-500 dark:text-gray-400">
+                  <th className="text-left py-2 px-3 text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                     Severity
                   </th>
                 </tr>
@@ -104,18 +104,18 @@ export const AuditLogPage = () => {
                 {logs.map((log) => (
                   <tr
                     key={log.id}
-                    className="border-b border-gray-100 dark:border-gray-800"
+                    className="border-b border-[var(--border-subtle)] dark:border-[var(--border-subtle)]"
                   >
-                    <td className="py-2 px-3 text-gray-900 dark:text-white">
+                    <td className="py-2 px-3 text-[var(--text-primary)] dark:text-white">
                       {log.user}
                     </td>
-                    <td className="py-2 px-3 text-gray-700 dark:text-gray-300">
+                    <td className="py-2 px-3 text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
                       {log.action}
                     </td>
-                    <td className="py-2 px-3 text-gray-700 dark:text-gray-300">
+                    <td className="py-2 px-3 text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
                       {log.resource}
                     </td>
-                    <td className="py-2 px-3 text-gray-500 dark:text-gray-400 text-xs">
+                    <td className="py-2 px-3 text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] text-xs">
                       {log.timestamp}
                     </td>
                     <td className="py-2 px-3">

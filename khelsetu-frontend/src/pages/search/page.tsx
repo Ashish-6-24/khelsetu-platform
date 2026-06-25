@@ -30,10 +30,10 @@ export const SearchPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
           Search
         </h1>
-        <p className="text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-1">
           Find tournaments, teams, players, and matches
         </p>
       </div>
@@ -55,7 +55,7 @@ export const SearchPage = () => {
       {activeTab === 'recent' && (
         <div className="space-y-3">
           {recentSearches.length === 0 ? (
-            <p className="text-center text-gray-500 dark:text-gray-400 py-8">
+            <p className="text-center text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] py-8">
               No recent searches
             </p>
           ) : (
@@ -64,7 +64,7 @@ export const SearchPage = () => {
                 <button
                   key={index}
                   onClick={() => handleSearch(search)}
-                  className="px-3 py-1.5 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                  className="px-3 py-1.5 text-sm rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)] bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] text-[var(--text-primary)] dark:text-[var(--text-secondary)] hover:bg-[var(--bg-surface-sunken)] dark:hover:bg-[var(--bg-surface-raised)]"
                 >
                   {search}
                 </button>
@@ -87,18 +87,18 @@ export const SearchPage = () => {
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="animate-pulse h-16 bg-gray-200 dark:bg-gray-700 rounded-lg"
+                  className="animate-pulse h-16 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded-lg"
                 />
               ))}
             </div>
           ) : results.length === 0 && query ? (
-            <p className="text-center text-gray-500 dark:text-gray-400 py-8">
+            <p className="text-center text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] py-8">
               No results found for "{query}"
             </p>
           ) : (
             Object.entries(groupedResults).map(([type, items]) => (
               <div key={type} className="space-y-3">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white capitalize">
+                <h3 className="text-lg font-semibold text-[var(--text-primary)] dark:text-white capitalize">
                   {type} ({items.length})
                 </h3>
                 <div className="space-y-2">
