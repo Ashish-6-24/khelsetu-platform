@@ -3,6 +3,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import { useScoringStore } from './scoringStore';
+import { useUIStore } from './uiStore';
 
 interface AuthStore extends AuthState {
   setUser: (user: User | null) => void;
@@ -26,6 +27,7 @@ export const useAuthStore = create<AuthStore>()(
 
       login: (user, tokens) => {
         localStorage.setItem('auth_token', tokens.accessToken);
+        useUIStore.getState().allowDarkMode();
         set({
           user,
           tokens,
@@ -37,6 +39,7 @@ export const useAuthStore = create<AuthStore>()(
       logout: () => {
         localStorage.removeItem('auth_token');
         useScoringStore.getState().resetScoring();
+        useUIStore.getState().forceLightMode();
         set({
           user: null,
           tokens: null,

@@ -5,6 +5,8 @@ import { ROUTES } from '@utils/constants';
 import { BarChart3, Radio, Sparkles, Trophy, Users } from 'lucide-react';
 
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useUIStore } from '@store/uiStore';
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -25,6 +27,12 @@ const stats = [
 ];
 
 export const AuthLayout = ({ children }: AuthLayoutProps) => {
+  const forceLightMode = useUIStore((s) => s.forceLightMode);
+
+  useEffect(() => {
+    forceLightMode();
+  }, [forceLightMode]);
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-[var(--bg-app)]">
       <SkipLink />

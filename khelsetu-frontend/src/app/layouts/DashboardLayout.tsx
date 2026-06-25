@@ -4,6 +4,7 @@ import { MobileTabBar } from '@components/navigation/MobileTabBar';
 import { Sidebar } from '@components/navigation/Sidebar';
 import { SkipLink } from '@features/accessibility';
 import { useUIStore } from '@store/uiStore';
+import { useEffect } from 'react';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -18,6 +19,11 @@ const MobileDrawerWrapper = () => {
 export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const sidebarState = useUIStore((s) => s.sidebarState);
   const sidebarWidth = sidebarState === 'collapsed' ? 'lg:pl-20' : 'lg:pl-64';
+  const allowDarkMode = useUIStore((s) => s.allowDarkMode);
+
+  useEffect(() => {
+    allowDarkMode();
+  }, [allowDarkMode]);
 
   return (
     <div className="min-h-screen bg-[var(--bg-app)]">

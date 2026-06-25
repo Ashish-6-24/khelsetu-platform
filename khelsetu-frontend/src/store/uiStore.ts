@@ -23,6 +23,8 @@ interface UINotification {
 
 interface UIActions {
   setTheme: (theme: Theme) => void;
+  forceLightMode: () => void;
+  allowDarkMode: () => void;
   toggleSidebar: () => void;
   setSidebarState: (state: SidebarState) => void;
   toggleMobileMenu: () => void;
@@ -35,18 +37,24 @@ interface UIActions {
   setLoading: (isLoading: boolean) => void;
 }
 
+let isAuthContext = false;
+
+const setAuthContext = (value: boolean) => {
+  isAuthContext = value;
+};
+
 const applyThemeToDOM = (theme: Theme) => {
   if (typeof document === 'undefined') return;
   const root = document.documentElement;
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const isDark = theme === 'dark' || (theme === 'system' && prefersDark);
+  const isDark = isAuthContext && (theme === 'dark' || (theme === 'system' && prefersDark));
   root.classList.toggle('dark', isDark);
   root.dataset.theme = theme;
 };
 
 export const useUIStore = create<UIState & UIActions>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       theme: 'system',
       sidebarState: 'expanded',
       isMobileMenuOpen: false,
@@ -58,6 +66,20 @@ export const useUIStore = create<UIState & UIActions>()(
         applyThemeToDOM(theme);
         localStorage.setItem(STORAGE_KEYS.THEME, theme);
         set({ theme });
+      },
+
+      forceLightMode: () => {
+        setAuthContext(false);
+        if (typeof document !== 'undefined') {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.dataset.theme = 'light';
+        }
+      },
+
+      allowDarkMode: () => {
+        setAuthContext(true);
+        const { theme } = get();
+        applyThemeToDOM(theme);
       },
 
       toggleSidebar: () =>
@@ -112,3 +134,5 @@ export const useUIStore = create<UIState & UIActions>()(
     },
   ),
 );
+
+export { setAuthContext, applyThemeToDOM };
