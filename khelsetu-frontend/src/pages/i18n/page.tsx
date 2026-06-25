@@ -10,10 +10,10 @@ export const I18nPage = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
             Internationalization
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-1">
             Manage language preferences and translations
           </p>
         </div>
@@ -23,7 +23,7 @@ export const I18nPage = () => {
       <Card>
         <CardBody>
           <div className="space-y-3">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
               Available Languages
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -32,18 +32,18 @@ export const I18nPage = () => {
                   key={lang.code}
                   className={`p-4 rounded-lg border ${
                     language === lang.code
-                      ? 'border-[#7F1D1D] bg-[#FEF2F2] dark:bg-[rgb(127_29_29/0.18)]'
-                      : 'border-gray-200 dark:border-gray-700'
+                      ? 'border-[var(--brand-primary)] bg-[var(--brand-primary-soft)] dark:bg-[rgb(127_29_29/0.18)]'
+                      : 'border-[var(--border-subtle)] dark:border-[var(--border-subtle)]'
                   }`}
                 >
-                  <p className="font-bold text-gray-900 dark:text-white">
+                  <p className="font-bold text-[var(--text-primary)] dark:text-white">
                     {lang.name}
                   </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                     Code: {lang.code.toUpperCase()}
                   </p>
                   {language === lang.code && (
-                    <p className="text-xs text-[#7F1D1D] dark:text-[#FCA5A5] mt-1">
+                    <p className="text-xs text-[var(--brand-primary)] dark:text-[var(--brand-primary)] mt-1">
                       Active
                     </p>
                   )}
@@ -58,20 +58,20 @@ export const I18nPage = () => {
 
       <Card>
         <CardBody>
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+          <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white mb-4">
             Translation Keys
           </h3>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-200 dark:border-gray-700">
-                  <th className="text-left py-2 px-3 text-gray-500 dark:text-gray-400">
+                <tr className="border-b border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
+                  <th className="text-left py-2 px-3 text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                     Key
                   </th>
                   {availableLanguages.map((lang) => (
                     <th
                       key={lang.code}
-                      className="text-left py-2 px-3 text-gray-500 dark:text-gray-400"
+                      className="text-left py-2 px-3 text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]"
                     >
                       {lang.name}
                     </th>
@@ -89,9 +89,9 @@ export const I18nPage = () => {
                 ].map((key) => (
                   <tr
                     key={key}
-                    className="border-b border-gray-100 dark:border-gray-800"
+                    className="border-b border-[var(--border-subtle)] dark:border-[var(--border-subtle)]"
                   >
-                    <td className="py-2 px-3 font-mono text-xs text-gray-600 dark:text-gray-400">
+                    <td className="py-2 px-3 font-mono text-xs text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
                       {key}
                     </td>
                     {availableLanguages.map((lang) => {
@@ -114,7 +114,7 @@ export const I18nPage = () => {
                       return (
                         <td
                           key={lang.code}
-                          className="py-2 px-3 text-gray-900 dark:text-white"
+                          className="py-2 px-3 text-[var(--text-primary)] dark:text-white"
                         >
                           {String(value)}
                         </td>

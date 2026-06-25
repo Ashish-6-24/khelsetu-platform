@@ -18,7 +18,7 @@ const stagger: Variants = {
 
 export const AboutPage = () => {
   return (
-    <div className="bg-[#FAFAF9] dark:bg-[#0A0A0F]">
+    <div className="bg-[var(--bg-surface)] dark:bg-[var(--bg-canvas)]">
       <Hero />
       <Mission />
       <Story />
@@ -31,7 +31,7 @@ export const AboutPage = () => {
 };
 
 const Hero = () => (
-  <section className="border-b border-[#E7E5E4] py-20 dark:border-[#27272A] sm:py-24">
+  <section className="border-b border-[var(--border-subtle)] py-20 dark:border-[var(--border-strong)] sm:py-24">
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <motion.div
         initial="hidden"
@@ -41,21 +41,21 @@ const Hero = () => (
       >
         <motion.div
           variants={fadeUp}
-          className="inline-flex items-center gap-2 rounded-full border border-[#7F1D1D]/15 bg-white px-3 py-1 text-xs font-semibold text-[#7F1D1D] dark:border-[#FCA5A5]/20 dark:bg-[#13131A] dark:text-[#FCA5A5]"
+          className="inline-flex items-center gap-2 rounded-full border border-[var(--brand-primary)]/15 bg-white px-3 py-1 text-xs font-semibold text-[var(--brand-primary)] dark:border-[var(--brand-primary)]/20 dark:bg-[var(--bg-surface-raised)] dark:text-[var(--brand-primary)]"
         >
-          <Heart className="h-3.5 w-3.5 text-[#B8860B]" />
+          <Heart className="h-3.5 w-3.5 text-[var(--brand-accent)]" />
           About KhelSetu
         </motion.div>
         <motion.h1
           variants={fadeUp}
-          className="mt-6 text-balance font-display text-4xl font-bold tracking-tight text-[#0F172A] sm:text-5xl lg:text-6xl dark:text-white"
+          className="mt-6 text-balance font-display text-4xl font-bold tracking-tight text-[var(--text-primary)] sm:text-5xl lg:text-6xl dark:text-white"
         >
           Built in Nepal.{' '}
-          <span className="text-[#7F1D1D] dark:text-[#FCA5A5]">For Nepal.</span>
+          <span className="text-[var(--brand-primary)] dark:text-[var(--brand-primary)]">For Nepal.</span>
         </motion.h1>
         <motion.p
           variants={fadeUp}
-          className="mt-6 text-pretty text-lg leading-relaxed text-[#475569] sm:text-xl dark:text-[#CBD5E1]"
+          className="mt-6 text-pretty text-lg leading-relaxed text-[var(--text-secondary)] sm:text-xl dark:text-[var(--text-muted)]"
         >
           We&apos;re a small team of engineers, designers, and former tournament
           organizers building the operating system for local sports in Nepal.
@@ -68,23 +68,23 @@ const Hero = () => (
 const Mission = () => (
   <section className="py-20 sm:py-24">
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-      <div className="text-xs font-semibold uppercase tracking-wider text-[#B8860B]">
+      <div className="text-xs font-semibold uppercase tracking-wider text-[var(--brand-accent)]">
         Our mission
       </div>
-      <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-[#0F172A] sm:text-4xl dark:text-white">
+      <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-[var(--text-primary)] sm:text-4xl dark:text-white">
         A local club in Dolpa should have the same tools as the IPL.
       </h2>
-      <p className="mt-6 text-lg leading-relaxed text-[#475569] dark:text-[#CBD5E1]">
+      <p className="mt-6 text-lg leading-relaxed text-[var(--text-secondary)] dark:text-[var(--text-muted)]">
         We watched too many tournaments run on WhatsApp groups and Excel sheets.
         We watched organizers lose a day to printing scorecards, lose a season
         to rain delays, lose sponsors to clunky broadcasts. We thought: it
         doesn&apos;t have to be this way.
       </p>
-      <blockquote className="mt-8 border-l-4 border-[#7F1D1D] pl-6 font-display text-2xl italic leading-relaxed text-[#0F172A] dark:text-white">
+      <blockquote className="mt-8 border-l-4 border-[var(--brand-primary)] pl-6 font-display text-2xl italic leading-relaxed text-[var(--text-primary)] dark:text-white">
         &ldquo;We believe a local club in Dolpa should have the same tools as
         the IPL — without needing a 12-person tech team.&rdquo;
       </blockquote>
-      <p className="mt-6 text-lg leading-relaxed text-[#475569] dark:text-[#CBD5E1]">
+      <p className="mt-6 text-lg leading-relaxed text-[var(--text-secondary)] dark:text-[var(--text-muted)]">
         KhelSetu is our answer. One platform, designed for the way Nepali
         tournaments actually work — small budgets, monsoon weather, intermittent
         internet, and proud local pride.
@@ -127,12 +127,12 @@ const milestones = [
 ];
 
 const Story = () => (
-  <section className="border-t border-[#E7E5E4] py-20 dark:border-[#27272A] sm:py-24">
+  <section className="border-t border-[var(--border-subtle)] py-20 dark:border-[var(--border-strong)] sm:py-24">
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-      <div className="text-xs font-semibold uppercase tracking-wider text-[#B8860B]">
+      <div className="text-xs font-semibold uppercase tracking-wider text-[var(--brand-accent)]">
         Our story
       </div>
-      <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-[#0F172A] sm:text-4xl dark:text-white">
+      <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-[var(--text-primary)] sm:text-4xl dark:text-white">
         Two years of showing up.
       </h2>
       <div className="mt-12 space-y-12">
@@ -145,14 +145,14 @@ const Story = () => (
             transition={{ duration: 0.4 }}
             className="grid grid-cols-[80px_1fr] gap-6"
           >
-            <div className="text-3xl font-display font-bold text-[#7F1D1D] dark:text-[#FCA5A5]">
+            <div className="text-3xl font-display font-bold text-[var(--brand-primary)] dark:text-[var(--brand-primary)]">
               {m.year}
             </div>
             <div>
-              <h3 className="text-xl font-semibold tracking-tight text-[#0F172A] dark:text-white">
+              <h3 className="text-xl font-semibold tracking-tight text-[var(--text-primary)] dark:text-white">
                 {m.title}
               </h3>
-              <p className="mt-2 text-[#475569] dark:text-[#CBD5E1]">
+              <p className="mt-2 text-[var(--text-secondary)] dark:text-[var(--text-muted)]">
                 {m.description}
               </p>
             </div>
@@ -185,16 +185,16 @@ const team = [
 ];
 
 const Team = () => (
-  <section className="border-t border-[#E7E5E4] py-20 dark:border-[#27272A] sm:py-24">
+  <section className="border-t border-[var(--border-subtle)] py-20 dark:border-[var(--border-strong)] sm:py-24">
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">
-        <div className="text-xs font-semibold uppercase tracking-wider text-[#B8860B]">
+        <div className="text-xs font-semibold uppercase tracking-wider text-[var(--brand-accent)]">
           The team
         </div>
-        <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-[#0F172A] sm:text-4xl dark:text-white">
+        <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-[var(--text-primary)] sm:text-4xl dark:text-white">
           Three people. One platform.
         </h2>
-        <p className="mt-4 text-lg text-[#475569] dark:text-[#CBD5E1]">
+        <p className="mt-4 text-lg text-[var(--text-secondary)] dark:text-[var(--text-muted)]">
           We&apos;re small, opinionated, and we ship on Fridays.
         </p>
       </div>
@@ -202,23 +202,23 @@ const Team = () => (
         {team.map((m) => (
           <div
             key={m.name}
-            className="rounded-2xl border border-[#E7E5E4] bg-white p-6 transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_24px_-6px_rgb(15_23_42/0.08)] dark:border-[#27272A] dark:bg-[#13131A]"
+            className="rounded-2xl border border-[var(--border-subtle)] bg-white p-6 transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_24px_-6px_rgb(15_23_42/0.08)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)]"
           >
             <div
               className="flex h-16 w-16 items-center justify-center rounded-full text-xl font-semibold text-white shadow-sm"
               style={{
-                background: 'linear-gradient(135deg, #991B1B 0%, #7F1D1D 100%)',
+                background: 'linear-gradient(135deg, var(--brand-primary-hover) 0%, var(--brand-primary) 100%)',
               }}
             >
               {m.initials}
             </div>
-            <h3 className="mt-4 text-base font-semibold text-[#0F172A] dark:text-white">
+            <h3 className="mt-4 text-base font-semibold text-[var(--text-primary)] dark:text-white">
               {m.name}
             </h3>
-            <p className="mt-1 text-xs text-[#7F1D1D] dark:text-[#FCA5A5]">
+            <p className="mt-1 text-xs text-[var(--brand-primary)] dark:text-[var(--brand-primary)]">
               {m.role}
             </p>
-            <p className="mt-3 text-sm leading-relaxed text-[#475569] dark:text-[#CBD5E1]">
+            <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)] dark:text-[var(--text-muted)]">
               {m.bio}
             </p>
           </div>
@@ -256,13 +256,13 @@ const values = [
 ];
 
 const Values = () => (
-  <section className="border-t border-[#E7E5E4] py-20 dark:border-[#27272A] sm:py-24">
+  <section className="border-t border-[var(--border-subtle)] py-20 dark:border-[var(--border-strong)] sm:py-24">
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">
-        <div className="text-xs font-semibold uppercase tracking-wider text-[#B8860B]">
+        <div className="text-xs font-semibold uppercase tracking-wider text-[var(--brand-accent)]">
           Our values
         </div>
-        <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-[#0F172A] sm:text-4xl dark:text-white">
+        <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-[var(--text-primary)] sm:text-4xl dark:text-white">
           What we believe in.
         </h2>
       </div>
@@ -272,16 +272,16 @@ const Values = () => (
             <div
               className={clsx(
                 'flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl font-display text-2xl font-bold',
-                'bg-gradient-to-br from-[#B8860B] to-[#9A7209] text-[#1A0A0A] shadow-sm',
+                'bg-gradient-to-br from-[var(--brand-accent)] to-[var(--brand-accent-hover)] text-[var(--brand-primary-ink)] shadow-sm',
               )}
             >
               {v.n}
             </div>
             <div>
-              <h3 className="text-lg font-semibold tracking-tight text-[#0F172A] dark:text-white">
+              <h3 className="text-lg font-semibold tracking-tight text-[var(--text-primary)] dark:text-white">
                 {v.title}
               </h3>
-              <p className="mt-2 text-[#475569] dark:text-[#CBD5E1]">
+              <p className="mt-2 text-[var(--text-secondary)] dark:text-[var(--text-muted)]">
                 {v.description}
               </p>
             </div>
@@ -294,16 +294,16 @@ const Values = () => (
 
 const partners = ['NPL', 'ANFA', 'CBA', 'NVL', 'NSC', 'NSJF', 'KMC', 'PPL'];
 const BackedBy = () => (
-  <section className="border-t border-[#E7E5E4] py-16 dark:border-[#27272A]">
+  <section className="border-t border-[var(--border-subtle)] py-16 dark:border-[var(--border-strong)]">
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <p className="text-center text-xs font-semibold uppercase tracking-wider text-[#475569] dark:text-[#CBD5E1]">
+      <p className="text-center text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)] dark:text-[var(--text-muted)]">
         Supported by the local sports community
       </p>
       <div className="mt-8 grid grid-cols-4 gap-x-8 gap-y-4 sm:grid-cols-8">
         {partners.map((p) => (
           <div
             key={p}
-            className="flex h-10 items-center justify-center rounded-lg border border-dashed border-[#E7E5E4] text-xs font-bold tracking-wider text-[#94A3B8] dark:border-[#27272A] dark:text-[#64748B]"
+            className="flex h-10 items-center justify-center rounded-lg border border-dashed border-[var(--border-subtle)] text-xs font-bold tracking-wider text-[var(--text-tertiary)] dark:border-[var(--border-strong)] dark:text-[var(--text-secondary)]"
           >
             {p}
           </div>
@@ -314,36 +314,36 @@ const BackedBy = () => (
 );
 
 const FooterCta = () => (
-  <section className="border-t border-[#E7E5E4] py-20 dark:border-[#27272A] sm:py-24">
+  <section className="border-t border-[var(--border-subtle)] py-20 dark:border-[var(--border-strong)] sm:py-24">
     <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
       <Logo size="lg" />
-      <h2 className="mt-6 font-display text-2xl font-bold tracking-tight text-[#0F172A] sm:text-3xl dark:text-white">
+      <h2 className="mt-6 font-display text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl dark:text-white">
         Want to know more?
       </h2>
-      <p className="mt-3 text-[#475569] dark:text-[#CBD5E1]">
+      <p className="mt-3 text-[var(--text-secondary)] dark:text-[var(--text-muted)]">
         Read our blog, talk to a human, or just start a tournament — we&apos;ll
         be there.
       </p>
       <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <Link
           to={ROUTES.HOME}
-          className="inline-flex h-12 items-center gap-2 rounded-xl bg-gradient-to-br from-[#991B1B] via-[#7F1D1D] to-[#450A0A] px-6 text-sm font-semibold text-white shadow-[0_4px_14px_-2px_rgb(127_29_29/0.45)] transition-all hover:shadow-[0_8px_24px_-4px_rgb(127_29_29/0.55)]"
+          className="inline-flex h-12 items-center gap-2 rounded-xl bg-gradient-to-br from-[var(--brand-primary-hover)] via-[var(--brand-primary)] to-[var(--brand-primary-active)] px-6 text-sm font-semibold text-white shadow-[0_4px_14px_-2px_rgb(127_29_29/0.45)] transition-all hover:shadow-[0_8px_24px_-4px_rgb(127_29_29/0.55)]"
         >
           Start a tournament
           <ArrowRight className="h-4 w-4" />
         </Link>
         <a
           href="mailto:hello@khelsetu.app"
-          className="inline-flex h-12 items-center gap-2 rounded-xl border border-[#E7E5E4] bg-white px-6 text-sm font-semibold text-[#0F172A] hover:bg-[#F5F5F4] dark:border-[#3F3F46] dark:bg-[#13131A] dark:text-[#F1F5F9] dark:hover:bg-[#1A1A23]"
+          className="inline-flex h-12 items-center gap-2 rounded-xl border border-[var(--border-subtle)] bg-white px-6 text-sm font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-surface-sunken)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)] dark:text-[var(--text-primary)] dark:hover:bg-[var(--bg-surface-raised)]"
         >
           Email us
         </a>
       </div>
-      <div className="mt-10 flex items-center justify-center gap-3 text-[#475569] dark:text-[#94A3B8]">
+      <div className="mt-10 flex items-center justify-center gap-3 text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
         <a
           href="#"
           aria-label="X (Twitter)"
-          className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#E7E5E4] transition-all hover:-translate-y-0.5 hover:border-[#7F1D1D]/30 hover:bg-white hover:text-[#7F1D1D] dark:border-[#27272A] dark:hover:border-[#FCA5A5]/30 dark:hover:bg-[#13131A] dark:hover:text-[#FCA5A5]"
+          className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-subtle)] transition-all hover:-translate-y-0.5 hover:border-[var(--brand-primary)]/30 hover:bg-white hover:text-[var(--brand-primary)] dark:border-[var(--border-strong)] dark:hover:border-[var(--brand-primary)]/30 dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-[var(--brand-primary)]"
         >
           <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
             <path d="M18.244 2H21.5l-7.5 8.57L23 22h-6.844l-5.36-7.01L4.5 22H1.244l8.04-9.18L1 2h7.02l4.85 6.41L18.244 2Zm-1.2 18h1.82L7.04 4H5.1l11.944 16Z" />
@@ -352,7 +352,7 @@ const FooterCta = () => (
         <a
           href="#"
           aria-label="LinkedIn"
-          className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#E7E5E4] transition-all hover:-translate-y-0.5 hover:border-[#7F1D1D]/30 hover:bg-white hover:text-[#7F1D1D] dark:border-[#27272A] dark:hover:border-[#FCA5A5]/30 dark:hover:bg-[#13131A] dark:hover:text-[#FCA5A5]"
+          className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-subtle)] transition-all hover:-translate-y-0.5 hover:border-[var(--brand-primary)]/30 hover:bg-white hover:text-[var(--brand-primary)] dark:border-[var(--border-strong)] dark:hover:border-[var(--brand-primary)]/30 dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-[var(--brand-primary)]"
         >
           <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
             <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85V21h-4V9Z" />
@@ -361,7 +361,7 @@ const FooterCta = () => (
         <a
           href="#"
           aria-label="GitHub"
-          className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#E7E5E4] transition-all hover:-translate-y-0.5 hover:border-[#7F1D1D]/30 hover:bg-white hover:text-[#7F1D1D] dark:border-[#27272A] dark:hover:border-[#FCA5A5]/30 dark:hover:bg-[#13131A] dark:hover:text-[#FCA5A5]"
+          className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-subtle)] transition-all hover:-translate-y-0.5 hover:border-[var(--brand-primary)]/30 hover:bg-white hover:text-[var(--brand-primary)] dark:border-[var(--border-strong)] dark:hover:border-[var(--brand-primary)]/30 dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-[var(--brand-primary)]"
         >
           <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
             <path

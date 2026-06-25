@@ -82,12 +82,12 @@ const SaveButton = ({
       className={clsx(
         'btn-save shine relative inline-flex items-center justify-center gap-2',
         'rounded-xl px-5 py-2.5 text-sm font-semibold',
-        'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#7F1D1D]',
-        'dark:focus-visible:ring-[#FCA5A5] dark:focus-visible:ring-offset-slate-900',
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-primary)]',
+        'dark:focus-visible:ring-[var(--brand-primary)] dark:focus-visible:ring-offset-slate-900',
         'disabled:cursor-not-allowed disabled:opacity-50',
         state === 'success'
           ? 'btn-save-success text-white'
-          : 'bg-gradient-to-br from-[#B91C1C] via-[#991B1B] to-[#7F1D1D] text-white shadow-[0_4px_14px_-2px_rgb(153_27_27/0.45)] hover:from-[#991B1B] hover:via-[#7F1D1D] hover:to-[#450A0A] hover:shadow-[0_8px_28px_-4px_rgb(153_27_27/0.55)] hover:brightness-110',
+          : 'bg-gradient-to-br from-[var(--color-danger)] via-[var(--brand-primary-hover)] to-[var(--brand-primary)] text-white shadow-[0_4px_14px_-2px_rgb(153_27_27/0.45)] hover:from-[var(--brand-primary-hover)] hover:via-[var(--brand-primary)] hover:to-[var(--brand-primary-active)] hover:shadow-[0_8px_28px_-4px_rgb(153_27_27/0.55)] hover:brightness-110',
       )}
     >
       {state === 'loading' && <Loader2 className="h-4 w-4 animate-spin" />}
@@ -176,10 +176,10 @@ export const SettingsPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
           Settings
         </h1>
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
           Manage your account settings and preferences
         </p>
       </div>
@@ -187,21 +187,21 @@ export const SettingsPage = () => {
       <Card>
         <CardBody>
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#7F1D1D] to-[#991B1B] flex items-center justify-center text-white text-2xl font-bold">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-hover)] flex items-center justify-center text-white text-2xl font-bold">
               {user?.name?.charAt(0).toUpperCase() ?? 'U'}
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h2 className="text-lg font-semibold text-[var(--text-primary)] dark:text-white">
                 {user?.name}
               </h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                 {user?.role}
               </p>
             </div>
           </div>
 
           <form onSubmit={handleProfileSubmit(onProfileSubmit)}>
-            <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-3 flex items-center gap-2">
               <UserIcon className="w-4 h-4" />
               Profile Information
             </h3>
@@ -250,7 +250,7 @@ export const SettingsPage = () => {
 
       <Card>
         <CardBody>
-          <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+          <h3 className="text-sm font-semibold text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-3">
             Security
           </h3>
           {!showPasswordForm ? (
@@ -312,16 +312,16 @@ export const SettingsPage = () => {
 
       <Card>
         <CardBody>
-          <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+          <h3 className="text-sm font-semibold text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-3">
             Preferences
           </h3>
           <div className="space-y-4">
-            <div className="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-800">
+            <div className="flex items-center justify-between py-3 border-b border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
               <div>
-                <p className="font-medium text-gray-900 dark:text-white">
+                <p className="font-medium text-[var(--text-primary)] dark:text-white">
                   Email Notifications
                 </p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   Receive email updates for match events
                 </p>
               </div>
@@ -345,7 +345,7 @@ export const SettingsPage = () => {
 
             <div className="flex items-center justify-between py-3">
               <div>
-                <p className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                <p className="font-medium text-[var(--text-primary)] dark:text-white flex items-center gap-2">
                   {theme === 'dark' ? (
                     <Moon className="w-4 h-4" />
                   ) : (
@@ -353,7 +353,7 @@ export const SettingsPage = () => {
                   )}
                   Dark Mode
                 </p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   Toggle dark theme
                 </p>
               </div>

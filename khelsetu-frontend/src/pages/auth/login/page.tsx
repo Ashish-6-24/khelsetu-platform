@@ -93,7 +93,7 @@ export const LoginPage = () => {
           <label className="group inline-flex cursor-pointer items-center gap-2 text-[var(--text-secondary)]">
             <input
               type="checkbox"
-              className="h-4 w-4 rounded border-[var(--border-strong)] text-[#7F1D1D] transition-colors focus:ring-2 focus:ring-[#7F1D1D]/30 dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-sunken)]"
+              className="h-4 w-4 rounded border-[var(--border-strong)] text-[var(--brand-primary)] transition-colors focus:ring-2 focus:ring-[var(--brand-primary)]/30 dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-sunken)]"
             />
             Remember me
           </label>

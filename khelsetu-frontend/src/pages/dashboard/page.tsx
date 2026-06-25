@@ -118,24 +118,24 @@ export const DashboardPage = () => {
     <div className="relative space-y-6">
       <GradientMesh variant="brand" />
       <FloatingOrb
-        color="#7F1D1D"
+        color="var(--brand-primary)"
         size={200}
         delay={0}
         duration={20}
         className="-right-16 top-0"
       />
       <FloatingOrb
-        color="#B8860B"
+        color="var(--brand-accent)"
         size={150}
         delay={2}
         duration={18}
         className="-left-12 bottom-0"
       />
 
-      <section className="relative overflow-hidden rounded-3xl border border-[var(--border-subtle)] bg-gradient-to-br from-[#7F1D1D] via-[#991B1B] to-[#450A0A] p-6 text-white shadow-[var(--shadow-lg)] sm:p-8 animate-fade-in-up">
+      <section className="relative overflow-hidden rounded-3xl border border-[var(--border-subtle)] bg-gradient-to-br from-[var(--brand-primary)] via-[var(--brand-primary-hover)] to-[var(--brand-primary-active)] p-6 text-white shadow-[var(--shadow-lg)] sm:p-8 animate-fade-in-up">
         <div className="pointer-events-none absolute inset-0 -z-0 opacity-30">
           <div className="absolute -left-10 -top-10 h-40 w-40 rounded-full bg-white/20 blur-3xl" />
-          <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-[#B8860B]/20 blur-3xl" />
+          <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-[var(--brand-accent)]/20 blur-3xl" />
           <div className="absolute inset-0 grid-pattern opacity-30" />
         </div>
         <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
@@ -192,14 +192,14 @@ export const DashboardPage = () => {
           title="Total Tournaments"
           value={totalTournaments}
           icon={<Trophy className="h-5 w-5" />}
-          glowColor="#7F1D1D"
+          glowColor="var(--brand-primary)"
           change={{ value: 12, isPositive: true }}
         />
         <GlowStatCard
           title="Live Matches"
           value={liveMatches}
           icon={<Radio className="h-5 w-5" />}
-          glowColor="#DC2626"
+          glowColor="var(--color-live)"
           change={
             liveMatches > 0
               ? { value: 100, isPositive: true }
@@ -210,14 +210,14 @@ export const DashboardPage = () => {
           title="Total Teams"
           value={totalTeams}
           icon={<Users className="h-5 w-5" />}
-          glowColor="#7C3AED"
+          glowColor="var(--color-info)"
           change={{ value: 8, isPositive: true }}
         />
         <GlowStatCard
           title="Total Players"
           value={totalPlayers}
           icon={<UserPlus className="h-5 w-5" />}
-          glowColor="#15803D"
+          glowColor="var(--color-success)"
           change={{ value: 24, isPositive: true }}
         />
       </div>
@@ -300,7 +300,7 @@ export const DashboardPage = () => {
                       </div>
                       <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
                         <div
-                          className="h-full rounded-full bg-gradient-to-r from-[#7F1D1D] to-[#B8860B] transition-all duration-1000 ease-out"
+                          className="h-full rounded-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)] transition-all duration-1000 ease-out"
                           style={{ width: `${progressA}%` }}
                         />
                       </div>
@@ -321,7 +321,7 @@ export const DashboardPage = () => {
                       </div>
                       <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
                         <div
-                          className="h-full rounded-full bg-gradient-to-r from-[#B8860B] to-[#7F1D1D] transition-all duration-1000 ease-out"
+                          className="h-full rounded-full bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-primary)] transition-all duration-1000 ease-out"
                           style={{ width: `${progressB}%` }}
                         />
                       </div>
@@ -425,7 +425,7 @@ const UpcomingMatches = ({
               key={m.id}
               className="flex items-center gap-4 px-5 py-4 transition-colors hover:bg-slate-50/70 sm:px-6 dark:hover:bg-slate-800/40"
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#7F1D1D] to-[#991B1B] text-xs font-semibold text-white">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-xs font-semibold text-white">
                 VS
               </div>
               <div className="min-w-0 flex-1">
