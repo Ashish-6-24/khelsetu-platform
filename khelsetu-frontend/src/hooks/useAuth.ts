@@ -1,11 +1,14 @@
 import { logger } from '@lib/logger';
 import { authService } from '@services/api/auth';
+import { matchService, tournamentService } from '@services/api/tournament';
 import { useAuthStore } from '@store/authStore';
+import { useQueryClient } from '@tanstack/react-query';
 import type { LoginCredentials, RegisterCredentials } from '@types-domain/auth';
 
 import { useCallback } from 'react';
 
 export const useAuth = () => {
+  const queryClient = useQueryClient();
   const {
     user,
     tokens,
@@ -22,6 +25,21 @@ export const useAuth = () => {
       try {
         const response = await authService.login(credentials);
         login(response.user, response.tokens);
+
+        // Prefetch dashboard data in parallel so it's cached before navigation
+        await Promise.allSettled([
+          queryClient.prefetchQuery({
+            queryKey: ['tournaments'],
+            queryFn: () => tournamentService.getAll(),
+            staleTime: 2 * 60 * 1000,
+          }),
+          queryClient.prefetchQuery({
+            queryKey: ['matches'],
+            queryFn: () => matchService.getAll(),
+            staleTime: 2 * 60 * 1000,
+          }),
+        ]);
+
         return { success: true };
       } catch (error) {
         logger.error('Login failed:', error);
@@ -30,7 +48,7 @@ export const useAuth = () => {
         setLoading(false);
       }
     },
-    [login, setLoading],
+    [login, setLoading, queryClient],
   );
 
   const handleRegister = useCallback(
@@ -39,6 +57,21 @@ export const useAuth = () => {
       try {
         const response = await authService.register(credentials);
         login(response.user, response.tokens);
+
+        // Prefetch dashboard data after registration too
+        await Promise.allSettled([
+          queryClient.prefetchQuery({
+            queryKey: ['tournaments'],
+            queryFn: () => tournamentService.getAll(),
+            staleTime: 2 * 60 * 1000,
+          }),
+          queryClient.prefetchQuery({
+            queryKey: ['matches'],
+            queryFn: () => matchService.getAll(),
+            staleTime: 2 * 60 * 1000,
+          }),
+        ]);
+
         return { success: true };
       } catch (error) {
         logger.error('Registration failed:', error);
@@ -47,7 +80,7 @@ export const useAuth = () => {
         setLoading(false);
       }
     },
-    [login, setLoading],
+    [login, setLoading, queryClient],
   );
 
   const handleLogout = useCallback(async () => {
