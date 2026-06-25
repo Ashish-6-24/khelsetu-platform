@@ -48,6 +48,7 @@ export const CursorGlow = () => {
       className="pointer-events-none fixed inset-0 z-50 hidden lg:block"
       aria-hidden="true"
       style={{
+        // brand-primary glow — theme-dependent shadow, not a design token
         background: `radial-gradient(600px circle at ${pos.x}px ${pos.y}px, rgba(127, 29, 29, 0.06), transparent 40%)`,
         transition: 'background 0.1s ease',
       }}

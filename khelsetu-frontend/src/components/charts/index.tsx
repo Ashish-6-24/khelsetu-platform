@@ -64,12 +64,12 @@ export const LineChart = ({
         <path
           d={pathD}
           fill="none"
-          stroke="#3b82f6"
+          stroke="var(--color-info)"
           strokeWidth="2"
           vectorEffect="non-scaling-stroke"
         />
         {points.map((p, idx) => (
-          <circle key={idx} cx={p.x} cy={p.y} r="1.5" fill="#3b82f6" />
+          <circle key={idx} cx={p.x} cy={p.y} r="1.5" fill="var(--color-info)" />
         ))}
       </svg>
       <div className="absolute bottom-0 left-0 right-0 flex justify-between">
@@ -142,7 +142,7 @@ interface SparklineProps {
 
 export const Sparkline = ({
   data,
-  color = '#3b82f6',
+  color = 'var(--color-info)',
   className,
 }: SparklineProps) => {
   const max = Math.max(...data, 1);

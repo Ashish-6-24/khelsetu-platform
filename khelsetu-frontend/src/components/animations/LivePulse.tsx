@@ -5,8 +5,8 @@ interface LivePulseProps {
 
 const sizeMap = { sm: 'h-2 w-2', md: 'h-3 w-3', lg: 'h-4 w-4' };
 const colorMap = {
-  red: 'bg-[#DC2626]',
-  green: 'bg-[#15803D]',
+  red: 'bg-[var(--color-live)]',
+  green: 'bg-[var(--color-success)]',
 };
 
 export const LivePulse = ({ color = 'red', size = 'md' }: LivePulseProps) => (
