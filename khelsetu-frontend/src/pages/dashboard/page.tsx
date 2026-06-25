@@ -27,6 +27,14 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 const HOUR = 60 * 60 * 1000;
+
+const getGreeting = (): string => {
+  const hour = new Date().getHours();
+  if (hour < 12) return 'Good morning';
+  if (hour < 17) return 'Good afternoon';
+  return 'Good evening';
+};
+
 const FALLBACK_ACTIVITIES: ActivityItem[] = [
   {
     id: '1',
@@ -136,7 +144,7 @@ export const DashboardPage = () => {
                 : 'All systems operational'}
             </div>
             <h1 className="mt-3 font-display text-2xl font-medium -tracking-[0.01em] sm:text-3xl">
-              Welcome back, {user?.name?.split(' ')[0] || 'champion'}.
+              {getGreeting()}, {user?.name?.split(' ')[0] || 'champion'}.
             </h1>
             <p className="mt-1.5 max-w-xl text-sm text-blue-100 sm:text-base">
               {liveMatches > 0
