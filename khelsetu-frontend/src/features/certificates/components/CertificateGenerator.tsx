@@ -52,7 +52,7 @@ export function CertificateGenerator() {
 
               <div className="space-y-3">
                 <div>
-                  <label className="text-xs font-medium text-gray-500">
+                  <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
                     Certificate ID
                   </label>
                   <p className="font-mono text-sm text-gray-900 dark:text-white">
@@ -61,7 +61,7 @@ export function CertificateGenerator() {
                 </div>
 
                 <div>
-                  <label className="text-xs font-medium text-gray-500">
+                  <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
                     Verification URL
                   </label>
                   <div className="flex items-center gap-2">
@@ -105,7 +105,7 @@ export function CertificateGenerator() {
                 <button
                   type="button"
                   onClick={reset}
-                  className="w-full text-center text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                  className="w-full text-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
                 >
                   Create Another Certificate
                 </button>
@@ -120,11 +120,11 @@ export function CertificateGenerator() {
             <CertificatePreview data={certificateData} />
           ) : (
             <div className="flex h-[560px] w-full items-center justify-center rounded-xl border-2 border-dashed border-accent-700/30 bg-accent-50/50">
-              <div className="text-center text-gray-400">
+              <div className="text-center text-gray-400 dark:text-gray-500">
                 <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-accent-100 text-3xl">
                   🏆
                 </div>
-                <p className="text-lg font-medium text-gray-500">
+                <p className="text-lg font-medium text-gray-500 dark:text-gray-400">
                   No Certificate Generated
                 </p>
                 <p className="mt-1 text-sm">

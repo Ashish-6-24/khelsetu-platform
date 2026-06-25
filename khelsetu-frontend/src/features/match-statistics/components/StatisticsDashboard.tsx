@@ -20,7 +20,7 @@ export const StatisticsDashboard = ({ data }: StatisticsDashboardProps) => {
         <CardBody padding="lg">
           <div className="flex flex-col items-center gap-2 sm:flex-row sm:items-center sm:justify-center sm:gap-8">
             <div className="text-center sm:text-right">
-              <h2 className="text-lg font-bold text-gray-900 dark:text-white sm:text-2xl">
+              <h2 className="text-lg font-bold text-[var(--text-primary)] dark:text-white sm:text-2xl">
                 {teamA.teamName}
               </h2>
               <div className="mt-1 h-0.5 w-full bg-gradient-to-r from-transparent to-blue-500" />
@@ -29,7 +29,7 @@ export const StatisticsDashboard = ({ data }: StatisticsDashboardProps) => {
               <span className="text-4xl font-black tabular-nums text-blue-600 dark:text-blue-400 sm:text-5xl">
                 {teamA.goals}
               </span>
-              <span className="text-2xl font-bold text-gray-400 dark:text-gray-500">
+              <span className="text-2xl font-bold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                 –
               </span>
               <span className="text-4xl font-black tabular-nums text-red-600 dark:text-red-400 sm:text-5xl">
@@ -37,7 +37,7 @@ export const StatisticsDashboard = ({ data }: StatisticsDashboardProps) => {
               </span>
             </div>
             <div className="text-center sm:text-left">
-              <h2 className="text-lg font-bold text-gray-900 dark:text-white sm:text-2xl">
+              <h2 className="text-lg font-bold text-[var(--text-primary)] dark:text-white sm:text-2xl">
                 {teamB.teamName}
               </h2>
               <div className="mt-1 h-0.5 w-full bg-gradient-to-l from-transparent to-red-500" />
@@ -49,7 +49,7 @@ export const StatisticsDashboard = ({ data }: StatisticsDashboardProps) => {
       {/* Stat Comparison Bars */}
       <Card glass>
         <CardBody>
-          <h3 className="mb-5 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+          <h3 className="mb-5 text-sm font-bold uppercase tracking-wider text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             Match Statistics
           </h3>
           <div className="space-y-4">
@@ -135,7 +135,7 @@ export const StatisticsDashboard = ({ data }: StatisticsDashboardProps) => {
 
       {/* Player Ratings Table */}
       <div>
-        <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+        <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
           Player Ratings
         </h3>
         <PlayerStatsTable players={playerStats} />
@@ -158,10 +158,10 @@ export const StatisticsDashboardSkeleton = () => (
 
 export const StatisticsDashboardEmpty = () => (
   <div className="flex flex-col items-center justify-center py-16">
-    <div className="rounded-2xl border border-gray-200 bg-white/80 px-8 py-12 text-center backdrop-blur-xl dark:border-gray-700 dark:bg-gray-800/80">
-      <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+    <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 px-8 py-12 text-center backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80">
+      <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100 dark:bg-[var(--bg-surface)]">
         <svg
-          className="h-8 w-8 text-gray-400 dark:text-gray-500"
+          className="h-8 w-8 text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -174,10 +174,10 @@ export const StatisticsDashboardEmpty = () => (
           />
         </svg>
       </div>
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+      <h3 className="text-lg font-semibold text-[var(--text-primary)] dark:text-white">
         No Statistics Available
       </h3>
-      <p className="mt-2 max-w-sm text-sm text-gray-500 dark:text-gray-400">
+      <p className="mt-2 max-w-sm text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
         Match statistics will appear here once the match has started and data is
         being recorded.
       </p>

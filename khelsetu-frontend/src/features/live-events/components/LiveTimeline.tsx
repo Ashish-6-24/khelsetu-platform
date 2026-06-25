@@ -19,7 +19,7 @@ export const LiveTimeline = ({ events, sport }: LiveTimelineProps) => {
     <Card glass>
       <CardHeader>
         <div className="flex items-center gap-2">
-          <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
+          <h3 className="text-sm font-semibold text-[var(--text-primary)] dark:text-white">
             Live Timeline
           </h3>
           {events.length > 0 && (
@@ -32,7 +32,7 @@ export const LiveTimeline = ({ events, sport }: LiveTimelineProps) => {
       <CardBody padding="sm">
         {sorted.length === 0 ? (
           <div className="py-8 text-center">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
               No events yet
             </p>
           </div>
@@ -52,7 +52,7 @@ export const LiveTimeline = ({ events, sport }: LiveTimelineProps) => {
                     animate={{ opacity: 1, x: 0, height: 'auto' }}
                     exit={{ opacity: 0, x: 16, height: 0 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                    className="flex items-center gap-3 p-2.5 rounded-xl bg-white/60 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-700/50"
+                    className="flex items-center gap-3 p-2.5 rounded-xl bg-[var(--bg-surface)]/60 dark:bg-[var(--bg-surface)]/60 border border-gray-100 dark:border-[var(--border-subtle)]/50"
                   >
                     <span
                       className={`flex items-center justify-center w-8 h-8 rounded-lg text-sm ${config.color}/15`}
@@ -60,15 +60,15 @@ export const LiveTimeline = ({ events, sport }: LiveTimelineProps) => {
                       {config.icon}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                      <p className="text-sm font-medium text-[var(--text-primary)] dark:text-white truncate">
                         {event.playerName ?? config.label}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                      <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] truncate">
                         {event.teamName}
                         {event.description && ` · ${event.description}`}
                       </p>
                     </div>
-                    <span className="text-xs font-semibold text-gray-600 dark:text-gray-300 tabular-nums whitespace-nowrap">
+                    <span className="text-xs font-semibold text-[var(--text-secondary)] dark:text-[var(--text-secondary)] tabular-nums whitespace-nowrap">
                       {event.minute}
                       {event.extraMinute && event.extraMinute > 0
                         ? `+${event.extraMinute}`

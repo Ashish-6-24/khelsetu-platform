@@ -38,10 +38,10 @@ export const SubscriptionCard = ({
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+              <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
                 {planName}
               </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                 ${subscription.amount}/{subscription.currency}
               </p>
             </div>
@@ -52,19 +52,19 @@ export const SubscriptionCard = ({
 
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-gray-400" />
+              <Calendar className="w-4 h-4 text-[var(--text-tertiary)]" />
               <div>
-                <p className="text-gray-500 dark:text-gray-400">Start Date</p>
-                <p className="font-medium text-gray-900 dark:text-white">
+                <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">Start Date</p>
+                <p className="font-medium text-[var(--text-primary)] dark:text-white">
                   {new Date(subscription.startDate).toLocaleDateString()}
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-gray-400" />
+              <Calendar className="w-4 h-4 text-[var(--text-tertiary)]" />
               <div>
-                <p className="text-gray-500 dark:text-gray-400">End Date</p>
-                <p className="font-medium text-gray-900 dark:text-white">
+                <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">End Date</p>
+                <p className="font-medium text-[var(--text-primary)] dark:text-white">
                   {new Date(subscription.endDate).toLocaleDateString()}
                 </p>
               </div>
@@ -72,8 +72,8 @@ export const SubscriptionCard = ({
           </div>
 
           <div className="flex items-center gap-2 text-sm">
-            <CreditCard className="w-4 h-4 text-gray-400" />
-            <p className="text-gray-500 dark:text-gray-400">
+            <CreditCard className="w-4 h-4 text-[var(--text-tertiary)]" />
+            <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
               Auto-renewal: {subscription.autoRenew ? 'Enabled' : 'Disabled'}
             </p>
           </div>

@@ -40,7 +40,7 @@ export const StreamControl = ({
             {isLive ? (
               <Circle className="w-4 h-4 text-red-500 animate-pulse" />
             ) : (
-              <Circle className="w-4 h-4 text-gray-400" />
+              <Circle className="w-4 h-4 text-gray-400 dark:text-gray-500" />
             )}
             <h3 className="text-lg font-bold text-gray-900 dark:text-white">
               {isLive ? 'Live Stream' : 'Stream Offline'}

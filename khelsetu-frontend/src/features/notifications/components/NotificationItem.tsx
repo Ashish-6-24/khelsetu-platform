@@ -23,8 +23,8 @@ export const NotificationItem = ({
       exit={{ opacity: 0, x: -20 }}
       className={`border-b px-4 py-3 transition-colors last:border-0 ${
         !notification.read
-          ? 'border-gray-100 bg-blue-50/50 hover:bg-blue-50 dark:border-gray-800 dark:bg-blue-900/10 dark:hover:bg-blue-900/20'
-          : 'border-gray-100 bg-white hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:hover:bg-gray-800/30'
+          ? 'border-gray-100 bg-blue-50/50 hover:bg-blue-50 dark:border-[var(--border-subtle)] dark:bg-blue-900/10 dark:hover:bg-blue-900/20'
+          : 'border-gray-100 bg-[var(--bg-surface)] hover:bg-[var(--bg-surface-sunken)] dark:border-[var(--border-subtle)] dark:bg-[var(--bg-canvas)] dark:hover:bg-[var(--bg-surface-raised)]/30'
       }`}
     >
       <div className="flex items-start gap-3">
@@ -32,7 +32,7 @@ export const NotificationItem = ({
           className={`mt-0.5 inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg ${
             !notification.read
               ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400'
-              : 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
+              : 'bg-gray-100 text-[var(--text-tertiary)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-tertiary)]'
           }`}
           aria-hidden="true"
         >
@@ -44,13 +44,13 @@ export const NotificationItem = ({
               <p
                 className={`text-sm font-medium ${
                   !notification.read
-                    ? 'text-gray-900 dark:text-white'
-                    : 'text-gray-600 dark:text-gray-400'
+                    ? 'text-[var(--text-primary)] dark:text-white'
+                    : 'text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]'
                 }`}
               >
                 {notification.title}
               </p>
-              <p className="mt-0.5 line-clamp-2 text-xs text-gray-500 dark:text-gray-400">
+              <p className="mt-0.5 line-clamp-2 text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                 {notification.message}
               </p>
             </div>
@@ -62,7 +62,7 @@ export const NotificationItem = ({
                     onMarkAsRead(notification.id);
                   }}
                   aria-label="Mark as read"
-                  className="inline-flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded text-gray-400 transition-colors hover:bg-gray-200 hover:text-green-600 dark:hover:bg-gray-700 dark:hover:text-green-400"
+                  className="inline-flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded text-[var(--text-tertiary)] transition-colors hover:bg-gray-200 hover:text-green-600 dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-green-400"
                 >
                   <Check className="h-3.5 w-3.5" />
                 </button>
@@ -73,13 +73,13 @@ export const NotificationItem = ({
                   onDelete(notification.id);
                 }}
                 aria-label="Delete notification"
-                className="inline-flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded text-gray-400 transition-colors hover:bg-gray-200 hover:text-red-600 dark:hover:bg-gray-700 dark:hover:text-red-400"
+                className="inline-flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded text-[var(--text-tertiary)] transition-colors hover:bg-gray-200 hover:text-red-600 dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-red-400"
               >
                 <Trash2 className="h-3.5 w-3.5" />
               </button>
             </div>
           </div>
-          <p className="mt-1 text-[10px] text-gray-400 dark:text-gray-500">
+          <p className="mt-1 text-[10px] text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             {formatDistanceToNow(new Date(notification.createdAt), {
               addSuffix: true,
             })}

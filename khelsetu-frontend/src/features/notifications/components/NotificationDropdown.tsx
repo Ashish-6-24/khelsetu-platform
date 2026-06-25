@@ -59,7 +59,7 @@ export const NotificationDropdown = ({
         aria-label={`Notifications, ${unreadCount} unread`}
         aria-expanded={isOpen}
         aria-haspopup="true"
-        className="relative inline-flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl text-gray-500 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+        className="relative inline-flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl text-[var(--text-tertiary)] transition-colors hover:bg-gray-100 dark:text-[var(--text-tertiary)] dark:hover:bg-[var(--bg-surface-raised)]"
       >
         <Bell className="h-5 w-5" />
         {unreadCount > 0 && (
@@ -79,10 +79,10 @@ export const NotificationDropdown = ({
           <div
             role="dialog"
             aria-label="Notifications"
-            className="absolute right-0 z-50 mt-2 w-96 max-w-[calc(100vw-2rem)] overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-900"
+            className="absolute right-0 z-50 mt-2 w-96 max-w-[calc(100vw-2rem)] overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] shadow-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-canvas)]"
           >
-            <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white">
+            <div className="flex items-center justify-between border-b border-[var(--border-subtle)] px-4 py-3 dark:border-[var(--border-subtle)]">
+              <h3 className="font-semibold text-[var(--text-primary)] dark:text-white">
                 Notifications
               </h3>
               {unreadCount > 0 && (
@@ -99,15 +99,15 @@ export const NotificationDropdown = ({
             <div className="max-h-96 overflow-y-auto">
               {notifications.length === 0 ? (
                 <div className="px-4 py-12 text-center">
-                  <Bell className="mx-auto mb-2 h-8 w-8 text-gray-400 dark:text-gray-600" />
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <Bell className="mx-auto mb-2 h-8 w-8 text-[var(--text-tertiary)] dark:text-[var(--text-secondary)]" />
+                  <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                     No notifications yet
                   </p>
                 </div>
               ) : (
                 Object.entries(groupedNotifications).map(([date, items]) => (
                   <div key={date}>
-                    <div className="bg-gray-50 px-4 py-2 text-xs font-medium uppercase tracking-wider text-gray-500 dark:bg-gray-800/50 dark:text-gray-400">
+                    <div className="bg-[var(--bg-surface-sunken)] px-4 py-2 text-xs font-medium uppercase tracking-wider text-[var(--text-tertiary)] dark:bg-[var(--bg-surface)]/50 dark:text-[var(--text-tertiary)]">
                       {date}
                     </div>
                     {items.map((notification) => {
@@ -128,7 +128,7 @@ export const NotificationDropdown = ({
             </div>
 
             {notifications.length > 0 && (
-              <div className="border-t border-gray-200 px-4 py-3 dark:border-gray-700">
+              <div className="border-t border-[var(--border-subtle)] px-4 py-3 dark:border-[var(--border-subtle)]">
                 <button
                   onClick={() => {
                     setIsOpen(false);

@@ -14,8 +14,8 @@ export const PlayerStatsTable = ({ players }: PlayerStatsTableProps) => {
 
   if (sorted.length === 0) {
     return (
-      <div className="rounded-2xl border border-gray-200 bg-white/80 p-8 text-center backdrop-blur-xl dark:border-gray-700 dark:bg-gray-800/80">
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+      <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 p-8 text-center backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80">
+        <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
           No player statistics available
         </p>
       </div>
@@ -23,50 +23,50 @@ export const PlayerStatsTable = ({ players }: PlayerStatsTableProps) => {
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-xl dark:border-gray-700 dark:bg-gray-800/80">
+    <div className="overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80">
       <div className="overflow-x-auto">
         <table className="w-full text-sm" aria-label="Player statistics">
           <thead>
-            <tr className="border-b border-gray-200 bg-gray-50/50 dark:border-gray-700 dark:bg-gray-900/50">
+            <tr className="border-b border-[var(--border-subtle)] bg-[var(--bg-surface-sunken)]/50 dark:border-[var(--border-subtle)] dark:bg-[var(--bg-canvas)]/50">
               <th
                 scope="col"
-                className="px-4 py-3 text-left font-semibold text-gray-500 dark:text-gray-400"
+                className="px-4 py-3 text-left font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]"
               >
                 Player
               </th>
               <th
                 scope="col"
-                className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400"
+                className="px-3 py-3 text-center font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]"
               >
                 Min
               </th>
               <th
                 scope="col"
-                className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400"
+                className="px-3 py-3 text-center font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]"
               >
                 G
               </th>
               <th
                 scope="col"
-                className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400"
+                className="px-3 py-3 text-center font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]"
               >
                 A
               </th>
               <th
                 scope="col"
-                className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400"
+                className="px-3 py-3 text-center font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]"
               >
                 Pass%
               </th>
               <th
                 scope="col"
-                className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400"
+                className="px-3 py-3 text-center font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]"
               >
                 Tkl
               </th>
               <th
                 scope="col"
-                className="px-3 py-3 text-center font-semibold text-gray-500 dark:text-gray-400"
+                className="px-3 py-3 text-center font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]"
               >
                 Rating
               </th>
@@ -76,35 +76,35 @@ export const PlayerStatsTable = ({ players }: PlayerStatsTableProps) => {
             {sorted.map((player, index) => (
               <tr
                 key={player.playerId}
-                className={`transition-colors hover:bg-gray-50 dark:hover:bg-gray-700/30 ${
+                className={`transition-colors hover:bg-[var(--bg-surface-sunken)] dark:hover:bg-[var(--bg-surface-raised)]/30 ${
                   index % 2 === 0
-                    ? 'bg-white dark:bg-transparent'
-                    : 'bg-gray-50/50 dark:bg-gray-800/50'
+                    ? 'bg-[var(--bg-surface)] dark:bg-transparent'
+                    : 'bg-[var(--bg-surface-sunken)]/50 dark:bg-[var(--bg-surface)]/50'
                 }`}
               >
                 <td className="px-4 py-2.5">
                   <div>
-                    <span className="font-medium text-gray-900 dark:text-white">
+                    <span className="font-medium text-[var(--text-primary)] dark:text-white">
                       {player.playerName}
                     </span>
-                    <span className="ml-1.5 text-xs text-gray-400 dark:text-gray-500">
+                    <span className="ml-1.5 text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                       {player.position}
                     </span>
                   </div>
                 </td>
-                <td className="px-3 py-2.5 text-center tabular-nums text-gray-600 dark:text-gray-400">
+                <td className="px-3 py-2.5 text-center tabular-nums text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
                   {player.minutesPlayed}&apos;
                 </td>
-                <td className="px-3 py-2.5 text-center font-semibold tabular-nums text-gray-900 dark:text-white">
+                <td className="px-3 py-2.5 text-center font-semibold tabular-nums text-[var(--text-primary)] dark:text-white">
                   {player.goals}
                 </td>
-                <td className="px-3 py-2.5 text-center tabular-nums text-gray-600 dark:text-gray-400">
+                <td className="px-3 py-2.5 text-center tabular-nums text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
                   {player.assists}
                 </td>
-                <td className="px-3 py-2.5 text-center tabular-nums text-gray-600 dark:text-gray-400">
+                <td className="px-3 py-2.5 text-center tabular-nums text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
                   {player.passAccuracy}%
                 </td>
-                <td className="px-3 py-2.5 text-center tabular-nums text-gray-600 dark:text-gray-400">
+                <td className="px-3 py-2.5 text-center tabular-nums text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
                   {player.tackles}
                 </td>
                 <td className="px-3 py-2.5 text-center">

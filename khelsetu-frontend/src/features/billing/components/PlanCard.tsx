@@ -21,14 +21,14 @@ export const PlanCard = ({
       <CardBody>
         <div className="space-y-4">
           <div>
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
               {plan.name}
             </h3>
             <div className="mt-2">
-              <span className="text-3xl font-bold text-gray-900 dark:text-white">
+              <span className="text-3xl font-bold text-[var(--text-primary)] dark:text-white">
                 ${plan.price}
               </span>
-              <span className="text-sm text-gray-500 dark:text-gray-400">
+              <span className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                 /{plan.interval}
               </span>
             </div>
@@ -38,7 +38,7 @@ export const PlanCard = ({
             {plan.features.map((feature, index) => (
               <li key={index} className="flex items-start gap-2 text-sm">
                 <Check className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-700 dark:text-gray-300">
+                <span className="text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
                   {feature}
                 </span>
               </li>
@@ -46,7 +46,7 @@ export const PlanCard = ({
           </ul>
 
           {plan.maxTournaments && (
-            <div className="text-xs text-gray-500 dark:text-gray-400">
+            <div className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
               Up to {plan.maxTournaments} tournaments
             </div>
           )}

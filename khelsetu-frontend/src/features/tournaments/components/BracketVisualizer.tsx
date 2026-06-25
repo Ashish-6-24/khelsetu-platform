@@ -14,7 +14,7 @@ export const BracketMatch = ({ match, isWinner }: BracketMatchProps) => {
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm"
+      className="bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] dark:border-[var(--border-subtle)] overflow-hidden shadow-sm"
     >
       <div className="p-3">
         <div
@@ -22,7 +22,7 @@ export const BracketMatch = ({ match, isWinner }: BracketMatchProps) => {
             'flex items-center justify-between p-2 rounded-lg',
             isWinner?.(match.teamA.id)
               ? 'bg-green-50 dark:bg-green-900/20'
-              : 'bg-gray-50 dark:bg-gray-700/50',
+              : 'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)]/50',
           )}
         >
           <span
@@ -30,24 +30,24 @@ export const BracketMatch = ({ match, isWinner }: BracketMatchProps) => {
               'text-sm font-medium',
               isWinner?.(match.teamA.id)
                 ? 'text-green-700 dark:text-green-400'
-                : 'text-gray-900 dark:text-white',
+                : 'text-[var(--text-primary)] dark:text-white',
             )}
           >
             {match.teamA.name}
           </span>
           {match.score && (
-            <span className="text-sm font-bold text-gray-900 dark:text-white">
+            <span className="text-sm font-bold text-[var(--text-primary)] dark:text-white">
               {match.score.teamAScore}
             </span>
           )}
         </div>
-        <div className="my-1 border-t border-gray-100 dark:border-gray-700" />
+        <div className="my-1 border-t border-gray-100 dark:border-[var(--border-subtle)]" />
         <div
           className={clsx(
             'flex items-center justify-between p-2 rounded-lg',
             isWinner?.(match.teamB.id)
               ? 'bg-green-50 dark:bg-green-900/20'
-              : 'bg-gray-50 dark:bg-gray-700/50',
+              : 'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)]/50',
           )}
         >
           <span
@@ -55,19 +55,19 @@ export const BracketMatch = ({ match, isWinner }: BracketMatchProps) => {
               'text-sm font-medium',
               isWinner?.(match.teamB.id)
                 ? 'text-green-700 dark:text-green-400'
-                : 'text-gray-900 dark:text-white',
+                : 'text-[var(--text-primary)] dark:text-white',
             )}
           >
             {match.teamB.name}
           </span>
           {match.score && (
-            <span className="text-sm font-bold text-gray-900 dark:text-white">
+            <span className="text-sm font-bold text-[var(--text-primary)] dark:text-white">
               {match.score.teamBScore}
             </span>
           )}
         </div>
       </div>
-      <div className="px-3 py-2 bg-gray-50 dark:bg-gray-700/30 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between">
+      <div className="px-3 py-2 bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)]/30 border-t border-gray-100 dark:border-[var(--border-subtle)] flex items-center justify-between">
         <Badge
           variant={
             match.status === 'live'
@@ -80,7 +80,7 @@ export const BracketMatch = ({ match, isWinner }: BracketMatchProps) => {
         >
           {match.status}
         </Badge>
-        <span className="text-xs text-gray-500 dark:text-gray-400">
+        <span className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
           {match.venue}
         </span>
       </div>
@@ -109,7 +109,7 @@ export const BracketVisualizer = ({
       <div className="space-y-6">
         {Object.entries(rounds).map(([roundName, roundMatches]) => (
           <div key={roundName}>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+            <h3 className="text-lg font-semibold text-[var(--text-primary)] dark:text-white mb-3">
               {roundName}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -141,7 +141,7 @@ export const BracketVisualizer = ({
     <div className="space-y-6">
       {Object.entries(matchesByRound).map(([round, roundMatches]) => (
         <div key={round}>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+          <h3 className="text-lg font-semibold text-[var(--text-primary)] dark:text-white mb-3">
             Round {round}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -166,17 +166,17 @@ export const FixtureTable = ({ matches }: FixtureTableProps) => {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-700">
-                <th className="text-left px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">
+              <tr className="border-b border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
+                <th className="text-left px-4 py-3 text-sm font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   Match
                 </th>
-                <th className="text-left px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left px-4 py-3 text-sm font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   Teams
                 </th>
-                <th className="text-left px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left px-4 py-3 text-sm font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   Status
                 </th>
-                <th className="text-left px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <th className="text-left px-4 py-3 text-sm font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   Venue
                 </th>
               </tr>
@@ -185,17 +185,17 @@ export const FixtureTable = ({ matches }: FixtureTableProps) => {
               {matches.map((match) => (
                 <tr
                   key={match.id}
-                  className="border-b border-gray-100 dark:border-gray-700 last:border-0"
+                  className="border-b border-gray-100 dark:border-[var(--border-subtle)] last:border-0"
                 >
-                  <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
+                  <td className="px-4 py-3 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                     #{match.id}
                   </td>
                   <td className="px-4 py-3">
                     <div className="text-sm">
-                      <p className="font-medium text-gray-900 dark:text-white">
+                      <p className="font-medium text-[var(--text-primary)] dark:text-white">
                         {match.teamA.name}
                       </p>
-                      <p className="font-medium text-gray-900 dark:text-white">
+                      <p className="font-medium text-[var(--text-primary)] dark:text-white">
                         {match.teamB.name}
                       </p>
                     </div>
@@ -214,7 +214,7 @@ export const FixtureTable = ({ matches }: FixtureTableProps) => {
                       {match.status}
                     </Badge>
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
+                  <td className="px-4 py-3 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                     {match.venue}
                   </td>
                 </tr>

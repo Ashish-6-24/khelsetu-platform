@@ -34,7 +34,7 @@ export const InvoiceList = ({
     return (
       <Card>
         <CardHeader>
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+          <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
             Invoices
           </h3>
         </CardHeader>
@@ -43,10 +43,10 @@ export const InvoiceList = ({
             {[1, 2, 3].map((i) => (
               <div key={i} className="animate-pulse flex justify-between">
                 <div className="space-y-2">
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24" />
-                  <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-32" />
+                  <div className="h-4 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded w-24" />
+                  <div className="h-3 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded w-32" />
                 </div>
-                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-16" />
+                <div className="h-4 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded w-16" />
               </div>
             ))}
           </div>
@@ -59,7 +59,7 @@ export const InvoiceList = ({
     return (
       <Card>
         <CardBody>
-          <p className="text-center text-gray-500 dark:text-gray-400 py-8">
+          <p className="text-center text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] py-8">
             No invoices found
           </p>
         </CardBody>
@@ -70,7 +70,7 @@ export const InvoiceList = ({
   return (
     <Card>
       <CardHeader>
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+        <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
           Invoices
         </h3>
       </CardHeader>
@@ -79,18 +79,18 @@ export const InvoiceList = ({
           {invoices.map((invoice) => (
             <div
               key={invoice.id}
-              className="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-700"
+              className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]"
             >
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-medium text-gray-900 dark:text-white text-sm">
+                  <span className="font-medium text-[var(--text-primary)] dark:text-white text-sm">
                     {invoice.description}
                   </span>
                   <Badge variant={getStatusColor(invoice.status)}>
                     {invoice.status}
                   </Badge>
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-1">
                   {new Date(invoice.date).toLocaleDateString()}
                   {invoice.dueDate && invoice.status === 'pending' && (
                     <span className="ml-2">
@@ -100,7 +100,7 @@ export const InvoiceList = ({
                 </p>
               </div>
               <div className="flex items-center gap-3">
-                <span className="font-bold text-gray-900 dark:text-white">
+                <span className="font-bold text-[var(--text-primary)] dark:text-white">
                   {invoice.currency} {invoice.amount.toFixed(2)}
                 </span>
                 {invoice.pdfUrl && (

@@ -30,13 +30,13 @@ export const SearchBar = ({
 
   return (
     <form onSubmit={handleSubmit} className="relative">
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-tertiary)]" />
       <input
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--border-subtle)] dark:border-[var(--border-subtle)] bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] text-[var(--text-primary)] dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
         aria-label="Search"
       />
     </form>
@@ -51,22 +51,22 @@ export const SearchResultCard = ({ result }: SearchResultCardProps) => {
   return (
     <a
       href={result.url}
-      className="block p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+      className="block p-4 rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)] hover:bg-[var(--bg-surface-sunken)] dark:hover:bg-[var(--bg-surface-raised)]/50 transition-colors"
     >
       <div className="flex items-start gap-3">
-        <div className="mt-1 text-gray-500 dark:text-gray-400">
+        <div className="mt-1 text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
           {categoryIcons[result.type]}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <h4 className="font-medium text-gray-900 dark:text-white truncate">
+            <h4 className="font-medium text-[var(--text-primary)] dark:text-white truncate">
               {result.title}
             </h4>
             <Badge variant="default" className="text-xs capitalize">
               {result.type}
             </Badge>
           </div>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-1">
             {result.description}
           </p>
         </div>
@@ -106,7 +106,7 @@ export const SearchFilters = ({ filters, onChange }: SearchFiltersProps) => {
               className={`px-3 py-1.5 text-sm rounded-lg border transition-colors capitalize ${
                 filters.categories.includes(category)
                   ? 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800'
-                  : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 dark:hover:bg-gray-700'
+                  : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border-[var(--border-subtle)] hover:bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-tertiary)] dark:border-[var(--border-subtle)] dark:hover:bg-[var(--bg-surface-raised)]'
               }`}
             >
               {category}

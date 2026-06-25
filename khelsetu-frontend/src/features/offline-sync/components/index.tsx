@@ -36,7 +36,7 @@ export const SyncStatusBadge = ({
         ) : (
           <WifiOff className="w-4 h-4 text-red-600 dark:text-red-400" />
         )}
-        <span className="text-sm text-gray-700 dark:text-gray-300">
+        <span className="text-sm text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
           {isOnline ? 'Online' : 'Offline'}
         </span>
       </div>
@@ -92,7 +92,7 @@ export const SyncEntryRow = ({ entry, onRemove }: SyncEntryRowProps) => {
       case 'failed':
         return <XCircle className="w-4 h-4 text-red-600 dark:text-red-400" />;
       default:
-        return <Clock className="w-4 h-4 text-gray-400" />;
+        return <Clock className="w-4 h-4 text-[var(--text-tertiary)]" />;
     }
   };
 
@@ -110,14 +110,14 @@ export const SyncEntryRow = ({ entry, onRemove }: SyncEntryRowProps) => {
   };
 
   return (
-    <div className="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-700">
+    <div className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
       <div className="flex items-center gap-3">
         {getStatusIcon(entry.status)}
         <div>
-          <p className="text-sm font-medium text-gray-900 dark:text-white capitalize">
+          <p className="text-sm font-medium text-[var(--text-primary)] dark:text-white capitalize">
             {entry.action} {entry.type}
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
+          <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             {new Date(entry.createdAt).toLocaleString()}
             {entry.retryCount > 0 && (
               <span className="ml-2">Retries: {entry.retryCount}</span>
@@ -136,7 +136,7 @@ export const SyncEntryRow = ({ entry, onRemove }: SyncEntryRowProps) => {
           variant="ghost"
           size="sm"
           onClick={() => onRemove(entry.id)}
-          className="text-gray-400 hover:text-red-600 dark:hover:text-red-400"
+          className="text-[var(--text-tertiary)] hover:text-red-600 dark:hover:text-red-400"
         >
           <Trash2 className="w-4 h-4" />
         </Button>

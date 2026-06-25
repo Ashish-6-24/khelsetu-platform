@@ -47,11 +47,11 @@ export const StandingsTable = ({
     sortKey === 'points' ? sortStandings(sortedStandings) : sortedStandings;
 
   const getSortIcon = (key: SortKey) => {
-    if (sortKey !== key) return <Minus className="w-4 h-4 text-gray-400" />;
+    if (sortKey !== key) return <Minus className="w-4 h-4 text-[var(--text-tertiary)]" />;
     return sortDirection === 'asc' ? (
-      <ArrowUp className="w-4 h-4 text-blue-600" />
+      <ArrowUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
     ) : (
-      <ArrowDown className="w-4 h-4 text-blue-600" />
+      <ArrowDown className="w-4 h-4 text-blue-600 dark:text-blue-400" />
     );
   };
 
@@ -74,7 +74,7 @@ export const StandingsTable = ({
       <Card>
         <CardBody>
           <div className="text-center py-8">
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
               Standings will be available once matches begin.
             </p>
           </div>
@@ -89,15 +89,15 @@ export const StandingsTable = ({
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
-                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <tr className="border-b border-[var(--border-subtle)] dark:border-[var(--border-subtle)] bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface)]">
+                <th className="text-left px-4 py-3 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider">
                   #
                 </th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="text-left px-4 py-3 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider">
                   Team
                 </th>
                 <th
-                  className="text-center px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-700 dark:hover:text-gray-300"
+                  className="text-center px-4 py-3 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider cursor-pointer hover:text-[var(--text-primary)] dark:hover:text-[var(--text-secondary)]"
                   onClick={() => handleSort('played')}
                 >
                   <div className="flex items-center justify-center gap-1">
@@ -105,7 +105,7 @@ export const StandingsTable = ({
                   </div>
                 </th>
                 <th
-                  className="text-center px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-700 dark:hover:text-gray-300"
+                  className="text-center px-4 py-3 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider cursor-pointer hover:text-[var(--text-primary)] dark:hover:text-[var(--text-secondary)]"
                   onClick={() => handleSort('won')}
                 >
                   <div className="flex items-center justify-center gap-1">
@@ -113,7 +113,7 @@ export const StandingsTable = ({
                   </div>
                 </th>
                 <th
-                  className="text-center px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-700 dark:hover:text-gray-300"
+                  className="text-center px-4 py-3 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider cursor-pointer hover:text-[var(--text-primary)] dark:hover:text-[var(--text-secondary)]"
                   onClick={() => handleSort('lost')}
                 >
                   <div className="flex items-center justify-center gap-1">
@@ -121,7 +121,7 @@ export const StandingsTable = ({
                   </div>
                 </th>
                 <th
-                  className="text-center px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-700 dark:hover:text-gray-300"
+                  className="text-center px-4 py-3 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider cursor-pointer hover:text-[var(--text-primary)] dark:hover:text-[var(--text-secondary)]"
                   onClick={() => handleSort('drawn')}
                 >
                   <div className="flex items-center justify-center gap-1">
@@ -130,7 +130,7 @@ export const StandingsTable = ({
                 </th>
                 {sport === 'cricket' && (
                   <th
-                    className="text-center px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-700 dark:hover:text-gray-300"
+                    className="text-center px-4 py-3 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider cursor-pointer hover:text-[var(--text-primary)] dark:hover:text-[var(--text-secondary)]"
                     onClick={() => handleSort('nrr')}
                   >
                     <div className="flex items-center justify-center gap-1">
@@ -139,7 +139,7 @@ export const StandingsTable = ({
                   </th>
                 )}
                 <th
-                  className="text-center px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-700 dark:hover:text-gray-300"
+                  className="text-center px-4 py-3 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider cursor-pointer hover:text-[var(--text-primary)] dark:hover:text-[var(--text-secondary)]"
                   onClick={() => handleSort('points')}
                 >
                   <div className="flex items-center justify-center gap-1">
@@ -155,7 +155,7 @@ export const StandingsTable = ({
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className={`border-b border-gray-100 dark:border-gray-700 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors ${
+                  className={`border-b border-gray-100 dark:border-[var(--border-subtle)] last:border-0 hover:bg-[var(--bg-surface-sunken)] dark:hover:bg-[var(--bg-surface-raised)]/50 transition-colors ${
                     isQualified(index, playoffSpots)
                       ? 'bg-green-50/50 dark:bg-green-900/10'
                       : ''
@@ -167,7 +167,7 @@ export const StandingsTable = ({
                         className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
                           isQualified(index, playoffSpots)
                             ? 'bg-green-500 text-white'
-                            : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                            : 'bg-gray-200 dark:bg-[var(--bg-surface-raised)] text-[var(--text-primary)] dark:text-[var(--text-secondary)]'
                         }`}
                       >
                         {index + 1}
@@ -175,11 +175,11 @@ export const StandingsTable = ({
                     </div>
                   </td>
                   <td className="px-4 py-3">
-                    <span className="font-medium text-gray-900 dark:text-white">
+                    <span className="font-medium text-[var(--text-primary)] dark:text-white">
                       {standing.teamName}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-center text-sm text-gray-700 dark:text-gray-300">
+                  <td className="px-4 py-3 text-center text-sm text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
                     {standing.played}
                   </td>
                   <td className="px-4 py-3 text-center text-sm text-green-600 dark:text-green-400 font-medium">
@@ -188,7 +188,7 @@ export const StandingsTable = ({
                   <td className="px-4 py-3 text-center text-sm text-red-600 dark:text-red-400 font-medium">
                     {standing.lost}
                   </td>
-                  <td className="px-4 py-3 text-center text-sm text-gray-500 dark:text-gray-400">
+                  <td className="px-4 py-3 text-center text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                     {standing.drawn}
                   </td>
                   {sport === 'cricket' && (

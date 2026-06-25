@@ -48,10 +48,10 @@ export const FormationBuilder = ({
         <CardBody padding="sm">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+              <h2 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
                 Formation Builder
               </h2>
-              <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-0.5 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                 Drag players to adjust positions. Use tactical tools to draw
                 plays.
               </p>

@@ -35,7 +35,7 @@ export const ReportCard = ({
             <div className="text-blue-600 dark:text-blue-400">
               {reportIcons[report.type]}
             </div>
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
               {report.name}
             </h3>
           </div>
@@ -46,7 +46,7 @@ export const ReportCard = ({
       </CardHeader>
       <CardBody>
         <div className="space-y-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             Generated: {new Date(report.generatedAt).toLocaleString()}
           </p>
 
@@ -54,12 +54,12 @@ export const ReportCard = ({
             {Object.entries(report.summary).map(([key, value]) => (
               <div
                 key={key}
-                className="p-2 bg-gray-50 dark:bg-gray-800 rounded-lg"
+                className="p-2 bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface)] rounded-lg"
               >
-                <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">
+                <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] capitalize">
                   {key}
                 </p>
-                <p className="text-lg font-bold text-gray-900 dark:text-white">
+                <p className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
                   {String(value)}
                 </p>
               </div>
@@ -112,7 +112,7 @@ export const ReportGenerator = ({
   return (
     <Card>
       <CardHeader>
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+        <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
           Generate Report
         </h3>
       </CardHeader>
@@ -123,7 +123,7 @@ export const ReportGenerator = ({
               key={type}
               onClick={() => onGenerate(type)}
               disabled={isGenerating}
-              className="p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors capitalize text-sm font-medium text-gray-700 dark:text-gray-300 disabled:opacity-50"
+              className="p-3 rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)] hover:bg-[var(--bg-surface-sunken)] dark:hover:bg-[var(--bg-surface-raised)] transition-colors capitalize text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] disabled:opacity-50"
             >
               {type}
             </button>

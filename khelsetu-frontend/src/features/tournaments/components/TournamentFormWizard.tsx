@@ -72,7 +72,7 @@ export const TournamentStepIndicator = ({
                     ? 'bg-green-500 text-white'
                     : currentStep === step.id
                       ? 'bg-blue-600 text-white ring-4 ring-blue-100 dark:ring-blue-900'
-                      : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400',
+                      : 'bg-gray-200 dark:bg-[var(--bg-surface-raised)] text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]',
                 )}
               >
                 {completedSteps.includes(step.id) ? (
@@ -87,7 +87,7 @@ export const TournamentStepIndicator = ({
                     'text-xs font-medium',
                     currentStep === step.id
                       ? 'text-blue-600 dark:text-blue-400'
-                      : 'text-gray-500 dark:text-gray-400',
+                      : 'text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]',
                   )}
                 >
                   {step.title}
@@ -100,7 +100,7 @@ export const TournamentStepIndicator = ({
                   'flex-1 h-0.5 mx-2 sm:mx-4',
                   completedSteps.includes(step.id + 1)
                     ? 'bg-green-500'
-                    : 'bg-gray-200 dark:bg-gray-700',
+                    : 'bg-gray-200 dark:bg-[var(--bg-surface-raised)]',
                 )}
               />
             )}
@@ -157,7 +157,7 @@ export const TournamentFormWizard = ({
             animate={{ opacity: 1, x: 0 }}
             className="space-y-4"
           >
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+            <h2 className="text-xl font-semibold text-[var(--text-primary)] dark:text-white">
               Tournament Basic Information
             </h2>
             <Input
@@ -199,7 +199,7 @@ export const TournamentFormWizard = ({
             animate={{ opacity: 1, x: 0 }}
             className="space-y-4"
           >
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+            <h2 className="text-xl font-semibold text-[var(--text-primary)] dark:text-white">
               Tournament Format & Structure
             </h2>
             <Select
@@ -250,7 +250,7 @@ export const TournamentFormWizard = ({
             animate={{ opacity: 1, x: 0 }}
             className="space-y-4"
           >
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+            <h2 className="text-xl font-semibold text-[var(--text-primary)] dark:text-white">
               Schedule & Dates
             </h2>
             <div className="grid grid-cols-2 gap-4">
@@ -280,11 +280,11 @@ export const TournamentFormWizard = ({
             animate={{ opacity: 1, x: 0 }}
             className="space-y-4"
           >
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+            <h2 className="text-xl font-semibold text-[var(--text-primary)] dark:text-white">
               Rules & Regulations
             </h2>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-1">
                 Tournament Rules
               </label>
               <textarea
@@ -292,7 +292,7 @@ export const TournamentFormWizard = ({
                 onChange={(e) => onFieldChange('rules', e.target.value)}
                 placeholder="Enter tournament rules and regulations..."
                 rows={6}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                className="w-full px-3 py-2 border border-[var(--border-strong)] dark:border-[var(--border-strong)] rounded-xl bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] text-[var(--text-primary)] dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
               />
             </div>
           </motion.div>
@@ -304,65 +304,65 @@ export const TournamentFormWizard = ({
             animate={{ opacity: 1, x: 0 }}
             className="space-y-4"
           >
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+            <h2 className="text-xl font-semibold text-[var(--text-primary)] dark:text-white">
               Review & Confirm
             </h2>
             <Card>
               <CardBody>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <p className="text-gray-500 dark:text-gray-400">
+                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                       Tournament Name
                     </p>
-                    <p className="font-medium text-gray-900 dark:text-white">
+                    <p className="font-medium text-[var(--text-primary)] dark:text-white">
                       {(formData.name as string) || '—'}
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-500 dark:text-gray-400">Sport</p>
-                    <p className="font-medium text-gray-900 dark:text-white">
+                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">Sport</p>
+                    <p className="font-medium text-[var(--text-primary)] dark:text-white">
                       {(formData.sport as string) || '—'}
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-500 dark:text-gray-400">Format</p>
-                    <p className="font-medium text-gray-900 dark:text-white capitalize">
+                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">Format</p>
+                    <p className="font-medium text-[var(--text-primary)] dark:text-white capitalize">
                       {(formData.format as string) || '—'}
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-500 dark:text-gray-400">
+                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                       Max Teams
                     </p>
-                    <p className="font-medium text-gray-900 dark:text-white">
+                    <p className="font-medium text-[var(--text-primary)] dark:text-white">
                       {(formData.maxTeams as number) || '—'}
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-500 dark:text-gray-400">
+                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                       Start Date
                     </p>
-                    <p className="font-medium text-gray-900 dark:text-white">
+                    <p className="font-medium text-[var(--text-primary)] dark:text-white">
                       {(formData.startDate as string) || '—'}
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-500 dark:text-gray-400">End Date</p>
-                    <p className="font-medium text-gray-900 dark:text-white">
+                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">End Date</p>
+                    <p className="font-medium text-[var(--text-primary)] dark:text-white">
                       {(formData.endDate as string) || '—'}
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-500 dark:text-gray-400">Venue</p>
-                    <p className="font-medium text-gray-900 dark:text-white">
+                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">Venue</p>
+                    <p className="font-medium text-[var(--text-primary)] dark:text-white">
                       {(formData.venue as string) || '—'}
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-500 dark:text-gray-400">
+                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                       Entry Fee
                     </p>
-                    <p className="font-medium text-gray-900 dark:text-white">
+                    <p className="font-medium text-[var(--text-primary)] dark:text-white">
                       {formData.entryFee
                         ? `$${formData.entryFee as number}`
                         : 'Free'}
@@ -370,11 +370,11 @@ export const TournamentFormWizard = ({
                   </div>
                 </div>
                 {(formData.rules as string) && (
-                  <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <p className="text-gray-500 dark:text-gray-400 text-sm">
+                  <div className="mt-4 pt-4 border-t border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
+                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] text-sm">
                       Rules
                     </p>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 mt-1 whitespace-pre-wrap">
+                    <p className="text-sm text-[var(--text-primary)] dark:text-[var(--text-secondary)] mt-1 whitespace-pre-wrap">
                       {String(formData.rules)}
                     </p>
                   </div>
