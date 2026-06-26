@@ -1,4 +1,4 @@
-import { ErrorBoundary } from '@components/error/ErrorBoundary';
+import { ErrorBoundary, GlobalErrorHandler } from '@components/error';
 
 import { AuthProvider } from './AuthProvider';
 import { QueryProvider } from './QueryProvider';
@@ -11,6 +11,7 @@ interface AppProvidersProps {
 export const AppProviders = ({ children }: AppProvidersProps) => {
   return (
     <ErrorBoundary>
+      <GlobalErrorHandler />
       <QueryProvider>
         <RouterProvider>
           <AuthProvider>{children}</AuthProvider>
