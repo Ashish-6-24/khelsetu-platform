@@ -1,4 +1,5 @@
 import { ErrorBoundary, GlobalErrorHandler } from '@components/error';
+import { OfflineBanner } from '@components/ui/OfflineBanner';
 
 import { AuthProvider } from './AuthProvider';
 import { QueryProvider } from './QueryProvider';
@@ -14,7 +15,10 @@ export const AppProviders = ({ children }: AppProvidersProps) => {
       <GlobalErrorHandler />
       <QueryProvider>
         <RouterProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            {children}
+            <OfflineBanner />
+          </AuthProvider>
         </RouterProvider>
       </QueryProvider>
     </ErrorBoundary>
