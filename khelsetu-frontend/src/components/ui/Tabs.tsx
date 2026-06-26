@@ -1,4 +1,5 @@
 import { clsx } from 'clsx';
+import { useCallback, useRef } from 'react';
 
 interface TabsProps {
   tabs: { id: string; label: string; icon?: React.ReactNode; count?: number }[];
@@ -17,9 +18,44 @@ export const Tabs = ({
   variant = 'default',
   fullWidth = false,
 }: TabsProps) => {
+  const tabRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      const currentIndex = tabs.findIndex((t) => t.id === activeTab);
+      if (currentIndex === -1) return;
+
+      let nextIndex: number | null = null;
+
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        nextIndex = (currentIndex + 1) % tabs.length;
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        nextIndex = 0;
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        nextIndex = tabs.length - 1;
+      }
+
+      if (nextIndex !== null) {
+        const nextTab = tabs[nextIndex];
+        if (nextTab) {
+          onChange(nextTab.id);
+          tabRefs.current.get(nextTab.id)?.focus();
+        }
+      }
+    },
+    [tabs, activeTab, onChange],
+  );
+
   return (
     <div
       role="tablist"
+      onKeyDown={handleKeyDown}
       className={clsx(
         'inline-flex',
         variant === 'pills' &&
@@ -33,8 +69,14 @@ export const Tabs = ({
         return (
           <button
             key={tab.id}
+            ref={(el) => {
+              if (el) tabRefs.current.set(tab.id, el);
+            }}
             role="tab"
+            id={`tab-${tab.id}`}
             aria-selected={isActive}
+            aria-controls={`tabpanel-${tab.id}`}
+            tabIndex={isActive ? 0 : -1}
             onClick={() => onChange(tab.id)}
             className={clsx(
               'inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-all duration-200',

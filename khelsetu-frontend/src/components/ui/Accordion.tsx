@@ -49,8 +49,10 @@ export const Accordion = ({
             )}
           >
             <button
+              id={`accordion-trigger-${item.id}`}
               onClick={() => toggle(item.id)}
               aria-expanded={isOpen}
+              aria-controls={`accordion-panel-${item.id}`}
               className="flex w-full items-center justify-between gap-4 px-4 py-3.5 text-left text-sm font-medium text-slate-900 transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset dark:text-white dark:hover:bg-slate-800/50"
             >
               <span>{item.title}</span>
@@ -64,6 +66,9 @@ export const Accordion = ({
             </button>
             {/* CSS Grid animation: 0fr → 1fr for butter-smooth height transition */}
             <div
+              id={`accordion-panel-${item.id}`}
+              role="region"
+              aria-labelledby={`accordion-trigger-${item.id}`}
               className="grid transition-[grid-template-rows] duration-250 ease-out"
               style={{
                 gridTemplateRows: isOpen ? '1fr' : '0fr',

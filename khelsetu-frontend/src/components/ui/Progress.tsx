@@ -56,6 +56,7 @@ export const Progress = ({
         aria-valuenow={Math.round(percentage)}
         aria-valuemin={0}
         aria-valuemax={100}
+        aria-label={label || `Progress: ${Math.round(percentage)}%`}
         className={clsx(
           'w-full overflow-hidden rounded-full bg-slate-200/70 dark:bg-slate-800/60',
           sizeStyles[size],

@@ -47,6 +47,14 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ref={ref}
             id={selectId}
             onChange={(e) => onChange?.(e.target.value)}
+            aria-invalid={error ? 'true' : 'false'}
+            aria-describedby={
+              error
+                ? `${selectId}-error`
+                : helperText
+                  ? `${selectId}-help`
+                  : undefined
+            }
             className={clsx(
               'block h-11 w-full appearance-none rounded-xl border bg-white pl-3.5 pr-10 text-sm text-slate-900',
               'border-slate-200 transition-all duration-200',
@@ -78,11 +86,17 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           />
         </div>
         {error ? (
-          <p className="mt-1.5 text-sm text-red-600 dark:text-red-400">
+          <p
+            id={`${selectId}-error`}
+            className="mt-1.5 text-sm text-red-600 dark:text-red-400"
+          >
             {error}
           </p>
         ) : helperText ? (
-          <p className="mt-1.5 text-sm text-slate-500 dark:text-slate-400">
+          <p
+            id={`${selectId}-help`}
+            className="mt-1.5 text-sm text-slate-500 dark:text-slate-400"
+          >
             {helperText}
           </p>
         ) : null}
