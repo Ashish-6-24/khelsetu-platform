@@ -30,6 +30,17 @@ export default defineConfig(({ mode }) => {
     build: {
       rollupOptions: {
         output: {
+          // Manual chunk splitting strategy:
+          // - vendor-react: Core React + Router (~300KB)
+          // - vendor-query: TanStack React Query (~80KB)
+          // - vendor-motion: Framer Motion (~120KB)
+          // - vendor-forms: react-hook-form + Zod (~60KB)
+          // - vendor-charts: Recharts (~200KB, only on analytics page)
+          // - vendor-pdf: html2canvas + jspdf (~150KB, only on certificates)
+          // - vendor-icons: Lucide React (~100KB)
+          // - vendor-utils: clsx + tailwind-merge + zustand (~30KB)
+          // - features-scoring: Live scoring module (code-split)
+          // - features-billing: Billing module (code-split)
           manualChunks(id) {
             if (id.includes('node_modules')) {
               if (

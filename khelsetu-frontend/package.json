@@ -37,6 +37,26 @@
       "name": "Vendor react bundle",
       "path": "dist/assets/vendor-react-*.js",
       "limit": "300 kB"
+    },
+    {
+      "name": "Vendor query bundle",
+      "path": "dist/assets/vendor-query-*.js",
+      "limit": "80 kB"
+    },
+    {
+      "name": "Vendor motion bundle",
+      "path": "dist/assets/vendor-motion-*.js",
+      "limit": "120 kB"
+    },
+    {
+      "name": "Vendor charts bundle",
+      "path": "dist/assets/vendor-charts-*.js",
+      "limit": "200 kB"
+    },
+    {
+      "name": "Vendor icons bundle",
+      "path": "dist/assets/vendor-icons-*.js",
+      "limit": "100 kB"
     }
   ],
   "lint-staged": {
