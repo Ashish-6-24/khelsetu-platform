@@ -7,6 +7,7 @@ import { useAuth } from '@hooks/useAuth';
 import { useAuthStore } from '@store/authStore';
 import { useUIStore } from '@store/uiStore';
 import { ROUTES } from '@utils/constants';
+import { getGreeting } from '@utils/date';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   Bell,
@@ -48,12 +49,7 @@ export const Header = () => {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const greeting = (() => {
-    const h = new Date().getHours();
-    if (h < 12) return 'Good morning';
-    if (h < 17) return 'Good afternoon';
-    return 'Good evening';
-  })();
+  const greeting = getGreeting();
 
   return (
     <header className="sticky top-0 z-30 border-b border-[var(--border-subtle)] bg-[var(--bg-glass)] backdrop-blur-xl">
@@ -70,7 +66,7 @@ export const Header = () => {
           <span>Open navigation</span>
         </Button>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+          <p className="truncate text-sm text-[var(--text-tertiary)]">
             {greeting},
           </p>
           <p className="truncate text-base font-semibold tracking-tight text-[var(--text-primary)]">
@@ -115,7 +111,7 @@ export const Header = () => {
             iconOnly
           >
             <Bell className="h-4 w-4" />
-            <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500 ring-2 ring-[var(--bg-surface)]" />
+            <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[var(--color-live)] ring-2 ring-[var(--bg-surface)]" />
           </Button>
           <AnimatePresence>
             {notifOpen && (
@@ -134,7 +130,7 @@ export const Header = () => {
                     Mark all read
                   </button>
                 </div>
-                <div className="px-4 py-8 text-center text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+                <div className="px-4 py-8 text-center text-sm text-[var(--text-tertiary)]">
                   You&apos;re all caught up.
                 </div>
                 <button
@@ -178,7 +174,7 @@ export const Header = () => {
                   <p className="text-sm font-semibold text-[var(--text-primary)]">
                     {user?.name}
                   </p>
-                  <p className="truncate text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+                  <p className="truncate text-xs text-[var(--text-tertiary)]">
                     {user?.email}
                   </p>
                 </div>
