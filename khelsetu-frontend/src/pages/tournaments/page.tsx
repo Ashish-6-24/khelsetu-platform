@@ -4,7 +4,7 @@ import { Skeleton } from '@components/ui/Skeleton';
 import { tournamentService } from '@services/api/tournament';
 import { useQuery } from '@tanstack/react-query';
 import type { Tournament } from '@types-domain/tournament';
-import { Trophy } from 'lucide-react';
+import { Trophy, RefreshCw } from 'lucide-react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,6 +14,8 @@ export const TournamentsPage = () => {
     data: tournaments,
     isLoading,
     error,
+    refetch,
+    isFetching,
   } = useQuery<Tournament[]>({
     queryKey: ['tournaments'],
     queryFn: () => tournamentService.getAll(),
@@ -45,16 +47,26 @@ export const TournamentsPage = () => {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
+            <h1 className="text-2xl font-bold text-[var(--text-primary)]">
               Tournaments
             </h1>
             <p className="mt-1 text-sm text-[var(--color-danger)]">
               Failed to load tournaments
             </p>
           </div>
-          <Button variant="create" leftIcon={<Trophy className="h-4 w-4" />}>
-            Create Tournament
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              leftIcon={<RefreshCw className="h-4 w-4" />}
+              onClick={() => refetch()}
+              isLoading={isFetching}
+            >
+              Retry
+            </Button>
+            <Button variant="create" leftIcon={<Trophy className="h-4 w-4" />}>
+              Create Tournament
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -64,10 +76,10 @@ export const TournamentsPage = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">
             Tournaments
           </h1>
-          <p className="mt-1 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+          <p className="mt-1 text-sm text-[var(--text-tertiary)]">
             Manage your tournaments
           </p>
         </div>
