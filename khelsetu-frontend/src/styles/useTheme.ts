@@ -8,7 +8,7 @@ export function useTheme() {
   const isDark = useMemo(() => {
     if (typeof document === 'undefined') return false;
     return document.documentElement.classList.contains('dark');
-  }, [theme]);
+  }, []);
 
   return {
     /** Current theme setting: 'light' | 'dark' | 'system' */

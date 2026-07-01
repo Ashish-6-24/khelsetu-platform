@@ -1,13 +1,11 @@
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { type ReactNode, useCallback } from 'react';
+import { type ReactNode } from 'react';
 
 import {
   Link,
   type LinkProps,
-  type NavigateOptions,
-  useNavigate,
 } from 'react-router-dom';
 
 interface ViewTransitionLinkProps extends LinkProps {
@@ -53,29 +51,5 @@ export const ViewTransitionLink = ({
   );
 };
 
-/**
- * Wraps React Router navigation in View Transitions API.
- * Falls back to standard navigation in unsupported browsers.
- */
-export function useViewTransitionNavigate() {
-  const navigate = useNavigate();
-
-  const transitionNavigate = useCallback(
-    (to: string, options?: NavigateOptions) => {
-      if (
-        typeof document !== 'undefined' &&
-        'startViewTransition' in document &&
-        typeof document.startViewTransition === 'function'
-      ) {
-        document.startViewTransition(() => {
-          navigate(to, options);
-        });
-      } else {
-        navigate(to, options);
-      }
-    },
-    [navigate],
-  );
-
-  return transitionNavigate;
-}
+// useViewTransitionNavigate moved to src/hooks/useViewTransitionNavigate.ts
+export { useViewTransitionNavigate } from '@hooks/useViewTransitionNavigate';
