@@ -7,7 +7,7 @@ import { useAuth } from '@hooks/useAuth';
 import { useFormValidation, validationRules } from '@hooks/useFormValidation';
 import { usePasswordStrength } from '@hooks/usePasswordStrength';
 import { ROUTES } from '@utils/constants';
-import { Lock, Mail, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Lock, Mail, ShieldCheck } from 'lucide-react';
 
 import { useState, useEffect } from 'react';
 
@@ -19,6 +19,8 @@ export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [validatingEmail, setValidatingEmail] = useState(false);
+  const [validatingPassword, setValidatingPassword] = useState(false);
 
   const passwordStrength = usePasswordStrength(password);
   const { validation, validateField, touchField, isFormValid, resetValidation } =
@@ -30,27 +32,47 @@ export const LoginPage = () => {
       },
     );
 
-  // Real-time validation on blur
+  // Real-time validation on blur with debounce
   const handleEmailBlur = () => {
     touchField('email');
-    validateField('email', email);
+    setValidatingEmail(true);
+    const timer = setTimeout(() => {
+      validateField('email', email);
+      setValidatingEmail(false);
+    }, 300);
+    return () => clearTimeout(timer);
   };
 
   const handlePasswordBlur = () => {
     touchField('password');
-    validateField('password', password);
+    setValidatingPassword(true);
+    const timer = setTimeout(() => {
+      validateField('password', password);
+      setValidatingPassword(false);
+    }, 300);
+    return () => clearTimeout(timer);
   };
 
   // Validate as user types (after touched)
   useEffect(() => {
     if (validation.email?.touched) {
-      validateField('email', email);
+      setValidatingEmail(true);
+      const timer = setTimeout(() => {
+        validateField('email', email);
+        setValidatingEmail(false);
+      }, 500);
+      return () => clearTimeout(timer);
     }
   }, [email, validation.email?.touched, validateField]);
 
   useEffect(() => {
     if (validation.password?.touched) {
-      validateField('password', password);
+      setValidatingPassword(true);
+      const timer = setTimeout(() => {
+        validateField('password', password);
+        setValidatingPassword(false);
+      }, 500);
+      return () => clearTimeout(timer);
     }
   }, [password, validation.password?.touched, validateField]);
 
@@ -83,6 +105,20 @@ export const LoginPage = () => {
     }
   };
 
+  // Determine validation state for email field
+  const emailValidationState = validatingEmail
+    ? 'validating'
+    : validation.email?.touched && !validation.email?.error
+      ? 'valid'
+      : undefined;
+
+  // Determine validation state for password field
+  const passwordValidationState = validatingPassword
+    ? 'validating'
+    : validation.password?.touched && !validation.password?.error
+      ? 'valid'
+      : undefined;
+
   return (
     <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-7 shadow-[var(--shadow-xl)] sm:p-9">
       <div className="lg:hidden mb-6 flex justify-center">
@@ -97,67 +133,64 @@ export const LoginPage = () => {
       </p>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-5" noValidate>
-         <div>
-           <Input
-             label="Email"
-             type="email"
-             autoComplete="email"
-             placeholder="you@club.org"
-             value={email}
-             onChange={(e) => setEmail(e.target.value)}
-             onBlur={handleEmailBlur}
-             leftIcon={<Mail className="h-4 w-4" />}
-             error={validation.email?.touched ? validation.email.error || undefined : undefined}
-             rightIcon={
-               validation.email?.touched && !validation.email?.error ? (
-                 <CheckCircle2 className="h-4 w-4 text-green-500" />
-               ) : undefined
-             }
-             required
-           />
-         </div>
-         <div>
-           <Input
-             label="Password"
-             type="password"
-             autoComplete="current-password"
-             placeholder="Enter your password"
-             value={password}
-             onChange={(e) => setPassword(e.target.value)}
-             onBlur={handlePasswordBlur}
-             leftIcon={<Lock className="h-4 w-4" />}
-             error={validation.password?.touched ? validation.password.error || undefined : undefined}
-             strength={password ? passwordStrength.level : undefined}
-             required
-           />
-         </div>
+        <div>
+          <Input
+            label="Email"
+            type="email"
+            autoComplete="email"
+            placeholder="you@club.org"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onBlur={handleEmailBlur}
+            leftIcon={<Mail className="h-4 w-4" />}
+            error={validation.email?.touched ? validation.email.error || undefined : undefined}
+            validationState={emailValidationState}
+            required
+          />
+        </div>
+        <div>
+          <Input
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onBlur={handlePasswordBlur}
+            leftIcon={<Lock className="h-4 w-4" />}
+            error={validation.password?.touched ? validation.password.error || undefined : undefined}
+            strength={password ? passwordStrength.level : undefined}
+            validationState={passwordValidationState}
+            required
+          />
+        </div>
 
-         <div className="flex items-center justify-between pt-2 text-sm">
-           <label className="group inline-flex cursor-pointer items-center gap-2 text-[var(--text-secondary)]">
-             <input
-               type="checkbox"
-               className="h-4 w-4 rounded border-[var(--border-strong)] text-[var(--brand-primary)] transition-colors focus:ring-2 focus:ring-[var(--brand-primary)]/30 dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-sunken)]"
-             />
-             Remember me
-           </label>
-           <Link
-             to="#"
-             className="font-medium text-[var(--text-link)] transition-colors hover:text-[var(--brand-primary-hover)]"
-           >
-             Forgot password?
-           </Link>
-         </div>
+        <div className="flex items-center justify-between pt-2 text-sm">
+          <label className="group inline-flex cursor-pointer items-center gap-2 text-[var(--text-secondary)]">
+            <input
+              type="checkbox"
+              className="h-4 w-4 rounded border-[var(--border-strong)] text-[var(--brand-primary)] transition-colors focus:ring-2 focus:ring-[var(--brand-primary)]/30 dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-sunken)]"
+            />
+            Remember me
+          </label>
+          <Link
+            to="#"
+            className="font-medium text-[var(--text-link)] transition-colors hover:text-[var(--brand-primary-hover)]"
+          >
+            Forgot password?
+          </Link>
+        </div>
 
-         <Button
-           type="submit"
-           disabled={isLoading || !isFormValid({ email, password })}
-           isLoading={isLoading}
-           fullWidth
-           size="lg"
-           className="shine transition-all duration-200"
-         >
-           {isLoading ? 'Signing in…' : 'Sign in'}
-         </Button>
+        <Button
+          type="submit"
+          disabled={isLoading || !isFormValid({ email, password })}
+          isLoading={isLoading}
+          fullWidth
+          size="lg"
+          className="shine transition-all duration-200"
+        >
+          {isLoading ? 'Signing in…' : 'Sign in'}
+        </Button>
       </form>
 
       <div className="relative my-6">
