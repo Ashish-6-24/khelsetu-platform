@@ -37,7 +37,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         {label && (
           <label
             htmlFor={selectId}
-            className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+            className="mb-1.5 block text-sm font-medium text-[var(--text-secondary)]"
           >
             {label}
           </label>
@@ -56,15 +56,13 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
                   : undefined
             }
             className={clsx(
-              'block h-11 w-full appearance-none rounded-xl border bg-white pl-3.5 pr-10 text-sm text-slate-900',
-              'border-slate-200 transition-all duration-200',
-              'hover:border-slate-300',
-              'focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-500/15',
-              'dark:border-slate-700 dark:bg-slate-900/50 dark:text-white',
-              'dark:hover:border-slate-600 dark:focus:border-blue-400 dark:focus:ring-blue-400/20',
+              'block h-11 w-full appearance-none rounded-xl border bg-[var(--bg-surface)] pl-3.5 pr-10 text-sm text-[var(--text-primary)]',
+              'border-[var(--border-subtle)] transition-all duration-200',
+              'hover:border-[var(--border-strong)]',
+              'focus:border-[var(--brand-primary)] focus:outline-none focus:ring-4 focus:ring-[var(--brand-primary)]/15',
               'disabled:cursor-not-allowed disabled:opacity-50',
               error &&
-                'border-red-400 focus:border-red-500 focus:ring-red-500/15 dark:border-red-500/60',
+                'border-[var(--color-danger)] focus:border-[var(--color-danger)] focus:ring-[var(--color-danger)]/15',
               className,
             )}
             {...props}
@@ -81,21 +79,21 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ))}
           </select>
           <ChevronDown
-            className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+            className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-tertiary)]"
             aria-hidden="true"
           />
         </div>
         {error ? (
           <p
             id={`${selectId}-error`}
-            className="mt-1.5 text-sm text-red-600 dark:text-red-400"
+            className="mt-1.5 text-sm text-[var(--color-danger)]"
           >
             {error}
           </p>
         ) : helperText ? (
           <p
             id={`${selectId}-help`}
-            className="mt-1.5 text-sm text-slate-500 dark:text-slate-400"
+            className="mt-1.5 text-sm text-[var(--text-tertiary)]"
           >
             {helperText}
           </p>
