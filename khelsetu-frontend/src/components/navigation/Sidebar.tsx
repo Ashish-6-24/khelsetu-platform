@@ -52,7 +52,7 @@ export const Sidebar = () => {
         <button
           onClick={toggleSidebar}
           aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          className="hidden h-8 w-8 min-h-11 min-w-11 items-center justify-center rounded-lg text-[var(--text-tertiary)] transition-colors hover:bg-[var(--bg-surface-sunken)] hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] dark:text-[var(--text-tertiary)] dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-[var(--text-primary)] lg:flex"
+          className="hidden h-11 w-11 items-center justify-center rounded-lg text-[var(--text-tertiary)] transition-colors hover:bg-[var(--bg-surface-sunken)] hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] dark:text-[var(--text-tertiary)] dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-[var(--text-primary)] lg:flex"
         >
           {isCollapsed ? (
             <ChevronsRight className="h-4 w-4" />
