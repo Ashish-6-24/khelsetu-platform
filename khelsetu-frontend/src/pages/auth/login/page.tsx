@@ -162,6 +162,7 @@ export const LoginPage = () => {
             error={validation.password?.touched ? validation.password.error || undefined : undefined}
             strength={password ? passwordStrength.level : undefined}
             validationState={passwordValidationState}
+            helperText="Minimum 8 characters with uppercase, lowercase, numbers, and symbols"
             required
           />
         </div>
