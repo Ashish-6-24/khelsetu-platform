@@ -28,12 +28,12 @@ interface BadgeProps {
 const variantStyles: Record<BadgeVariant, string> = {
   default: 'bg-[var(--bg-surface-sunken)] text-[var(--text-primary)] dark:bg-[var(--bg-surface-raised)] dark:text-[var(--text-primary)]',
   success:
-    'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20 dark:bg-emerald-500/10 dark:text-emerald-400 dark:ring-emerald-400/30',
+    'bg-[var(--color-success-soft)] text-[var(--color-success)] ring-1 ring-inset ring-[var(--color-success)]/20',
   warning:
-    'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20 dark:bg-amber-500/10 dark:text-amber-400 dark:ring-amber-400/30',
+    'bg-[var(--color-warning-soft)] text-[var(--color-warning)] ring-1 ring-inset ring-[var(--color-warning)]/20',
   error:
-    'bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20 dark:bg-red-500/10 dark:text-red-400 dark:ring-red-400/30',
-  info: 'bg-sky-50 text-sky-700 ring-1 ring-inset ring-sky-600/20 dark:bg-sky-500/10 dark:text-sky-400 dark:ring-sky-400/30',
+    'bg-[var(--color-danger-soft)] text-[var(--color-danger)] ring-1 ring-inset ring-[var(--color-danger)]/20',
+  info: 'bg-[var(--color-info-soft)] text-[var(--color-info)] ring-1 ring-inset ring-[var(--color-info)]/20',
   // AA-safe live badge: deep maroon-red bg + white text + warm glow ring
   live: 'bg-[var(--color-live)] text-white shadow-[0_0_0_3px_rgb(220_38_38/0.18),0_2px_8px_-2px_rgb(220_38_38/0.45)] /* live shadow */',
   // Gold = premium tier, awards, verified
@@ -43,13 +43,13 @@ const variantStyles: Record<BadgeVariant, string> = {
     'bg-[var(--brand-primary)] text-white shadow-sm ring-1 ring-inset ring-[var(--brand-primary-active)]/40',
   // Sport accents
   'sport-cricket':
-    'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20 dark:bg-emerald-500/10 dark:text-emerald-400 dark:ring-emerald-400/30',
+    'bg-[var(--sport-cricket)]/10 text-[var(--sport-cricket)] ring-1 ring-inset ring-[var(--sport-cricket)]/20',
   'sport-football':
-    'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20 dark:bg-blue-500/10 dark:text-blue-400 dark:ring-blue-400/30',
+    'bg-[var(--sport-football)]/10 text-[var(--sport-football)] ring-1 ring-inset ring-[var(--sport-football)]/20',
   'sport-volleyball':
-    'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20 dark:bg-amber-500/10 dark:text-amber-400 dark:ring-amber-400/30',
+    'bg-[var(--sport-volleyball)]/10 text-[var(--sport-volleyball)] ring-1 ring-inset ring-[var(--sport-volleyball)]/20',
   'sport-basketball':
-    'bg-orange-50 text-orange-700 ring-1 ring-inset ring-orange-600/20 dark:bg-orange-500/10 dark:text-orange-400 dark:ring-orange-400/30',
+    'bg-[var(--sport-basketball)]/10 text-[var(--sport-basketball)] ring-1 ring-inset ring-[var(--sport-basketball)]/20',
   outline:
     'border border-[var(--border-subtle)] text-[var(--text-primary)] dark:border-[var(--border-strong)] dark:text-[var(--text-primary)]',
 };
