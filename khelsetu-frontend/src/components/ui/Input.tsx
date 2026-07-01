@@ -118,11 +118,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             type={actualType}
             className={clsx(
               'block w-full rounded-xl border bg-[var(--bg-surface)] text-sm text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)]',
-              'h-11 transition-all duration-200',
-              'border-[var(--border-subtle)] hover:border-[var(--border-strong)]',
-              'focus:border-[var(--brand-primary)] focus:outline-none focus:ring-4 focus:ring-[var(--brand-primary)]/12',
+              'h-11 transition-all duration-200 ease-out',
+              'border-[var(--border-subtle)] hover:border-[var(--border-strong)] hover:shadow-sm',
+              'focus:border-[var(--brand-primary)] focus:outline-none focus:ring-4 focus:ring-[var(--brand-primary)]/12 focus:shadow-md',
               'dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface-sunken)] dark:text-white dark:placeholder:text-slate-500',
-              'dark:hover:border-[var(--border-strong)] dark:focus:border-[var(--brand-primary)] dark:focus:ring-[var(--brand-primary)]/15',
+              'dark:hover:border-[var(--border-strong)] dark:hover:shadow-sm dark:focus:border-[var(--brand-primary)] dark:focus:ring-[var(--brand-primary)]/15 dark:focus:shadow-md',
               'disabled:cursor-not-allowed disabled:opacity-50',
               leftIcon ? 'pl-10' : 'pl-3.5',
               rightIcon || isPassword || validationState ? 'pr-12' : 'pr-3.5',
