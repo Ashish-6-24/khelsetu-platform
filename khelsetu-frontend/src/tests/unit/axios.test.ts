@@ -38,7 +38,7 @@ describe('Axios Instance', () => {
 
       const result = handlers[0].fulfilled(config as never);
       if (result && typeof result === 'object' && !('then' in result)) {
-        const configObj = result as Record<string, unknown>;
+        const configObj = result as unknown as Record<string, unknown>;
         const headers = configObj.headers as Record<string, unknown>;
         expect(headers?.Authorization).toBe('Bearer test-token');
       }
@@ -58,7 +58,7 @@ describe('Axios Instance', () => {
 
       const result = handlers[0].fulfilled(config as never);
       if (result && typeof result === 'object' && !('then' in result)) {
-        const configObj = result as Record<string, unknown>;
+        const configObj = result as unknown as Record<string, unknown>;
         const headers = configObj.headers as Record<string, unknown>;
         expect(headers?.Authorization).toBeUndefined();
       }
