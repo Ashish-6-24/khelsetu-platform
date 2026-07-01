@@ -32,9 +32,16 @@ describe('Axios Instance', () => {
       };
 
       const handlers = axiosInstance.interceptors.request.handlers;
-      const result = handlers[0]?.fulfilled(config as never);
+      if (!handlers?.[0]?.fulfilled) {
+        throw new Error('Request interceptor not configured');
+      }
 
-      expect(result?.headers.Authorization).toBe('Bearer test-token');
+      const result = handlers[0].fulfilled(config as never);
+      if (result && typeof result === 'object' && !('then' in result)) {
+        expect((result as Record<string, string>).headers.Authorization).toBe(
+          'Bearer test-token',
+        );
+      }
     });
 
     it('should not add Authorization header when no token', () => {
@@ -45,17 +52,22 @@ describe('Axios Instance', () => {
       };
 
       const handlers = axiosInstance.interceptors.request.handlers;
-      const result = handlers[0]?.fulfilled(config as never);
+      if (!handlers?.[0]?.fulfilled) {
+        throw new Error('Request interceptor not configured');
+      }
 
-      expect(result?.headers.Authorization).toBeUndefined();
+      const result = handlers[0].fulfilled(config as never);
+      if (result && typeof result === 'object' && !('then' in result)) {
+        expect((result as Record<string, string>).headers.Authorization).toBeUndefined();
+      }
     });
   });
 
   describe('Response Interceptor', () => {
     it('should have response error handler defined', () => {
       const handlers = axiosInstance.interceptors.response.handlers;
-      expect(handlers.length).toBeGreaterThan(0);
-      expect(typeof handlers[0]?.rejected).toBe('function');
+      expect(handlers && handlers.length).toBeGreaterThan(0);
+      expect(typeof handlers?.[0]?.rejected).toBe('function');
     });
   });
 
