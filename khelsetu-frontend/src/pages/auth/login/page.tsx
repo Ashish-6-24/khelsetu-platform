@@ -4,10 +4,12 @@ import { LanguageToggle } from '@components/ui/LanguageToggle';
 import { Logo } from '@components/ui/Logo';
 import { useToast } from '@components/ui/toast-context';
 import { useAuth } from '@hooks/useAuth';
+import { useFormValidation, validationRules } from '@hooks/useFormValidation';
+import { usePasswordStrength } from '@hooks/usePasswordStrength';
 import { ROUTES } from '@utils/constants';
-import { Lock, Mail, ShieldCheck } from 'lucide-react';
+import { Lock, Mail, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
 
@@ -17,32 +19,61 @@ export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
-    {},
-  );
 
-  const validate = () => {
-    const e: typeof errors = {};
-    if (!email) e.email = 'Email is required';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-      e.email = 'Enter a valid email';
-    if (!password) e.password = 'Password is required';
-    setErrors(e);
-    return Object.keys(e).length === 0;
+  const passwordStrength = usePasswordStrength(password);
+  const { validation, validateField, touchField, isFormValid, resetValidation } =
+    useFormValidation(
+      { email, password },
+      {
+        email: validationRules.email(email),
+        password: validationRules.password(password),
+      },
+    );
+
+  // Real-time validation on blur
+  const handleEmailBlur = () => {
+    touchField('email');
+    validateField('email', email);
   };
+
+  const handlePasswordBlur = () => {
+    touchField('password');
+    validateField('password', password);
+  };
+
+  // Validate as user types (after touched)
+  useEffect(() => {
+    if (validation.email?.touched) {
+      validateField('email', email);
+    }
+  }, [email, validation.email?.touched, validateField]);
+
+  useEffect(() => {
+    if (validation.password?.touched) {
+      validateField('password', password);
+    }
+  }, [password, validation.password?.touched, validateField]);
 
   const handleSubmit = async (ev: React.FormEvent) => {
     ev.preventDefault();
-    if (!validate()) return;
+    touchField('email');
+    touchField('password');
+    validateField('email', email);
+    validateField('password', password);
+
+    if (!isFormValid({ email, password })) return;
+
     setIsLoading(true);
     const res = await login({ email, password });
     setIsLoading(false);
+
     if (res.success) {
       addToast({
         type: 'success',
         title: 'Welcome back!',
         message: 'Signed in successfully. Redirecting…',
       });
+      resetValidation();
     } else {
       addToast({
         type: 'error',
@@ -65,55 +96,68 @@ export const LoginPage = () => {
         Sign in to manage your tournaments.
       </p>
 
-      <form onSubmit={handleSubmit} className="mt-8 space-y-4" noValidate>
-        <Input
-          label="Email"
-          type="email"
-          autoComplete="email"
-          placeholder="you@club.org"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          leftIcon={<Mail className="h-4 w-4" />}
-          error={errors.email}
-          required
-        />
-        <Input
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          placeholder="Enter your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          leftIcon={<Lock className="h-4 w-4" />}
-          error={errors.password}
-          required
-        />
+      <form onSubmit={handleSubmit} className="mt-8 space-y-5" noValidate>
+         <div>
+           <Input
+             label="Email"
+             type="email"
+             autoComplete="email"
+             placeholder="you@club.org"
+             value={email}
+             onChange={(e) => setEmail(e.target.value)}
+             onBlur={handleEmailBlur}
+             leftIcon={<Mail className="h-4 w-4" />}
+             error={validation.email?.touched ? validation.email.error || undefined : undefined}
+             rightIcon={
+               validation.email?.touched && !validation.email?.error ? (
+                 <CheckCircle2 className="h-4 w-4 text-green-500" />
+               ) : undefined
+             }
+             required
+           />
+         </div>
+         <div>
+           <Input
+             label="Password"
+             type="password"
+             autoComplete="current-password"
+             placeholder="Enter your password"
+             value={password}
+             onChange={(e) => setPassword(e.target.value)}
+             onBlur={handlePasswordBlur}
+             leftIcon={<Lock className="h-4 w-4" />}
+             error={validation.password?.touched ? validation.password.error || undefined : undefined}
+             strength={password ? passwordStrength.level : undefined}
+             required
+           />
+         </div>
 
-        <div className="flex items-center justify-between text-sm">
-          <label className="group inline-flex cursor-pointer items-center gap-2 text-[var(--text-secondary)]">
-            <input
-              type="checkbox"
-              className="h-4 w-4 rounded border-[var(--border-strong)] text-[var(--brand-primary)] transition-colors focus:ring-2 focus:ring-[var(--brand-primary)]/30 dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-sunken)]"
-            />
-            Remember me
-          </label>
-          <Link
-            to="#"
-            className="font-medium text-[var(--text-link)] transition-colors hover:text-[var(--brand-primary-hover)]"
-          >
-            Forgot password?
-          </Link>
-        </div>
+         <div className="flex items-center justify-between pt-2 text-sm">
+           <label className="group inline-flex cursor-pointer items-center gap-2 text-[var(--text-secondary)]">
+             <input
+               type="checkbox"
+               className="h-4 w-4 rounded border-[var(--border-strong)] text-[var(--brand-primary)] transition-colors focus:ring-2 focus:ring-[var(--brand-primary)]/30 dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-sunken)]"
+             />
+             Remember me
+           </label>
+           <Link
+             to="#"
+             className="font-medium text-[var(--text-link)] transition-colors hover:text-[var(--brand-primary-hover)]"
+           >
+             Forgot password?
+           </Link>
+         </div>
 
-        <Button
-          type="submit"
-          isLoading={isLoading}
-          fullWidth
-          size="lg"
-          className="shine"
-        >
-          {isLoading ? 'Signing in…' : 'Sign in'}
-        </Button>
+         <Button
+           type="submit"
+           disabled={isLoading || !isFormValid({ email, password })}
+           isLoading={isLoading}
+           fullWidth
+           size="lg"
+           className="shine transition-all duration-200"
+         >
+           {isLoading ? 'Signing in…' : 'Sign in'}
+         </Button>
       </form>
 
       <div className="relative my-6">
