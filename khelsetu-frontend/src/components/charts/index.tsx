@@ -21,10 +21,10 @@ export const BarChart = ({ data, height = 200, className }: BarChartProps) => {
           transition={{ delay: idx * 0.05, duration: 0.3 }}
         >
           <motion.div
-            className={clsx('w-full rounded-t-lg', item.color || 'bg-blue-600')}
+            className={clsx('w-full rounded-t-lg', item.color || 'bg-[var(--color-info)]')}
             style={{ height: `${(item.value / maxValue) * 100}%` }}
           />
-          <span className="text-xs text-gray-500 dark:text-gray-400 truncate w-full text-center">
+          <span className="text-xs text-[var(--text-tertiary)] truncate w-full text-center">
             {item.label}
           </span>
         </motion.div>
@@ -74,7 +74,7 @@ export const LineChart = ({
       </svg>
       <div className="absolute bottom-0 left-0 right-0 flex justify-between">
         {data.map((d, idx) => (
-          <span key={idx} className="text-xs text-gray-500 dark:text-gray-400">
+          <span key={idx} className="text-xs text-[var(--text-tertiary)]">
             {d.label}
           </span>
         ))}
@@ -126,7 +126,7 @@ export const DonutChart = ({
         ))}
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-lg font-bold text-gray-900 dark:text-white">
+        <span className="text-lg font-bold text-[var(--text-primary)]">
           {total}
         </span>
       </div>
