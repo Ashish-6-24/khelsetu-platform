@@ -103,11 +103,11 @@ const variantStyles: Record<ButtonVariant, string> = {
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  xs: 'h-7 px-2.5 text-xs gap-1.5',
-  sm: 'h-9 px-3.5 text-sm gap-1.5',
-  md: 'h-10 px-4 text-sm gap-2',
-  lg: 'h-12 px-6 text-base gap-2',
-  xl: 'h-14 px-7 text-base gap-2.5',
+  xs: 'h-7 px-2.5 text-xs gap-1.5 sm:h-8',
+  sm: 'h-9 px-3.5 text-sm gap-1.5 sm:h-10',
+  md: 'h-10 px-4 text-sm gap-2 sm:h-11',
+  lg: 'h-12 px-6 text-base gap-2 sm:h-12 md:min-h-[48px]',
+  xl: 'h-14 px-7 text-base gap-2.5 sm:h-14 md:min-h-[48px]',
 };
 
 /**
