@@ -38,6 +38,25 @@ export default tseslint.config(
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'prefer-const': 'error',
       eqeqeq: ['error', 'always'],
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@features/*'],
+              message: 'shared/ must not import from features/. Use a prop/callback pattern instead.',
+              allowTypeImports: false,
+            },
+          ],
+          paths: [
+            {
+              name: 'react',
+              importNames: ['default'],
+              message: 'Use named imports (e.g., useState, useEffect).',
+            },
+          ],
+        },
+      ],
     },
   },
   storybook.configs['flat/recommended'],

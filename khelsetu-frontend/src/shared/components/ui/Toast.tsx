@@ -1,4 +1,4 @@
-import { useReducedMotion } from '@features/accessibility';
+import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 import { clsx } from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AlertTriangle, CheckCircle2, Info, X, XCircle } from 'lucide-react';

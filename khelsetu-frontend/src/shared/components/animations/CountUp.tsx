@@ -1,4 +1,4 @@
-import { useReducedMotion } from '@features/accessibility';
+import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 
 import { useEffect, useRef, useState } from 'react';
 

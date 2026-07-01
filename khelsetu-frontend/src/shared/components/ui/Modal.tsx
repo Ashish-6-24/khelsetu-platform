@@ -1,4 +1,5 @@
-import { useFocusTrap, useReducedMotion } from '@features/accessibility';
+import { useFocusTrap } from '@shared/hooks/useFocusTrap';
+import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 import { clsx } from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';

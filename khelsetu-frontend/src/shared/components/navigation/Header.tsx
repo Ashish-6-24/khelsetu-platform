@@ -1,10 +1,10 @@
-import { useAuth } from '@features/auth/useAuth';
+import { api } from '@lib/axios';
 import { useCommandPalette } from '@shared/components/command/palette-context';
 import { ThemeToggle } from '@shared/components/theme-toggle/ThemeToggle';
 import { Avatar } from '@shared/components/ui/Avatar';
 import { BadgeDot } from '@shared/components/ui/Badge';
 import { Button } from '@shared/components/ui/Button';
-import { ROUTES } from '@shared/utils/constants';
+import { API_ENDPOINTS, ROUTES } from '@shared/utils/constants';
 import { getGreeting } from '@shared/utils/date';
 import { useAuthStore } from '@store/authStore';
 import { useUIStore } from '@store/uiStore';
@@ -20,16 +20,26 @@ import {
   User,
 } from 'lucide-react';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
 export const Header = () => {
   const user = useAuthStore((state) => state.user);
-  const { logout } = useAuth();
+  const storeLogout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
   const setMobileMenuOpen = useUIStore((state) => state.setMobileMenuOpen);
   const { setOpen: openCommandPalette } = useCommandPalette();
+
+  const logout = useCallback(async () => {
+    try {
+      await api.post(API_ENDPOINTS.AUTH.LOGOUT);
+    } catch {
+      // best-effort server-side logout
+    } finally {
+      storeLogout();
+    }
+  }, [storeLogout]);
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);

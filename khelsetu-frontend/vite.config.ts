@@ -30,13 +30,19 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
+              // React core + router + UI libs that depend on React internals
               if (
-                id.includes('react') ||
-                id.includes('react-dom') ||
-                id.includes('react-router')
+                /\breact-dom\b/.test(id) ||
+                /\breact-router\b/.test(id) ||
+                /\breact-router-dom\b/.test(id) ||
+                /\bcmdk\b/.test(id) ||
+                /\b@radix-ui\b/.test(id) ||
+                /\breact-remove-scroll\b/.test(id) ||
+                /\breact-is\b/.test(id)
               ) {
                 return 'vendor-react';
               }
+              if (/\/react\//.test(id) || /\/react@/.test(id)) return 'vendor-react';
               if (id.includes('@tanstack/react-query')) return 'vendor-query';
               if (id.includes('framer-motion')) return 'vendor-motion';
               if (
@@ -79,6 +85,11 @@ export default defineConfig(({ mode }) => {
       ],
     },
     server: {
+      port: 3000,
+      strictPort: true,
+      host: true,
+    },
+    preview: {
       port: 3000,
       strictPort: true,
       host: true,

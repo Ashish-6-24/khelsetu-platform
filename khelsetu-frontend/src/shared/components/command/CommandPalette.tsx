@@ -1,4 +1,4 @@
-import { useReducedMotion } from '@features/accessibility';
+import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 import { useCommandPalette } from '@shared/components/command/palette-context';
 import { PaletteContextProvider } from '@shared/components/command/palette-provider';
 import { NAV_GROUPS } from '@shared/components/navigation/nav-config';

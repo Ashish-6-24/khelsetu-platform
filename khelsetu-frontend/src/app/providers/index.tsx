@@ -17,14 +17,14 @@ export const AppProviders = ({ children }: AppProvidersProps) => {
       <GlobalErrorHandler />
       <QueryProvider>
         <ToastProvider>
-          <CommandPaletteProvider>
-            <RouterProvider>
+          <RouterProvider>
+            <CommandPaletteProvider>
               <AuthProvider>
                 {children}
                 <OfflineBanner />
               </AuthProvider>
-            </RouterProvider>
-          </CommandPaletteProvider>
+            </CommandPaletteProvider>
+          </RouterProvider>
         </ToastProvider>
       </QueryProvider>
     </ErrorBoundary>

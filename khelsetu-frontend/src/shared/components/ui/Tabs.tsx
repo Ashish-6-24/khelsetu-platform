@@ -1,4 +1,5 @@
 import { clsx } from 'clsx';
+import { motion } from 'framer-motion';
 
 import { useCallback, useRef } from 'react';
 
@@ -80,23 +81,22 @@ export const Tabs = ({
             tabIndex={isActive ? 0 : -1}
             onClick={() => onChange(tab.id)}
             className={clsx(
-              'inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-all duration-200',
+              'relative inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-colors duration-200',
               'focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
               fullWidth && 'flex-1',
               variant === 'pills' && 'h-9 px-3.5',
               variant === 'default' && 'h-9 px-3.5',
-              variant === 'underline' &&
-                'h-10 px-3 border-b-2 -mb-px rounded-none',
+              variant === 'underline' && 'h-10 px-3',
               variant === 'pills' && isActive
-                ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-900 dark:text-white'
+                ? 'text-slate-900 dark:text-white'
                 : variant === 'pills'
                   ? 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                   : variant === 'underline'
                     ? isActive
-                      ? 'border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400'
-                      : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+                      ? 'text-blue-600 dark:text-blue-400'
+                      : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
                     : isActive
-                      ? 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300'
+                      ? 'text-blue-700 dark:text-blue-300'
                       : 'text-slate-600 hover:bg-slate-100/60 dark:text-slate-300 dark:hover:bg-slate-800/50',
             )}
           >
@@ -113,6 +113,28 @@ export const Tabs = ({
               >
                 {tab.count}
               </span>
+            )}
+            {/* Animated underline / active indicator */}
+            {isActive && variant === 'underline' && (
+              <motion.div
+                layoutId="tab-underline"
+                className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-blue-600 dark:bg-blue-400"
+                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+              />
+            )}
+            {isActive && variant === 'default' && (
+              <motion.div
+                layoutId="tab-default-bg"
+                className="absolute inset-0 -z-10 rounded-lg bg-blue-50 dark:bg-blue-500/15"
+                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+              />
+            )}
+            {isActive && variant === 'pills' && (
+              <motion.div
+                layoutId="tab-pills-bg"
+                className="absolute inset-0 -z-10 rounded-lg bg-white shadow-sm dark:bg-slate-900"
+                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+              />
             )}
           </button>
         );
