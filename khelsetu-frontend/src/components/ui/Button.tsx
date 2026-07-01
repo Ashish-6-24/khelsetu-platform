@@ -130,8 +130,8 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(
     const isDisabled = Boolean(disabled) || isLoading;
 
     // Buttons should not be tabbable while loading; keep aria-busy on.
-    const a11y: Record<string, boolean> = isLoading
-      ? { 'aria-busy': true, 'aria-live': true }
+    const a11y: Record<string, boolean | string> = isLoading
+      ? { 'aria-busy': true, 'aria-live': 'polite' }
       : {};
 
     const {
@@ -162,7 +162,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(
             className,
           ),
         )}
-        disabled={isDisabled || undefined}
+        {...(Tag === 'button' ? { disabled: isDisabled || undefined } : {})}
         aria-disabled={isDisabled || undefined}
         {...a11y}
         {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
