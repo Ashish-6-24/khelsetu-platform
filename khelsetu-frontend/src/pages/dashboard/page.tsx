@@ -12,6 +12,7 @@ import { useAuthStore } from '@store/authStore';
 import { useQuery } from '@tanstack/react-query';
 import type { Match, Tournament } from '@types-domain/tournament';
 import { ROUTES } from '@utils/constants';
+import { getGreeting } from '@utils/date';
 import {
   ArrowRight,
   BarChart3,
@@ -28,13 +29,6 @@ import { Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const HOUR = 60 * 60 * 1000;
-
-const getGreeting = (): string => {
-  const hour = new Date().getHours();
-  if (hour < 12) return 'Good morning';
-  if (hour < 17) return 'Good afternoon';
-  return 'Good evening';
-};
 
 const FALLBACK_ACTIVITIES: ActivityItem[] = [
   {
@@ -229,12 +223,12 @@ export const DashboardPage = () => {
         >
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-base font-semibold flex items-center gap-2 text-[var(--text-primary)]">
-              <span className="inline-flex h-2 w-2 animate-pulse rounded-full bg-red-500" />
+              <span className="inline-flex h-2 w-2 animate-pulse rounded-full bg-[var(--color-live)]" />
               Live now
             </h2>
             <button
               onClick={() => navigate(ROUTES.SCORING)}
-              className="text-xs font-medium text-[var(--text-link)]"
+              className="text-xs font-medium text-[var(--text-link)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-canvas)] rounded"
             >
               View all →
             </button>
@@ -270,7 +264,7 @@ export const DashboardPage = () => {
                   <button
                     key={match.id}
                     onClick={() => navigate(`/scoring/${match.id}`)}
-                    className="live-card spring-bounce relative group flex-shrink-0 w-72 snap-start rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-4 shadow-[var(--shadow-sm)] transition-all hover:shadow-[var(--shadow-md)] cursor-pointer overflow-hidden"
+                    className="live-card spring-bounce relative group flex-shrink-0 w-72 snap-start rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-4 shadow-[var(--shadow-sm)] transition-all hover:shadow-[var(--shadow-md)] cursor-pointer overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-canvas)]"
                     style={{ animationDelay: `${idx * 150}ms` }}
                   >
                     <div className="absolute inset-x-0 top-0 h-0.5 rounded-t-2xl live-card-border" />
@@ -386,7 +380,7 @@ const UpcomingMatches = ({
     <div className="overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] shadow-[var(--shadow-sm)]">
       <div className="flex items-center justify-between border-b border-[var(--border-subtle)] px-5 py-4 sm:px-6">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--color-info)]/10 text-[var(--color-info)]">
             <Calendar className="h-4 w-4" size={18} />
           </div>
           <div>
@@ -400,7 +394,7 @@ const UpcomingMatches = ({
         </div>
         <button
           onClick={onSeeAll}
-          className="inline-flex items-center gap-1 text-xs font-medium text-[var(--text-link)]"
+          className="inline-flex items-center gap-1 text-xs font-medium text-[var(--text-link)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-canvas)] rounded"
         >
           See all
           <ArrowRight className="h-3.5 w-3.5" />
@@ -474,9 +468,9 @@ const QuickActions = () => {
           <button
             key={a.label}
             onClick={() => navigate(a.to)}
-            className="group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-[var(--bg-surface-sunken)]"
+            className="group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-[var(--bg-surface-sunken)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-canvas)]"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--bg-surface-sunken)] text-[var(--text-secondary)] transition-colors group-hover:bg-blue-500/10 group-hover:text-[var(--text-link)]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--bg-surface-sunken)] text-[var(--text-secondary)] transition-colors group-hover:bg-[var(--color-info)]/10 group-hover:text-[var(--text-link)]">
               <a.icon className="h-4 w-4" />
             </div>
             <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">
