@@ -17,10 +17,10 @@ const sizeStyles = {
 };
 
 const variantStyles = {
-  default: 'bg-blue-600',
-  success: 'bg-emerald-600',
-  warning: 'bg-amber-500',
-  error: 'bg-red-600',
+  default: 'bg-[var(--color-info)]',
+  success: 'bg-[var(--color-success)]',
+  warning: 'bg-[var(--color-warning)]',
+  error: 'bg-[var(--color-live)]',
   gradient: 'bg-gradient-to-r from-[var(--brand-primary)] via-[var(--brand-primary-hover)] to-[var(--brand-accent)]',
 };
 
