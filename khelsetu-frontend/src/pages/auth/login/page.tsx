@@ -145,6 +145,7 @@ export const LoginPage = () => {
             leftIcon={<Mail className="h-4 w-4" />}
             error={validation.email?.touched ? validation.email.error || undefined : undefined}
             validationState={emailValidationState}
+            helperText="Enter your registered email address"
             required
           />
         </div>
