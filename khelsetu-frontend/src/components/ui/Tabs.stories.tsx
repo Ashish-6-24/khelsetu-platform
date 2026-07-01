@@ -29,18 +29,16 @@ const tabs = [
 ] as const;
 
 const defaultTabId = tabs[0].id;
-
-export const Default: Story = {
-  args: {
-    tabs,
-    activeTab: defaultTabId,
-    onChange: () => {},
-  },
-};
+const tabsForStories = tabs as unknown as Array<{
+  id: string;
+  label: string;
+  icon?: React.ReactNode;
+  count?: number;
+}>;
 
 export const Pills: Story = {
   args: {
-    tabs,
+    tabs: tabsForStories,
     activeTab: defaultTabId,
     onChange: () => {},
     variant: 'pills',
@@ -49,7 +47,7 @@ export const Pills: Story = {
 
 export const Underline: Story = {
   args: {
-    tabs,
+    tabs: tabsForStories,
     activeTab: defaultTabId,
     onChange: () => {},
     variant: 'underline',
@@ -70,7 +68,7 @@ export const WithCounts: Story = {
 
 export const FullWidth: Story = {
   args: {
-    tabs,
+    tabs: tabsForStories,
     activeTab: defaultTabId,
     onChange: () => {},
     fullWidth: true,

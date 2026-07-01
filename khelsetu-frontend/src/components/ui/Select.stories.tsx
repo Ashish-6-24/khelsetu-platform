@@ -24,11 +24,6 @@ const options = [
   { value: 'basketball', label: 'Basketball' },
 ];
 
-const _SelectWithState = (props: React.ComponentProps<typeof Select>) => {
-  const [value, setValue] = useState('');
-  return <Select {...props} value={value} onChange={setValue} />;
-};
-
 export const Default: Story = {
   args: {
     label: 'Sport',
