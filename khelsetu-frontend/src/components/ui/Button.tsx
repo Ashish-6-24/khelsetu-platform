@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { type ElementType, type ReactNode, forwardRef } from 'react';
+import { type ElementType, type ReactNode, forwardRef, useEffect, useState } from 'react';
 
 type ButtonVariant =
   | 'primary'
@@ -30,6 +30,8 @@ interface ButtonOwnProps {
   children?: ReactNode;
   className?: string;
   disabled?: boolean;
+  /** Optional loading stage text (e.g. 'Verifying', 'Authenticating', 'Redirecting') */
+  loadingStage?: string;
 }
 
 export type ButtonProps = ButtonOwnProps &
@@ -124,6 +126,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(
     const isLoading: boolean = props.isLoading ?? false;
     const fullWidth: boolean = props.fullWidth ?? false;
     const iconOnly: boolean = props.iconOnly ?? false;
+    const loadingStage: string | undefined = (props as any).loadingStage;
     const Tag: ElementType = (props.as as ElementType) ?? 'button';
     const className = (props.className as string | undefined) ?? '';
     const disabled = props.disabled;
