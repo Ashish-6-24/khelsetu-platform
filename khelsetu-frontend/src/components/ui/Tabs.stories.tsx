@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
 
 import { Tabs } from './Tabs';
 
@@ -27,41 +26,53 @@ const tabs = [
   { id: 'matches', label: 'Matches' },
   { id: 'teams', label: 'Teams' },
   { id: 'standings', label: 'Standings' },
-];
+] as const;
 
-const TabsWithState = (props: React.ComponentProps<typeof Tabs>) => {
-  const [activeTab, setActiveTab] = useState(props.tabs[0]?.id ?? '');
-  return <Tabs {...props} activeTab={activeTab} onChange={setActiveTab} />;
-};
+const defaultTabId = tabs[0].id;
 
 export const Default: Story = {
-  render: () => <TabsWithState tabs={tabs} />,
+  args: {
+    tabs,
+    activeTab: defaultTabId,
+    onChange: () => {},
+  },
 };
 
 export const Pills: Story = {
-  render: () => <TabsWithState tabs={tabs} variant="pills" />,
+  args: {
+    tabs,
+    activeTab: defaultTabId,
+    onChange: () => {},
+    variant: 'pills',
+  },
 };
 
 export const Underline: Story = {
-  render: () => <TabsWithState tabs={tabs} variant="underline" />,
+  args: {
+    tabs,
+    activeTab: defaultTabId,
+    onChange: () => {},
+    variant: 'underline',
+  },
 };
 
 export const WithCounts: Story = {
-  render: () => (
-    <TabsWithState
-      tabs={[
-        { id: 'all', label: 'All', count: 42 },
-        { id: 'active', label: 'Active', count: 12 },
-        { id: 'completed', label: 'Completed', count: 30 },
-      ]}
-    />
-  ),
+  args: {
+    tabs: [
+      { id: 'all', label: 'All', count: 42 },
+      { id: 'active', label: 'Active', count: 12 },
+      { id: 'completed', label: 'Completed', count: 30 },
+    ],
+    activeTab: 'all',
+    onChange: () => {},
+  },
 };
 
 export const FullWidth: Story = {
-  render: () => (
-    <div className="w-96">
-      <TabsWithState tabs={tabs} fullWidth />
-    </div>
-  ),
+  args: {
+    tabs,
+    activeTab: defaultTabId,
+    onChange: () => {},
+    fullWidth: true,
+  },
 };

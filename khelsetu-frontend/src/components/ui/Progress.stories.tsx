@@ -71,11 +71,10 @@ export const Gradient: Story = {
 };
 
 export const Sizes: Story = {
-  render: () => (
-    <div className="w-64 space-y-4">
-      <Progress value={60} size="sm" label="Small" showLabel />
-      <Progress value={60} size="md" label="Medium" showLabel />
-      <Progress value={60} size="lg" label="Large" showLabel />
-    </div>
-  ),
+  args: {
+    value: 60,
+    size: 'md',
+    label: 'Medium',
+    showLabel: true,
+  },
 };

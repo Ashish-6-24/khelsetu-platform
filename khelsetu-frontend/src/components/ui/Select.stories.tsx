@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
 
 import { Select } from './Select';
 
@@ -25,47 +24,47 @@ const options = [
   { value: 'basketball', label: 'Basketball' },
 ];
 
-const SelectWithState = (props: React.ComponentProps<typeof Select>) => {
+const _SelectWithState = (props: React.ComponentProps<typeof Select>) => {
   const [value, setValue] = useState('');
   return <Select {...props} value={value} onChange={setValue} />;
 };
 
 export const Default: Story = {
-  render: () => (
-    <div className="w-64">
-      <SelectWithState label="Sport" options={options} placeholder="Select sport" />
-    </div>
-  ),
+  args: {
+    label: 'Sport',
+    options,
+    placeholder: 'Select sport',
+    value: '',
+    onChange: () => {},
+  },
 };
 
 export const WithError: Story = {
-  render: () => (
-    <div className="w-64">
-      <SelectWithState
-        label="Sport"
-        options={options}
-        error="Please select a sport"
-      />
-    </div>
-  ),
+  args: {
+    label: 'Sport',
+    options,
+    error: 'Please select a sport',
+    value: '',
+    onChange: () => {},
+  },
 };
 
 export const WithHelper: Story = {
-  render: () => (
-    <div className="w-64">
-      <SelectWithState
-        label="Sport"
-        options={options}
-        helperText="Choose the sport for this tournament"
-      />
-    </div>
-  ),
+  args: {
+    label: 'Sport',
+    options,
+    helperText: 'Choose the sport for this tournament',
+    value: '',
+    onChange: () => {},
+  },
 };
 
 export const Disabled: Story = {
-  render: () => (
-    <div className="w-64">
-      <SelectWithState label="Sport" options={options} disabled />
-    </div>
-  ),
+  args: {
+    label: 'Sport',
+    options,
+    disabled: true,
+    value: '',
+    onChange: () => {},
+  },
 };

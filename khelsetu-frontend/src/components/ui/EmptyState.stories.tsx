@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Inbox, Trophy, Users } from 'lucide-react';
+import { Trophy, Users } from 'lucide-react';
 
 import { Button } from './Button';
 import { EmptyState } from './EmptyState';
