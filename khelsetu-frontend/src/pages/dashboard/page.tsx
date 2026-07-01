@@ -140,9 +140,9 @@ export const DashboardPage = () => {
         </div>
         <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur">
-              <span className="inline-flex h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" />
-              {liveMatches > 0
+             <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur">
+               <span className="inline-flex h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--color-success)]" />
+               {liveMatches > 0
                 ? `${liveMatches} live match${liveMatches === 1 ? '' : 'es'} right now`
                 : 'All systems operational'}
             </div>

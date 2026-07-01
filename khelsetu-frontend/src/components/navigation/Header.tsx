@@ -152,12 +152,12 @@ export const Header = () => {
         </div>
 
         <div className="relative" ref={menuRef}>
-          <button
-            onClick={() => setMenuOpen((o) => !o)}
-            aria-expanded={menuOpen}
-            aria-haspopup="menu"
-            className="flex items-center gap-2 rounded-full p-0.5 transition-all hover:ring-2 hover:ring-blue-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-          >
+           <button
+             onClick={() => setMenuOpen((o) => !o)}
+             aria-expanded={menuOpen}
+             aria-haspopup="menu"
+             className="flex items-center gap-2 rounded-full p-0.5 transition-all hover:ring-2 hover:ring-[var(--brand-primary)]/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]"
+           >
             <Avatar name={user?.name || 'User'} size="sm" status="online" />
             <ChevronDown
               className={`h-3.5 w-3.5 text-[var(--text-secondary)] transition-transform ${
@@ -243,7 +243,7 @@ const MenuItem = ({
     onClick={onClick}
     className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
       danger
-        ? 'text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-[var(--color-danger-soft)]'
+        ? 'text-[var(--color-danger)] hover:bg-[var(--color-danger)]/10 dark:text-[var(--color-danger)] dark:hover:bg-[var(--color-danger-soft)]'
         : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-sunken)] dark:text-[var(--text-primary)] dark:hover:bg-[var(--bg-surface)]/60'
     }`}
   >

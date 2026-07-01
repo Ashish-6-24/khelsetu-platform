@@ -50,10 +50,10 @@ export const StandingsPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
           Standings
         </h1>
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-[var(--text-tertiary)]">
           View tournament standings and points tables
         </p>
       </div>
@@ -72,7 +72,7 @@ export const StandingsPage = () => {
         <div className="md:col-span-1">
           <Card>
             <CardBody>
-              <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+              <h3 className="text-sm font-semibold text-[var(--text-secondary)] mb-3">
                 Select Tournament
               </h3>
               {loadingTournaments ? (
@@ -89,13 +89,13 @@ export const StandingsPage = () => {
                       onClick={() => setSelectedTournamentId(tournament.id)}
                       className={`w-full text-left p-3 rounded-lg transition-colors ${
                         selectedTournamentId === tournament.id
-                          ? 'bg-blue-50 border-2 border-blue-500 dark:bg-blue-900/20'
-                          : 'bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 border-2 border-transparent'
+                          ? 'bg-[var(--bg-surface)] border-2 border-[var(--brand-primary)] dark:bg-[var(--brand-primary)]/10'
+                          : 'bg-[var(--bg-surface-sunken)] hover:bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] dark:hover:bg-[var(--bg-surface-raised)] border-2 border-transparent'
                       }`}
                     >
-                      <p className="font-medium text-sm text-gray-900 dark:text-white truncate">
-                        {tournament.name}
-                      </p>
+                        <p className="font-medium text-sm text-[var(--text-primary)] truncate">
+                          {tournament.name}
+                        </p>
                       <div className="flex items-center gap-2 mt-1">
                         <Badge
                           variant={
@@ -109,7 +109,7 @@ export const StandingsPage = () => {
                         >
                           {tournament.status}
                         </Badge>
-                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                        <span className="text-xs text-[var(--text-tertiary)]">
                           {(tournament as Tournament & { sport?: string })
                             .sport ?? 'cricket'}
                         </span>
@@ -117,8 +117,8 @@ export const StandingsPage = () => {
                     </button>
                   ))}
                 </div>
-              ) : (
-                <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-4">
+                ) : (
+                <p className="text-sm text-[var(--text-tertiary)] text-center py-4">
                   No tournaments yet. Create one to see standings.
                 </p>
               )}
@@ -131,10 +131,10 @@ export const StandingsPage = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  <h2 className="text-lg font-semibold text-[var(--text-primary)]">
                     {selectedTournament?.name}
                   </h2>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <p className="text-sm text-[var(--text-tertiary)]">
                     Points Table
                   </p>
                 </div>
@@ -164,7 +164,7 @@ export const StandingsPage = () => {
             <Card>
               <CardBody>
                 <div className="text-center py-12">
-                  <p className="text-gray-500 dark:text-gray-400 text-lg">
+                  <p className="text-[var(--text-tertiary)] text-lg">
                     Select a tournament to view standings
                   </p>
                 </div>

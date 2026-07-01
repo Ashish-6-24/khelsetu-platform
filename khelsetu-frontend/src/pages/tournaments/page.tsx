@@ -48,7 +48,7 @@ export const TournamentsPage = () => {
             <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
               Tournaments
             </h1>
-            <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+            <p className="mt-1 text-sm text-[var(--color-danger)]">
               Failed to load tournaments
             </p>
           </div>

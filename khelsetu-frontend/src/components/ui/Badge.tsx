@@ -100,11 +100,11 @@ interface BadgeDotProps {
 }
 
 const dotColors: Record<NonNullable<BadgeDotProps['variant']>, string> = {
-  success: 'bg-emerald-500',
-  warning: 'bg-amber-500',
-  error: 'bg-red-500',
-  info: 'bg-blue-500',
-  neutral: 'bg-slate-400',
+  success: 'bg-[var(--color-success)]',
+  warning: 'bg-[var(--color-warning)]',
+  error: 'bg-[var(--color-danger)]',
+  info: 'bg-[var(--color-info)]',
+  neutral: 'bg-[var(--text-tertiary)]',
 };
 
 export const BadgeDot = ({

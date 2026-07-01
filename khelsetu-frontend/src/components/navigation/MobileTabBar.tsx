@@ -63,7 +63,7 @@ export const MobileTabBar = () => {
                   to={tab.href}
                   aria-current={active ? 'page' : undefined}
                   className={clsx(
-                    'group relative flex h-full w-full flex-col items-center justify-center gap-0.5 rounded-lg text-[10px] font-semibold tracking-wide transition-colors',
+                    'group relative flex h-full w-full flex-col items-center justify-center gap-0.5 rounded-lg text-xs font-semibold tracking-wide transition-colors',
                     active
                       ? 'text-[var(--text-link)]'
                       : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)] dark:text-[var(--text-tertiary)] dark:hover:text-[var(--text-primary)]',
