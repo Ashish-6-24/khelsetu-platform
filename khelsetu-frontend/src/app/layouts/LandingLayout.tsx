@@ -1,8 +1,9 @@
-import { Footer } from '@components/navigation/Footer';
-import { Navbar } from '@components/navigation/Navbar';
 import { SkipLink } from '@features/accessibility';
-import { useEffect } from 'react';
+import { Footer } from '@shared/components/navigation/Footer';
+import { Navbar } from '@shared/components/navigation/Navbar';
 import { useUIStore } from '@store/uiStore';
+
+import { useEffect } from 'react';
 
 interface LandingLayoutProps {
   children: React.ReactNode;

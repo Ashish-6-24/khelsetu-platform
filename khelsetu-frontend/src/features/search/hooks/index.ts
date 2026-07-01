@@ -1,6 +1,6 @@
 import { useSearchStore } from '@features/search/store';
 import type { SearchResult } from '@features/search/types';
-import { useDebounce } from '@hooks/performance';
+import { useDebounce } from '@shared/hooks/useDebounce';
 
 import { useEffect, useMemo } from 'react';
 

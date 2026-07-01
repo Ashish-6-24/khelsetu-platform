@@ -155,9 +155,12 @@
   /* Shadows — tinted dark blue for premium feel */
   --shadow-xs: 0 1px 2px rgb(8 11 20 / 0.3);
   --shadow-sm: 0 1px 3px rgb(8 11 20 / 0.4), 0 1px 2px rgb(8 11 20 / 0.3);
-  --shadow-md: 0 4px 8px -2px rgb(8 11 20 / 0.5), 0 2px 4px -2px rgb(8 11 20 / 0.3);
-  --shadow-lg: 0 12px 24px -6px rgb(8 11 20 / 0.6), 0 4px 8px -2px rgb(8 11 20 / 0.4);
-  --shadow-xl: 0 24px 48px -12px rgb(8 11 20 / 0.7), 0 8px 16px -4px rgb(8 11 20 / 0.5);
+  --shadow-md:
+    0 4px 8px -2px rgb(8 11 20 / 0.5), 0 2px 4px -2px rgb(8 11 20 / 0.3);
+  --shadow-lg:
+    0 12px 24px -6px rgb(8 11 20 / 0.6), 0 4px 8px -2px rgb(8 11 20 / 0.4);
+  --shadow-xl:
+    0 24px 48px -12px rgb(8 11 20 / 0.7), 0 8px 16px -4px rgb(8 11 20 / 0.5);
   --shadow-brand: 0 8px 24px -8px rgb(252 165 165 / 0.25);
   --shadow-gold: 0 8px 24px -8px rgb(240 201 91 / 0.35);
 }

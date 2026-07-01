@@ -1,4 +1,4 @@
-import { ROUTES } from '@utils/constants';
+import { ROUTES } from '@shared/utils/constants';
 import { clsx } from 'clsx';
 import DOMPurify from 'dompurify';
 import { ArrowLeft, Clock, Eye, Share2, User } from 'lucide-react';

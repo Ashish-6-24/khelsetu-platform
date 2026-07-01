@@ -1,7 +1,7 @@
-import { Card, CardBody } from '@components/ui/Card';
 import { I18nDemo, LanguageSwitcher } from '@features/i18n/components';
 import { useI18n } from '@features/i18n/hooks';
 import { translations } from '@features/i18n/translations';
+import { Card, CardBody } from '@shared/components/ui/Card';
 
 export const I18nPage = () => {
   const { language, availableLanguages } = useI18n();

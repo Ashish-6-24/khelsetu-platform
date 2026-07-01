@@ -1,5 +1,5 @@
-import { Badge } from '@components/ui/Badge';
-import { Card, CardBody, CardHeader } from '@components/ui/Card';
+import { Badge } from '@shared/components/ui/Badge';
+import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
 import { Calendar, Clock } from 'lucide-react';
 
 import { useState } from 'react';

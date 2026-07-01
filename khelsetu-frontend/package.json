@@ -18,6 +18,12 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:report": "playwright show-report",
+    "test:e2e:chromium": "playwright test --project=chromium",
+    "test:e2e:firefox": "playwright test --project=firefox",
+    "test:e2e:webkit": "playwright test --project=webkit",
+    "test:e2e:mobile": "playwright test --project='Mobile Chrome' --project='Mobile Safari'",
     "circular": "dpdm --circular --warning false --tree false src/main.tsx",
     "size-limit": "size-limit",
     "security:audit": "npm audit --audit-level=high",
@@ -25,7 +31,16 @@
     "validate": "npm run lint && npm run format:check && npm run typecheck && npm run test:run && npm run build && npm run circular",
     "analyze": "npm run build && npx vite-bundle-analyzer dist",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test-storybook": "vitest --project=storybook",
+    "test-storybook:run": "vitest --project=storybook --run",
+    "test:a11y": "playwright test --project=a11y-public --project=a11y-dashboard",
+    "test:visual": "chromatic --only-changed",
+    "lhci": "lhci autorun",
+    "lhci:collect": "lhci collect",
+    "lhci:assert": "lhci assert",
+    "lhci:upload": "lhci upload",
+    "serve:lhci": "npm run build && npm run preview"
   },
   "size-limit": [
     {
@@ -39,11 +54,6 @@
       "limit": "300 kB"
     },
     {
-      "name": "Vendor query bundle",
-      "path": "dist/assets/vendor-query-*.js",
-      "limit": "80 kB"
-    },
-    {
       "name": "Vendor motion bundle",
       "path": "dist/assets/vendor-motion-*.js",
       "limit": "120 kB"
@@ -52,11 +62,6 @@
       "name": "Vendor charts bundle",
       "path": "dist/assets/vendor-charts-*.js",
       "limit": "200 kB"
-    },
-    {
-      "name": "Vendor icons bundle",
-      "path": "dist/assets/vendor-icons-*.js",
-      "limit": "100 kB"
     }
   ],
   "lint-staged": {
@@ -92,10 +97,12 @@
     "zustand": "^5.0.13"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
     "@chromatic-com/storybook": "^5.2.1",
     "@commitlint/cli": "^21.0.1",
     "@commitlint/config-conventional": "^21.0.1",
     "@eslint/js": "^10.0.1",
+    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.60.0",
     "@size-limit/preset-app": "^12.1.0",
     "@storybook/addon-a11y": "^10.4.0",
@@ -125,6 +132,8 @@
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
     "lint-staged": "^17.0.5",
+    "msw": "^2.14.6",
+    "msw-storybook-addon": "^2.0.7",
     "playwright": "^1.60.0",
     "postcss": "^8.5.15",
     "prettier": "^3.5.3",

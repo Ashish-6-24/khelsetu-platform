@@ -1,8 +1,8 @@
-import { Card, CardBody } from '@components/ui/Card';
-import { Skeleton } from '@components/ui/Skeleton';
 import { FormationBuilder } from '@features/formation/components/FormationBuilder';
 import { useFormation } from '@features/formation/hooks/useFormation';
-import { matchService } from '@services/api/tournament';
+import { matchService } from '@features/tournaments/services/tournament';
+import { Card, CardBody } from '@shared/components/ui/Card';
+import { Skeleton } from '@shared/components/ui/Skeleton';
 import { useQuery } from '@tanstack/react-query';
 
 import { useParams } from 'react-router-dom';

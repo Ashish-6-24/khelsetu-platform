@@ -1,6 +1,6 @@
 import type { Notification } from '@features/notifications/types';
 import { axiosInstance } from '@lib/axios';
-import { API_ENDPOINTS } from '@utils/constants';
+import { API_ENDPOINTS } from '@shared/utils/constants';
 
 export const notificationService = {
   getNotifications: async (): Promise<Notification[]> => {

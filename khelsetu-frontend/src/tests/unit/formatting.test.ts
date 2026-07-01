@@ -6,7 +6,7 @@ import {
   pluralize,
   slugify,
   truncate,
-} from '@utils/formatting';
+} from '@shared/utils/formatting';
 import { describe, expect, it } from 'vitest';
 
 describe('Formatting Utilities', () => {

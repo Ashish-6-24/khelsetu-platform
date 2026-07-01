@@ -1,5 +1,7 @@
-import { ErrorBoundary, GlobalErrorHandler } from '@components/error';
-import { OfflineBanner } from '@components/ui/OfflineBanner';
+import { CommandPaletteProvider } from '@shared/components/command/CommandPalette';
+import { ErrorBoundary, GlobalErrorHandler } from '@shared/components/error';
+import { OfflineBanner } from '@shared/components/ui/OfflineBanner';
+import { ToastProvider } from '@shared/components/ui/Toast';
 
 import { AuthProvider } from './AuthProvider';
 import { QueryProvider } from './QueryProvider';
@@ -14,12 +16,16 @@ export const AppProviders = ({ children }: AppProvidersProps) => {
     <ErrorBoundary>
       <GlobalErrorHandler />
       <QueryProvider>
-        <RouterProvider>
-          <AuthProvider>
-            {children}
-            <OfflineBanner />
-          </AuthProvider>
-        </RouterProvider>
+        <ToastProvider>
+          <CommandPaletteProvider>
+            <RouterProvider>
+              <AuthProvider>
+                {children}
+                <OfflineBanner />
+              </AuthProvider>
+            </RouterProvider>
+          </CommandPaletteProvider>
+        </ToastProvider>
       </QueryProvider>
     </ErrorBoundary>
   );

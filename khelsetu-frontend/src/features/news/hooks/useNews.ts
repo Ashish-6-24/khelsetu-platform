@@ -1,4 +1,4 @@
-import { newsService } from '@services/api/news';
+import { newsService } from '@features/news/services/news';
 import { useQuery } from '@tanstack/react-query';
 
 import type { NewsFilters } from '../types';

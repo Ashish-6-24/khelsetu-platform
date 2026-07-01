@@ -1,4 +1,4 @@
-import { Badge } from '@components/ui/Badge';
+import { Badge } from '@shared/components/ui/Badge';
 import { clsx } from 'clsx';
 
 import { useCallback, useState } from 'react';

@@ -1,10 +1,10 @@
-import { Tabs } from '@components/ui/Tabs';
 import {
   SearchBar,
   SearchFilters,
   SearchResultCard,
 } from '@features/search/components';
 import { useSearch } from '@features/search/hooks';
+import { Tabs } from '@shared/components/ui/Tabs';
 
 import { useState } from 'react';
 

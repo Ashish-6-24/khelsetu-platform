@@ -1,4 +1,4 @@
-import { STORAGE_KEYS } from '@utils/constants';
+import { STORAGE_KEYS } from '@shared/utils/constants';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -47,7 +47,8 @@ const applyThemeToDOM = (theme: Theme) => {
   if (typeof document === 'undefined') return;
   const root = document.documentElement;
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const isDark = isAuthContext && (theme === 'dark' || (theme === 'system' && prefersDark));
+  const isDark =
+    isAuthContext && (theme === 'dark' || (theme === 'system' && prefersDark));
   root.classList.toggle('dark', isDark);
   root.dataset.theme = theme;
 };

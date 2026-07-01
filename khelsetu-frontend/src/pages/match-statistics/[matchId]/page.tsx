@@ -4,7 +4,7 @@ import {
   StatisticsDashboardSkeleton,
 } from '@features/match-statistics/components/StatisticsDashboard';
 import { useMatchStatistics } from '@features/match-statistics/hooks/useMatchStatistics';
-import { matchService } from '@services/api/tournament';
+import { matchService } from '@features/tournaments/services/tournament';
 import { useQuery } from '@tanstack/react-query';
 
 import { useParams } from 'react-router-dom';

@@ -1,4 +1,4 @@
-import type { AuthState, AuthTokens, User } from '@types-domain/auth';
+import type { AuthState, AuthTokens, User } from '@shared/types/auth';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 

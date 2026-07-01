@@ -1,7 +1,7 @@
-import { Badge } from '@components/ui/Badge';
-import { Button } from '@components/ui/Button';
-import { Card, CardBody } from '@components/ui/Card';
 import type { Subscription } from '@features/billing/types';
+import { Badge } from '@shared/components/ui/Badge';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody } from '@shared/components/ui/Card';
 import { Calendar, CreditCard, X } from 'lucide-react';
 
 interface SubscriptionCardProps {
@@ -54,7 +54,9 @@ export const SubscriptionCard = ({
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-[var(--text-tertiary)]" />
               <div>
-                <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">Start Date</p>
+                <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+                  Start Date
+                </p>
                 <p className="font-medium text-[var(--text-primary)] dark:text-white">
                   {new Date(subscription.startDate).toLocaleDateString()}
                 </p>
@@ -63,7 +65,9 @@ export const SubscriptionCard = ({
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-[var(--text-tertiary)]" />
               <div>
-                <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">End Date</p>
+                <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+                  End Date
+                </p>
                 <p className="font-medium text-[var(--text-primary)] dark:text-white">
                   {new Date(subscription.endDate).toLocaleDateString()}
                 </p>

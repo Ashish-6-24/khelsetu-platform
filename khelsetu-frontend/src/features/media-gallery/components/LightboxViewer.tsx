@@ -180,7 +180,9 @@ export function LightboxViewer({
         <div className="mt-4 text-center">
           <h3 className="text-lg font-semibold text-white">{item.title}</h3>
           {item.description && (
-            <p className="mt-1 text-sm text-[var(--text-secondary)]">{item.description}</p>
+            <p className="mt-1 text-sm text-[var(--text-secondary)]">
+              {item.description}
+            </p>
           )}
           <div className="mt-2 flex items-center justify-center gap-3 text-xs text-[var(--text-tertiary)]">
             {item.playerName && <span>{item.playerName}</span>}

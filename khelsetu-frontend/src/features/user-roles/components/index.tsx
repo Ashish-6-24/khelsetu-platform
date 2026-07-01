@@ -1,12 +1,12 @@
-import { Badge } from '@components/ui/Badge';
-import { Button } from '@components/ui/Button';
-import { Card, CardBody, CardHeader } from '@components/ui/Card';
 import type {
   Permission,
   Role,
   UserRole,
   UserWithRole,
 } from '@features/user-roles/types';
+import { Badge } from '@shared/components/ui/Badge';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
 import { Shield, Users } from 'lucide-react';
 
 const roleColors: Record<Role, string> = {
@@ -14,7 +14,8 @@ const roleColors: Record<Role, string> = {
   organizer: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
   scorer:
     'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
-  viewer: 'bg-gray-100 text-[var(--text-primary)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-secondary)]',
+  viewer:
+    'bg-gray-100 text-[var(--text-primary)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-secondary)]',
 };
 
 interface RoleCardProps {
@@ -48,7 +49,10 @@ export const RoleCard = ({ role, onSelect, isSelected }: RoleCardProps) => {
           </div>
           <div className="space-y-1">
             {role.permissions.slice(0, 3).map((perm, i) => (
-              <div key={i} className="text-xs text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
+              <div
+                key={i}
+                className="text-xs text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]"
+              >
                 <strong>{perm.resource}:</strong> {perm.actions.join(', ')}
               </div>
             ))}

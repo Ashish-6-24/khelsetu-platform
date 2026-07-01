@@ -1,4 +1,4 @@
-import type { CricketInnings } from '@types-domain/scoring';
+import type { CricketInnings } from '@shared/types/scoring';
 
 interface InningsSummaryProps {
   innings: CricketInnings;

@@ -1,7 +1,11 @@
+import {
+  useErrorHandler,
+  useNetworkStatus,
+} from '@shared/components/error/hooks';
 import { renderHook } from '@testing-library/react';
-import { useErrorHandler, useNetworkStatus } from '@components/error/hooks';
-import { act } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+import { act } from 'react';
 
 describe('useNetworkStatus', () => {
   beforeEach(() => {
@@ -16,13 +20,19 @@ describe('useNetworkStatus', () => {
   });
 
   it('should return offline status when navigator.onLine is false', () => {
-    Object.defineProperty(navigator, 'onLine', { value: false, writable: true });
+    Object.defineProperty(navigator, 'onLine', {
+      value: false,
+      writable: true,
+    });
     const { result } = renderHook(() => useNetworkStatus());
     expect(result.current.isOnline).toBe(false);
   });
 
   it('should update to online when online event fires', () => {
-    Object.defineProperty(navigator, 'onLine', { value: false, writable: true });
+    Object.defineProperty(navigator, 'onLine', {
+      value: false,
+      writable: true,
+    });
     const { result } = renderHook(() => useNetworkStatus());
 
     act(() => {
@@ -50,8 +60,14 @@ describe('useNetworkStatus', () => {
 
     unmount();
 
-    expect(removeEventListenerSpy).toHaveBeenCalledWith('online', expect.any(Function));
-    expect(removeEventListenerSpy).toHaveBeenCalledWith('offline', expect.any(Function));
+    expect(removeEventListenerSpy).toHaveBeenCalledWith(
+      'online',
+      expect.any(Function),
+    );
+    expect(removeEventListenerSpy).toHaveBeenCalledWith(
+      'offline',
+      expect.any(Function),
+    );
   });
 });
 

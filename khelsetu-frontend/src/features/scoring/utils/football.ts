@@ -1,4 +1,4 @@
-import type { FootballEvent, FootballPeriod } from '@types-domain/scoring';
+import type { FootballEvent, FootballPeriod } from '@shared/types/scoring';
 
 export const createFootballEvent = (
   matchId: string,

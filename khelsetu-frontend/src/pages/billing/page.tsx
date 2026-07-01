@@ -1,11 +1,11 @@
-import { Card, CardBody } from '@components/ui/Card';
-import { Tabs } from '@components/ui/Tabs';
 import {
   InvoiceList,
   PlanCard,
   SubscriptionCard,
 } from '@features/billing/components';
 import { useBilling } from '@features/billing/hooks';
+import { Card, CardBody } from '@shared/components/ui/Card';
+import { Tabs } from '@shared/components/ui/Tabs';
 
 import { useState } from 'react';
 

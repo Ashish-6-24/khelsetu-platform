@@ -1,12 +1,12 @@
-import { Button } from '@components/ui/Button';
-import { Card, CardBody } from '@components/ui/Card';
-import { Tabs } from '@components/ui/Tabs';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody } from '@shared/components/ui/Card';
+import { Tabs } from '@shared/components/ui/Tabs';
 import type {
   CricketBall,
   CricketExtraType,
   CricketInnings,
   CricketWicketType,
-} from '@types-domain/scoring';
+} from '@shared/types/scoring';
 
 import { useState } from 'react';
 

@@ -1,12 +1,12 @@
-import { TeamCard } from '@components/teams/TeamCard';
-import { Button } from '@components/ui/Button';
-import { Input } from '@components/ui/Input';
-import { Modal } from '@components/ui/Modal';
-import { Skeleton } from '@components/ui/Skeleton';
-import { Tabs } from '@components/ui/Tabs';
-import { teamService } from '@services/api/team';
+import { TeamCard } from '@features/teams/components/TeamCard';
+import { teamService } from '@features/teams/services/team';
+import { Button } from '@shared/components/ui/Button';
+import { Input } from '@shared/components/ui/Input';
+import { Modal } from '@shared/components/ui/Modal';
+import { Skeleton } from '@shared/components/ui/Skeleton';
+import { Tabs } from '@shared/components/ui/Tabs';
+import type { Team } from '@shared/types/tournament';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { Team } from '@types-domain/tournament';
 import { Plus } from 'lucide-react';
 
 import { useState } from 'react';

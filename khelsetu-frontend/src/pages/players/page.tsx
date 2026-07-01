@@ -1,10 +1,10 @@
-import { PlayerCard } from '@components/teams/PlayerCard';
-import { Input } from '@components/ui/Input';
-import { Skeleton } from '@components/ui/Skeleton';
-import { Tabs } from '@components/ui/Tabs';
-import { playerService } from '@services/api/team';
+import { PlayerCard } from '@features/teams/components/PlayerCard';
+import { playerService } from '@features/teams/services/team';
+import { Input } from '@shared/components/ui/Input';
+import { Skeleton } from '@shared/components/ui/Skeleton';
+import { Tabs } from '@shared/components/ui/Tabs';
+import type { Player } from '@shared/types/tournament';
 import { useQuery } from '@tanstack/react-query';
-import type { Player } from '@types-domain/tournament';
 import { Search, Users } from 'lucide-react';
 
 import { useState } from 'react';

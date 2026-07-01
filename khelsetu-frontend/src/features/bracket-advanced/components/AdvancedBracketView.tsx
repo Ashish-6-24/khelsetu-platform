@@ -1,6 +1,6 @@
-import { Badge } from '@components/ui/Badge';
-import { Card, CardBody } from '@components/ui/Card';
-import { Skeleton } from '@components/ui/Skeleton';
+import { Badge } from '@shared/components/ui/Badge';
+import { Card, CardBody } from '@shared/components/ui/Card';
+import { Skeleton } from '@shared/components/ui/Skeleton';
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
 import { Trophy } from 'lucide-react';

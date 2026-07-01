@@ -1,6 +1,6 @@
 import { api } from '@lib/axios';
+import { API_ENDPOINTS } from '@shared/utils/constants';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_ENDPOINTS } from '@utils/constants';
 
 import type { MatchReport } from '../types';
 

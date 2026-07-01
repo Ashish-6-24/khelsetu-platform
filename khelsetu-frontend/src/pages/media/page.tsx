@@ -1,6 +1,6 @@
-import { Badge } from '@components/ui/Badge';
-import { Button } from '@components/ui/Button';
-import { Card, CardBody } from '@components/ui/Card';
+import { Badge } from '@shared/components/ui/Badge';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody } from '@shared/components/ui/Card';
 import { Download, Image, Trash2, Upload } from 'lucide-react';
 
 import { useState } from 'react';
@@ -116,7 +116,11 @@ export const MediaPage = () => {
                     <Button variant="ghost" size="sm">
                       <Download className="w-3 h-3" />
                     </Button>
-                    <Button variant="ghost" size="sm" className="text-red-600 dark:text-red-400">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-red-600 dark:text-red-400"
+                    >
                       <Trash2 className="w-3 h-3" />
                     </Button>
                   </div>

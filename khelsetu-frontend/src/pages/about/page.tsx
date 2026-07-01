@@ -1,5 +1,5 @@
-import { Logo } from '@components/ui/Logo';
-import { ROUTES } from '@utils/constants';
+import { Logo } from '@shared/components/ui/Logo';
+import { ROUTES } from '@shared/utils/constants';
 import { clsx } from 'clsx';
 import { type Variants, motion } from 'framer-motion';
 import { ArrowRight, Heart } from 'lucide-react';
@@ -51,7 +51,9 @@ const Hero = () => (
           className="mt-6 text-balance font-display text-4xl font-bold tracking-tight text-[var(--text-primary)] sm:text-5xl lg:text-6xl dark:text-white"
         >
           Built in Nepal.{' '}
-          <span className="text-[var(--brand-primary)] dark:text-[var(--brand-primary)]">For Nepal.</span>
+          <span className="text-[var(--brand-primary)] dark:text-[var(--brand-primary)]">
+            For Nepal.
+          </span>
         </motion.h1>
         <motion.p
           variants={fadeUp}
@@ -207,7 +209,8 @@ const Team = () => (
             <div
               className="flex h-16 w-16 items-center justify-center rounded-full text-xl font-semibold text-white shadow-sm"
               style={{
-                background: 'linear-gradient(135deg, var(--brand-primary-hover) 0%, var(--brand-primary) 100%)',
+                background:
+                  'linear-gradient(135deg, var(--brand-primary-hover) 0%, var(--brand-primary) 100%)',
               }}
             >
               {m.initials}

@@ -1,9 +1,10 @@
-import { Header } from '@components/navigation/Header';
-import { MobileDrawer } from '@components/navigation/MobileDrawer';
-import { MobileTabBar } from '@components/navigation/MobileTabBar';
-import { Sidebar } from '@components/navigation/Sidebar';
 import { SkipLink } from '@features/accessibility';
+import { Header } from '@shared/components/navigation/Header';
+import { MobileDrawer } from '@shared/components/navigation/MobileDrawer';
+import { MobileTabBar } from '@shared/components/navigation/MobileTabBar';
+import { Sidebar } from '@shared/components/navigation/Sidebar';
 import { useUIStore } from '@store/uiStore';
+
 import { useEffect } from 'react';
 
 interface DashboardLayoutProps {

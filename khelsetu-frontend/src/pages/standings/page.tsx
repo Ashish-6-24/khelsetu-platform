@@ -1,14 +1,14 @@
-import { Badge } from '@components/ui/Badge';
-import { Button } from '@components/ui/Button';
-import { Card, CardBody } from '@components/ui/Card';
-import { Skeleton } from '@components/ui/Skeleton';
-import { Tabs } from '@components/ui/Tabs';
 import { StandingsTable } from '@features/standings/components';
 import { useStandings } from '@features/standings/hooks';
 import type { Standing } from '@features/standings/types';
-import { tournamentService } from '@services/api/tournament';
+import { tournamentService } from '@features/tournaments/services/tournament';
+import { Badge } from '@shared/components/ui/Badge';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody } from '@shared/components/ui/Card';
+import { Skeleton } from '@shared/components/ui/Skeleton';
+import { Tabs } from '@shared/components/ui/Tabs';
+import type { Tournament } from '@shared/types/tournament';
 import { useQuery } from '@tanstack/react-query';
-import type { Tournament } from '@types-domain/tournament';
 
 import { useState } from 'react';
 
@@ -93,9 +93,9 @@ export const StandingsPage = () => {
                           : 'bg-[var(--bg-surface-sunken)] hover:bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] dark:hover:bg-[var(--bg-surface-raised)] border-2 border-transparent'
                       }`}
                     >
-                        <p className="font-medium text-sm text-[var(--text-primary)] truncate">
-                          {tournament.name}
-                        </p>
+                      <p className="font-medium text-sm text-[var(--text-primary)] truncate">
+                        {tournament.name}
+                      </p>
                       <div className="flex items-center gap-2 mt-1">
                         <Badge
                           variant={
@@ -117,7 +117,7 @@ export const StandingsPage = () => {
                     </button>
                   ))}
                 </div>
-                ) : (
+              ) : (
                 <p className="text-sm text-[var(--text-tertiary)] text-center py-4">
                   No tournaments yet. Create one to see standings.
                 </p>

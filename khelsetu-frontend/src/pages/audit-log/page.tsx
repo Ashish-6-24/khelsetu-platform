@@ -1,6 +1,6 @@
-import { Badge } from '@components/ui/Badge';
-import { Button } from '@components/ui/Button';
-import { Card, CardBody, CardHeader } from '@components/ui/Card';
+import { Badge } from '@shared/components/ui/Badge';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
 import { Filter, Shield } from 'lucide-react';
 
 import { useState } from 'react';

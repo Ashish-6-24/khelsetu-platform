@@ -1,12 +1,12 @@
-import { Badge } from '@components/ui/Badge';
-import { Button } from '@components/ui/Button';
-import { Card, CardBody } from '@components/ui/Card';
-import { Skeleton } from '@components/ui/Skeleton';
-import { Tabs } from '@components/ui/Tabs';
-import { playerService } from '@services/api/team';
-import { teamService } from '@services/api/team';
+import { playerService } from '@features/teams/services/team';
+import { teamService } from '@features/teams/services/team';
+import { Badge } from '@shared/components/ui/Badge';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody } from '@shared/components/ui/Card';
+import { Skeleton } from '@shared/components/ui/Skeleton';
+import { Tabs } from '@shared/components/ui/Tabs';
+import type { Player, Team } from '@shared/types/tournament';
 import { useQuery } from '@tanstack/react-query';
-import type { Player, Team } from '@types-domain/tournament';
 import { ArrowLeft, Edit, Trophy } from 'lucide-react';
 
 import { useState } from 'react';

@@ -11,4 +11,4 @@ export type {
   TeamStats,
   PlayerStats,
   CreateTournamentInput,
-} from '@types-domain/tournament';
+} from '@shared/types/tournament';

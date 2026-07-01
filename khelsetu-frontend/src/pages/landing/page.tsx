@@ -1,13 +1,16 @@
-import { CountUp, CursorGlow, Reveal } from '@components/animations';
-import { Accordion } from '@components/ui/Accordion';
-import { AnimatedBackground } from '@components/ui/AnimatedBackground';
-import { FloatingOrb } from '@components/ui/FloatingOrb';
-import { GlowPulse } from '@components/ui/GlowPulse';
-import { Logo } from '@components/ui/Logo';
-import { GradientMesh } from '@components/ui/PremiumCard';
-import { ScoreTicker, type TickerItem } from '@components/ui/ScoreTicker';
-import { SportIcon } from '@components/ui/SportIcon';
-import { ROUTES } from '@utils/constants';
+import {
+  ScoreTicker,
+  type TickerItem,
+} from '@features/live-scoring/components/ScoreTicker';
+import { SportIcon } from '@features/teams/components/SportIcon';
+import { CountUp, CursorGlow, Reveal } from '@shared/components/animations';
+import { Accordion } from '@shared/components/ui/Accordion';
+import { AnimatedBackground } from '@shared/components/ui/AnimatedBackground';
+import { FloatingOrb } from '@shared/components/ui/FloatingOrb';
+import { GlowPulse } from '@shared/components/ui/GlowPulse';
+import { Logo } from '@shared/components/ui/Logo';
+import { GradientMesh } from '@shared/components/ui/PremiumCard';
+import { ROUTES } from '@shared/utils/constants';
 import { clsx } from 'clsx';
 import {
   BarChart3,
@@ -111,7 +114,11 @@ const Hero = () => {
     <section className="relative overflow-hidden">
       <CursorGlow />
       <GradientMesh variant="premium" />
-      <AnimatedBackground variant="dots" color="var(--brand-primary)" density="sparse" />
+      <AnimatedBackground
+        variant="dots"
+        color="var(--brand-primary)"
+        density="sparse"
+      />
 
       {/* Floating orbs for connected feel */}
       <FloatingOrb
@@ -159,7 +166,8 @@ const Hero = () => {
       <div
         className="pointer-events-none absolute -top-20 left-1/2 -z-10 h-[400px] w-[800px] -translate-x-1/2 rounded-full opacity-40 blur-3xl"
         style={{
-          background: 'radial-gradient(circle, var(--brand-primary) 0%, transparent 70%)',
+          background:
+            'radial-gradient(circle, var(--brand-primary) 0%, transparent 70%)',
         }}
       />
 
@@ -250,7 +258,10 @@ const Hero = () => {
               aria-hidden="true"
             />
             <div className="flex items-center gap-2 text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
-              <ShieldCheck className="h-4 w-4 text-[var(--color-success)]" aria-hidden />
+              <ShieldCheck
+                className="h-4 w-4 text-[var(--color-success)]"
+                aria-hidden
+              />
               <span>SOC 2 ready · ISO-aligned</span>
             </div>
           </div>
@@ -263,7 +274,8 @@ const Hero = () => {
           <div
             className="absolute -inset-x-6 -inset-y-6 -z-10 rounded-[2rem] opacity-30 blur-2xl"
             style={{
-              background: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%)',
+              background:
+                'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%)',
             }}
           />
           <div className="overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-white shadow-[0_24px_48px_-12px_rgb(15_23_42/0.12)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)]">
@@ -916,7 +928,7 @@ const HowItWorks = () => {
                     className="relative mx-auto flex h-24 w-24 items-center justify-center rounded-3xl text-white shadow-[0_8px_24px_-4px_rgb(127_29_29/0.35)] transition-transform duration-300 group-hover:-translate-y-1"
                     style={{
                       background:
-'linear-gradient(135deg, var(--brand-primary-hover) 0%, var(--brand-primary) 50%, var(--brand-primary-active) 100%)',
+                        'linear-gradient(135deg, var(--brand-primary-hover) 0%, var(--brand-primary) 50%, var(--brand-primary-active) 100%)',
                     }}
                   >
                     <s.icon className="h-9 w-9" strokeWidth={1.5} />
@@ -1131,7 +1143,10 @@ const Testimonials = () => {
                 >
                   &ldquo;
                 </div>
-                <div className="flex gap-0.5 text-[var(--brand-accent)]" aria-hidden>
+                <div
+                  className="flex gap-0.5 text-[var(--brand-accent)]"
+                  aria-hidden
+                >
                   {Array.from({ length: 5 }).map((_, j) => (
                     <span key={j} className="text-sm leading-none">
                       ★
@@ -1553,7 +1568,9 @@ const CTA = () => {
               </div>
               <h2 className="mt-6 font-display text-4xl font-medium -tracking-[0.02em] text-white sm:text-5xl">
                 Ready to run your{' '}
-                <span className="italic text-[var(--brand-accent)]">best tournament</span>{' '}
+                <span className="italic text-[var(--brand-accent)]">
+                  best tournament
+                </span>{' '}
                 yet?
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-pretty text-base text-stone-200 sm:text-lg">

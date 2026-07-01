@@ -1,14 +1,14 @@
-import { ThemeToggleSegmented } from '@components/ThemeToggle';
-import { Button } from '@components/ui/Button';
-import { Card, CardBody } from '@components/ui/Card';
-import { Input } from '@components/ui/Input';
-import { useToast } from '@components/ui/toast-context';
+import { authService } from '@features/auth/services/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { authService } from '@services/api/auth';
+import { ThemeToggleSegmented } from '@shared/components/theme-toggle';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody } from '@shared/components/ui/Card';
+import { Input } from '@shared/components/ui/Input';
+import { useToast } from '@shared/components/ui/toast-context';
+import type { User } from '@shared/types/auth';
 import { useAuthStore } from '@store/authStore';
 import { useUIStore } from '@store/uiStore';
 import { useMutation } from '@tanstack/react-query';
-import type { User } from '@types-domain/auth';
 import { clsx } from 'clsx';
 import {
   Loader2,

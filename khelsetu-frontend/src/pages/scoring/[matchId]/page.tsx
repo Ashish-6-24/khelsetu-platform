@@ -1,17 +1,17 @@
-import { MatchStatusIndicator } from '@components/scoring/MatchStatusIndicator';
-import { Button } from '@components/ui/Button';
-import { Card, CardBody } from '@components/ui/Card';
-import { Skeleton } from '@components/ui/Skeleton';
+import { MatchStatusIndicator } from '@features/live-scoring/components/MatchStatusIndicator';
 import {
   BasketballScoringPanel,
   CricketScoringPanel,
   FootballScoringPanel,
   VolleyballScoringPanel,
 } from '@features/scoring/components';
-import { matchService } from '@services/api/tournament';
+import { matchService } from '@features/tournaments/services/tournament';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody } from '@shared/components/ui/Card';
+import { Skeleton } from '@shared/components/ui/Skeleton';
+import type { Match } from '@shared/types/tournament';
 import { useScoringStore } from '@store/scoringStore';
 import { useQuery } from '@tanstack/react-query';
-import type { Match } from '@types-domain/tournament';
 
 import { useEffect } from 'react';
 

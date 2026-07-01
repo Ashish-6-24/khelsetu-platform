@@ -1,12 +1,13 @@
-import { Logo } from '@components/ui/Logo';
 import { SkipLink } from '@features/accessibility';
-import { APP_NAME } from '@utils/constants';
-import { ROUTES } from '@utils/constants';
+import { Logo } from '@shared/components/ui/Logo';
+import { APP_NAME } from '@shared/utils/constants';
+import { ROUTES } from '@shared/utils/constants';
+import { useUIStore } from '@store/uiStore';
 import { BarChart3, Radio, Sparkles, Trophy, Users } from 'lucide-react';
 
-import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useUIStore } from '@store/uiStore';
+
+import { Link } from 'react-router-dom';
 
 interface AuthLayoutProps {
   children: React.ReactNode;

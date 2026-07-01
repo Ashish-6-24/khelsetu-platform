@@ -1,4 +1,4 @@
-import { Skeleton } from '@components/ui/Skeleton';
+import { Skeleton } from '@shared/components/ui/Skeleton';
 import { Newspaper } from 'lucide-react';
 
 import type { NewsArticle } from '../types';

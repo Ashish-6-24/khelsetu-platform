@@ -1,15 +1,18 @@
-import { Button } from '@components/ui/Button';
-import { Input } from '@components/ui/Input';
-import { LanguageToggle } from '@components/ui/LanguageToggle';
-import { Logo } from '@components/ui/Logo';
-import { useToast } from '@components/ui/toast-context';
-import { useAuth } from '@hooks/useAuth';
-import { useFormValidation, validationRules } from '@hooks/useFormValidation';
-import { usePasswordStrength } from '@hooks/usePasswordStrength';
-import { ROUTES } from '@utils/constants';
+import { useAuth } from '@features/auth/useAuth';
+import { Button } from '@shared/components/ui/Button';
+import { Input } from '@shared/components/ui/Input';
+import { LanguageToggle } from '@shared/components/ui/LanguageToggle';
+import { Logo } from '@shared/components/ui/Logo';
+import { useToast } from '@shared/components/ui/toast-context';
+import {
+  useFormValidation,
+  validationRules,
+} from '@shared/hooks/useFormValidation';
+import { usePasswordStrength } from '@shared/hooks/usePasswordStrength';
+import { ROUTES } from '@shared/utils/constants';
 import { Lock, Mail, ShieldCheck } from 'lucide-react';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
@@ -23,14 +26,19 @@ export const LoginPage = () => {
   const [validatingPassword, setValidatingPassword] = useState(false);
 
   const passwordStrength = usePasswordStrength(password);
-  const { validation, validateField, touchField, isFormValid, resetValidation } =
-    useFormValidation(
-      { email, password },
-      {
-        email: validationRules.email(email),
-        password: validationRules.password(password),
-      },
-    );
+  const {
+    validation,
+    validateField,
+    touchField,
+    isFormValid,
+    resetValidation,
+  } = useFormValidation(
+    { email, password },
+    {
+      email: validationRules.email(email),
+      password: validationRules.password(password),
+    },
+  );
 
   // Real-time validation on blur with debounce
   const handleEmailBlur = () => {
@@ -56,8 +64,8 @@ export const LoginPage = () => {
   // Validate as user types (after touched)
   useEffect(() => {
     if (validation.email?.touched) {
-      setValidatingEmail(true);
       const timer = setTimeout(() => {
+        setValidatingEmail(true);
         validateField('email', email);
         setValidatingEmail(false);
       }, 500);
@@ -67,8 +75,8 @@ export const LoginPage = () => {
 
   useEffect(() => {
     if (validation.password?.touched) {
-      setValidatingPassword(true);
       const timer = setTimeout(() => {
+        setValidatingPassword(true);
         validateField('password', password);
         setValidatingPassword(false);
       }, 500);
@@ -143,7 +151,11 @@ export const LoginPage = () => {
             onChange={(e) => setEmail(e.target.value)}
             onBlur={handleEmailBlur}
             leftIcon={<Mail className="h-4 w-4" />}
-            error={validation.email?.touched ? validation.email.error || undefined : undefined}
+            error={
+              validation.email?.touched
+                ? validation.email.error || undefined
+                : undefined
+            }
             validationState={emailValidationState}
             helperText="Enter your registered email address"
             required
@@ -159,7 +171,11 @@ export const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
             onBlur={handlePasswordBlur}
             leftIcon={<Lock className="h-4 w-4" />}
-            error={validation.password?.touched ? validation.password.error || undefined : undefined}
+            error={
+              validation.password?.touched
+                ? validation.password.error || undefined
+                : undefined
+            }
             strength={password ? passwordStrength.level : undefined}
             validationState={passwordValidationState}
             helperText="Minimum 8 characters with uppercase, lowercase, numbers, and symbols"

@@ -1,4 +1,4 @@
-import type { UserRole as Role } from '@types-domain/auth';
+import type { UserRole as Role } from '@shared/types/auth';
 
 export type { Role };
 

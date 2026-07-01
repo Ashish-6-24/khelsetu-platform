@@ -1,4 +1,4 @@
-import type { MatchStatus, Team } from '@types-domain/tournament';
+import type { MatchStatus, Team } from '@shared/types/tournament';
 
 export interface GeneratedFixture {
   round: number;
