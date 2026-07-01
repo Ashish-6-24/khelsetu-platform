@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Loader2, CheckCircle2 } from 'lucide-react';
 
 import { forwardRef, useState } from 'react';
 
@@ -12,6 +12,8 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   optional?: boolean;
   /** 0–4 password strength; renders <PasswordStrength /> beneath the field. */
   strength?: 0 | 1 | 2 | 3 | 4;
+  /** Show validation state: 'validating' (spinner) or 'valid' (checkmark) */
+  validationState?: 'validating' | 'valid';
 }
 
 const strengthLabels = ['Too weak', 'Weak', 'Fair', 'Good', 'Strong'] as const;
@@ -73,6 +75,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       helperText,
       optional = false,
       strength,
+      validationState,
       className,
       id,
       type = 'text',
@@ -122,7 +125,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               'dark:hover:border-[var(--border-strong)] dark:focus:border-[var(--brand-primary)] dark:focus:ring-[var(--brand-primary)]/15',
               'disabled:cursor-not-allowed disabled:opacity-50',
               leftIcon ? 'pl-10' : 'pl-3.5',
-              rightIcon || isPassword ? 'pr-12' : 'pr-3.5',
+              rightIcon || isPassword || validationState ? 'pr-12' : 'pr-3.5',
               error &&
                 'border-red-400 focus:border-red-500 focus:ring-red-500/15 dark:border-red-500/60',
               className,
@@ -152,6 +155,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                 <Eye className="h-4 w-4" />
               )}
             </button>
+          ) : validationState === 'validating' ? (
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+              <Loader2 className="h-4 w-4 animate-spin text-blue-500" />
+            </div>
+          ) : validationState === 'valid' ? (
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+              <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+            </div>
           ) : (
             rightIcon && (
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400">
