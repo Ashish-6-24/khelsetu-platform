@@ -31,7 +31,7 @@ export const Hero = () => (
           <span className="text-[var(--brand-primary)] dark:text-[var(--brand-primary)]">like a national one.</span>
         </h1>
 
-        <p className="animate-fade-in-up mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-[var(--text-secondary)] sm:text-xl dark:text-[var(--text-muted)]" style={{ animationDelay: '120ms' }}>
+        <p className="animate-fade-in-up mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-[var(--text-secondary)] sm:text-xl dark:text-[var(--text-secondary)]" style={{ animationDelay: '120ms' }}>
           KhelSetu is the operations platform for cricket, football, volleyball, and basketball organizers across Nepal. Set up fixtures, run live scoring, and share results — in 10 minutes.
         </p>
 
@@ -46,7 +46,7 @@ export const Hero = () => (
           </Button>
         </div>
 
-        <p className="animate-fade-in-up mt-5 text-xs text-[var(--text-secondary)] dark:text-[var(--text-muted)]" style={{ animationDelay: '240ms' }}>
+        <p className="animate-fade-in-up mt-5 text-xs text-[var(--text-secondary)] dark:text-[var(--text-secondary)]" style={{ animationDelay: '240ms' }}>
           Free for clubs under 8 teams · No credit card · 24/7 Nepali support
         </p>
 

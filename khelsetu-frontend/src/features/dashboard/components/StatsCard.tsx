@@ -17,7 +17,7 @@ interface StatsCardProps {
 }
 
 const accentMap: Record<NonNullable<StatsCardProps['accent']>, string> = {
-  blue: 'from-[var(--brand-primary)] to-[var(--brand-primary-hover)] shadow-[var(--brand-primary)]/25',
+  blue: 'from-[#7f1d1d] to-[#991b1b] dark:from-[#6b1515] dark:to-[#8b1c1c] shadow-[var(--brand-primary)]/25',
   green: 'from-emerald-500 to-teal-600 shadow-emerald-500/25',
   amber: 'from-amber-500 to-orange-600 shadow-amber-500/25',
   red: 'from-red-500 to-rose-600 shadow-red-500/25',
