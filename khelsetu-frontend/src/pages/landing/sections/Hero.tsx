@@ -1,6 +1,5 @@
 import { ScoreTicker } from '@features/live-scoring/components/ScoreTicker';
 import { CursorGlow } from '@shared/components/animations';
-import { AnimatedBackground } from '@shared/components/ui/AnimatedBackground';
 import { Button } from '@shared/components/ui/Button';
 import { FloatingOrb } from '@shared/components/ui/FloatingOrb';
 import { GradientMesh } from '@shared/components/ui/PremiumCard';
@@ -14,14 +13,7 @@ export const Hero = () => (
   <section className="relative overflow-hidden">
     <CursorGlow />
     <GradientMesh variant="premium" />
-    <AnimatedBackground variant="dots" color="var(--brand-primary)" density="sparse" />
     <FloatingOrb color="var(--brand-primary)" size={300} delay={0} duration={25} className="-left-32 top-1/4" />
-    <FloatingOrb color="var(--brand-accent)" size={250} delay={2} duration={20} className="-right-20 top-1/3" />
-    <FloatingOrb color="var(--brand-primary)" size={180} delay={4} duration={22} className="left-1/4 -bottom-20" />
-
-    <div className="absolute inset-0 -z-10 gradient-animate" style={{ background: 'linear-gradient(135deg, var(--bg-surface) 0%, var(--brand-primary-soft) 50%, var(--bg-surface) 100%)', backgroundSize: '400% 400%' }} />
-    <div className="absolute inset-0 -z-10 opacity-50" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(127, 29, 29, 0.08) 1px, transparent 0)', backgroundSize: '32px 32px', maskImage: 'linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 60%)', WebkitMaskImage: 'linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 60%)' }} />
-    <div className="pointer-events-none absolute -top-20 left-1/2 -z-10 h-[400px] w-[800px] -translate-x-1/2 rounded-full opacity-40 blur-3xl" style={{ background: 'radial-gradient(circle, var(--brand-primary) 0%, transparent 70%)' }} />
 
     <div className="mx-auto max-w-7xl px-4 pb-20 pt-20 sm:px-6 sm:pt-28 lg:px-8 lg:pt-32">
       <div className="animate-fade-in-up mx-auto mb-10 max-w-3xl" style={{ animationDelay: '0ms' }}>
