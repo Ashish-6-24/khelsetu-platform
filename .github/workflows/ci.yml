@@ -149,14 +149,14 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: e2e-report-${{ matrix.shard }}
+          name: e2e-report-${{ replace(matrix.shard, '/', '-') }}
           path: khelsetu-frontend/playwright-report/
           retention-days: 14
       - name: Upload test results
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: e2e-results-${{ matrix.shard }}
+          name: e2e-results-${{ replace(matrix.shard, '/', '-') }}
           path: khelsetu-frontend/test-results/
           retention-days: 14
 

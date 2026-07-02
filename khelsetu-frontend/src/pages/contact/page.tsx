@@ -202,10 +202,11 @@ const ContactForm = ({
         inputMode="tel"
       />
       <div>
-        <label className="mb-1.5 block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-primary)]">
+        <label htmlFor="contact-topic" className="mb-1.5 block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-primary)]">
           Topic
         </label>
         <select
+          id="contact-topic"
           value={form.topic}
           onChange={(e) =>
             setForm({

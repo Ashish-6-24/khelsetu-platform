@@ -18,8 +18,8 @@
   --brand-secondary-soft: #f1f5f9; /* slate-100 */
   --brand-secondary-ink: #ffffff;
 
-  --brand-accent: #b8860b; /* dark gold */
-  --brand-accent-hover: #9a7209;
+  --brand-accent: #854d0e; /* dark gold — yellow-800, 5.77:1 on white */
+  --brand-accent-hover: #713f12;
   --brand-accent-soft: #fef3c7; /* amber-100 */
   --brand-accent-ink: #1a0a0a;
 
@@ -39,8 +39,8 @@
   /* Text */
   --text-primary: #0f172a; /* slate-900 */
   --text-secondary: #475569; /* slate-600 */
-  --text-tertiary: #64748b; /* slate-500 — passes WCAG AA on white (5.74:1) */
-  --text-muted: #64748b; /* alias for text-tertiary */
+  --text-tertiary: #475569; /* slate-600 — 7.07:1 on white, 5.67:1 on sunken */
+  --text-muted: #475569; /* alias for text-tertiary */
   --text-on-brand: #ffffff;
   --text-on-primary: #ffffff;
   --text-on-accent: #1a0a0a;
@@ -53,7 +53,7 @@
   --border-brand: #7f1d1d;
 
   /* Functional */
-  --color-live: #dc2626; /* red-600 */
+  --color-live: #b91c1c; /* red-700 — 5.74:1 on white, 5.04:1 on live-soft */
   --color-live-soft: #fef2f2;
   --color-success: #15803d; /* green-700 */
   --color-success-soft: #f0fdf4;

@@ -23,11 +23,15 @@ export default defineConfig({
 
   projects: [
     // Functional tests — cross-browser
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-    { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
-    { name: 'webkit', use: { ...devices['Desktop Safari'] } },
-    { name: 'Mobile Chrome', use: { ...devices['Pixel 5'] } },
-    { name: 'Mobile Safari', use: { ...devices['iPhone 12'] } },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+      testIgnore: /a11y\//,
+    },
+    { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testIgnore: /a11y\// },
+    { name: 'webkit', use: { ...devices['Desktop Safari'] }, testIgnore: /a11y\// },
+    { name: 'Mobile Chrome', use: { ...devices['Pixel 5'] }, testIgnore: /a11y\// },
+    { name: 'Mobile Safari', use: { ...devices['iPhone 12'] }, testIgnore: /a11y\// },
 
     // A11y tests — public pages (no auth)
     {

@@ -54,12 +54,12 @@ test.describe('Provider Context Fix - QA Testing', () => {
     // Submit form
     await page.click('button:has-text("Send message")');
 
-    // Wait for toast notification
-    await page.waitForTimeout(1000);
+    // Wait for toast notification (form has 600ms mock delay + render time)
+    await page.waitForTimeout(2000);
 
     // Verify toast appears (contains success message)
     const toastVisible = await page
-      .locator('text=/Message sent|We.*ll get back/')
+      .getByText('Message sent!')
       .isVisible()
       .catch(() => false);
     expect(toastVisible).toBeTruthy();
@@ -223,6 +223,6 @@ test.describe('Provider Context Fix - QA Testing', () => {
 
     // Page should still be responsive
     await page.goto('/');
-    await expect(page.locator('text=/Get in touch|About/i')).toBeVisible();
+    await expect(page.getByText('About').first()).toBeVisible();
   });
 });
