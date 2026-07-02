@@ -5,6 +5,9 @@ on:
     branches: [master, main, develop]
   pull_request:
     branches: [master, main, develop]
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -121,11 +124,15 @@ jobs:
       - run: npx size-limit
 
   e2e:
-    name: E2E Tests
+    name: E2E (${{ matrix.shard }})
     runs-on: ubuntu-latest
     needs: build
     permissions:
       contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1/2, 2/2]
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
@@ -136,7 +143,22 @@ jobs:
       - run: npm ci
       - run: npx playwright install chromium --with-deps
       - run: npm run build
-      - run: npm run test:e2e
+      - name: Run E2E tests (shard ${{ matrix.shard }})
+        run: npx playwright test --project=chromium --shard=${{ matrix.shard }}
+      - name: Upload Playwright report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-report-${{ matrix.shard }}
+          path: khelsetu-frontend/playwright-report/
+          retention-days: 14
+      - name: Upload test results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-results-${{ matrix.shard }}
+          path: khelsetu-frontend/test-results/
+          retention-days: 14
 
   a11y:
     name: Accessibility Tests
@@ -154,14 +176,21 @@ jobs:
       - run: npm ci
       - run: npx playwright install chromium --with-deps
       - run: npm run build
-      - name: Run a11y tests
-        run: npx playwright test --project=a11y-public
+      - name: Run a11y tests (public + dashboard)
+        run: npx playwright test --project=a11y-public --project=a11y-dashboard
       - name: Upload report
-        if: failure()
+        if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: a11y-report
           path: khelsetu-frontend/playwright-report/
+          retention-days: 14
+      - name: Upload test results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: a11y-results
+          path: khelsetu-frontend/test-results/
           retention-days: 14
 
   lighthouse:
@@ -183,6 +212,13 @@ jobs:
       - run: npm run build
       - name: Run Lighthouse CI
         run: npx @lhci/cli autorun
+      - name: Upload LHCI report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: khelsetu-frontend/.lighthouseci/
+          retention-days: 14
 
   security:
     name: Security Audit
