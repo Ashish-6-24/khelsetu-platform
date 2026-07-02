@@ -1,7 +1,7 @@
+import type { User } from '@shared/types/auth';
 import { useAuthStore } from '@store/authStore';
 import { useUIStore } from '@store/uiStore';
 import { act, renderHook } from '@testing-library/react';
-import type { User } from '@types-domain/auth';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('Auth Store', () => {
@@ -12,8 +12,12 @@ describe('Auth Store', () => {
       isAuthenticated: false,
       isLoading: false,
     });
-    vi.spyOn(useUIStore.getState(), 'allowDarkMode').mockImplementation(() => {});
-    vi.spyOn(useUIStore.getState(), 'forceLightMode').mockImplementation(() => {});
+    vi.spyOn(useUIStore.getState(), 'allowDarkMode').mockImplementation(
+      () => {},
+    );
+    vi.spyOn(useUIStore.getState(), 'forceLightMode').mockImplementation(
+      () => {},
+    );
   });
 
   it('should have initial state', () => {

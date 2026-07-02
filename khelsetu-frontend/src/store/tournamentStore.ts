@@ -1,4 +1,4 @@
-import type { Match, Team, Tournament } from '@types-domain/tournament';
+import type { Match, Team, Tournament } from '@shared/types/tournament';
 import { create } from 'zustand';
 
 interface TournamentState {

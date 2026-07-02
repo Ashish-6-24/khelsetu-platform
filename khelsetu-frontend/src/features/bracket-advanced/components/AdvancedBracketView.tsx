@@ -1,6 +1,6 @@
-import { Badge } from '@components/ui/Badge';
-import { Card, CardBody } from '@components/ui/Card';
-import { Skeleton } from '@components/ui/Skeleton';
+import { Badge } from '@shared/components/ui/Badge';
+import { Card, CardBody } from '@shared/components/ui/Card';
+import { Skeleton } from '@shared/components/ui/Skeleton';
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
 import { Trophy } from 'lucide-react';
@@ -137,7 +137,7 @@ export const AdvancedBracketView = ({
       <div className="flex items-center gap-3">
         <div className="flex-1 h-2 rounded-full bg-gray-100 dark:bg-[var(--bg-surface)] overflow-hidden">
           <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)]"
+            className="h-full rounded-full bg-gradient-to-r from-[var(--brand-primary-bg)] to-[var(--brand-accent)]"
             initial={{ width: 0 }}
             animate={{ width: `${stats.completionPercent}%` }}
             transition={{ duration: 0.8, ease: 'easeOut' }}

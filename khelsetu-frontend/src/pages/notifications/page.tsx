@@ -1,11 +1,11 @@
-import { Button } from '@components/ui/Button';
-import { Card, CardBody } from '@components/ui/Card';
-import { Skeleton } from '@components/ui/Skeleton';
-import { Tabs } from '@components/ui/Tabs';
 import { NotificationItem } from '@features/notifications/components';
 import { useNotifications } from '@features/notifications/hooks';
 import type { NotificationType } from '@features/notifications/types';
 import { notificationUtils } from '@features/notifications/utils';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody } from '@shared/components/ui/Card';
+import { Skeleton } from '@shared/components/ui/Skeleton';
+import { Tabs } from '@shared/components/ui/Tabs';
 import {
   Activity,
   Bell,

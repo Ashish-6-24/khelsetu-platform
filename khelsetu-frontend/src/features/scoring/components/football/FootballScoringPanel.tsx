@@ -1,7 +1,7 @@
-import { Button } from '@components/ui/Button';
-import { Card, CardBody } from '@components/ui/Card';
-import { Tabs } from '@components/ui/Tabs';
-import type { FootballEvent, FootballScore } from '@types-domain/scoring';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody } from '@shared/components/ui/Card';
+import { Tabs } from '@shared/components/ui/Tabs';
+import type { FootballEvent, FootballScore } from '@shared/types/scoring';
 
 import { useState } from 'react';
 

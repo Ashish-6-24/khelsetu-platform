@@ -23,7 +23,7 @@ export function MatchReport({
   return (
     <div className="space-y-4 print:space-y-4 sm:space-y-6">
       {/* Report Header */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] p-4 text-white shadow-xl print:bg-gray-900 sm:p-8">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[var(--brand-primary-bg)] to-[var(--brand-primary-bg-hover)] p-4 text-white shadow-xl print:bg-gray-900 sm:p-8">
         <div className="absolute inset-0 bg-[url('/patterns/football.svg')] opacity-10" />
         <div className="relative">
           <h1 className="text-xl font-bold tracking-tight print:text-2xl sm:text-3xl">
@@ -84,7 +84,7 @@ export function MatchReport({
           <div className="relative ml-4 border-l-2 border-[var(--border-subtle)] pl-6 dark:border-[var(--border-subtle)]">
             {report.goals.map((goal) => (
               <div key={goal.id} className="relative mb-6 last:mb-0">
-                <div className="absolute -left-[31px] flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-xs font-bold text-white shadow-sm dark:border-[var(--border-subtle)]">
+                <div className="absolute -left-[31px] flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-gradient-to-r from-[var(--brand-primary-bg)] to-[var(--brand-primary-bg-hover)] text-xs font-bold text-white shadow-sm dark:border-[var(--border-subtle)]">
                   ⚽
                 </div>
                 <div className="rounded-lg bg-[var(--bg-surface-sunken)] p-3 dark:bg-[var(--bg-surface-raised)]/50">

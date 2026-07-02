@@ -1,4 +1,4 @@
-import { Button } from '@components/ui/Button';
+import { Button } from '@shared/components/ui/Button';
 import { clsx } from 'clsx';
 import { Download, Image, Printer, Share2, Trophy } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';

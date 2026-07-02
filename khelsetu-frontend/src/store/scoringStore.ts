@@ -8,7 +8,7 @@ import type {
   SportType,
   VolleyballEvent,
   VolleyballScore,
-} from '@types-domain/scoring';
+} from '@shared/types/scoring';
 import { create } from 'zustand';
 
 interface CricketScoringState {

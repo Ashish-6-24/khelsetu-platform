@@ -1,4 +1,4 @@
-import { Badge } from '@components/ui/Badge';
+import { Badge } from '@shared/components/ui/Badge';
 import { clsx } from 'clsx';
 
 import { useCallback, useState } from 'react';
@@ -73,7 +73,7 @@ export const LiveEventCenter = ({
             className={clsx(
               'px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200',
               activeTeam === 'teamA'
-                ? 'bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-white shadow-md'
+                ? 'bg-gradient-to-r from-[var(--brand-primary-bg)] to-[var(--brand-primary-bg-hover)] text-white shadow-md'
                 : 'bg-[var(--bg-surface)]/60 dark:bg-[var(--bg-surface)]/60 text-[var(--text-primary)] dark:text-[var(--text-secondary)] border border-[var(--border-subtle)] dark:border-[var(--border-subtle)] hover:bg-[var(--bg-surface)] dark:hover:bg-[var(--bg-surface-raised)]',
             )}
           >
@@ -90,7 +90,7 @@ export const LiveEventCenter = ({
             className={clsx(
               'px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200',
               activeTeam === 'teamB'
-                ? 'bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-white shadow-md'
+                ? 'bg-gradient-to-r from-[var(--brand-primary-bg)] to-[var(--brand-primary-bg-hover)] text-white shadow-md'
                 : 'bg-[var(--bg-surface)]/60 dark:bg-[var(--bg-surface)]/60 text-[var(--text-primary)] dark:text-[var(--text-secondary)] border border-[var(--border-subtle)] dark:border-[var(--border-subtle)] hover:bg-[var(--bg-surface)] dark:hover:bg-[var(--bg-surface-raised)]',
             )}
           >

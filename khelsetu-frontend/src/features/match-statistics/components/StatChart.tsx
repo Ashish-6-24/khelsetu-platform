@@ -148,8 +148,16 @@ export const StatChart = ({
                   value === 'teamA' ? teamAName : teamBName
                 }
               />
-              <Bar dataKey="teamA" fill="var(--color-info)" radius={[6, 6, 0, 0]} />
-              <Bar dataKey="teamB" fill="var(--color-danger)" radius={[6, 6, 0, 0]} />
+              <Bar
+                dataKey="teamA"
+                fill="var(--color-info)"
+                radius={[6, 6, 0, 0]}
+              />
+              <Bar
+                dataKey="teamB"
+                fill="var(--color-danger)"
+                radius={[6, 6, 0, 0]}
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -174,7 +182,9 @@ export const StatChart = ({
               dataKey="subject"
               tick={{ fontSize: 11, fill: 'var(--text-secondary)' }}
             />
-            <PolarRadiusAxis tick={{ fontSize: 10, fill: 'var(--text-tertiary)' }} />
+            <PolarRadiusAxis
+              tick={{ fontSize: 10, fill: 'var(--text-tertiary)' }}
+            />
             <Tooltip
               content={
                 <CustomTooltip teamAName={teamAName} teamBName={teamBName} />

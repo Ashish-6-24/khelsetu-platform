@@ -1,5 +1,5 @@
 import { formatMinute, getEventIcon } from '@features/scoring/utils/football';
-import type { FootballEvent } from '@types-domain/scoring';
+import type { FootballEvent } from '@shared/types/scoring';
 import { motion } from 'framer-motion';
 
 interface EventTimelineProps {

@@ -1,4 +1,4 @@
-import type { CricketPartnership } from '@types-domain/scoring';
+import type { CricketPartnership } from '@shared/types/scoring';
 
 interface PartnershipDisplayProps {
   partnership?: CricketPartnership;

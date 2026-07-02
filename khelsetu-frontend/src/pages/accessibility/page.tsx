@@ -1,5 +1,3 @@
-import { Card, CardBody, CardHeader } from '@components/ui/Card';
-import { Tabs } from '@components/ui/Tabs';
 import {
   LiveRegion,
   SkipLink,
@@ -8,6 +6,8 @@ import {
   useLiveAnnouncer,
   useReducedMotion,
 } from '@features/accessibility';
+import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
+import { Tabs } from '@shared/components/ui/Tabs';
 
 import { useState } from 'react';
 

@@ -5,4 +5,4 @@ export type {
   ScoreUpdatePayload,
   MatchStatusPayload,
   NotificationPayload,
-} from '@types-domain/websocket';
+} from '@shared/types/websocket';

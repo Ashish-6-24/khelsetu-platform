@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader } from '@components/ui/Card';
+import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import type { LiveMatchEvent, SportType } from '../types';

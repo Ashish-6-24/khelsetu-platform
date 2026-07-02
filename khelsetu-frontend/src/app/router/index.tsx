@@ -1,11 +1,11 @@
 import { AuthLayout } from '@app/layouts/AuthLayout';
 import { DashboardLayout } from '@app/layouts/DashboardLayout';
 import { LandingLayout } from '@app/layouts/LandingLayout';
-import { ErrorBoundary } from '@components/error/ErrorBoundary';
 import { LandingPage } from '@pages/landing/page';
 import { NotFoundPage } from '@pages/not-found/page';
+import { ErrorBoundary } from '@shared/components/error/ErrorBoundary';
+import { ROUTES } from '@shared/utils/constants';
 import { useAuthStore } from '@store/authStore';
-import { ROUTES } from '@utils/constants';
 
 import { Suspense, lazy } from 'react';
 
@@ -247,9 +247,7 @@ export const AppRouter = () => {
         path={ROUTES.LOGIN}
         element={
           <PublicRoute>
-            <AuthLayout>
-              {withSuspense(LoginPage)}
-            </AuthLayout>
+            <AuthLayout>{withSuspense(LoginPage)}</AuthLayout>
           </PublicRoute>
         }
       />
@@ -258,9 +256,7 @@ export const AppRouter = () => {
         path={ROUTES.REGISTER}
         element={
           <PublicRoute>
-            <AuthLayout>
-              {withSuspense(RegisterPage)}
-            </AuthLayout>
+            <AuthLayout>{withSuspense(RegisterPage)}</AuthLayout>
           </PublicRoute>
         }
       />
@@ -269,9 +265,7 @@ export const AppRouter = () => {
         path={ROUTES.DASHBOARD}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(DashboardPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(DashboardPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -280,9 +274,7 @@ export const AppRouter = () => {
         path={ROUTES.TOURNAMENTS}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(TournamentsPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(TournamentsPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />
@@ -335,9 +327,7 @@ export const AppRouter = () => {
         path={ROUTES.TEAMS}
         element={
           <ProtectedRoute>
-            <DashboardLayout>
-              {withSuspense(TeamsPage)}
-            </DashboardLayout>
+            <DashboardLayout>{withSuspense(TeamsPage)}</DashboardLayout>
           </ProtectedRoute>
         }
       />

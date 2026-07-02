@@ -1,0 +1,12 @@
+{
+  "$schema": "https://www.chromatic.com/config-file.schema.json",
+  "buildScriptName": "build-storybook",
+  "onlyChanged": true,
+  "exitZeroOnChanges": false,
+  "autoAcceptChanges": "master",
+  "exitOnceUploaded": true,
+  "externals": ["src/styles/**", "public/**", ".storybook/**"],
+  "untraced": ["package.json"],
+  "traceChanged": "expanded",
+  "zip": true
+}

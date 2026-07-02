@@ -1,18 +1,21 @@
-import { ActivityFeed } from '@components/dashboard/ActivityFeed';
-import type { ActivityItem } from '@components/dashboard/ActivityFeed';
-import { LiveMatchesPanel } from '@components/dashboard/LiveMatchesPanel';
-import { OnboardingChecklist } from '@components/dashboard/OnboardingChecklist';
-import { Badge } from '@components/ui/Badge';
-import { Button } from '@components/ui/Button';
-import { FloatingOrb } from '@components/ui/FloatingOrb';
-import { GlowStatCard, GradientMesh } from '@components/ui/PremiumCard';
-import { Skeleton, SkeletonStatsCard } from '@components/ui/Skeleton';
-import { matchService, tournamentService } from '@services/api/tournament';
+import { ActivityFeed } from '@features/dashboard/components/ActivityFeed';
+import type { ActivityItem } from '@features/dashboard/components/ActivityFeed';
+import { LiveMatchesPanel } from '@features/dashboard/components/LiveMatchesPanel';
+import { OnboardingChecklist } from '@features/dashboard/components/OnboardingChecklist';
+import {
+  matchService,
+  tournamentService,
+} from '@features/tournaments/services/tournament';
+import { Badge } from '@shared/components/ui/Badge';
+import { Button } from '@shared/components/ui/Button';
+import { FloatingOrb } from '@shared/components/ui/FloatingOrb';
+import { GlowStatCard, GradientMesh } from '@shared/components/ui/PremiumCard';
+import { Skeleton, SkeletonStatsCard } from '@shared/components/ui/Skeleton';
+import type { Match, Tournament } from '@shared/types/tournament';
+import { ROUTES } from '@shared/utils/constants';
+import { getGreeting } from '@shared/utils/date';
 import { useAuthStore } from '@store/authStore';
 import { useQuery } from '@tanstack/react-query';
-import type { Match, Tournament } from '@types-domain/tournament';
-import { ROUTES } from '@utils/constants';
-import { getGreeting } from '@utils/date';
 import {
   ArrowRight,
   BarChart3,
@@ -26,6 +29,7 @@ import {
 } from 'lucide-react';
 
 import { Suspense } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 const HOUR = 60 * 60 * 1000;
@@ -126,7 +130,7 @@ export const DashboardPage = () => {
         className="-left-12 bottom-0"
       />
 
-      <section className="relative overflow-hidden rounded-3xl border border-[var(--border-subtle)] bg-gradient-to-br from-[var(--brand-primary)] via-[var(--brand-primary-hover)] to-[var(--brand-primary-active)] p-6 text-white shadow-[var(--shadow-lg)] sm:p-8 animate-fade-in-up">
+      <section className="relative overflow-hidden rounded-3xl border border-[var(--border-subtle)] bg-gradient-to-br from-[var(--brand-primary)] via-[var(--brand-primary-hover)] to-[var(--brand-primary-active)] p-6 text-white shadow-[var(--shadow-lg)] sm:p-8 animate-fade-in-up dark:from-[#6b1515] dark:via-[#8b1c1c] dark:to-[#521010]">
         <div className="pointer-events-none absolute inset-0 -z-0 opacity-30">
           <div className="absolute -left-10 -top-10 h-40 w-40 rounded-full bg-white/20 blur-3xl" />
           <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-[var(--brand-accent)]/20 blur-3xl" />
@@ -134,9 +138,9 @@ export const DashboardPage = () => {
         </div>
         <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-             <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur">
-               <span className="inline-flex h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--color-success)]" />
-               {liveMatches > 0
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur">
+              <span className="inline-flex h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--color-success)]" />
+              {liveMatches > 0
                 ? `${liveMatches} live match${liveMatches === 1 ? '' : 'es'} right now`
                 : 'All systems operational'}
             </div>
@@ -294,7 +298,7 @@ export const DashboardPage = () => {
                       </div>
                       <div className="h-1.5 overflow-hidden rounded-full bg-[var(--bg-surface-sunken)]">
                         <div
-                          className="h-full rounded-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)] transition-all duration-1000 ease-out"
+                          className="h-full rounded-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)] transition-all duration-1000 ease-out dark:from-[#8b1c1c] dark:to-[#92710a]"
                           style={{ width: `${progressA}%` }}
                         />
                       </div>
@@ -315,7 +319,7 @@ export const DashboardPage = () => {
                       </div>
                       <div className="h-1.5 overflow-hidden rounded-full bg-[var(--bg-surface-sunken)]">
                         <div
-                          className="h-full rounded-full bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-primary)] transition-all duration-1000 ease-out"
+                          className="h-full rounded-full bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-primary)] transition-all duration-1000 ease-out dark:from-[#92710a] dark:to-[#8b1c1c]"
                           style={{ width: `${progressB}%` }}
                         />
                       </div>
@@ -419,12 +423,13 @@ const UpcomingMatches = ({
               key={m.id}
               className="flex items-center gap-4 px-5 py-4 transition-colors hover:bg-[var(--bg-surface-sunken)] sm:px-6"
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-xs font-semibold text-white">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-xs font-semibold text-white dark:from-[#6b1515] dark:to-[#8b1c1c]">
                 VS
               </div>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium text-[var(--text-primary)]">
-                  {m.teamA.name} <span className="text-[var(--text-tertiary)]">vs</span>{' '}
+                  {m.teamA.name}{' '}
+                  <span className="text-[var(--text-tertiary)]">vs</span>{' '}
                   {m.teamB.name}
                 </p>
                 <p className="text-xs text-[var(--text-secondary)]">
@@ -470,7 +475,7 @@ const QuickActions = () => {
             onClick={() => navigate(a.to)}
             className="group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-[var(--bg-surface-sunken)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-canvas)]"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--bg-surface-sunken)] text-[var(--text-secondary)] transition-colors group-hover:bg-[var(--color-info)]/10 group-hover:text-[var(--text-link)]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--bg-surface-sunken)] text-[var(--text-secondary)] transition-colors group-hover:bg-[var(--brand-primary)]/10 group-hover:text-[var(--brand-primary)]">
               <a.icon className="h-4 w-4" />
             </div>
             <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">

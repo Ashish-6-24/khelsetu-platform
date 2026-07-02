@@ -1,5 +1,5 @@
-import { Button } from '@components/ui/Button';
-import { Card, CardBody } from '@components/ui/Card';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody } from '@shared/components/ui/Card';
 
 import type {
   BenchPlayer,

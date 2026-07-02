@@ -6,7 +6,7 @@ import type {
   CricketInnings,
   CricketPartnership,
   CricketWicketType,
-} from '@types-domain/scoring';
+} from '@shared/types/scoring';
 
 export const createCricketBall = (
   matchId: string,

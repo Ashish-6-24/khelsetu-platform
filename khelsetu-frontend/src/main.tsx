@@ -1,3 +1,8 @@
+import {
+  STORAGE_KEYS,
+  THEME_VALUES,
+  type ThemeValue,
+} from '@shared/utils/constants';
 import { createRoot } from 'react-dom/client';
 
 import { StrictMode } from 'react';
@@ -7,7 +12,6 @@ import './index.css';
 import { logger } from './lib/logger';
 import './styles/animations.css';
 import './styles/themes.css';
-import { STORAGE_KEYS, THEME_VALUES, type ThemeValue } from './utils/constants';
 
 window.addEventListener('unhandledrejection', (e) => {
   logger.error('Unhandled promise rejection:', e.reason);

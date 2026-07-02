@@ -1,4 +1,4 @@
-import { BroadcastScoreOverlay } from '@components/overlays';
+import { BroadcastScoreOverlay } from '@features/overlays/components';
 
 export const OverlaysPage = () => {
   return (

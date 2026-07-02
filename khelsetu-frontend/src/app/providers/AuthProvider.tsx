@@ -1,5 +1,5 @@
 import { logger } from '@lib/logger';
-import { wsService } from '@services/websocket';
+import { wsService } from '@lib/websocket-client';
 import { useAuthStore } from '@store/authStore';
 
 import { useEffect } from 'react';

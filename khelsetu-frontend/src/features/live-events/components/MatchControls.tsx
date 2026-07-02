@@ -1,6 +1,6 @@
-import { Badge } from '@components/ui/Badge';
-import { Button } from '@components/ui/Button';
-import { Card, CardBody } from '@components/ui/Card';
+import { Badge } from '@shared/components/ui/Badge';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody } from '@shared/components/ui/Card';
 
 import type { MatchPhase, MatchTimerState } from '../types';
 

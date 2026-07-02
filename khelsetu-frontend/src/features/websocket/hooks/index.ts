@@ -1,4 +1,4 @@
-export { useSocket } from '@hooks/useSocket';
+export { useSocket } from '@features/websocket/useSocket';
 export const useWebSocket = () => {
   return {
     isConnected: false,

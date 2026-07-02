@@ -1,4 +1,3 @@
-import { Tabs } from '@components/ui/Tabs';
 import {
   PermissionTable,
   RoleCard,
@@ -6,6 +5,7 @@ import {
 } from '@features/user-roles/components';
 import { useUserRoles } from '@features/user-roles/hooks';
 import type { Role } from '@features/user-roles/types';
+import { Tabs } from '@shared/components/ui/Tabs';
 
 import { useState } from 'react';
 

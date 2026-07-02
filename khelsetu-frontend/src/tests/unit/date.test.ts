@@ -4,7 +4,7 @@ import {
   formatTime,
   isDatePassed,
   isDateToday,
-} from '@utils/date';
+} from '@shared/utils/date';
 import { describe, expect, it } from 'vitest';
 
 describe('Date Utilities', () => {

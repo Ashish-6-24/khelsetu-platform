@@ -5,7 +5,7 @@ import {
   ReportEditor,
   useMatchReport,
 } from '@features/match-reports';
-import { matchService } from '@services/api/tournament';
+import { matchService } from '@features/tournaments/services/tournament';
 import { useQuery } from '@tanstack/react-query';
 
 import { useParams } from 'react-router-dom';

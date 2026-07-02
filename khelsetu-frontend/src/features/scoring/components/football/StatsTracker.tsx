@@ -1,4 +1,4 @@
-import type { FootballTeamStats } from '@types-domain/scoring';
+import type { FootballTeamStats } from '@shared/types/scoring';
 
 interface StatsTrackerProps {
   teamA: FootballTeamStats;

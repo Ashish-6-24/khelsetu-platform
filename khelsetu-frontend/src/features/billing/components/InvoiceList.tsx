@@ -1,7 +1,7 @@
-import { Badge } from '@components/ui/Badge';
-import { Button } from '@components/ui/Button';
-import { Card, CardBody, CardHeader } from '@components/ui/Card';
 import type { Invoice } from '@features/billing/types';
+import { Badge } from '@shared/components/ui/Badge';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
 import { Download } from 'lucide-react';
 
 interface InvoiceListProps {

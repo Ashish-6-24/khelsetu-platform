@@ -1,10 +1,12 @@
 @import 'tailwindcss';
 
-/* @property declarations for smooth theme transitions */
+/* @property declarations for smooth theme transitions.
+   Actual values live in src/styles/themes.css (source of truth).
+   These enable CSS transitions on custom properties. */
 @property --bg-app {
   syntax: '<color>';
   inherits: true;
-  initial-value: #f8fafc;
+  initial-value: #fafaf9;
 }
 @property --bg-surface {
   syntax: '<color>';
@@ -19,7 +21,7 @@
 @property --bg-surface-3 {
   syntax: '<color>';
   inherits: true;
-  initial-value: #f3f4f6;
+  initial-value: #f5f5f4;
 }
 @property --bg-elevated {
   syntax: '<color>';
@@ -44,7 +46,7 @@
 @property --border-subtle {
   syntax: '<color>';
   inherits: true;
-  initial-value: #e2e8f0;
+  initial-value: #e7e5e4;
 }
 
 @theme {
@@ -99,77 +101,8 @@
 }
 
 @layer base {
-  :root {
-    --bg-app: #f8fafc;
-    --bg-surface: #ffffff;
-    --bg-surface-2: #f9fafb;
-    --bg-surface-3: #f3f4f6;
-    --bg-elevated: #ffffff;
-    --bg-glass: rgba(255, 255, 255, 0.72);
-    --bg-glass-strong: rgba(255, 255, 255, 0.88);
-
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --text-tertiary: #64748b;
-    --text-muted: #64748b;
-    --text-on-primary: #ffffff;
-
-    --border-subtle: #e2e8f0;
-    --border-default: #cbd5e1;
-    --border-strong: #94a3b8;
-
-    --shadow-color: 215 25% 27%;
-    --shadow-sm: 0 1px 2px 0 rgb(var(--shadow-color) / 0.04);
-    --shadow-md:
-      0 4px 12px -2px rgb(var(--shadow-color) / 0.06),
-      0 2px 4px -2px rgb(var(--shadow-color) / 0.04);
-    --shadow-lg:
-      0 12px 32px -8px rgb(var(--shadow-color) / 0.12),
-      0 4px 12px -4px rgb(var(--shadow-color) / 0.08);
-    --shadow-xl:
-      0 24px 48px -12px rgb(var(--shadow-color) / 0.18),
-      0 8px 16px -4px rgb(var(--shadow-color) / 0.08);
-    --shadow-glow:
-      0 0 0 1px rgb(127 29 29 / 0.18), 0 12px 40px -8px rgb(127 29 29 / 0.35);
-
-    --ring-focus: 127 29 29;
-  }
-
-  .dark {
-    --bg-app: #0a0a0f;
-    --bg-surface: #0f1420;
-    --bg-surface-2: #161d2e;
-    --bg-surface-3: #1e293b;
-    --bg-elevated: #1a2136;
-    --bg-glass: rgba(15, 20, 32, 0.85);
-    --bg-glass-strong: rgba(15, 20, 32, 0.92);
-
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-tertiary: #94a3b8;
-    --text-muted: #94a3b8;
-    --text-on-primary: #ffffff;
-
-    --border-subtle: rgba(148, 163, 184, 0.08);
-    --border-default: rgba(148, 163, 184, 0.15);
-    --border-strong: rgba(148, 163, 184, 0.25);
-
-    --shadow-color: 210 40% 6%;
-    --shadow-sm: 0 1px 2px 0 rgb(8 11 20 / 0.3);
-    --shadow-md:
-      0 4px 12px -2px rgb(8 11 20 / 0.5),
-      0 2px 4px -2px rgb(8 11 20 / 0.3);
-    --shadow-lg:
-      0 12px 32px -8px rgb(8 11 20 / 0.6),
-      0 4px 12px -4px rgb(8 11 20 / 0.4);
-    --shadow-xl:
-      0 24px 48px -12px rgb(8 11 20 / 0.7),
-      0 8px 16px -4px rgb(8 11 20 / 0.5);
-    --shadow-glow:
-      0 0 0 1px rgb(252 165 165 / 0.25), 0 12px 40px -8px rgb(127 29 29 / 0.5);
-
-    --ring-focus: 252 165 165;
-  }
+  /* Tokens are defined in src/styles/themes.css (source of truth).
+     Only base element styles live here — no token redefinitions. */
 
   *,
   *::before,
@@ -189,7 +122,7 @@
   body {
     font-family: var(--font-sans);
     font-feature-settings: 'cv11', 'ss01', 'ss03';
-    background-color: var(--bg-app);
+    background-color: var(--bg-canvas);
     color: var(--text-primary);
     transition:
       background-color 500ms cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -202,7 +135,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--ring-focus));
+    outline: 2px solid var(--brand-primary);
     outline-offset: 2px;
     border-radius: 4px;
   }
@@ -392,43 +325,45 @@
     height: 1px;
     background: currentColor;
   }
+}
 
-  /* Marquee for partner logos */
-  .marquee {
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent 0,
-      black 80px,
-      black calc(100% - 80px),
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to right,
-      transparent 0,
-      black 80px,
-      black calc(100% - 80px),
-      transparent 100%
-    );
+/* Marquee — must be outside @layer for Tailwind v4 cascade priority */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 80px,
+    black calc(100% - 80px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 80px,
+    black calc(100% - 80px),
+    transparent 100%
+  );
+}
+.marquee-track {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  animation: marquee-scroll 40s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
   }
-  .marquee-track {
-    display: flex;
-    gap: 3rem;
-    width: max-content;
-    animation: marquee 40s linear infinite;
+  to {
+    transform: translateX(-50%);
   }
-  .marquee:hover .marquee-track {
-    animation-play-state: paused;
-  }
-  @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
+}
 
+@layer components {
   /* Subtle shine sweep on hover (used for premium CTAs) */
   .shine {
     position: relative;
@@ -946,6 +881,30 @@
   animation: fade-in-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* Generic shake animation for errors, invalid inputs, delete confirmations */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-4px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+.animate-shake {
+  animation: shake 0.4s cubic-bezier(0.36, 0, 0.66, -0.56);
+}
+
 /* Stagger delays for child elements */
 .animate-stagger > *:nth-child(1) {
   animation-delay: 0ms;
@@ -1421,40 +1380,7 @@
   animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-/* Named transitions for shared elements */
-.view-transition-hero {
-  view-transition-name: hero;
-}
-
-.view-transition-card {
-  view-transition-name: card;
-}
-
-/* Modal entry/exit with @starting-style (replaces framer-motion AnimatePresence) */
-@supports (view-transition-name: none) {
-  .modal-backdrop {
-    opacity: 1;
-    transition: opacity 180ms ease;
-  }
-
-  .modal-backdrop@starting-style {
-    opacity: 0;
-  }
-
-  .modal-dialog {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-    transition:
-      opacity 180ms ease,
-      transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .modal-dialog@starting-style {
-    opacity: 0;
-    transform: scale(0.96) translateY(16px);
-  }
-}
-
+/* Scrollbar hiding utility */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -1773,19 +1699,9 @@
     0 16px 40px rgba(0, 0, 0, 0.12);
 }
 
-/* Premium focus ring — maroon with white gap (replaces outline-based) */
-*:focus-visible {
-  outline: none;
-  box-shadow:
-    0 0 0 2px #fff,
-    0 0 0 4px #7f1d1d;
-  transition: box-shadow 150ms ease-out;
-}
-.dark *:focus-visible {
-  box-shadow:
-    0 0 0 2px #0f172a,
-    0 0 0 4px #fca5a5;
-}
+/* Focus ring is defined in @layer base using outline (not box-shadow).
+   Button.tsx handles its own focus ring via Tailwind focus-visible:ring classes.
+   Do NOT add a global *:focus-visible box-shadow rule here — it conflicts. */
 
 /* Score pulse — brief flash on change */
 @keyframes scorePulse {
@@ -1936,5 +1852,36 @@
 
   .marquee-track {
     animation-play-state: paused !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   High Contrast — accessible overrides for prefers-contrast: more
+   ═══════════════════════════════════════════════════════════════ */
+@media (prefers-contrast: more) {
+  :root {
+    --text-secondary: #374151;
+    --text-tertiary: #4b5563;
+    --text-muted: #6b7280;
+    --border-subtle: #d1d5db;
+    --border-default: #9ca3af;
+  }
+
+  .dark {
+    --text-secondary: #d1d5db;
+    --text-tertiary: #9ca3af;
+    --text-muted: #6b7280;
+    --border-subtle: #4b5563;
+    --border-default: #6b7280;
+  }
+
+  /* Ensure focus rings are always visible */
+  *:focus-visible {
+    outline-width: 3px !important;
+  }
+
+  /* Increase card border visibility */
+  [class*='border-'] {
+    border-width: 1.5px;
   }
 }

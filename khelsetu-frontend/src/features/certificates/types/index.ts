@@ -41,7 +41,8 @@ export const CERTIFICATE_TEMPLATES: Record<
     icon: '🏆',
     primaryColor: 'var(--brand-accent)',
     accentColor: 'var(--brand-accent-hover)',
-    gradient: 'linear-gradient(135deg, var(--brand-accent), var(--brand-accent-hover), #f59e0b)',
+    gradient:
+      'linear-gradient(135deg, var(--brand-accent), var(--brand-accent-hover), #f59e0b)',
   },
   'runner-up': {
     type: 'runner-up',
@@ -59,7 +60,8 @@ export const CERTIFICATE_TEMPLATES: Record<
     icon: '⭐',
     primaryColor: 'var(--brand-primary)',
     accentColor: 'var(--brand-accent)',
-    gradient: 'linear-gradient(135deg, var(--brand-primary), var(--brand-primary-hover), var(--brand-accent))',
+    gradient:
+      'linear-gradient(135deg, var(--brand-primary), var(--brand-primary-hover), var(--brand-accent))',
   },
   'top-scorer': {
     type: 'top-scorer',

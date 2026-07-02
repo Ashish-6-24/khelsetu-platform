@@ -5,7 +5,7 @@ import {
   calculateRunRate,
   calculateStrikeRate,
   calculateWinProbability,
-} from '@utils/calculations';
+} from '@shared/utils/calculations';
 import { describe, expect, it } from 'vitest';
 
 describe('Cricket Calculations', () => {

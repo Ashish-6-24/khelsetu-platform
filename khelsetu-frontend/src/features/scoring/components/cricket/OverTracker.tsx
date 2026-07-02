@@ -1,4 +1,4 @@
-import type { CricketBall } from '@types-domain/scoring';
+import type { CricketBall } from '@shared/types/scoring';
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
 

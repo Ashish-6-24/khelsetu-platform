@@ -28,4 +28,4 @@ export type {
   BasketballEventType,
   BasketballTeamStats,
   BasketballScore,
-} from '@types-domain/scoring';
+} from '@shared/types/scoring';

@@ -1,9 +1,9 @@
-import { MatchCard } from '@components/sports/MatchCard';
-import { Skeleton } from '@components/ui/Skeleton';
-import { Tabs } from '@components/ui/Tabs';
-import { matchService } from '@services/api/tournament';
+import { MatchCard } from '@features/teams/components/MatchCard';
+import { matchService } from '@features/tournaments/services/tournament';
+import { Skeleton } from '@shared/components/ui/Skeleton';
+import { Tabs } from '@shared/components/ui/Tabs';
+import type { Match } from '@shared/types/tournament';
 import { useQuery } from '@tanstack/react-query';
-import type { Match } from '@types-domain/tournament';
 
 import { useState } from 'react';
 

@@ -25,22 +25,30 @@
 
   /* Surfaces */
   --bg-canvas: #fafaf9; /* stone-50 */
+  --bg-app: #fafaf9; /* alias for bg-canvas — used in layout components */
   --bg-surface: #ffffff;
+  --bg-surface-2: #f9fafb;
+  --bg-surface-3: #f5f5f4; /* stone-100 */
   --bg-surface-raised: #ffffff;
   --bg-surface-sunken: #f5f5f4; /* stone-100 */
+  --bg-elevated: #ffffff;
   --bg-inverse: #0f172a; /* slate-900 */
   --bg-glass: rgba(255, 255, 255, 0.7);
+  --bg-glass-strong: rgba(255, 255, 255, 0.88);
 
   /* Text */
   --text-primary: #0f172a; /* slate-900 */
   --text-secondary: #475569; /* slate-600 */
   --text-tertiary: #64748b; /* slate-500 — passes WCAG AA on white (5.74:1) */
+  --text-muted: #64748b; /* alias for text-tertiary */
   --text-on-brand: #ffffff;
+  --text-on-primary: #ffffff;
   --text-on-accent: #1a0a0a;
   --text-link: #7f1d1d;
 
   /* Borders */
   --border-subtle: #e7e5e4; /* stone-200 */
+  --border-default: #cbd5e1; /* stone-300 — alias for border-strong */
   --border-strong: #d6d3d1; /* stone-300 */
   --border-brand: #7f1d1d;
 
@@ -56,6 +64,11 @@
   --color-info: #0369a1; /* sky-700 */
   --color-info-soft: #f0f9ff;
 
+  /* Brand backgrounds — same as brand in light mode, dark maroon in dark */
+  --brand-primary-bg: #7f1d1d;
+  --brand-primary-bg-hover: #991b1b;
+  --brand-primary-bg-active: #5b1414;
+
   /* Sport accents (never used for primary CTAs) */
   --sport-cricket: #15803d;
   --sport-football: #1e40af;
@@ -63,6 +76,7 @@
   --sport-basketball: #c2410c;
 
   /* Shadows */
+  --shadow-color: 215 25% 27%;
   --shadow-xs: 0 1px 2px rgb(15 23 42 / 0.04);
   --shadow-sm: 0 1px 3px rgb(15 23 42 / 0.06), 0 1px 2px rgb(15 23 42 / 0.04);
   --shadow-md:
@@ -73,6 +87,11 @@
     0 24px 48px -12px rgb(15 23 42 / 0.12), 0 8px 16px -4px rgb(15 23 42 / 0.06);
   --shadow-brand: 0 8px 24px -8px rgb(127 29 29 / 0.25);
   --shadow-gold: 0 8px 24px -8px rgb(184 134 11 / 0.35);
+  --shadow-glow:
+    0 0 0 1px rgb(127 29 29 / 0.18), 0 12px 40px -8px rgb(127 29 29 / 0.35);
+
+  /* Focus ring */
+  --ring-focus: 127 29 29;
 
   /* Radii */
   --radius-sm: 4px;
@@ -85,10 +104,10 @@
   --color-primary: var(--brand-primary);
   --color-primary-dark: var(--brand-primary-hover);
   --color-secondary: var(--brand-secondary);
-  --color-success: var(--color-success);
-  --color-warning: var(--color-warning);
+  --color-success: #15803d;
+  --color-warning: #b45309;
   --color-error: var(--color-danger);
-  --color-info: var(--color-info);
+  --color-info: #0369a1;
   --bg-primary: var(--bg-surface);
   --bg-secondary: var(--bg-canvas);
   --bg-tertiary: var(--bg-surface-sunken);
@@ -115,23 +134,31 @@
 
   /* Surfaces — slightly cooler tones */
   --bg-canvas: #0a0a0f;
+  --bg-app: #0a0a0f; /* alias for bg-canvas */
   --bg-surface: #0f1420;
+  --bg-surface-2: #161d2e;
+  --bg-surface-3: #1e293b;
   --bg-surface-raised: #161d2e;
   --bg-surface-sunken: #080c14;
+  --bg-elevated: #1a2136;
   --bg-inverse: #fafaf9;
   --bg-glass: rgba(15, 20, 32, 0.85);
+  --bg-glass-strong: rgba(15, 20, 32, 0.92);
 
   /* Text */
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-tertiary: #94a3b8;
+  --text-muted: #94a3b8; /* alias for text-tertiary */
   --text-on-brand: #1a0a0a;
+  --text-on-primary: #ffffff;
   --text-on-accent: #1a0a0a;
   --text-link: #fca5a5;
 
   /* Borders — semi-transparent for depth */
   --border-subtle: rgba(148, 163, 184, 0.08);
-  --border-strong: rgba(148, 163, 184, 0.15);
+  --border-default: rgba(148, 163, 184, 0.15);
+  --border-strong: rgba(148, 163, 184, 0.25);
   --border-brand: #fca5a5;
 
   /* Functional */
@@ -146,6 +173,11 @@
   --color-info: #38bdf8;
   --color-info-soft: rgb(3 105 161 / 0.18);
 
+  /* Brand backgrounds — dark maroon even in dark mode (not pink) */
+  --brand-primary-bg: #6b1515;
+  --brand-primary-bg-hover: #8b1c1c;
+  --brand-primary-bg-active: #521010;
+
   /* Sport accents (dark mode is slightly brighter) */
   --sport-cricket: #4ade80;
   --sport-football: #60a5fa;
@@ -153,11 +185,20 @@
   --sport-basketball: #fb923c;
 
   /* Shadows — tinted dark blue for premium feel */
+  --shadow-color: 210 40% 6%;
   --shadow-xs: 0 1px 2px rgb(8 11 20 / 0.3);
   --shadow-sm: 0 1px 3px rgb(8 11 20 / 0.4), 0 1px 2px rgb(8 11 20 / 0.3);
-  --shadow-md: 0 4px 8px -2px rgb(8 11 20 / 0.5), 0 2px 4px -2px rgb(8 11 20 / 0.3);
-  --shadow-lg: 0 12px 24px -6px rgb(8 11 20 / 0.6), 0 4px 8px -2px rgb(8 11 20 / 0.4);
-  --shadow-xl: 0 24px 48px -12px rgb(8 11 20 / 0.7), 0 8px 16px -4px rgb(8 11 20 / 0.5);
+  --shadow-md:
+    0 4px 8px -2px rgb(8 11 20 / 0.5), 0 2px 4px -2px rgb(8 11 20 / 0.3);
+  --shadow-lg:
+    0 12px 24px -6px rgb(8 11 20 / 0.6), 0 4px 8px -2px rgb(8 11 20 / 0.4);
+  --shadow-xl:
+    0 24px 48px -12px rgb(8 11 20 / 0.7), 0 8px 16px -4px rgb(8 11 20 / 0.5);
   --shadow-brand: 0 8px 24px -8px rgb(252 165 165 / 0.25);
   --shadow-gold: 0 8px 24px -8px rgb(240 201 91 / 0.35);
+  --shadow-glow:
+    0 0 0 1px rgb(252 165 165 / 0.25), 0 12px 40px -8px rgb(127 29 29 / 0.5);
+
+  /* Focus ring */
+  --ring-focus: 252 165 165;
 }

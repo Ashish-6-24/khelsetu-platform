@@ -1,10 +1,10 @@
-import { TournamentCard } from '@components/tournament/TournamentCard';
-import { Button } from '@components/ui/Button';
-import { Skeleton } from '@components/ui/Skeleton';
-import { tournamentService } from '@services/api/tournament';
+import { TournamentCard } from '@features/tournaments/components/TournamentCard';
+import { tournamentService } from '@features/tournaments/services/tournament';
+import { Button } from '@shared/components/ui/Button';
+import { Skeleton } from '@shared/components/ui/Skeleton';
+import type { Tournament } from '@shared/types/tournament';
 import { useQuery } from '@tanstack/react-query';
-import type { Tournament } from '@types-domain/tournament';
-import { Trophy, RefreshCw } from 'lucide-react';
+import { RefreshCw, Trophy } from 'lucide-react';
 
 import { useNavigate } from 'react-router-dom';
 

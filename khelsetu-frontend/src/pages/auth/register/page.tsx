@@ -1,9 +1,9 @@
-import { Button } from '@components/ui/Button';
-import { Input } from '@components/ui/Input';
-import { Logo } from '@components/ui/Logo';
-import { useToast } from '@components/ui/toast-context';
-import { useAuth } from '@hooks/useAuth';
-import { ROUTES } from '@utils/constants';
+import { useAuth } from '@features/auth/useAuth';
+import { Button } from '@shared/components/ui/Button';
+import { Input } from '@shared/components/ui/Input';
+import { Logo } from '@shared/components/ui/Logo';
+import { useToast } from '@shared/components/ui/toast-context';
+import { ROUTES } from '@shared/utils/constants';
 import { Lock, Mail, User as UserIcon } from 'lucide-react';
 
 import { useState } from 'react';

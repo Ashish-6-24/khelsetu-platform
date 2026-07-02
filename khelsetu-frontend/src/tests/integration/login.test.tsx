@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { MemoryRouter } from 'react-router-dom';
 
-vi.mock('@hooks/useAuth', () => ({
+vi.mock('@features/auth/useAuth', () => ({
   useAuth: () => ({
     login: vi.fn(),
     register: vi.fn(),

@@ -1,14 +1,14 @@
-import { PlayerCard } from '@components/teams/PlayerCard';
-import { TeamCard } from '@components/teams/TeamCard';
-import { Badge } from '@components/ui/Badge';
-import { Button } from '@components/ui/Button';
-import { Input } from '@components/ui/Input';
-import { Modal } from '@components/ui/Modal';
-import { Skeleton } from '@components/ui/Skeleton';
-import { Tabs } from '@components/ui/Tabs';
-import { playerService, teamService } from '@services/api/team';
+import { PlayerCard } from '@features/teams/components/PlayerCard';
+import { TeamCard } from '@features/teams/components/TeamCard';
+import { playerService, teamService } from '@features/teams/services/team';
+import { Badge } from '@shared/components/ui/Badge';
+import { Button } from '@shared/components/ui/Button';
+import { Input } from '@shared/components/ui/Input';
+import { Modal } from '@shared/components/ui/Modal';
+import { Skeleton } from '@shared/components/ui/Skeleton';
+import { Tabs } from '@shared/components/ui/Tabs';
+import type { Player, Team } from '@shared/types/tournament';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { Player, Team } from '@types-domain/tournament';
 import { Plus } from 'lucide-react';
 
 import { useState } from 'react';
@@ -184,19 +184,25 @@ export const TeamDetailPage = () => {
             </p>
           </div>
           <div className="p-4 bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
-            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">Won</p>
+            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+              Won
+            </p>
             <p className="text-3xl font-bold text-green-600 dark:text-green-400 mt-2">
               {team.stats.won}
             </p>
           </div>
           <div className="p-4 bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
-            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">Lost</p>
+            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+              Lost
+            </p>
             <p className="text-3xl font-bold text-red-600 dark:text-red-400 mt-2">
               {team.stats.lost}
             </p>
           </div>
           <div className="p-4 bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
-            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">Points</p>
+            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+              Points
+            </p>
             <p className="text-3xl font-bold text-blue-600 dark:text-blue-400 mt-2">
               {team.stats.points}
             </p>

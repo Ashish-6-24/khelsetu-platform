@@ -1,10 +1,10 @@
-import { Card, CardBody } from '@components/ui/Card';
 import {
   OverlayControl,
   StreamControl,
 } from '@features/live-broadcast/components';
 import { useBroadcast } from '@features/live-broadcast/hooks';
 import type { OverlayType } from '@features/live-broadcast/types';
+import { Card, CardBody } from '@shared/components/ui/Card';
 
 export const LiveBroadcastPage = () => {
   const {

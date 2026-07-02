@@ -1,4 +1,4 @@
-import type { CricketBowlerScore } from '@types-domain/scoring';
+import type { CricketBowlerScore } from '@shared/types/scoring';
 
 interface BowlerSelectorProps {
   bowlers: CricketBowlerScore[];

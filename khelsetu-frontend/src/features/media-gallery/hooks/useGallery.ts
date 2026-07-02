@@ -1,4 +1,4 @@
-import { mediaService } from '@services/api/media';
+import { mediaService } from '@features/media-gallery/services/media';
 import { useQuery } from '@tanstack/react-query';
 
 import { useCallback, useMemo, useState } from 'react';

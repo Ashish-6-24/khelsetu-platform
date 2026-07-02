@@ -1,4 +1,4 @@
-import { Badge } from '@components/ui/Badge';
+import { Badge } from '@shared/components/ui/Badge';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 

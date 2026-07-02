@@ -1,6 +1,6 @@
-import { Button } from '@components/ui/Button';
-import { Logo } from '@components/ui/Logo';
-import { ROUTES } from '@utils/constants';
+import { Button } from '@shared/components/ui/Button';
+import { Logo } from '@shared/components/ui/Logo';
+import { ROUTES } from '@shared/utils/constants';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Home, Search } from 'lucide-react';
 
