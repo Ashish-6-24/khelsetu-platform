@@ -130,7 +130,7 @@ export const DashboardPage = () => {
         className="-left-12 bottom-0"
       />
 
-      <section className="relative overflow-hidden rounded-3xl border border-[var(--border-subtle)] bg-gradient-to-br from-[var(--brand-primary)] via-[var(--brand-primary-hover)] to-[var(--brand-primary-active)] p-6 text-white shadow-[var(--shadow-lg)] sm:p-8 animate-fade-in-up">
+      <section className="relative overflow-hidden rounded-3xl border border-[var(--border-subtle)] bg-gradient-to-br from-[var(--brand-primary)] via-[var(--brand-primary-hover)] to-[var(--brand-primary-active)] p-6 text-white shadow-[var(--shadow-lg)] sm:p-8 animate-fade-in-up dark:from-[#6b1515] dark:via-[#8b1c1c] dark:to-[#521010]">
         <div className="pointer-events-none absolute inset-0 -z-0 opacity-30">
           <div className="absolute -left-10 -top-10 h-40 w-40 rounded-full bg-white/20 blur-3xl" />
           <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-[var(--brand-accent)]/20 blur-3xl" />
@@ -298,7 +298,7 @@ export const DashboardPage = () => {
                       </div>
                       <div className="h-1.5 overflow-hidden rounded-full bg-[var(--bg-surface-sunken)]">
                         <div
-                          className="h-full rounded-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)] transition-all duration-1000 ease-out"
+                          className="h-full rounded-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)] transition-all duration-1000 ease-out dark:from-[#8b1c1c] dark:to-[#92710a]"
                           style={{ width: `${progressA}%` }}
                         />
                       </div>
@@ -319,7 +319,7 @@ export const DashboardPage = () => {
                       </div>
                       <div className="h-1.5 overflow-hidden rounded-full bg-[var(--bg-surface-sunken)]">
                         <div
-                          className="h-full rounded-full bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-primary)] transition-all duration-1000 ease-out"
+                          className="h-full rounded-full bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-primary)] transition-all duration-1000 ease-out dark:from-[#92710a] dark:to-[#8b1c1c]"
                           style={{ width: `${progressB}%` }}
                         />
                       </div>
@@ -423,7 +423,7 @@ const UpcomingMatches = ({
               key={m.id}
               className="flex items-center gap-4 px-5 py-4 transition-colors hover:bg-[var(--bg-surface-sunken)] sm:px-6"
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-xs font-semibold text-white">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-xs font-semibold text-white dark:from-[#6b1515] dark:to-[#8b1c1c]">
                 VS
               </div>
               <div className="min-w-0 flex-1">
@@ -475,7 +475,7 @@ const QuickActions = () => {
             onClick={() => navigate(a.to)}
             className="group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-[var(--bg-surface-sunken)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-canvas)]"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--bg-surface-sunken)] text-[var(--text-secondary)] transition-colors group-hover:bg-[var(--color-info)]/10 group-hover:text-[var(--text-link)]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--bg-surface-sunken)] text-[var(--text-secondary)] transition-colors group-hover:bg-[var(--brand-primary)]/10 group-hover:text-[var(--brand-primary)]">
               <a.icon className="h-4 w-4" />
             </div>
             <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">
