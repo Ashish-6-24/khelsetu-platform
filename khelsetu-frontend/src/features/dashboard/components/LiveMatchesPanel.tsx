@@ -23,7 +23,7 @@ export const LiveMatchesPanel = ({
     <Card elevated>
       <CardHeader divided className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-500/10 text-red-600 dark:bg-red-500/15 dark:text-red-400">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--color-danger)]/10 text-[var(--color-danger)] dark:bg-[var(--color-danger)]/15 dark:text-[var(--color-danger)]">
             <Radio className="h-4 w-4" size={18} />
           </div>
           <div>
@@ -73,7 +73,7 @@ export const LiveMatchesPanel = ({
               >
                 <button
                   onClick={() => onMatchClick?.(match)}
-                  className="group flex w-full items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-[var(--bg-surface-sunken)]/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset dark:hover:bg-[var(--bg-surface)]/40"
+                  className="group flex w-full items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-[var(--bg-surface-sunken)]/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-inset dark:hover:bg-[var(--bg-surface)]/40"
                 >
                   <div className="flex flex-1 items-center gap-3.5">
                     <BadgeDot variant="error" pulse />
