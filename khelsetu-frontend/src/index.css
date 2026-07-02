@@ -1,10 +1,12 @@
 @import 'tailwindcss';
 
-/* @property declarations for smooth theme transitions */
+/* @property declarations for smooth theme transitions.
+   Actual values live in src/styles/themes.css (source of truth).
+   These enable CSS transitions on custom properties. */
 @property --bg-app {
   syntax: '<color>';
   inherits: true;
-  initial-value: #f8fafc;
+  initial-value: #fafaf9;
 }
 @property --bg-surface {
   syntax: '<color>';
@@ -19,7 +21,7 @@
 @property --bg-surface-3 {
   syntax: '<color>';
   inherits: true;
-  initial-value: #f3f4f6;
+  initial-value: #f5f5f4;
 }
 @property --bg-elevated {
   syntax: '<color>';
@@ -44,7 +46,7 @@
 @property --border-subtle {
   syntax: '<color>';
   inherits: true;
-  initial-value: #e2e8f0;
+  initial-value: #e7e5e4;
 }
 
 @theme {
@@ -99,74 +101,8 @@
 }
 
 @layer base {
-  :root {
-    --bg-app: #f8fafc;
-    --bg-surface: #ffffff;
-    --bg-surface-2: #f9fafb;
-    --bg-surface-3: #f3f4f6;
-    --bg-elevated: #ffffff;
-    --bg-glass: rgba(255, 255, 255, 0.72);
-    --bg-glass-strong: rgba(255, 255, 255, 0.88);
-
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --text-tertiary: #64748b;
-    --text-muted: #64748b;
-    --text-on-primary: #ffffff;
-
-    --border-subtle: #e2e8f0;
-    --border-default: #cbd5e1;
-    --border-strong: #94a3b8;
-
-    --shadow-color: 215 25% 27%;
-    --shadow-sm: 0 1px 2px 0 rgb(var(--shadow-color) / 0.04);
-    --shadow-md:
-      0 4px 12px -2px rgb(var(--shadow-color) / 0.06),
-      0 2px 4px -2px rgb(var(--shadow-color) / 0.04);
-    --shadow-lg:
-      0 12px 32px -8px rgb(var(--shadow-color) / 0.12),
-      0 4px 12px -4px rgb(var(--shadow-color) / 0.08);
-    --shadow-xl:
-      0 24px 48px -12px rgb(var(--shadow-color) / 0.18),
-      0 8px 16px -4px rgb(var(--shadow-color) / 0.08);
-    --shadow-glow:
-      0 0 0 1px rgb(127 29 29 / 0.18), 0 12px 40px -8px rgb(127 29 29 / 0.35);
-
-    --ring-focus: 127 29 29;
-  }
-
-  .dark {
-    --bg-app: #0a0a0f;
-    --bg-surface: #0f1420;
-    --bg-surface-2: #161d2e;
-    --bg-surface-3: #1e293b;
-    --bg-elevated: #1a2136;
-    --bg-glass: rgba(15, 20, 32, 0.85);
-    --bg-glass-strong: rgba(15, 20, 32, 0.92);
-
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-tertiary: #94a3b8;
-    --text-muted: #94a3b8;
-    --text-on-primary: #ffffff;
-
-    --border-subtle: rgba(148, 163, 184, 0.08);
-    --border-default: rgba(148, 163, 184, 0.15);
-    --border-strong: rgba(148, 163, 184, 0.25);
-
-    --shadow-color: 210 40% 6%;
-    --shadow-sm: 0 1px 2px 0 rgb(8 11 20 / 0.3);
-    --shadow-md:
-      0 4px 12px -2px rgb(8 11 20 / 0.5), 0 2px 4px -2px rgb(8 11 20 / 0.3);
-    --shadow-lg:
-      0 12px 32px -8px rgb(8 11 20 / 0.6), 0 4px 12px -4px rgb(8 11 20 / 0.4);
-    --shadow-xl:
-      0 24px 48px -12px rgb(8 11 20 / 0.7), 0 8px 16px -4px rgb(8 11 20 / 0.5);
-    --shadow-glow:
-      0 0 0 1px rgb(252 165 165 / 0.25), 0 12px 40px -8px rgb(127 29 29 / 0.5);
-
-    --ring-focus: 252 165 165;
-  }
+  /* Tokens are defined in src/styles/themes.css (source of truth).
+     Only base element styles live here — no token redefinitions. */
 
   *,
   *::before,
@@ -186,7 +122,7 @@
   body {
     font-family: var(--font-sans);
     font-feature-settings: 'cv11', 'ss01', 'ss03';
-    background-color: var(--bg-app);
+    background-color: var(--bg-canvas);
     color: var(--text-primary);
     transition:
       background-color 500ms cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -199,7 +135,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--ring-focus));
+    outline: 2px solid var(--brand-primary);
     outline-offset: 2px;
     border-radius: 4px;
   }
