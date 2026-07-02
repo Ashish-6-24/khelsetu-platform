@@ -1,5 +1,6 @@
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+
 import { useEffect, useRef, useState } from 'react';
 
 export interface TickerItem {
@@ -47,11 +48,18 @@ const LiveDot = () => (
   </span>
 );
 
-const TickerItemCard = ({ item, justUpdated }: { item: TickerItem; justUpdated: 'A' | 'B' | null }) => (
+const TickerItemCard = ({
+  item,
+  justUpdated,
+}: {
+  item: TickerItem;
+  justUpdated: 'A' | 'B' | null;
+}) => (
   <div
     className={clsx(
       'flex items-center gap-3 whitespace-nowrap px-4 py-2 rounded-lg transition-all duration-300',
-      item.status === 'live' && 'bg-red-500/5 border border-red-500/20 shadow-[0_0_12px_-4px_rgba(239,68,68,0.2)]',
+      item.status === 'live' &&
+        'bg-red-500/5 border border-red-500/20 shadow-[0_0_12px_-4px_rgba(239,68,68,0.2)]',
       item.status === 'completed' && 'opacity-70',
       item.status === 'upcoming' && 'opacity-60',
     )}
@@ -111,7 +119,9 @@ export const ScoreTicker = ({
   renderItem,
 }: ScoreTickerProps) => {
   const [items, setItems] = useState(initialItems);
-  const [flash, setFlash] = useState<{ id: string; side: 'A' | 'B' } | null>(null);
+  const [flash, setFlash] = useState<{ id: string; side: 'A' | 'B' } | null>(
+    null,
+  );
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Simulate live score updates every 4-8 seconds
@@ -123,7 +133,8 @@ export const ScoreTicker = ({
           .filter((i) => i !== -1);
         if (liveIndices.length === 0) return prev;
 
-        const idx = liveIndices[Math.floor(Math.random() * liveIndices.length)]!;
+        const idx =
+          liveIndices[Math.floor(Math.random() * liveIndices.length)]!;
         const item = prev[idx]!;
         const side: 'A' | 'B' = Math.random() < 0.5 ? 'A' : 'B';
         const oldScore = side === 'A' ? item.scoreA : item.scoreB;
@@ -156,7 +167,8 @@ export const ScoreTicker = ({
 
     scheduleNext();
     return () => {
-      if (intervalRef.current) clearTimeout(intervalRef.current as unknown as number);
+      if (intervalRef.current)
+        clearTimeout(intervalRef.current as unknown as number);
     };
   }, []);
 

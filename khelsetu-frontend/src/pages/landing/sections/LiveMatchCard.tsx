@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
 import { GlowPulse } from '@shared/components/ui/GlowPulse';
 import { clsx } from 'clsx';
+
+import { useEffect, useState } from 'react';
 
 interface TeamScore {
   name: string;
@@ -97,7 +98,8 @@ export const LiveMatchCard = () => {
                 <span
                   className={clsx(
                     'font-mono text-sm font-bold tabular-nums text-[var(--text-primary)] dark:text-white transition-all duration-300',
-                    flash === i && 'scale-110 text-green-600 dark:text-green-400',
+                    flash === i &&
+                      'scale-110 text-green-600 dark:text-green-400',
                   )}
                 >
                   {t.score}

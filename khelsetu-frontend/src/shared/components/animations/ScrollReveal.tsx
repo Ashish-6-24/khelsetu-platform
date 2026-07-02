@@ -104,12 +104,10 @@ export const ScrollReveal = ({
           y: intensityConfig[intensity].offset,
           scale: intensityConfig[intensity].scale,
         }}
-        animate={
-          shouldShow
-            ? { opacity: 1, y: 0, scale: 1 }
-            : undefined
+        animate={shouldShow ? { opacity: 1, y: 0, scale: 1 } : undefined}
+        whileInView={
+          fallbackVisible ? undefined : { opacity: 1, y: 0, scale: 1 }
         }
-        whileInView={fallbackVisible ? undefined : { opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{
           duration: intensityConfig[intensity].duration,
@@ -159,7 +157,9 @@ export const Reveal = ({
       <motion.div
         initial={{ opacity: 0, y: offset, scale }}
         animate={shouldShow ? { opacity: 1, y: 0, scale: 1 } : undefined}
-        whileInView={fallbackVisible ? undefined : { opacity: 1, y: 0, scale: 1 }}
+        whileInView={
+          fallbackVisible ? undefined : { opacity: 1, y: 0, scale: 1 }
+        }
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration, ease: [0.16, 1, 0.3, 1], delay }}
       >

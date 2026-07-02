@@ -42,7 +42,8 @@ export default defineConfig(({ mode }) => {
               ) {
                 return 'vendor-react';
               }
-              if (/\/react\//.test(id) || /\/react@/.test(id)) return 'vendor-react';
+              if (/\/react\//.test(id) || /\/react@/.test(id))
+                return 'vendor-react';
               if (id.includes('@tanstack/react-query')) return 'vendor-query';
               if (id.includes('framer-motion')) return 'vendor-motion';
               if (

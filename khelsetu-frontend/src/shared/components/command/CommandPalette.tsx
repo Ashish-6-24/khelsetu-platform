@@ -1,8 +1,8 @@
-import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 import { useCommandPalette } from '@shared/components/command/palette-context';
 import { PaletteContextProvider } from '@shared/components/command/palette-provider';
 import { NAV_GROUPS } from '@shared/components/navigation/nav-config';
 import { Logo } from '@shared/components/ui/Logo';
+import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 import { useShortcut } from '@shared/hooks/useShortcut';
 import { ROUTES } from '@shared/utils/constants';
 import { Command } from 'cmdk';

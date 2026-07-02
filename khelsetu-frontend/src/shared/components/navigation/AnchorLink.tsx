@@ -1,5 +1,6 @@
-import { useLocation } from 'react-router-dom';
 import { useCallback } from 'react';
+
+import { useLocation } from 'react-router-dom';
 
 interface AnchorLinkProps {
   href: string;
@@ -13,7 +14,12 @@ interface AnchorLinkProps {
  * On same route: smooth scroll. On different route: full navigation
  * so browser's native hash scrolling works after page load.
  */
-export const AnchorLink = ({ href, children, className, onClick }: AnchorLinkProps) => {
+export const AnchorLink = ({
+  href,
+  children,
+  className,
+  onClick,
+}: AnchorLinkProps) => {
   const location = useLocation();
 
   const handleClick = useCallback(
