@@ -1,6 +1,7 @@
 import { ScoreTicker } from '@features/live-scoring/components/ScoreTicker';
 import { CursorGlow } from '@shared/components/animations';
 import { AnimatedBackground } from '@shared/components/ui/AnimatedBackground';
+import { Button } from '@shared/components/ui/Button';
 import { FloatingOrb } from '@shared/components/ui/FloatingOrb';
 import { GradientMesh } from '@shared/components/ui/PremiumCard';
 import { ROUTES } from '@shared/utils/constants';
@@ -44,17 +45,13 @@ export const Hero = () => (
 
         <div className="animate-fade-in-up mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row" style={{ animationDelay: '180ms' }}>
           <Link to={ROUTES.REGISTER}>
-            <button className="group inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[var(--brand-primary-hover)] via-[var(--brand-primary)] to-[var(--brand-primary-active)] px-6 text-sm font-semibold text-white shadow-[0_4px_24px_-4px_rgb(127_29_29/0.5)] transition-all hover:shadow-[0_8px_32px_-4px_rgb(127_29_29/0.6)] active:translate-y-px">
+            <Button variant="primary" size="lg" rightIcon={<ChevronRight className="h-4 w-4" />}>
               Start a tournament
-              <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </button>
+            </Button>
           </Link>
-          <button className="group inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-[var(--border-subtle)] bg-white/80 px-6 text-sm font-semibold text-[var(--text-primary)] backdrop-blur transition-all hover:border-[var(--border-strong)] hover:bg-white dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)]/80 dark:text-[var(--text-primary)] dark:hover:border-[var(--border-strong)] dark:hover:bg-[var(--bg-surface-raised)]">
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] dark:text-[var(--brand-primary)]">
-              <Play className="h-3 w-3 fill-current" />
-            </span>
+          <Button variant="outline" size="lg" leftIcon={<span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] dark:text-[var(--brand-primary)]"><Play className="h-3 w-3 fill-current" /></span>}>
             Watch a 90-second tour
-          </button>
+          </Button>
         </div>
 
         <p className="animate-fade-in-up mt-5 text-xs text-[var(--text-secondary)] dark:text-[var(--text-muted)]" style={{ animationDelay: '240ms' }}>
