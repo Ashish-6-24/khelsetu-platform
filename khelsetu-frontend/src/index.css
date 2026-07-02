@@ -1368,40 +1368,7 @@
   animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-/* Named transitions for shared elements */
-.view-transition-hero {
-  view-transition-name: hero;
-}
-
-.view-transition-card {
-  view-transition-name: card;
-}
-
-/* Modal entry/exit with @starting-style (replaces framer-motion AnimatePresence) */
-@supports (view-transition-name: none) {
-  .modal-backdrop {
-    opacity: 1;
-    transition: opacity 180ms ease;
-  }
-
-  .modal-backdrop@starting-style {
-    opacity: 0;
-  }
-
-  .modal-dialog {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-    transition:
-      opacity 180ms ease,
-      transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .modal-dialog@starting-style {
-    opacity: 0;
-    transform: scale(0.96) translateY(16px);
-  }
-}
-
+/* Scrollbar hiding utility */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -1873,5 +1840,36 @@
 
   .marquee-track {
     animation-play-state: paused !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   High Contrast — accessible overrides for prefers-contrast: more
+   ═══════════════════════════════════════════════════════════════ */
+@media (prefers-contrast: more) {
+  :root {
+    --text-secondary: #374151;
+    --text-tertiary: #4b5563;
+    --text-muted: #6b7280;
+    --border-subtle: #d1d5db;
+    --border-default: #9ca3af;
+  }
+
+  .dark {
+    --text-secondary: #d1d5db;
+    --text-tertiary: #9ca3af;
+    --text-muted: #6b7280;
+    --border-subtle: #4b5563;
+    --border-default: #6b7280;
+  }
+
+  /* Ensure focus rings are always visible */
+  *:focus-visible {
+    outline-width: 3px !important;
+  }
+
+  /* Increase card border visibility */
+  [class*="border-"] {
+    border-width: 1.5px;
   }
 }
