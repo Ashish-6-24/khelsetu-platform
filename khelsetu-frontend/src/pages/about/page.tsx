@@ -210,7 +210,7 @@ const Team = () => (
               className="flex h-16 w-16 items-center justify-center rounded-full text-xl font-semibold text-white shadow-sm"
               style={{
                 background:
-                  'linear-gradient(135deg, var(--brand-primary-hover) 0%, var(--brand-primary) 100%)',
+                  'linear-gradient(135deg, var(--brand-primary-bg-hover) 0%, var(--brand-primary-bg) 100%)',
               }}
             >
               {m.initials}
@@ -330,7 +330,7 @@ const FooterCta = () => (
       <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <Link
           to={ROUTES.HOME}
-          className="inline-flex h-12 items-center gap-2 rounded-xl bg-gradient-to-br from-[var(--brand-primary-hover)] via-[var(--brand-primary)] to-[var(--brand-primary-active)] px-6 text-sm font-semibold text-white shadow-[0_4px_14px_-2px_rgb(127_29_29/0.45)] transition-all hover:shadow-[0_8px_24px_-4px_rgb(127_29_29/0.55)]"
+          className="inline-flex h-12 items-center gap-2 rounded-xl bg-gradient-to-br from-[var(--brand-primary-bg-hover)] via-[var(--brand-primary-bg)] to-[var(--brand-primary-bg-active)] px-6 text-sm font-semibold text-white shadow-[0_4px_14px_-2px_rgb(127_29_29/0.45)] transition-all hover:shadow-[0_8px_24px_-4px_rgb(127_29_29/0.55)]"
         >
           Start a tournament
           <ArrowRight className="h-4 w-4" />

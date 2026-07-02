@@ -41,7 +41,7 @@ const variantStyles: Record<BadgeVariant, string> = {
   gold: 'bg-gradient-to-r from-[var(--brand-accent)] via-[var(--brand-accent-hover)] to-[var(--brand-accent)] text-[var(--brand-primary-ink)] shadow-sm ring-1 ring-inset ring-[var(--brand-accent-hover)]/30',
   // Brand = primary callout, maroon
   brand:
-    'bg-[var(--brand-primary)] text-white shadow-sm ring-1 ring-inset ring-[var(--brand-primary-active)]/40',
+    'bg-[var(--brand-primary-bg)] text-white shadow-sm ring-1 ring-inset ring-[var(--brand-primary-bg-active)]/40',
   // Sport accents
   'sport-cricket':
     'bg-[var(--sport-cricket)]/10 text-[var(--sport-cricket)] ring-1 ring-inset ring-[var(--sport-cricket)]/20',

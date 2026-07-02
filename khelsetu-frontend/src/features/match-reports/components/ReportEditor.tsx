@@ -76,7 +76,7 @@ export function ReportEditor({
           <button
             onClick={onPublish}
             disabled={isPublishing}
-            className="rounded-lg bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] px-4 py-2 text-sm font-medium text-white shadow-sm transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="rounded-lg bg-gradient-to-r from-[var(--brand-primary-bg)] to-[var(--brand-primary-bg-hover)] px-4 py-2 text-sm font-medium text-white shadow-sm transition-opacity hover:opacity-90 disabled:opacity-50"
           >
             {isPublishing ? 'Publishing...' : 'Publish Report'}
           </button>

@@ -74,7 +74,7 @@ function ProgressBar({
       aria-hidden
     >
       <div
-        className="h-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)] transition-[width] ease-linear"
+        className="h-full bg-gradient-to-r from-[var(--brand-primary-bg)] to-[var(--brand-accent)] transition-[width] ease-linear"
         style={{ width: `${width}%`, transitionDuration: '120ms' }}
       />
     </div>

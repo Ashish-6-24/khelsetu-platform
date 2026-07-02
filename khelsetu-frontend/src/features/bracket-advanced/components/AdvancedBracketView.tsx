@@ -137,7 +137,7 @@ export const AdvancedBracketView = ({
       <div className="flex items-center gap-3">
         <div className="flex-1 h-2 rounded-full bg-gray-100 dark:bg-[var(--bg-surface)] overflow-hidden">
           <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)]"
+            className="h-full rounded-full bg-gradient-to-r from-[var(--brand-primary-bg)] to-[var(--brand-accent)]"
             initial={{ width: 0 }}
             animate={{ width: `${stats.completionPercent}%` }}
             transition={{ duration: 0.8, ease: 'easeOut' }}

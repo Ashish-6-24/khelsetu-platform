@@ -109,7 +109,7 @@ export const LiveMatchCard = () => {
             </div>
             <div className="h-1.5 overflow-hidden rounded-full bg-[var(--border-subtle)] dark:bg-[var(--border-strong)]">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)] transition-all duration-700 ease-out"
+                className="h-full rounded-full bg-gradient-to-r from-[var(--brand-primary-bg)] to-[var(--brand-accent)] transition-all duration-700 ease-out"
                 style={{ width: `${t.pct}%` }}
               />
             </div>

@@ -64,6 +64,11 @@
   --color-info: #0369a1; /* sky-700 */
   --color-info-soft: #f0f9ff;
 
+  /* Brand backgrounds — same as brand in light mode, dark maroon in dark */
+  --brand-primary-bg: #7f1d1d;
+  --brand-primary-bg-hover: #991b1b;
+  --brand-primary-bg-active: #5b1414;
+
   /* Sport accents (never used for primary CTAs) */
   --sport-cricket: #15803d;
   --sport-football: #1e40af;
@@ -166,6 +171,11 @@
   --color-danger-soft: rgb(185 28 28 / 0.18);
   --color-info: #38bdf8;
   --color-info-soft: rgb(3 105 161 / 0.18);
+
+  /* Brand backgrounds — dark maroon even in dark mode (not pink) */
+  --brand-primary-bg: #6b1515;
+  --brand-primary-bg-hover: #8b1c1c;
+  --brand-primary-bg-active: #521010;
 
   /* Sport accents (dark mode is slightly brighter) */
   --sport-cricket: #4ade80;

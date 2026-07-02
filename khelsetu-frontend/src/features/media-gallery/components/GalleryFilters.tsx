@@ -72,7 +72,7 @@ export function GalleryFilters({
             aria-checked={filters.type === type.value}
             className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-all ${
               filters.type === type.value
-                ? 'bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-white shadow-lg'
+                ? 'bg-gradient-to-r from-[var(--brand-primary-bg)] to-[var(--brand-primary-bg-hover)] text-white shadow-lg'
                 : 'bg-[var(--bg-surface)]/80 text-[var(--text-secondary)] hover:bg-gray-100 dark:bg-[var(--bg-surface)]/80 dark:text-[var(--text-secondary)] dark:hover:bg-[var(--bg-surface-raised)]'
             }`}
           >

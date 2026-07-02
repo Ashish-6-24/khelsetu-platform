@@ -86,7 +86,7 @@ export const UserRow = ({ user, onRoleChange }: UserRowProps) => {
   return (
     <div className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
       <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-hover)] flex items-center justify-center text-white text-sm font-bold">
+        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--brand-primary-bg)] to-[var(--brand-primary-bg-hover)] flex items-center justify-center text-white text-sm font-bold">
           {user.name.charAt(0)}
         </div>
         <div>

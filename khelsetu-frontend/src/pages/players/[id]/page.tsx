@@ -164,7 +164,7 @@ export const PlayerDetailPage = () => {
           <CardBody>
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-hover)] flex items-center justify-center text-white text-3xl font-bold">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[var(--brand-primary-bg)] to-[var(--brand-primary-bg-hover)] flex items-center justify-center text-white text-3xl font-bold">
                   {player.name.charAt(0).toUpperCase()}
                 </div>
                 <div>
