@@ -7,6 +7,29 @@ import storybook from 'eslint-plugin-storybook';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
+const sharedRestrictImports = {
+  'no-restricted-imports': [
+    'error',
+    {
+      patterns: [
+        {
+          group: ['@features/*'],
+          message:
+            'shared/ must not import from features/. Use a prop/callback pattern instead.',
+          allowTypeImports: false,
+        },
+      ],
+      paths: [
+        {
+          name: 'react',
+          importNames: ['default'],
+          message: 'Use named imports (e.g., useState, useEffect).',
+        },
+      ],
+    },
+  ],
+};
+
 export default tseslint.config(
   { ignores: ['dist', 'node_modules', 'coverage'] },
   {
@@ -41,13 +64,6 @@ export default tseslint.config(
       'no-restricted-imports': [
         'error',
         {
-          patterns: [
-            {
-              group: ['@features/*'],
-              message: 'shared/ must not import from features/. Use a prop/callback pattern instead.',
-              allowTypeImports: false,
-            },
-          ],
           paths: [
             {
               name: 'react',
@@ -57,6 +73,16 @@ export default tseslint.config(
           ],
         },
       ],
+    },
+  },
+  {
+    files: ['src/shared/**'],
+    rules: sharedRestrictImports,
+  },
+  {
+    files: ['src/tests/**', 'e2e/**', '**/*.test.*', '**/*.spec.*'],
+    rules: {
+      'no-restricted-imports': 'off',
     },
   },
   storybook.configs['flat/recommended'],
