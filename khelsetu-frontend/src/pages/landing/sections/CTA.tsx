@@ -45,10 +45,10 @@ export const CTA = () => (
                 </div>
               ))}
             </div>
-            <p className="mt-8 flex items-center justify-center gap-2 text-xs text-stone-300">
+            <div className="mt-8 flex items-center justify-center gap-2 text-xs text-stone-300">
               <Logo size="sm" variant="white" withWordmark={false} />
               Made with care in Nepal
-            </p>
+            </div>
           </div>
         </div>
       </div>

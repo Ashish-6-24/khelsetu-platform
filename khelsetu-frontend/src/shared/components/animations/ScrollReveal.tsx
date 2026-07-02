@@ -1,6 +1,6 @@
 import { type Variants, motion, useInView } from 'framer-motion';
 
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type Intensity = 'bold' | 'moderate' | 'subtle';
 
@@ -29,9 +29,9 @@ const intensityConfig: Record<
  * Uses CSS scroll-driven animations as progressive enhancement with
  * framer-motion fallback for Safari/older browsers.
  *
- * - **bold**: 40px slide-up + 0.97 scale — hero, metrics, CTA
- * - **moderate**: 24px slide-up + 0.99 scale — features, sports, testimonials
- * - **subtle**: 12px slide-up, no scale — pricing, FAQ, footer
+ * Safety: if IntersectionObserver doesn't fire within 3s (headless, slow JS,
+ * network issues), content becomes visible anyway — content must never be
+ * permanently invisible.
  *
  * Respects `prefers-reduced-motion`.
  */
@@ -44,6 +44,14 @@ export const ScrollReveal = ({
 }: ScrollRevealProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.15 });
+  const [fallbackVisible, setFallbackVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!isInView) setFallbackVisible(true);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [isInView]);
 
   const cssClass =
     intensity === 'bold'
@@ -51,6 +59,8 @@ export const ScrollReveal = ({
       : intensity === 'subtle'
         ? 'scroll-reveal-subtle'
         : 'scroll-reveal';
+
+  const shouldShow = isInView || fallbackVisible;
 
   // For stagger mode, use framer-motion variants
   if (stagger) {
@@ -76,7 +86,7 @@ export const ScrollReveal = ({
       <motion.div
         ref={ref}
         initial="hidden"
-        animate={isInView ? 'visible' : 'hidden'}
+        animate={shouldShow ? 'visible' : 'hidden'}
         variants={variants}
         className={className}
       >
@@ -88,14 +98,18 @@ export const ScrollReveal = ({
   // Non-stagger: use CSS scroll-driven animations with framer-motion fallback
   return (
     <div ref={ref} className={`${cssClass} ${className ?? ''}`}>
-      {/* CSS path: visible by default (for scroll-driven), framer-motion handles fallback */}
       <motion.div
         initial={{
           opacity: 0,
           y: intensityConfig[intensity].offset,
           scale: intensityConfig[intensity].scale,
         }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        animate={
+          shouldShow
+            ? { opacity: 1, y: 0, scale: 1 }
+            : undefined
+        }
+        whileInView={fallbackVisible ? undefined : { opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{
           duration: intensityConfig[intensity].duration,
@@ -111,6 +125,7 @@ export const ScrollReveal = ({
 
 /**
  * Simplified ScrollReveal that uses straightforward motion props.
+ * Includes fallback: if IntersectionObserver doesn't fire in 3s, content shows.
  */
 export const Reveal = ({
   children,
@@ -119,6 +134,16 @@ export const Reveal = ({
   className,
 }: Omit<ScrollRevealProps, 'stagger' | 'staggerDelay'>) => {
   const { offset, scale, duration } = intensityConfig[intensity];
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.15 });
+  const [fallbackVisible, setFallbackVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!isInView) setFallbackVisible(true);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [isInView]);
 
   const cssClass =
     intensity === 'bold'
@@ -127,11 +152,14 @@ export const Reveal = ({
         ? 'scroll-reveal-subtle'
         : 'scroll-reveal';
 
+  const shouldShow = isInView || fallbackVisible;
+
   return (
-    <div className={`${cssClass} ${className ?? ''}`}>
+    <div ref={ref} className={`${cssClass} ${className ?? ''}`}>
       <motion.div
         initial={{ opacity: 0, y: offset, scale }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        animate={shouldShow ? { opacity: 1, y: 0, scale: 1 } : undefined}
+        whileInView={fallbackVisible ? undefined : { opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration, ease: [0.16, 1, 0.3, 1], delay }}
       >
