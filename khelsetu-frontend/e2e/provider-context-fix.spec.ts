@@ -88,7 +88,7 @@ test.describe('Provider Context Fix - QA Testing', () => {
     });
 
     // Verify page loads
-    await expect(page).not.toHaveURL('/login');
+    await expect(page).not.toHaveURL('/auth/login');
 
     const contextError = errors.find(
       (e) =>
@@ -131,9 +131,9 @@ test.describe('Provider Context Fix - QA Testing', () => {
       '/',
       '/about',
       '/contact',
-      // Auth pages (may redirect if already logged in)
-      '/login',
-      '/register',
+      '/tournaments',
+      '/teams',
+      '/standings',
     ];
 
     for (const route of routes) {
