@@ -85,21 +85,18 @@ const variantStyles: Record<ButtonVariant, string> = {
     'hover:shadow-[0_8px_24px_-4px_rgb(184_134_11/0.55)] /* brand-accent shadow */ ' +
     'dark:from-[var(--brand-accent)] dark:via-[var(--brand-accent-hover)] dark:to-[var(--brand-accent)] dark:text-[var(--brand-primary-ink)]',
   live:
-    'bg-gradient-to-br from-[var(--color-danger)] via-[var(--brand-primary-hover)] to-[var(--brand-primary)] text-white ' +
-    'shadow-[0_4px_14px_-2px_rgb(185_28_28/0.5)] /* live shadow */ ' +
-    'hover:from-[var(--brand-primary-hover)] hover:via-[var(--brand-primary)] hover:to-[var(--brand-primary-active)] ' +
-    'hover:shadow-[0_8px_28px_-4px_rgb(185_28_28/0.6),0_0_50px_10px_rgb(185_28_28/0.2)] /* live hover shadow */ ' +
-    'hover:brightness-110 ' +
-    'dark:from-[var(--brand-primary)] dark:via-[var(--color-live)] dark:to-[var(--brand-primary-hover)] ' +
+    'bg-gradient-to-br from-[var(--color-danger)] via-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-white ' +
+    'shadow-[0_4px_14px_-2px_rgb(185_28_28/0.5)] animate-glow-pulse ' +
+    'hover:from-[var(--color-danger)] hover:to-[var(--brand-primary)] ' +
+    'hover:shadow-[0_8px_28px_-4px_rgb(185_28_28/0.6)] ' +
+    'dark:from-[var(--color-live)] dark:via-[var(--brand-primary)] dark:to-[var(--brand-primary-hover)] ' +
     'dark:text-[var(--brand-primary-ink)]',
   create:
-    'bg-gradient-to-br from-[var(--color-danger)] via-[var(--brand-primary-hover)] to-[var(--brand-primary)] text-white ' +
-    'shadow-[0_4px_14px_-2px_rgb(153_27_27/0.45)] /* create shadow */ ' +
-    'hover:from-[var(--brand-primary-hover)] hover:via-[var(--brand-primary)] hover:to-[var(--brand-primary-active)] ' +
-    'hover:shadow-[0_8px_28px_-4px_rgb(153_27_27/0.55),0_0_0_2px_rgb(153_27_27/0.15)] /* create hover shadow */ ' +
-    'hover:brightness-110 ' +
-    'dark:from-[var(--brand-primary)] dark:via-[var(--color-live)] dark:to-[var(--brand-primary-hover)] ' +
-    'dark:text-[var(--brand-primary-ink)]',
+    'bg-[var(--brand-primary)] text-white ' +
+    'shadow-[0_2px_8px_-2px_rgb(127_29_29/0.35)] ' +
+    'hover:bg-[var(--brand-primary-hover)] ' +
+    'hover:shadow-[0_4px_16px_-4px_rgb(127_29_29/0.45)] ' +
+    'dark:bg-[var(--brand-primary)] dark:text-[var(--brand-primary-ink)]',
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
