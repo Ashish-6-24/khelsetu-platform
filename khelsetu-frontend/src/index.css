@@ -1720,19 +1720,9 @@
     0 16px 40px rgba(0, 0, 0, 0.12);
 }
 
-/* Premium focus ring — maroon with white gap (replaces outline-based) */
-*:focus-visible {
-  outline: none;
-  box-shadow:
-    0 0 0 2px #fff,
-    0 0 0 4px #7f1d1d;
-  transition: box-shadow 150ms ease-out;
-}
-.dark *:focus-visible {
-  box-shadow:
-    0 0 0 2px #0f172a,
-    0 0 0 4px #fca5a5;
-}
+/* Focus ring is defined in @layer base using outline (not box-shadow).
+   Button.tsx handles its own focus ring via Tailwind focus-visible:ring classes.
+   Do NOT add a global *:focus-visible box-shadow rule here — it conflicts. */
 
 /* Score pulse — brief flash on change */
 @keyframes scorePulse {
