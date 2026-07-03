@@ -99,7 +99,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
     "@chromatic-com/storybook": "^5.2.1",
-    "@commitlint/cli": "^21.0.1",
+    "@commitlint/cli": "^21.2.0",
     "@commitlint/config-conventional": "^21.0.1",
     "@eslint/js": "^10.0.1",
     "@lhci/cli": "^0.15.1",
