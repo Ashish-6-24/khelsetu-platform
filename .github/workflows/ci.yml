@@ -132,7 +132,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [1/2, 2/2]
+        shard: [1, 2]
+        total: [2]
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
@@ -143,20 +144,20 @@ jobs:
       - run: npm ci
       - run: npx playwright install chromium --with-deps
       - run: npm run build
-      - name: Run E2E tests (shard ${{ matrix.shard }})
-        run: npx playwright test --project=chromium --shard=${{ matrix.shard }}
+      - name: Run E2E tests (shard ${{ matrix.shard }}/${{ matrix.total }})
+        run: npx playwright test --project=chromium --shard=${{ matrix.shard }}/${{ matrix.total }}
       - name: Upload Playwright report
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: e2e-report-${{ replace(matrix.shard, '/', '-') }}
+          name: e2e-report-shard-${{ matrix.shard }}-of-${{ matrix.total }}
           path: khelsetu-frontend/playwright-report/
           retention-days: 14
       - name: Upload test results
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: e2e-results-${{ replace(matrix.shard, '/', '-') }}
+          name: e2e-results-shard-${{ matrix.shard }}-of-${{ matrix.total }}
           path: khelsetu-frontend/test-results/
           retention-days: 14
 
