@@ -28,10 +28,26 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
       testIgnore: /a11y\//,
     },
-    { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testIgnore: /a11y\// },
-    { name: 'webkit', use: { ...devices['Desktop Safari'] }, testIgnore: /a11y\// },
-    { name: 'Mobile Chrome', use: { ...devices['Pixel 5'] }, testIgnore: /a11y\// },
-    { name: 'Mobile Safari', use: { ...devices['iPhone 12'] }, testIgnore: /a11y\// },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+      testIgnore: /a11y\//,
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+      testIgnore: /a11y\//,
+    },
+    {
+      name: 'Mobile Chrome',
+      use: { ...devices['Pixel 5'] },
+      testIgnore: /a11y\//,
+    },
+    {
+      name: 'Mobile Safari',
+      use: { ...devices['iPhone 12'] },
+      testIgnore: /a11y\//,
+    },
 
     // A11y tests — public pages (no auth)
     {
