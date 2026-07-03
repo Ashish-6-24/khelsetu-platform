@@ -1,9 +1,5 @@
 export type NotificationType =
-  | 'match_start'
-  | 'score_update'
-  | 'tournament_update'
-  | 'system'
-  | 'billing';
+  'match_start' | 'score_update' | 'tournament_update' | 'system' | 'billing';
 
 export interface Notification {
   id: string;

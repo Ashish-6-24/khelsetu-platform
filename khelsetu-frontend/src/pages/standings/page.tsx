@@ -153,10 +153,7 @@ export const StandingsPage = () => {
                 sport={
                   ((selectedTournament as Tournament & { sport?: string })
                     ?.sport ?? 'cricket') as
-                    | 'cricket'
-                    | 'football'
-                    | 'volleyball'
-                    | 'basketball'
+                    'cricket' | 'football' | 'volleyball' | 'basketball'
                 }
               />
             </div>

@@ -15,12 +15,7 @@ export interface BracketMatch {
   scoreB: number | null;
   winner: 'teamA' | 'teamB' | null;
   status:
-    | 'pending'
-    | 'live'
-    | 'completed'
-    | 'bye'
-    | 'walkover'
-    | 'disqualified';
+    'pending' | 'live' | 'completed' | 'bye' | 'walkover' | 'disqualified';
   venue?: string;
   scheduledAt?: string;
   nextMatchId?: string;
