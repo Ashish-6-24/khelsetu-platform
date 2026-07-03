@@ -1,0 +1,8 @@
+# Code Owners — KhelSetu
+# All PRs require review from @Ashish-6-24 before merge.
+
+* @Ashish-6-24
+
+# CI/CD and infrastructure changes require owner review
+.github/ @Ashish-6-24
+scripts/ @Ashish-6-24
