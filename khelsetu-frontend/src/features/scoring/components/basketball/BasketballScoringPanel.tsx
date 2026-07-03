@@ -1,11 +1,11 @@
-import { Button } from '@components/ui/Button';
-import { Card, CardBody } from '@components/ui/Card';
 import {
   formatGameTime,
   getEventTypeLabel,
   getPointsForEventType,
 } from '@features/scoring/utils/basketball';
-import type { BasketballEvent, BasketballScore } from '@types-domain/scoring';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody } from '@shared/components/ui/Card';
+import type { BasketballEvent, BasketballScore } from '@shared/types/scoring';
 import { motion } from 'framer-motion';
 
 import { useState } from 'react';

@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# Pre-commit hook: prevents stale/duplicate directories from being committed
+
+bash scripts/check-duplicates.sh

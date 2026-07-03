@@ -1,4 +1,4 @@
-import { ROUTES } from '@utils/constants';
+import { ROUTES } from '@shared/utils/constants';
 import { clsx } from 'clsx';
 import DOMPurify from 'dompurify';
 import { ArrowLeft, Clock, Eye, Share2, User } from 'lucide-react';
@@ -89,7 +89,7 @@ export function NewsArticle({
 
       <div className="mt-8 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-active)] text-sm font-semibold text-white">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand-primary-bg)] to-[var(--brand-primary-bg-active)] text-sm font-semibold text-white">
             {article.author
               .split(' ')
               .map((n) => n[0])

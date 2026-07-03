@@ -1,1 +1,1 @@
-export { authService } from '@services/api/auth';
+export { authService } from '@features/auth/services/auth';

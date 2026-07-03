@@ -1,9 +1,9 @@
-import { Button } from '@components/ui/Button';
-import { Modal } from '@components/ui/Modal';
+import { Button } from '@shared/components/ui/Button';
+import { Modal } from '@shared/components/ui/Modal';
 import type {
   CricketBatsmanScore,
   CricketWicketType,
-} from '@types-domain/scoring';
+} from '@shared/types/scoring';
 import { clsx } from 'clsx';
 
 import { useState } from 'react';

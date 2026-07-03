@@ -132,7 +132,11 @@ describe('Axios Instance', () => {
       } as never);
 
       await api.put('/test/1', { name: 'updated' });
-      expect(spy).toHaveBeenCalledWith('/test/1', { name: 'updated' }, undefined);
+      expect(spy).toHaveBeenCalledWith(
+        '/test/1',
+        { name: 'updated' },
+        undefined,
+      );
     });
 
     it('should pass data to axiosInstance.patch', async () => {
@@ -145,7 +149,11 @@ describe('Axios Instance', () => {
       } as never);
 
       await api.patch('/test/1', { name: 'patched' });
-      expect(spy).toHaveBeenCalledWith('/test/1', { name: 'patched' }, undefined);
+      expect(spy).toHaveBeenCalledWith(
+        '/test/1',
+        { name: 'patched' },
+        undefined,
+      );
     });
 
     it('should call axiosInstance.delete', async () => {

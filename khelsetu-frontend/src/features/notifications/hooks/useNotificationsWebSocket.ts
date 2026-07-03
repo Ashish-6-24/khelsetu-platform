@@ -3,7 +3,7 @@ import type {
   Notification,
   NotificationType,
 } from '@features/notifications/types';
-import { wsService } from '@services/websocket';
+import { wsService } from '@lib/websocket-client';
 
 import { useCallback, useEffect } from 'react';
 

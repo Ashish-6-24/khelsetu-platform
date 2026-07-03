@@ -12,7 +12,7 @@ export {
   useFeaturedNews,
   useTrendingNews,
 } from './hooks/useNews';
-export { newsService } from '@services/api/news';
+export { newsService } from '@features/news/services/news';
 export type {
   NewsArticle as NewsArticleType,
   NewsCategory,

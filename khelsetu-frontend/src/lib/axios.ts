@@ -77,7 +77,7 @@ axiosInstance.interceptors.response.use(
         isRefreshing = true;
 
         try {
-          const { authService } = await import('@services/api/auth');
+          const { authService } = await import('@features/auth/services/auth');
           const response = await authService.refreshToken();
           const newToken = response.tokens.accessToken;
           localStorage.setItem('auth_token', newToken);

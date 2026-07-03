@@ -83,7 +83,7 @@ export const TacticalBoard = ({
           className={clsx(
             'rounded-lg px-3 py-1.5 text-xs font-semibold transition-all',
             isDrawing
-              ? 'bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-primary-hover)] text-white'
+              ? 'bg-gradient-to-r from-[var(--brand-primary-bg)] to-[var(--brand-primary-bg-hover)] text-white'
               : 'bg-gray-100 text-[var(--text-primary)] hover:bg-gray-200 dark:bg-[var(--bg-surface-raised)] dark:text-[var(--text-secondary)] dark:hover:bg-gray-600',
           )}
         >
@@ -104,7 +104,7 @@ export const TacticalBoard = ({
                   className={clsx(
                     'flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg text-sm transition-all',
                     activeTool === tool.type
-                      ? 'bg-[var(--brand-primary)] text-white'
+                      ? 'bg-[var(--brand-primary-bg)] text-white'
                       : 'bg-gray-100 text-[var(--text-secondary)] hover:bg-gray-200 dark:bg-[var(--bg-surface-raised)] dark:text-[var(--text-tertiary)] dark:hover:bg-gray-600',
                   )}
                 >

@@ -5,7 +5,7 @@ import type {
   Subscription,
 } from '@features/billing/types';
 import { axiosInstance } from '@lib/axios';
-import { API_ENDPOINTS } from '@utils/constants';
+import { API_ENDPOINTS } from '@shared/utils/constants';
 
 export const billingService = {
   getPlans: async (): Promise<Plan[]> => {

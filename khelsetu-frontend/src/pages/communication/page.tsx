@@ -1,5 +1,5 @@
-import { Button } from '@components/ui/Button';
-import { Card, CardBody, CardHeader } from '@components/ui/Card';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
 import { MessageCircle, Send, Users } from 'lucide-react';
 
 import { useState } from 'react';

@@ -1,4 +1,4 @@
-import { ROUTES } from '@utils/constants';
+import { ROUTES } from '@shared/utils/constants';
 import { clsx } from 'clsx';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 

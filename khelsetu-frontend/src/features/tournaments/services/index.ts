@@ -1,1 +1,4 @@
-export { tournamentService, matchService } from '@services/api/tournament';
+export {
+  tournamentService,
+  matchService,
+} from '@features/tournaments/services/tournament';

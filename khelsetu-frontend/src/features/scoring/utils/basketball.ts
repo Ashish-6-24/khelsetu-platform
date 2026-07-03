@@ -1,7 +1,7 @@
 import type {
   BasketballEvent,
   BasketballEventType,
-} from '@types-domain/scoring';
+} from '@shared/types/scoring';
 
 export const createBasketballEvent = (
   matchId: string,

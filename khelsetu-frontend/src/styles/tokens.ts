@@ -83,6 +83,12 @@ export const tokens = {
     caption: 13,
     small: 12,
   },
+  fontWeight: {
+    regular: 400,
+    medium: 500,
+    semibold: 600,
+    bold: 700,
+  },
   radius: {
     xs: 4,
     sm: 8,

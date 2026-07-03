@@ -1,6 +1,6 @@
 import { useStandingsStore } from '@features/standings/store';
 import type { Standing } from '@features/standings/types';
-import { wsService } from '@services/websocket';
+import { wsService } from '@lib/websocket-client';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useCallback, useEffect } from 'react';

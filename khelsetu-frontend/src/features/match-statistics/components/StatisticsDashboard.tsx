@@ -1,5 +1,5 @@
-import { Card, CardBody } from '@components/ui/Card';
-import { Skeleton } from '@components/ui/Skeleton';
+import { Card, CardBody } from '@shared/components/ui/Card';
+import { Skeleton } from '@shared/components/ui/Skeleton';
 
 import type { MatchStatistics } from '../types';
 import { PlayerStatsTable } from './PlayerStatsTable';

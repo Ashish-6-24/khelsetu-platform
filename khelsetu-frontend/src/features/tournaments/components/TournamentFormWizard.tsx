@@ -1,8 +1,8 @@
-import { Button } from '@components/ui/Button';
-import { Card, CardBody } from '@components/ui/Card';
-import { Input } from '@components/ui/Input';
-import { Select } from '@components/ui/Select';
-import type { TournamentFormat } from '@types-domain/tournament';
+import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody } from '@shared/components/ui/Card';
+import { Input } from '@shared/components/ui/Input';
+import { Select } from '@shared/components/ui/Select';
+import type { TournamentFormat } from '@shared/types/tournament';
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
@@ -319,13 +319,17 @@ export const TournamentFormWizard = ({
                     </p>
                   </div>
                   <div>
-                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">Sport</p>
+                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+                      Sport
+                    </p>
                     <p className="font-medium text-[var(--text-primary)] dark:text-white">
                       {(formData.sport as string) || '—'}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">Format</p>
+                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+                      Format
+                    </p>
                     <p className="font-medium text-[var(--text-primary)] dark:text-white capitalize">
                       {(formData.format as string) || '—'}
                     </p>
@@ -347,13 +351,17 @@ export const TournamentFormWizard = ({
                     </p>
                   </div>
                   <div>
-                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">End Date</p>
+                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+                      End Date
+                    </p>
                     <p className="font-medium text-[var(--text-primary)] dark:text-white">
                       {(formData.endDate as string) || '—'}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">Venue</p>
+                    <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+                      Venue
+                    </p>
                     <p className="font-medium text-[var(--text-primary)] dark:text-white">
                       {(formData.venue as string) || '—'}
                     </p>

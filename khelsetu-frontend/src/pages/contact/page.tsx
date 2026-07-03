@@ -1,7 +1,7 @@
-import { Button } from '@components/ui/Button';
-import { Input } from '@components/ui/Input';
-import { useToast } from '@components/ui/toast-context';
-import { APP_NAME } from '@utils/constants';
+import { Button } from '@shared/components/ui/Button';
+import { Input } from '@shared/components/ui/Input';
+import { useToast } from '@shared/components/ui/toast-context';
+import { APP_NAME } from '@shared/utils/constants';
 import { clsx } from 'clsx';
 import { type Variants, motion } from 'framer-motion';
 import {
@@ -202,10 +202,14 @@ const ContactForm = ({
         inputMode="tel"
       />
       <div>
-        <label className="mb-1.5 block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-primary)]">
+        <label
+          htmlFor="contact-topic"
+          className="mb-1.5 block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-primary)]"
+        >
           Topic
         </label>
         <select
+          id="contact-topic"
           value={form.topic}
           onChange={(e) =>
             setForm({
@@ -338,7 +342,8 @@ const ContactInfo = () => (
             <div
               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white shadow-sm"
               style={{
-                background: 'linear-gradient(135deg, var(--brand-primary-hover) 0%, var(--brand-primary) 100%)',
+                background:
+                  'linear-gradient(135deg, var(--brand-primary-hover) 0%, var(--brand-primary) 100%)',
               }}
             >
               <item.icon className="h-4 w-4" />
@@ -375,7 +380,8 @@ const ContactInfo = () => (
         <div
           className="flex h-10 w-10 items-center justify-center rounded-xl text-white shadow-sm"
           style={{
-            background: 'linear-gradient(135deg, var(--color-success) 0%, var(--color-success-darker) 100%)',
+            background:
+              'linear-gradient(135deg, var(--color-success) 0%, var(--color-success-darker) 100%)',
           }}
         >
           <MessageCircle className="h-5 w-5" />

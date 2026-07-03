@@ -1,8 +1,8 @@
-import { Skeleton } from '@components/ui/Skeleton';
 import { NewsArticle } from '@features/news/components';
 import { useNews, useNewsArticle } from '@features/news/hooks/useNews';
 import { getRelatedArticles } from '@features/news/utils/newsUtils';
-import { ROUTES } from '@utils/constants';
+import { Skeleton } from '@shared/components/ui/Skeleton';
+import { ROUTES } from '@shared/utils/constants';
 import { AlertCircle } from 'lucide-react';
 
 import { useParams } from 'react-router-dom';

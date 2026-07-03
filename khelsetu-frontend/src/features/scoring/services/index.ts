@@ -7,8 +7,8 @@ import type {
   MatchScore,
   SportType,
   VolleyballEvent,
-} from '@types-domain/scoring';
-import type { Match, MatchStatus } from '@types-domain/tournament';
+} from '@shared/types/scoring';
+import type { Match, MatchStatus } from '@shared/types/tournament';
 
 export const scoringService = {
   getMatch: async (matchId: string) => {

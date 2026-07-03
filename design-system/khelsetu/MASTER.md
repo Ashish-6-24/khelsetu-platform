@@ -7,8 +7,8 @@
 ---
 
 **Project:** KhelSetu
-**Generated:** 2026-06-10 11:48:19
-**Category:** Podcast Platform
+**Generated:** 2026-07-02 (updated from source of truth)
+**Category:** Multi-tenant Sports Operations Platform
 
 ---
 
@@ -18,24 +18,26 @@
 
 | Role | Hex | CSS Variable |
 |------|-----|--------------|
-| Primary | `#1E40AF` | `--color-primary` |
-| Secondary | `#3B82F6` | `--color-secondary` |
-| CTA/Accent | `#F59E0B` | `--color-cta` |
-| Background | `#F8FAFC` | `--color-background` |
-| Text | `#1E3A8A` | `--color-text` |
+| Primary | `#7F1D1D` (maroon-800) | `--brand-primary` |
+| Secondary | `#1E293B` (slate-800) | `--brand-secondary` |
+| Accent | `#B8860B` (dark gold) | `--brand-accent` |
+| Background | `#FAFAF9` (stone-50) | `--bg-canvas` |
+| Text | `#0F172A` (slate-900) | `--text-primary` |
 
-**Color Notes:** Blue data + amber highlights
+**Color Notes:** Maroon / Navy / Gold — "Quiet Authority" brand. Source of truth: `src/styles/themes.css`.
 
 ### Typography
 
-- **Heading Font:** Fira Code
-- **Body Font:** Fira Sans
-- **Mood:** dashboard, data, analytics, code, technical, precise
-- **Google Fonts:** [Fira Code + Fira Sans](https://fonts.google.com/share?selection.family=Fira+Code:wght@400;500;600;700|Fira+Sans:wght@300;400;500;600;700)
+- **Display Font:** Cormorant Garamond (headlines, hero)
+- **Body Font:** Inter (UI, body, buttons, labels)
+- **Devanagari Font:** Noto Sans Devanagari (Nepali text)
+- **Mono Font:** JetBrains Mono (code, data)
+- **Mood:** premium, quiet authority, editorial, organized
+- **Google Fonts:** [Cormorant Garamond + Inter](https://fonts.google.com/share?selection.family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400|Inter:wght@300;400;500;600;700)
 
 **CSS Import:**
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
 ```
 
 ### Spacing Variables
@@ -65,109 +67,48 @@
 
 ### Buttons
 
-```css
-/* Primary Button */
-.btn-primary {
-  background: #F59E0B;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 200ms ease;
-  cursor: pointer;
-}
+See `src/shared/components/ui/Button.tsx` for the canonical implementation.
 
-.btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-/* Secondary Button */
-.btn-secondary {
-  background: transparent;
-  color: #1E40AF;
-  border: 2px solid #1E40AF;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 200ms ease;
-  cursor: pointer;
-}
-```
+Variants: `primary`, `secondary`, `outline`, `ghost`, `danger`, `success`, `glass`, `gold`, `live`, `create`.
+Sizes: `xs` (28px), `sm` (36px), `md` (40px), `lg` (48px), `xl` (56px).
 
 ### Cards
 
-```css
-.card {
-  background: #F8FAFC;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: var(--shadow-md);
-  transition: all 200ms ease;
-  cursor: pointer;
-}
+See `src/shared/components/ui/Card.tsx` for the canonical implementation.
 
-.card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
-}
-```
+Default: `bg-surface`, `rounded-xl`, `border border-subtle`, `shadow-sm`. Hover: `lift-2` (translateY -6px + shadow-lg).
 
 ### Inputs
 
-```css
-.input {
-  padding: 12px 16px;
-  border: 1px solid #E2E8F0;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 200ms ease;
-}
+See `src/shared/components/ui/Input.tsx` for the canonical implementation.
 
-.input:focus {
-  border-color: #1E40AF;
-  outline: none;
-  box-shadow: 0 0 0 3px #1E40AF20;
-}
-```
+Default: `bg-surface`, `border border-subtle`, `rounded-lg`, `h-10`. Focus: `border-brand`, `ring-2 ring-brand/20`.
 
 ### Modals
 
-```css
-.modal-overlay {
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-}
+See `src/shared/components/ui/Modal.tsx` for the canonical implementation.
 
-.modal {
-  background: white;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: var(--shadow-xl);
-  max-width: 500px;
-  width: 90%;
-}
-```
+Sizes: `sm` (480px), `md` (640px), `lg` (768px), `xl` (960px). Backdrop: `bg-black/40 backdrop-blur-sm`.
 
 ---
 
 ## Style Guidelines
 
-**Style:** Dark Mode (OLED)
+**Style:** "Quiet Authority" — premium sports operations
 
-**Keywords:** Dark theme, low light, high contrast, deep black, midnight blue, eye-friendly, OLED, night mode, power efficient
+**Keywords:** Maroon, navy, gold, premium, editorial, organized, restrained, trustworthy, Nepal-first
 
-**Best For:** Night-mode apps, coding platforms, entertainment, eye-strain prevention, OLED devices, low-light
+**Best For:** Sports tournament management, club operations, local organizers
 
-**Key Effects:** Minimal glow (text-shadow: 0 0 10px), dark-to-light transitions, low white emission, high readability, visible focus
+**Key Effects:** Subtle gradients (maroon→gold), glass morphism, spring-physics hover, scroll-reveal, live pulse animations
 
 ### Page Pattern
 
-**Pattern Name:** App Store Style Landing
+**Pattern Name:** Sports Operations Platform
 
-- **Conversion Strategy:** Show real screenshots. Include ratings (4.5+ stars). QR code for mobile. Platform-specific CTAs.
-- **CTA Placement:** Download buttons prominent (App Store + Play Store) throughout
-- **Section Order:** 1. Hero with device mockup, 2. Screenshots carousel, 3. Features with icons, 4. Reviews/ratings, 5. Download CTAs
+- **Conversion Strategy:** Show real screenshots. Include live match previews. Social proof from Nepali organizers.
+- **CTA Placement:** "Start a tournament" in hero, after features, after pricing, final CTA
+- **Section Order:** 1. Hero with live score ticker, 2. Social proof, 3. Sports picker, 4. Features, 5. Metrics, 6. How it works, 7. Testimonials, 8. Pricing, 9. FAQ, 10. Final CTA
 
 ---
 

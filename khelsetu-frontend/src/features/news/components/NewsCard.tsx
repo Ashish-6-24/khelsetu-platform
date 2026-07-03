@@ -1,4 +1,4 @@
-import { ROUTES } from '@utils/constants';
+import { ROUTES } from '@shared/utils/constants';
 import { clsx } from 'clsx';
 import { Clock, Eye, Flame, User } from 'lucide-react';
 

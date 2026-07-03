@@ -96,7 +96,9 @@ export function MediaGallery({
           <p className="text-lg font-medium text-red-500">
             Error loading media
           </p>
-          <p className="text-sm text-[var(--text-tertiary)]">Please try again later</p>
+          <p className="text-sm text-[var(--text-tertiary)]">
+            Please try again later
+          </p>
         </div>
       ) : (
         <GalleryGrid items={items} onItemClick={openLightbox} />

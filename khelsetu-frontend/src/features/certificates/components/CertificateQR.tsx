@@ -14,7 +14,10 @@ export function CertificateQR({ value, size = 56 }: CertificateQRProps) {
     QRCode.toDataURL(value, {
       width: size * 2,
       margin: 1,
-      color: { dark: '#1f2937', light: '#ffffff' }, /* QR code colors — not theme-dependent */
+      color: {
+        dark: '#1f2937',
+        light: '#ffffff',
+      } /* QR code colors — not theme-dependent */,
       errorCorrectionLevel: 'M',
     }).then(setSrc);
   }, [value, size]);

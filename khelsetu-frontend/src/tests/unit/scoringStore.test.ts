@@ -1,11 +1,11 @@
-import { useScoringStore } from '@store/scoringStore';
-import { act, renderHook } from '@testing-library/react';
 import type {
   BasketballScore,
   CricketScore,
   FootballScore,
   VolleyballScore,
-} from '@types-domain/scoring';
+} from '@shared/types/scoring';
+import { useScoringStore } from '@store/scoringStore';
+import { act, renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const mockCricketScore: CricketScore = {

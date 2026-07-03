@@ -1,6 +1,6 @@
-import { Button } from '@components/ui/Button';
-import { Modal } from '@components/ui/Modal';
-import type { FootballEvent } from '@types-domain/scoring';
+import { Button } from '@shared/components/ui/Button';
+import { Modal } from '@shared/components/ui/Modal';
+import type { FootballEvent } from '@shared/types/scoring';
 
 import { useState } from 'react';
 

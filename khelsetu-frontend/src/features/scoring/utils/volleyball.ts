@@ -1,7 +1,7 @@
 import type {
   VolleyballEvent,
   VolleyballEventType,
-} from '@types-domain/scoring';
+} from '@shared/types/scoring';
 
 export const createVolleyballEvent = (
   matchId: string,

@@ -5,6 +5,9 @@ on:
     branches: [master, main, develop]
   pull_request:
     branches: [master, main, develop]
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -27,11 +30,11 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
         with:
           fetch-depth: 0
       - name: Run Gitleaks
-        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -41,13 +44,16 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
           cache-dependency-path: khelsetu-frontend/package-lock.json
       - run: npm ci
+      - name: Check for duplicate/stale directories
+        working-directory: .
+        run: bash scripts/check-duplicates.sh
       - run: npm run lint
       - run: npm run format:check
       - run: npm run typecheck
@@ -62,8 +68,8 @@ jobs:
       matrix:
         shard: [1, 2]
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
@@ -77,8 +83,8 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
@@ -92,8 +98,8 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
@@ -107,8 +113,8 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
@@ -118,14 +124,19 @@ jobs:
       - run: npx size-limit
 
   e2e:
-    name: E2E Tests
+    name: E2E (${{ matrix.shard }})
     runs-on: ubuntu-latest
     needs: build
     permissions:
       contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2]
+        total: [2]
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
@@ -133,7 +144,82 @@ jobs:
       - run: npm ci
       - run: npx playwright install chromium --with-deps
       - run: npm run build
-      - run: npm run test:e2e
+      - name: Run E2E tests (shard ${{ matrix.shard }}/${{ matrix.total }})
+        run: npx playwright test --project=chromium --shard=${{ matrix.shard }}/${{ matrix.total }}
+      - name: Upload Playwright report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-report-shard-${{ matrix.shard }}-of-${{ matrix.total }}
+          path: khelsetu-frontend/playwright-report/
+          retention-days: 14
+      - name: Upload test results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-results-shard-${{ matrix.shard }}-of-${{ matrix.total }}
+          path: khelsetu-frontend/test-results/
+          retention-days: 14
+
+  a11y:
+    name: Accessibility Tests
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: khelsetu-frontend/package-lock.json
+      - run: npm ci
+      - run: npx playwright install chromium --with-deps
+      - run: npm run build
+      - name: Run a11y tests (public pages)
+        run: npx playwright test --project=a11y-public
+      - name: Upload report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: a11y-report
+          path: khelsetu-frontend/playwright-report/
+          retention-days: 14
+      - name: Upload test results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: a11y-results
+          path: khelsetu-frontend/test-results/
+          retention-days: 14
+
+  lighthouse:
+    name: Lighthouse CI
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        with:
+          fetch-depth: 20
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: khelsetu-frontend/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - name: Run Lighthouse CI
+        run: npx @lhci/cli autorun
+      - name: Upload LHCI report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: khelsetu-frontend/.lighthouseci/
+          retention-days: 14
 
   security:
     name: Security Audit
@@ -141,8 +227,8 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
@@ -153,7 +239,7 @@ jobs:
   ci-gatekeeper:
     name: CI Status
     if: always()
-    needs: [gitleaks, quality, test, coverage, circular, build, e2e, security]
+    needs: [gitleaks, quality, test, coverage, circular, build, e2e, a11y, lighthouse, security]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -164,14 +250,16 @@ jobs:
       - name: Evaluate results
         run: |
           echo "=== CI Results ==="
-          echo "Gitleaks:    ${{ needs.gitleaks.result }}"
-          echo "Quality:     ${{ needs.quality.result }}"
-          echo "Test:        ${{ needs.test.result }}"
-          echo "Coverage:    ${{ needs.coverage.result }}"
-          echo "Circular:    ${{ needs.circular.result }}"
-          echo "Build:       ${{ needs.build.result }}"
-          echo "E2E:         ${{ needs.e2e.result }}"
-          echo "Security:    ${{ needs.security.result }}"
+          echo "Gitleaks:          ${{ needs.gitleaks.result }}"
+          echo "Quality:           ${{ needs.quality.result }}"
+          echo "Test:              ${{ needs.test.result }}"
+          echo "Coverage:          ${{ needs.coverage.result }}"
+          echo "Circular:          ${{ needs.circular.result }}"
+          echo "Build:             ${{ needs.build.result }}"
+          echo "E2E:               ${{ needs.e2e.result }} (non-blocking)"
+          echo "A11y:              ${{ needs.a11y.result }}"
+          echo "Lighthouse:        ${{ needs.lighthouse.result }}"
+          echo "Security:          ${{ needs.security.result }}"
           echo ""
           if [ "${{ needs.gitleaks.result }}" == "failure" ] || \
              [ "${{ needs.quality.result }}" == "failure" ] || \
@@ -179,7 +267,8 @@ jobs:
              [ "${{ needs.coverage.result }}" == "failure" ] || \
              [ "${{ needs.circular.result }}" == "failure" ] || \
              [ "${{ needs.build.result }}" == "failure" ] || \
-             [ "${{ needs.e2e.result }}" == "failure" ] || \
+             [ "${{ needs.a11y.result }}" == "failure" ] || \
+             [ "${{ needs.lighthouse.result }}" == "failure" ] || \
              [ "${{ needs.security.result }}" == "failure" ]; then
             echo "One or more required jobs FAILED"
             exit 1

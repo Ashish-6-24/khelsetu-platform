@@ -1,8 +1,8 @@
-import { Badge } from '@components/ui/Badge';
-import { Card, CardBody } from '@components/ui/Card';
-import { Skeleton } from '@components/ui/Skeleton';
 import type { Standing } from '@features/standings/types';
 import { isQualified, sortStandings } from '@features/standings/utils';
+import { Badge } from '@shared/components/ui/Badge';
+import { Card, CardBody } from '@shared/components/ui/Card';
+import { Skeleton } from '@shared/components/ui/Skeleton';
 import { motion } from 'framer-motion';
 import { ArrowDown, ArrowUp, Minus } from 'lucide-react';
 
@@ -47,7 +47,8 @@ export const StandingsTable = ({
     sortKey === 'points' ? sortStandings(sortedStandings) : sortedStandings;
 
   const getSortIcon = (key: SortKey) => {
-    if (sortKey !== key) return <Minus className="w-4 h-4 text-[var(--text-tertiary)]" />;
+    if (sortKey !== key)
+      return <Minus className="w-4 h-4 text-[var(--text-tertiary)]" />;
     return sortDirection === 'asc' ? (
       <ArrowUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
     ) : (

@@ -1,5 +1,5 @@
 import type { Standing } from '@features/standings/types';
-import { tournamentService } from '@services/api/tournament';
+import { tournamentService } from '@features/tournaments/services/tournament';
 
 export const standingsService = {
   getStandings: async (tournamentId: string): Promise<Standing[]> => {

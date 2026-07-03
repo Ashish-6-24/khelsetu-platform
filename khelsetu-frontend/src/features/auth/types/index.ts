@@ -6,4 +6,4 @@ export type {
   RegisterCredentials,
   AuthResponse,
   AuthState,
-} from '@types-domain/auth';
+} from '@shared/types/auth';
