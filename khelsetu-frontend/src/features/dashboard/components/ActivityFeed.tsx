@@ -20,13 +20,7 @@ export interface ActivityItem {
   description?: string;
   time: string | Date;
   type:
-    | 'info'
-    | 'success'
-    | 'warning'
-    | 'error'
-    | 'tournament'
-    | 'player'
-    | 'live';
+    'info' | 'success' | 'warning' | 'error' | 'tournament' | 'player' | 'live';
 }
 
 const typeConfig = {

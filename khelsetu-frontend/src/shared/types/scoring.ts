@@ -5,12 +5,7 @@ export type SportType = 'cricket' | 'football' | 'volleyball' | 'basketball';
 export type CricketScoreType = 'run' | 'wicket' | 'extra' | 'over';
 export type CricketExtraType = 'wide' | 'no-ball' | 'bye' | 'leg-bye';
 export type CricketWicketType =
-  | 'bowled'
-  | 'caught'
-  | 'lbw'
-  | 'run-out'
-  | 'stumped'
-  | 'hit-wicket';
+  'bowled' | 'caught' | 'lbw' | 'run-out' | 'stumped' | 'hit-wicket';
 
 export interface CricketBall {
   id: string;
@@ -283,10 +278,7 @@ export interface BasketballScore {
 // ==================== UNIFIED TYPES ====================
 
 export type MatchScore =
-  | CricketScore
-  | FootballScore
-  | VolleyballScore
-  | BasketballScore;
+  CricketScore | FootballScore | VolleyballScore | BasketballScore;
 
 export interface MatchConfig {
   sport: SportType;

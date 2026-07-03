@@ -1,9 +1,5 @@
 export type ReportType =
-  | 'tournament'
-  | 'team'
-  | 'player'
-  | 'match'
-  | 'analytics';
+  'tournament' | 'team' | 'player' | 'match' | 'analytics';
 export type ExportFormat = 'csv' | 'json' | 'pdf';
 
 export interface ReportConfig {

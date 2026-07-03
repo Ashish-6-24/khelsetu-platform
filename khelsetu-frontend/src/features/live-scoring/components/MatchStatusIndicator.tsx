@@ -2,11 +2,7 @@ import { Badge, type BadgeVariant } from '@shared/components/ui/Badge';
 import { motion } from 'framer-motion';
 
 type MatchStatus =
-  | 'scheduled'
-  | 'live'
-  | 'completed'
-  | 'cancelled'
-  | 'postponed';
+  'scheduled' | 'live' | 'completed' | 'cancelled' | 'postponed';
 
 interface MatchStatusIndicatorProps {
   status: MatchStatus;

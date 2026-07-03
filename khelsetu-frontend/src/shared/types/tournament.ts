@@ -1,16 +1,8 @@
 export type TournamentStatus =
-  | 'draft'
-  | 'upcoming'
-  | 'live'
-  | 'completed'
-  | 'cancelled';
+  'draft' | 'upcoming' | 'live' | 'completed' | 'cancelled';
 export type TournamentFormat = 'knockout' | 'league' | 'round-robin' | 'swiss';
 export type MatchStatus =
-  | 'scheduled'
-  | 'live'
-  | 'completed'
-  | 'cancelled'
-  | 'postponed';
+  'scheduled' | 'live' | 'completed' | 'cancelled' | 'postponed';
 
 export interface Tournament {
   id: string;

@@ -244,10 +244,7 @@ export const TournamentDetailPage = () => {
           isLoading={loadingStandings || featureLoadingStandings}
           sport={
             (tournament?.sport as
-              | 'cricket'
-              | 'football'
-              | 'volleyball'
-              | 'basketball') ?? 'cricket'
+              'cricket' | 'football' | 'volleyball' | 'basketball') ?? 'cricket'
           }
         />
       )}
