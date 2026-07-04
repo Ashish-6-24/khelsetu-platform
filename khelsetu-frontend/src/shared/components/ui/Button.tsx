@@ -44,8 +44,7 @@ const baseStyles =
   'focus-visible:ring-[var(--brand-primary)] dark:focus-visible:ring-[var(--brand-primary)] dark:focus-visible:ring-offset-[var(--bg-canvas)] ' +
   'disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none ' +
   'transition-[transform,background-color,box-shadow,color,border-color] duration-200 ease-out ' +
-  'active:translate-y-px hover:scale-[1.02] active:scale-[0.97] ' +
-  'will-change-transform';
+  'active:translate-y-px hover:scale-[1.02] active:scale-[0.97]';
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
