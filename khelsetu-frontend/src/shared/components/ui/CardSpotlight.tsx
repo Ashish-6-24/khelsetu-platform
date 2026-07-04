@@ -18,19 +18,20 @@ export const CardSpotlight = ({
   size = 300,
 }: CardSpotlightProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const spotlightRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const container = containerRef.current;
-    if (!container) return;
+    const spotlight = spotlightRef.current;
+    if (!container || !spotlight) return;
 
     const rect = container.getBoundingClientRect();
-    setPosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  }, []);
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    spotlight.style.setProperty('--spotlight-x', `${x - size / 2}px`);
+    spotlight.style.setProperty('--spotlight-y', `${y - size / 2}px`);
+  }, [size]);
 
   return (
     <div
@@ -42,15 +43,17 @@ export const CardSpotlight = ({
     >
       {/* Spotlight gradient */}
       <div
+        ref={spotlightRef}
         className={clsx(
           'pointer-events-none absolute z-0 transition-opacity duration-300',
           isHovered ? 'opacity-100' : 'opacity-0',
         )}
         style={{
-          left: position.x - size / 2,
-          top: position.y - size / 2,
+          left: 0,
+          top: 0,
           width: size,
           height: size,
+          transform: 'translate(var(--spotlight-x, -9999px), var(--spotlight-y, -9999px))',
           background: `radial-gradient(circle, ${spotlightColor} 0%, transparent 70%)`,
           borderRadius: '50%',
         }}
