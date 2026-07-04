@@ -11,8 +11,14 @@ const getEnv = () => {
     );
   }
 
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
-  const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8080';
+  const apiUrl =
+    import.meta.env.VITE_API_URL !== undefined
+      ? import.meta.env.VITE_API_URL
+      : 'http://localhost:8080';
+  const wsUrl =
+    import.meta.env.VITE_WS_URL !== undefined
+      ? import.meta.env.VITE_WS_URL
+      : 'ws://localhost:8080';
 
   if (isProd) {
     if (!apiUrl.startsWith('https://')) {
