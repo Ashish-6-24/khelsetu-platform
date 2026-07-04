@@ -165,18 +165,19 @@ export const FixtureTable = ({ matches }: FixtureTableProps) => {
       <CardBody className="p-0">
         <div className="overflow-x-auto">
           <table className="w-full">
+            <caption className="sr-only">Tournament Bracket</caption>
             <thead>
               <tr className="border-b border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
-                <th className="text-left px-4 py-3 text-sm font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+                <th scope="col" className="text-left px-4 py-3 text-sm font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   Match
                 </th>
-                <th className="text-left px-4 py-3 text-sm font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+                <th scope="col" className="text-left px-4 py-3 text-sm font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   Teams
                 </th>
-                <th className="text-left px-4 py-3 text-sm font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+                <th scope="col" className="text-left px-4 py-3 text-sm font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   Status
                 </th>
-                <th className="text-left px-4 py-3 text-sm font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+                <th scope="col" className="text-left px-4 py-3 text-sm font-medium text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   Venue
                 </th>
               </tr>
