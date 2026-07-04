@@ -2,6 +2,7 @@ import type { AuthState, AuthTokens, User } from '@shared/types/auth';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+import { setAccessToken } from '@lib/axios';
 import { useScoringStore } from './scoringStore';
 import { useUIStore } from './uiStore';
 
@@ -26,7 +27,7 @@ export const useAuthStore = create<AuthStore>()(
       setTokens: (tokens) => set({ tokens }),
 
       login: (user, tokens) => {
-        localStorage.setItem('auth_token', tokens.accessToken);
+        setAccessToken(tokens.accessToken);
         useUIStore.getState().allowDarkMode();
         set({
           user,
@@ -37,9 +38,8 @@ export const useAuthStore = create<AuthStore>()(
       },
 
       logout: () => {
-        localStorage.removeItem('auth_token');
+        setAccessToken(null);
         useScoringStore.getState().resetScoring();
-        useUIStore.getState().forceLightMode();
         set({
           user: null,
           tokens: null,
@@ -53,9 +53,13 @@ export const useAuthStore = create<AuthStore>()(
       name: 'auth-storage',
       partialize: (state) => ({
         user: state.user,
-        tokens: state.tokens,
-        isAuthenticated: state.isAuthenticated,
       }),
+      onRehydrateStorage: () => (state) => {
+        if (state?.user) {
+          state.isAuthenticated = true;
+          useUIStore.getState().allowDarkMode();
+        }
+      },
     },
   ),
 );
