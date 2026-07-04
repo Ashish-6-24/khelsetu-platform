@@ -105,7 +105,7 @@ export default defineConfig(({ mode }) => {
           },
         },
       },
-      chunkSizeWarningLimit: 600,
+      chunkSizeWarningLimit: 800,
       minify: 'esbuild',
       target: ['es2022', 'chrome85', 'firefox79', 'safari15.4'],
       cssCodeSplit: true,
