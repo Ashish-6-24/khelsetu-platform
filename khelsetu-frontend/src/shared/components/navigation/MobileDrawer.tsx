@@ -1,4 +1,5 @@
 import { Logo } from '@shared/components/ui/Logo';
+import { useFocusTrap } from '@shared/hooks/useFocusTrap';
 import { ROUTES } from '@shared/utils/constants';
 import { clsx } from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -7,8 +8,6 @@ import { X } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
 import { Link, useLocation } from 'react-router-dom';
-
-import { useFocusTrap } from '@shared/hooks/useFocusTrap';
 
 import { SidebarContent } from './SidebarContent';
 

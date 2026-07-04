@@ -8,21 +8,13 @@ import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 
-interface TextareaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
   error?: string;
 }
 
-const Textarea = ({
-  label,
-  error,
-  id,
-  className,
-  ...props
-}: TextareaProps) => {
-  const textareaId =
-    id || label?.toLowerCase().replace(/\s+/g, '-');
+const Textarea = ({ label, error, id, className, ...props }: TextareaProps) => {
+  const textareaId = id || label?.toLowerCase().replace(/\s+/g, '-');
 
   return (
     <div className="w-full">
@@ -192,7 +184,10 @@ interface TournamentFormWizardProps {
   currentStep: number;
   isSubmitting: boolean;
   onStepChange: (step: number) => void;
-  onFieldChange: (field: keyof TournamentFormData, value: string | number) => void;
+  onFieldChange: (
+    field: keyof TournamentFormData,
+    value: string | number,
+  ) => void;
   onSubmit: () => void;
   onBack: () => void;
 }

@@ -5,12 +5,15 @@ import { useOffline } from './useOffline';
 export const useServiceWorker = () => {
   const { isOnline } = useOffline();
   const [swRegistered, setSwRegistered] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
   const [isInstallable, setIsInstallable] = useState(false);
 
   useEffect(() => {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.ready.then(() => setSwRegistered(true)).catch(() => setSwRegistered(false));
+      navigator.serviceWorker.ready
+        .then(() => setSwRegistered(true))
+        .catch(() => setSwRegistered(false));
     }
   }, []);
 
@@ -38,7 +41,13 @@ export const useServiceWorker = () => {
     setIsInstallable(false);
   }, []);
 
-  return { isOnline, swRegistered, isInstallable, promptInstall, dismissInstall };
+  return {
+    isOnline,
+    swRegistered,
+    isInstallable,
+    promptInstall,
+    dismissInstall,
+  };
 };
 
 interface BeforeInstallPromptEvent extends Event {

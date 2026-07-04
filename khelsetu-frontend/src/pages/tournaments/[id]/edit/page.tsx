@@ -1,4 +1,7 @@
-import { TournamentFormWizard, type TournamentFormData } from '@features/tournaments/components';
+import {
+  type TournamentFormData,
+  TournamentFormWizard,
+} from '@features/tournaments/components';
 import { tournamentService } from '@features/tournaments/services/tournament';
 import type { Tournament } from '@shared/types/tournament';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';

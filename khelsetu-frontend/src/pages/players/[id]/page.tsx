@@ -119,9 +119,7 @@ export const PlayerDetailPage = () => {
         {player.stats.wickets !== undefined && (
           <Card>
             <CardBody>
-              <p className="text-sm text-[var(--text-tertiary)]">
-                Wickets
-              </p>
+              <p className="text-sm text-[var(--text-tertiary)]">Wickets</p>
               <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">
                 {player.stats.wickets}
               </p>
@@ -141,9 +139,7 @@ export const PlayerDetailPage = () => {
         {player.stats.assists !== undefined && (
           <Card>
             <CardBody>
-              <p className="text-sm text-[var(--text-tertiary)]">
-                Assists
-              </p>
+              <p className="text-sm text-[var(--text-tertiary)]">Assists</p>
               <p className="text-2xl font-bold text-purple-600 dark:text-purple-400 mt-1">
                 {player.stats.assists}
               </p>
@@ -192,9 +188,7 @@ export const PlayerDetailPage = () => {
                 </div>
                 {player.jerseyNumber && (
                   <div>
-                    <p className="text-[var(--text-tertiary)]">
-                      Jersey Number
-                    </p>
+                    <p className="text-[var(--text-tertiary)]">Jersey Number</p>
                     <p className="font-medium text-[var(--text-primary)]">
                       #{player.jerseyNumber}
                     </p>

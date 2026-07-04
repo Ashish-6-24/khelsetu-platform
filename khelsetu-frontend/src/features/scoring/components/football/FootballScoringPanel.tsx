@@ -57,7 +57,9 @@ export const FootballScoringPanel = ({
             </p>
           </div>
           <div className="text-center px-4">
-            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">VS</p>
+            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+              VS
+            </p>
           </div>
           <div className="text-center flex-1">
             <p className="text-lg font-bold text-[var(--text-primary)] dark:text-white">

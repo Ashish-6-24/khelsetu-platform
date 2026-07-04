@@ -1,8 +1,8 @@
+import { setAccessToken } from '@lib/axios';
 import type { AuthState, AuthTokens, User } from '@shared/types/auth';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { setAccessToken } from '@lib/axios';
 import { useScoringStore } from './scoringStore';
 import { useUIStore } from './uiStore';
 

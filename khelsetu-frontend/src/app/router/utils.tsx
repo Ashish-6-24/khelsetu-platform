@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
-import { Suspense, lazy } from 'react';
-
 import { Skeleton } from '@shared/components/ui/Skeleton';
+
+import { Suspense, lazy } from 'react';
 
 export const LoadingFallback = () => (
   <div className="flex items-center justify-center h-64">

@@ -154,44 +154,323 @@ const MediaGalleryPage = lazyPage(
 
 export const dashboardRoutes = (
   <>
-    <Route path={ROUTES.DASHBOARD} element={<ProtectedRoute><DashboardLayout>{withSuspense(DashboardPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.TOURNAMENTS} element={<ProtectedRoute><DashboardLayout>{withSuspense(TournamentsPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.TOURNAMENT_CREATE} element={<ProtectedRoute><DashboardLayout>{withSuspense(TournamentCreatePage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.TOURNAMENT_DETAIL} element={<ProtectedRoute><DashboardLayout>{withSuspense(TournamentDetailPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.TOURNAMENT_EDIT} element={<ProtectedRoute><DashboardLayout>{withSuspense(TournamentEditPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.TOURNAMENT_BRACKET} element={<ProtectedRoute><DashboardLayout>{withSuspense(TournamentBracketPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.TEAMS} element={<ProtectedRoute><DashboardLayout>{withSuspense(TeamsPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.TEAM_DETAIL} element={<ProtectedRoute><DashboardLayout>{withSuspense(TeamDetailPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.SCORING} element={<ProtectedRoute><DashboardLayout>{withSuspense(ScoringPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.SCORING_MATCH} element={<ProtectedRoute><DashboardLayout>{withSuspense(ScoringMatchPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.STANDINGS} element={<ProtectedRoute><DashboardLayout>{withSuspense(StandingsPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.NOTIFICATIONS} element={<ProtectedRoute><DashboardLayout>{withSuspense(NotificationsPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.PLAYERS} element={<ProtectedRoute><DashboardLayout>{withSuspense(PlayersPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.PLAYER_DETAIL} element={<ProtectedRoute><DashboardLayout>{withSuspense(PlayerDetailPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.PLAYER_EDIT} element={<ProtectedRoute><DashboardLayout>{withSuspense(PlayerEditPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.ANALYTICS} element={<ProtectedRoute><DashboardLayout>{withSuspense(AnalyticsPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.BILLING} element={<ProtectedRoute><DashboardLayout>{withSuspense(BillingPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.OFFLINE_SYNC} element={<ProtectedRoute><DashboardLayout>{withSuspense(OfflineSyncPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.ACCESSIBILITY} element={<ProtectedRoute><DashboardLayout>{withSuspense(AccessibilityPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.SEARCH} element={<ProtectedRoute><DashboardLayout>{withSuspense(SearchPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.REPORTS} element={<ProtectedRoute><DashboardLayout>{withSuspense(ReportsPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.USER_ROLES} element={<ProtectedRoute><DashboardLayout>{withSuspense(UserRolesPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.I18N} element={<ProtectedRoute><DashboardLayout>{withSuspense(I18nPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.LIVE_BROADCAST} element={<ProtectedRoute><DashboardLayout>{withSuspense(LiveBroadcastPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.MEDIA} element={<ProtectedRoute><DashboardLayout>{withSuspense(MediaPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.SCHEDULE} element={<ProtectedRoute><DashboardLayout>{withSuspense(SchedulePage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.VENUES} element={<ProtectedRoute><DashboardLayout>{withSuspense(VenuesPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.COMMUNICATION} element={<ProtectedRoute><DashboardLayout>{withSuspense(CommunicationPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.AUDIT_LOG} element={<ProtectedRoute><DashboardLayout>{withSuspense(AuditLogPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.DATA_IMPORT} element={<ProtectedRoute><DashboardLayout>{withSuspense(DataImportPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.SETTINGS} element={<ProtectedRoute><DashboardLayout>{withSuspense(SettingsPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.NEWS} element={<ProtectedRoute><DashboardLayout>{withSuspense(NewsPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.NEWS_DETAIL} element={<ProtectedRoute><DashboardLayout>{withSuspense(NewsDetailPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.CERTIFICATES} element={<ProtectedRoute><DashboardLayout>{withSuspense(CertificatesPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.FORMATION} element={<ProtectedRoute><DashboardLayout>{withSuspense(FormationPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.LIVE_EVENTS} element={<ProtectedRoute><DashboardLayout>{withSuspense(LiveEventCenterPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.MATCH_STATISTICS} element={<ProtectedRoute><DashboardLayout>{withSuspense(MatchStatisticsPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.MATCH_REPORTS} element={<ProtectedRoute><DashboardLayout>{withSuspense(MatchReportPage)}</DashboardLayout></ProtectedRoute>} />
-    <Route path={ROUTES.MEDIA_GALLERY} element={<ProtectedRoute><DashboardLayout>{withSuspense(MediaGalleryPage)}</DashboardLayout></ProtectedRoute>} />
+    <Route
+      path={ROUTES.DASHBOARD}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(DashboardPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.TOURNAMENTS}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(TournamentsPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.TOURNAMENT_CREATE}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>
+            {withSuspense(TournamentCreatePage)}
+          </DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.TOURNAMENT_DETAIL}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>
+            {withSuspense(TournamentDetailPage)}
+          </DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.TOURNAMENT_EDIT}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(TournamentEditPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.TOURNAMENT_BRACKET}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>
+            {withSuspense(TournamentBracketPage)}
+          </DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.TEAMS}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(TeamsPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.TEAM_DETAIL}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(TeamDetailPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.SCORING}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(ScoringPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.SCORING_MATCH}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(ScoringMatchPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.STANDINGS}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(StandingsPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.NOTIFICATIONS}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(NotificationsPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.PLAYERS}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(PlayersPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.PLAYER_DETAIL}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(PlayerDetailPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.PLAYER_EDIT}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(PlayerEditPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.ANALYTICS}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(AnalyticsPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.BILLING}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(BillingPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.OFFLINE_SYNC}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(OfflineSyncPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.ACCESSIBILITY}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(AccessibilityPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.SEARCH}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(SearchPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.REPORTS}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(ReportsPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.USER_ROLES}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(UserRolesPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.I18N}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(I18nPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.LIVE_BROADCAST}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(LiveBroadcastPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.MEDIA}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(MediaPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.SCHEDULE}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(SchedulePage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.VENUES}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(VenuesPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.COMMUNICATION}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(CommunicationPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.AUDIT_LOG}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(AuditLogPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.DATA_IMPORT}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(DataImportPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.SETTINGS}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(SettingsPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.NEWS}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(NewsPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.NEWS_DETAIL}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(NewsDetailPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.CERTIFICATES}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(CertificatesPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.FORMATION}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(FormationPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.LIVE_EVENTS}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(LiveEventCenterPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.MATCH_STATISTICS}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(MatchStatisticsPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.MATCH_REPORTS}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(MatchReportPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.MEDIA_GALLERY}
+      element={
+        <ProtectedRoute>
+          <DashboardLayout>{withSuspense(MediaGalleryPage)}</DashboardLayout>
+        </ProtectedRoute>
+      }
+    />
   </>
 );

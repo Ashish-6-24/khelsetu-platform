@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 type KeyCombo = {
   /** Lowercase character or special key. e.g. 'k', '/', '?', 'Escape' */
@@ -85,7 +85,9 @@ export const useShortcut = (
       e.preventDefault();
       handlerRef.current(e);
     };
-    window.addEventListener('keydown', onKey, { capture: parsedOptions.capture });
+    window.addEventListener('keydown', onKey, {
+      capture: parsedOptions.capture,
+    });
     return () =>
       window.removeEventListener('keydown', onKey, {
         capture: parsedOptions.capture,

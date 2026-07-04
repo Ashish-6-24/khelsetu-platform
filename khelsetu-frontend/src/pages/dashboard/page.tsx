@@ -83,7 +83,10 @@ export const DashboardPage = () => {
 
   const isLoading = loadingTournaments || loadingMatches;
 
-  const totalTournaments = useMemo(() => tournaments?.length ?? 0, [tournaments]);
+  const totalTournaments = useMemo(
+    () => tournaments?.length ?? 0,
+    [tournaments],
+  );
   const liveMatches = useMemo(
     () => matches?.filter((m) => m.status === 'live').length ?? 0,
     [matches],

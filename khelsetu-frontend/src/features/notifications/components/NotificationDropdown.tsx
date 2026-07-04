@@ -3,6 +3,7 @@ import type {
   NotificationType,
 } from '@features/notifications/types';
 import { notificationUtils } from '@features/notifications/utils';
+import { useFocusTrap } from '@shared/hooks/useFocusTrap';
 import {
   Activity,
   Bell,
@@ -15,8 +16,6 @@ import {
 } from 'lucide-react';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-
-import { useFocusTrap } from '@shared/hooks/useFocusTrap';
 
 import { NotificationItem } from './NotificationItem';
 

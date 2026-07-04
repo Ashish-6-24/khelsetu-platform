@@ -40,7 +40,10 @@ export function CertificateForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="cert-type" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label
+          htmlFor="cert-type"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
           Certificate Type
         </label>
         <select
@@ -58,7 +61,10 @@ export function CertificateForm({
       </div>
 
       <div>
-        <label htmlFor="cert-player" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label
+          htmlFor="cert-player"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
           Recipient Name
         </label>
         <input
@@ -73,7 +79,10 @@ export function CertificateForm({
       </div>
 
       <div>
-        <label htmlFor="cert-team" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label
+          htmlFor="cert-team"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
           Team Name
         </label>
         <input
@@ -88,7 +97,10 @@ export function CertificateForm({
       </div>
 
       <div>
-        <label htmlFor="cert-tournament" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label
+          htmlFor="cert-tournament"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
           Tournament Name
         </label>
         <input
@@ -103,7 +115,10 @@ export function CertificateForm({
       </div>
 
       <div>
-        <label htmlFor="cert-date" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label
+          htmlFor="cert-date"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
           Date
         </label>
         <input
@@ -117,7 +132,10 @@ export function CertificateForm({
       </div>
 
       <div>
-        <label htmlFor="cert-organizer" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label
+          htmlFor="cert-organizer"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
           Organizer
         </label>
         <input

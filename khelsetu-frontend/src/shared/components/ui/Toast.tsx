@@ -204,7 +204,9 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
-  const timeoutsRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+  const timeoutsRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(
+    new Map(),
+  );
 
   useEffect(() => {
     const timeouts = timeoutsRef.current;

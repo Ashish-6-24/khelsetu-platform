@@ -10,13 +10,7 @@ import { useAuthStore } from '@store/authStore';
 import { useUIStore } from '@store/uiStore';
 import { useMutation } from '@tanstack/react-query';
 import { clsx } from 'clsx';
-import {
-  Moon,
-  Phone,
-  Save,
-  Sun,
-  User as UserIcon,
-} from 'lucide-react';
+import { Moon, Phone, Save, Sun, User as UserIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -78,9 +72,7 @@ const SaveButton = ({
       variant="create"
       disabled={isLoading}
       isLoading={isLoading}
-      className={clsx(
-        showSuccess && 'btn-save-success',
-      )}
+      className={clsx(showSuccess && 'btn-save-success')}
     >
       {showSuccess && (
         <svg
@@ -147,7 +139,10 @@ export const SettingsPage = () => {
   const updatePasswordMutation = useMutation({
     mutationFn: (_data: PasswordFormData) => {
       // TODO: implement when backend password change endpoint is available
-      addToast({ type: 'warning', message: 'Password change is not yet connected to the backend.' });
+      addToast({
+        type: 'warning',
+        message: 'Password change is not yet connected to the backend.',
+      });
       return Promise.resolve();
     },
     onSuccess: () => {

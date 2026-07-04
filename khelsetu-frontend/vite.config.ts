@@ -39,7 +39,10 @@ export default defineConfig(({ mode }) => {
               handler: 'CacheFirst',
               options: {
                 cacheName: 'google-fonts-cache',
-                expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
+                expiration: {
+                  maxEntries: 10,
+                  maxAgeSeconds: 60 * 60 * 24 * 365,
+                },
               },
             },
             {
@@ -76,7 +79,8 @@ export default defineConfig(({ mode }) => {
               if (/\/react\//.test(id) || /\/react@/.test(id))
                 return 'vendor-react';
               if (id.includes('@tanstack/react-query')) return 'vendor-query';
-              if (id.includes('framer-motion') || id.includes('motion')) return 'vendor-motion';
+              if (id.includes('framer-motion') || id.includes('motion'))
+                return 'vendor-motion';
               if (
                 id.includes('react-hook-form') ||
                 id.includes('@hookform/resolvers') ||

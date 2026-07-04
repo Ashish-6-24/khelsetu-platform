@@ -34,7 +34,11 @@ interface ScoringState {
   activeSport: SportType | null;
   isScoring: boolean;
   lastUpdate: string | null;
-  history: Array<{ type: string; data?: CricketBall | FootballEvent | VolleyballEvent | BasketballEvent; snapshot: Partial<ScoringState> }>;
+  history: Array<{
+    type: string;
+    data?: CricketBall | FootballEvent | VolleyballEvent | BasketballEvent;
+    snapshot: Partial<ScoringState>;
+  }>;
   cricket: CricketScoringState;
   football: FootballScoringState;
   volleyball: VolleyballScoringState;

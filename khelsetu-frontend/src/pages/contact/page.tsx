@@ -229,7 +229,10 @@ const ContactForm = ({
     </div>
 
     <div className="mt-4">
-      <label htmlFor="contact-message" className="mb-1.5 block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-primary)]">
+      <label
+        htmlFor="contact-message"
+        className="mb-1.5 block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-primary)]"
+      >
         Message
         <span className="ml-2 text-xs font-normal text-[var(--text-tertiary)]">
           {form.message.length} / 500

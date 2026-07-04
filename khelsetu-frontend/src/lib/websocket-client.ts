@@ -58,9 +58,17 @@ class WebSocketService {
 
   private isValidEvent(event: string): boolean {
     const knownEvents: WebSocketEvent[] = [
-      'connect', 'disconnect', 'score_update', 'match_start', 'match_end',
-      'tournament_update', 'standings_update', 'notification',
-      'user_join', 'user_leave', 'error',
+      'connect',
+      'disconnect',
+      'score_update',
+      'match_start',
+      'match_end',
+      'tournament_update',
+      'standings_update',
+      'notification',
+      'user_join',
+      'user_leave',
+      'error',
     ];
     return (knownEvents as string[]).includes(event);
   }

@@ -20,7 +20,12 @@ export const LiveCommentary = ({ balls }: LiveCommentaryProps) => {
   }
 
   return (
-    <div className="space-y-2 max-h-96 overflow-y-auto" role="log" aria-live="polite" aria-label="Live commentary">
+    <div
+      className="space-y-2 max-h-96 overflow-y-auto"
+      role="log"
+      aria-live="polite"
+      aria-label="Live commentary"
+    >
       {reversedBalls.map((ball) => (
         <div
           key={ball.id}

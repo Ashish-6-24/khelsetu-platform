@@ -6,7 +6,10 @@ class Logger {
   private level: LogLevel;
   private prefix: string;
 
-  constructor(prefix = 'KhelSetu', level: LogLevel = isProd ? 'error' : 'debug') {
+  constructor(
+    prefix = 'KhelSetu',
+    level: LogLevel = isProd ? 'error' : 'debug',
+  ) {
     this.prefix = prefix;
     this.level = level;
   }

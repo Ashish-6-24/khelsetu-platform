@@ -136,9 +136,7 @@ export const TournamentDetailPage = () => {
         </Card>
         <Card>
           <CardBody>
-            <p className="text-sm text-[var(--text-tertiary)]">
-              Completed
-            </p>
+            <p className="text-sm text-[var(--text-tertiary)]">Completed</p>
             <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">
               {matches?.filter((m) => m.status === 'completed').length ?? 0}
             </p>

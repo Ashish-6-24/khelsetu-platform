@@ -28,7 +28,10 @@ export const useNotifications = () => {
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
     },
     onError: () => {
-      addToast({ type: 'error', message: 'Failed to mark notification as read' });
+      addToast({
+        type: 'error',
+        message: 'Failed to mark notification as read',
+      });
     },
   });
 

@@ -142,7 +142,8 @@ export const useUIStore = create<UIState & UIActions>()(
         sidebarState: state.sidebarState,
       }),
       onRehydrateStorage: () => (state) => {
-        if (state?.theme) applyThemeToDOM(state.theme, state.isAuthContextActive);
+        if (state?.theme)
+          applyThemeToDOM(state.theme, state.isAuthContextActive);
       },
     },
   ),

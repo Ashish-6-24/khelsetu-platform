@@ -79,9 +79,7 @@ export const OfflineSyncPage = () => {
               <p className="text-3xl font-bold text-red-600 dark:text-red-400">
                 {failedCount}
               </p>
-              <p className="text-sm text-[var(--text-tertiary)] mt-1">
-                Failed
-              </p>
+              <p className="text-sm text-[var(--text-tertiary)] mt-1">Failed</p>
             </div>
           </CardBody>
         </Card>
@@ -91,9 +89,7 @@ export const OfflineSyncPage = () => {
               <p className="text-3xl font-bold text-green-600 dark:text-green-400">
                 {completedCount}
               </p>
-              <p className="text-sm text-[var(--text-tertiary)] mt-1">
-                Synced
-              </p>
+              <p className="text-sm text-[var(--text-tertiary)] mt-1">Synced</p>
             </div>
           </CardBody>
         </Card>

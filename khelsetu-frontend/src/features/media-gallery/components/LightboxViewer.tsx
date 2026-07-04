@@ -1,3 +1,4 @@
+import { useFocusTrap } from '@shared/hooks/useFocusTrap';
 import {
   ChevronLeft,
   ChevronRight,
@@ -9,8 +10,6 @@ import {
 } from 'lucide-react';
 
 import { useCallback, useEffect, useRef } from 'react';
-
-import { useFocusTrap } from '@shared/hooks/useFocusTrap';
 
 import { MediaItem } from '../types';
 import { formatDuration } from '../utils/galleryUtils';

@@ -21,17 +21,20 @@ export const CardSpotlight = ({
   const spotlightRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const container = containerRef.current;
-    const spotlight = spotlightRef.current;
-    if (!container || !spotlight) return;
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const container = containerRef.current;
+      const spotlight = spotlightRef.current;
+      if (!container || !spotlight) return;
 
-    const rect = container.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    spotlight.style.setProperty('--spotlight-x', `${x - size / 2}px`);
-    spotlight.style.setProperty('--spotlight-y', `${y - size / 2}px`);
-  }, [size]);
+      const rect = container.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      spotlight.style.setProperty('--spotlight-x', `${x - size / 2}px`);
+      spotlight.style.setProperty('--spotlight-y', `${y - size / 2}px`);
+    },
+    [size],
+  );
 
   return (
     <div
@@ -53,7 +56,8 @@ export const CardSpotlight = ({
           top: 0,
           width: size,
           height: size,
-          transform: 'translate(var(--spotlight-x, -9999px), var(--spotlight-y, -9999px))',
+          transform:
+            'translate(var(--spotlight-x, -9999px), var(--spotlight-y, -9999px))',
           background: `radial-gradient(circle, ${spotlightColor} 0%, transparent 70%)`,
           borderRadius: '50%',
         }}

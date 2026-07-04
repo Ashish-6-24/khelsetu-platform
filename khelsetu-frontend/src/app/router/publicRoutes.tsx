@@ -61,13 +61,17 @@ export const publicRoutes = (
     <Route
       path={ROUTES.LOGIN}
       element={
-        <PublicRoute><AuthLayout>{withSuspense(LoginPage)}</AuthLayout></PublicRoute>
+        <PublicRoute>
+          <AuthLayout>{withSuspense(LoginPage)}</AuthLayout>
+        </PublicRoute>
       }
     />
     <Route
       path={ROUTES.REGISTER}
       element={
-        <PublicRoute><AuthLayout>{withSuspense(RegisterPage)}</AuthLayout></PublicRoute>
+        <PublicRoute>
+          <AuthLayout>{withSuspense(RegisterPage)}</AuthLayout>
+        </PublicRoute>
       }
     />
   </>

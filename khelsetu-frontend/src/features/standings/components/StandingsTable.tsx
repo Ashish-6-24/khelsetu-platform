@@ -107,7 +107,13 @@ export const StandingsTable = ({
                     }
                   }}
                   role="columnheader"
-                  aria-sort={sortKey === 'played' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none'}
+                  aria-sort={
+                    sortKey === 'played'
+                      ? sortDirection === 'asc'
+                        ? 'ascending'
+                        : 'descending'
+                      : 'none'
+                  }
                   tabIndex={0}
                 >
                   <div className="flex items-center justify-center gap-1">
@@ -124,7 +130,13 @@ export const StandingsTable = ({
                     }
                   }}
                   role="columnheader"
-                  aria-sort={sortKey === 'won' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none'}
+                  aria-sort={
+                    sortKey === 'won'
+                      ? sortDirection === 'asc'
+                        ? 'ascending'
+                        : 'descending'
+                      : 'none'
+                  }
                   tabIndex={0}
                 >
                   <div className="flex items-center justify-center gap-1">
@@ -141,7 +153,13 @@ export const StandingsTable = ({
                     }
                   }}
                   role="columnheader"
-                  aria-sort={sortKey === 'lost' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none'}
+                  aria-sort={
+                    sortKey === 'lost'
+                      ? sortDirection === 'asc'
+                        ? 'ascending'
+                        : 'descending'
+                      : 'none'
+                  }
                   tabIndex={0}
                 >
                   <div className="flex items-center justify-center gap-1">
@@ -158,7 +176,13 @@ export const StandingsTable = ({
                     }
                   }}
                   role="columnheader"
-                  aria-sort={sortKey === 'drawn' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none'}
+                  aria-sort={
+                    sortKey === 'drawn'
+                      ? sortDirection === 'asc'
+                        ? 'ascending'
+                        : 'descending'
+                      : 'none'
+                  }
                   tabIndex={0}
                 >
                   <div className="flex items-center justify-center gap-1">
@@ -176,7 +200,13 @@ export const StandingsTable = ({
                       }
                     }}
                     role="columnheader"
-                    aria-sort={sortKey === 'nrr' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none'}
+                    aria-sort={
+                      sortKey === 'nrr'
+                        ? sortDirection === 'asc'
+                          ? 'ascending'
+                          : 'descending'
+                        : 'none'
+                    }
                     tabIndex={0}
                   >
                     <div className="flex items-center justify-center gap-1">
@@ -194,7 +224,13 @@ export const StandingsTable = ({
                     }
                   }}
                   role="columnheader"
-                  aria-sort={sortKey === 'points' ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none'}
+                  aria-sort={
+                    sortKey === 'points'
+                      ? sortDirection === 'asc'
+                        ? 'ascending'
+                        : 'descending'
+                      : 'none'
+                  }
                   tabIndex={0}
                 >
                   <div className="flex items-center justify-center gap-1">
