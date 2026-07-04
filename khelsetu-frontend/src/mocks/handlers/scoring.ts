@@ -1,8 +1,9 @@
 import { HttpResponse, http } from 'msw';
 
 export const scoringHandlers = [
-  http.get('/api/scoring/:matchId', ({ params }) => {
+  http.get('/matches/:matchId', ({ params }) => {
     return HttpResponse.json({
+      id: params.matchId,
       matchId: params.matchId,
       innings: 1,
       score: '142/3',
@@ -22,7 +23,23 @@ export const scoringHandlers = [
     });
   }),
 
-  http.post('/api/scoring/:matchId/ball', async ({ params }) => {
+  http.get('/matches', () => {
+    return HttpResponse.json({
+      data: [
+        {
+          id: '1',
+          teamA: { id: '1', name: 'Kathmandu Kings' },
+          teamB: { id: '2', name: 'Pokhara Rhinos' },
+          status: 'live',
+          score: '142/3',
+          overs: 15.2,
+        },
+      ],
+      total: 1,
+    });
+  }),
+
+  http.post('/matches/:matchId/score', async ({ params }) => {
     return HttpResponse.json(
       { matchId: params.matchId, updated: true },
       { status: 201 },

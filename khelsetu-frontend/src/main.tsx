@@ -7,7 +7,6 @@ import { createRoot } from 'react-dom/client';
 
 import { StrictMode } from 'react';
 
-import App from './App';
 import './index.css';
 import { logger } from './lib/logger';
 import './styles/animations.css';
@@ -40,8 +39,26 @@ mediaQuery.addEventListener('change', () => {
   }
 });
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+async function bootstrap() {
+  // Start MSW in development to mock API responses (no backend yet)
+  if (import.meta.env.DEV) {
+    const { worker } = await import('./mocks/browser');
+    await worker.start({
+      onUnhandledRequest: 'bypass',
+      serviceWorker: {
+        url: '/mockServiceWorker.js',
+      },
+    });
+    logger.info('[MSW] Mock API enabled for development');
+  }
+
+  const { default: App } = await import('./App');
+
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  );
+}
+
+bootstrap();
