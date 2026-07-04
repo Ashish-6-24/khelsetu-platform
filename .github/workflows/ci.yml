@@ -148,7 +148,7 @@ jobs:
         run: npx playwright test --project=chromium --shard=${{ matrix.shard }}/${{ matrix.total }}
       - name: Upload Playwright report
         if: ${{ always() }}
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: e2e-report-shard-${{ matrix.shard }}-of-${{ matrix.total }}
           path: khelsetu-frontend/playwright-report/
@@ -156,7 +156,7 @@ jobs:
           if-no-files-found: ignore
       - name: Upload test results
         if: ${{ always() }}
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: e2e-results-shard-${{ matrix.shard }}-of-${{ matrix.total }}
           path: khelsetu-frontend/test-results/
@@ -183,7 +183,7 @@ jobs:
         run: npx playwright test --project=a11y-public
       - name: Upload report
         if: ${{ always() }}
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: a11y-report
           path: khelsetu-frontend/playwright-report/
@@ -191,7 +191,7 @@ jobs:
           if-no-files-found: ignore
       - name: Upload test results
         if: ${{ always() }}
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: a11y-results
           path: khelsetu-frontend/test-results/
@@ -219,7 +219,7 @@ jobs:
         run: npx @lhci/cli autorun
       - name: Upload LHCI report
         if: ${{ always() }}
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: lighthouse-report
           path: khelsetu-frontend/.lighthouseci/
