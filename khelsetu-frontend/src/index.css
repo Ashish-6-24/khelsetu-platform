@@ -239,12 +239,14 @@
     box-shadow: 0 0 0 4px rgb(127 29 29 / 0.12);
   }
 
-  .text-balance {
-    text-wrap: balance;
-  }
+  @supports (text-wrap: balance) {
+    .text-balance {
+      text-wrap: balance;
+    }
 
-  .text-pretty {
-    text-wrap: pretty;
+    .text-pretty {
+      text-wrap: pretty;
+    }
   }
 
   /* Premium hover lift (4-level elevation) */

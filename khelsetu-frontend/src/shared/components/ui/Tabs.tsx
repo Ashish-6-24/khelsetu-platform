@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
 
-import { useCallback, useRef } from 'react';
+import { useCallback, useId, useRef } from 'react';
 
 interface TabsProps {
   tabs: { id: string; label: string; icon?: React.ReactNode; count?: number }[];
@@ -20,6 +20,7 @@ export const Tabs = ({
   variant = 'default',
   fullWidth = false,
 }: TabsProps) => {
+  const uniqueId = useId();
   const tabRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
 
   const handleKeyDown = useCallback(
@@ -117,21 +118,21 @@ export const Tabs = ({
             {/* Animated underline / active indicator */}
             {isActive && variant === 'underline' && (
               <motion.div
-                layoutId="tab-underline"
+                layoutId={`${uniqueId}-tab-underline`}
                 className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-blue-600 dark:bg-blue-400"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
             {isActive && variant === 'default' && (
               <motion.div
-                layoutId="tab-default-bg"
+                layoutId={`${uniqueId}-tab-default-bg`}
                 className="absolute inset-0 -z-10 rounded-lg bg-blue-50 dark:bg-blue-500/15"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
             {isActive && variant === 'pills' && (
               <motion.div
-                layoutId="tab-pills-bg"
+                layoutId={`${uniqueId}-tab-pills-bg`}
                 className="absolute inset-0 -z-10 rounded-lg bg-white shadow-sm dark:bg-slate-900"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />

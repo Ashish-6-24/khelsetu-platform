@@ -28,6 +28,7 @@ export const LoginForm = ({ onSubmit, isLoading }: LoginFormProps) => {
       <Input
         label="Email"
         type="email"
+        autoComplete="email"
         {...register('email')}
         error={errors.email?.message}
         placeholder="you@example.com"
@@ -35,6 +36,7 @@ export const LoginForm = ({ onSubmit, isLoading }: LoginFormProps) => {
       <Input
         label="Password"
         type="password"
+        autoComplete="current-password"
         {...register('password')}
         error={errors.password?.message}
         placeholder="••••••••"
