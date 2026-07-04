@@ -1,10 +1,12 @@
+import { logger } from '@lib/logger';
+
 const STORAGE_KEYS = {
   AUTH_TOKEN: 'auth_token',
   USER: 'user',
   THEME: 'theme',
   OFFLINE_QUEUE: 'offline_queue',
   CACHE: 'cache',
-} as const;
+} satisfies Record<string, string>;
 
 export const storageService = {
   get: <T>(key: string, defaultValue?: T): T | null => {
@@ -20,7 +22,7 @@ export const storageService = {
     try {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
-      console.error('Failed to save to localStorage:', error);
+      logger.error('Failed to save to localStorage:', error);
     }
   },
 

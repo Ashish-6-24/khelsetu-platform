@@ -41,7 +41,7 @@ export const useFormValidation = (
   initialState: Record<string, string>,
   rules: Record<string, ValidationRule>,
 ) => {
-  const [validation, setValidation] = useState<FormValidationState>(
+  const [validation, setValidation] = useState<FormValidationState>(() =>
     Object.keys(initialState).reduce(
       (acc, key) => ({
         ...acc,

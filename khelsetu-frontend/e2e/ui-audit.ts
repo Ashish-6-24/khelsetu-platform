@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * UI Audit Script v2 — Playwright + Visual Review
  * Correct routes, dark mode via localStorage, proper login flow.

@@ -1,9 +1,9 @@
-import { useServiceWorker } from '@shared/hooks/useServiceWorker';
+import { useOffline } from '@shared/hooks/useOffline';
 import { AnimatePresence, motion } from 'framer-motion';
 import { WifiOff } from 'lucide-react';
 
 export const OfflineBanner = () => {
-  const { isOnline } = useServiceWorker();
+  const { isOnline } = useOffline();
 
   return (
     <AnimatePresence>

@@ -32,7 +32,7 @@ export function NewsSearch({ value, onChange, resultCount }: NewsSearchProps) {
         onChange={(e) => setLocalValue(e.target.value)}
         placeholder="Search articles..."
         aria-label="Search articles"
-        className="h-10 w-full rounded-xl border border-[var(--border-subtle)] bg-white pl-10 pr-20 text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/20 dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface)] dark:text-white dark:placeholder-[var(--text-secondary)] dark:focus:border-[var(--brand-primary)] dark:focus:ring-[var(--brand-primary)]/20"
+        className="h-10 w-full rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] pl-10 pr-20 text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/20 dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface)] dark:text-white dark:placeholder-[var(--text-secondary)] dark:focus:border-[var(--brand-primary)] dark:focus:ring-[var(--brand-primary)]/20"
       />
       <div className="absolute right-3 top-1/2 flex -translate-y-1/2 items-center gap-2">
         {localValue && (

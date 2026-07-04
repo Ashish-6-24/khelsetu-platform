@@ -41,12 +41,27 @@ export const LiveMatchClock = ({
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      setNow(Date.now());
-    }, 1000);
+    const startInterval = () => {
+      intervalRef.current = setInterval(() => {
+        setNow(Date.now());
+      }, 1000);
+    };
+
+    startInterval();
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+      } else {
+        setNow(Date.now());
+        startInterval();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
+      document.removeEventListener('visibilitychange', handleVisibility);
     };
   }, []);
 

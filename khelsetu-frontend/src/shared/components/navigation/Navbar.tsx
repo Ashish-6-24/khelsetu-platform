@@ -52,7 +52,7 @@ export const Navbar = () => {
               <AnchorLink
                 key={l.name}
                 href={l.href}
-                className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100/70 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/60 dark:hover:text-white"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-surface-sunken)]/70 hover:text-[var(--text-primary)] dark:text-[var(--text-secondary)] dark:hover:bg-[var(--bg-surface-sunken)]/60 dark:hover:text-[var(--text-primary)]"
               >
                 {l.name}
               </AnchorLink>
@@ -60,7 +60,7 @@ export const Navbar = () => {
               <Link
                 key={l.name}
                 to={l.href}
-                className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100/70 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/60 dark:hover:text-white"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-surface-sunken)]/70 hover:text-[var(--text-primary)] dark:text-[var(--text-secondary)] dark:hover:bg-[var(--bg-surface-sunken)]/60 dark:hover:text-[var(--text-primary)]"
               >
                 {l.name}
               </Link>
@@ -86,7 +86,7 @@ export const Navbar = () => {
         </div>
 
         <button
-          className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-slate-700 transition-colors hover:bg-slate-100 md:hidden dark:text-slate-200 dark:hover:bg-slate-800"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-[var(--text-primary)] transition-colors hover:bg-[var(--bg-surface-sunken)] md:hidden dark:text-[var(--text-primary)] dark:hover:bg-[var(--bg-surface-sunken)]"
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
@@ -110,7 +110,7 @@ export const Navbar = () => {
                     key={l.name}
                     href={l.href}
                     onClick={() => setOpen(false)}
-                    className="block rounded-lg px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                    className="block rounded-lg px-3 py-2 text-base font-medium text-[var(--text-primary)] hover:bg-[var(--bg-surface-sunken)] dark:text-[var(--text-primary)] dark:hover:bg-[var(--bg-surface-sunken)]"
                   >
                     {l.name}
                   </AnchorLink>
@@ -119,7 +119,7 @@ export const Navbar = () => {
                     key={l.name}
                     to={l.href}
                     onClick={() => setOpen(false)}
-                    className="block rounded-lg px-3 py-2 text-base font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                    className="block rounded-lg px-3 py-2 text-base font-medium text-[var(--text-primary)] hover:bg-[var(--bg-surface-sunken)] dark:text-[var(--text-primary)] dark:hover:bg-[var(--bg-surface-sunken)]"
                   >
                     {l.name}
                   </Link>

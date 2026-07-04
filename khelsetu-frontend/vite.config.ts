@@ -2,6 +2,7 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
 
 const src = path.resolve(__dirname, './src');
 
@@ -23,7 +24,40 @@ export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
 
   return {
-    plugins: [react(), tailwindcss()],
+    plugins: [
+      react(),
+      tailwindcss(),
+      VitePWA({
+        registerType: 'autoUpdate',
+        includeAssets: ['favicon.svg', 'icons/*.svg', 'icons/*.png'],
+        manifest: false,
+        workbox: {
+          globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+          runtimeCaching: [
+            {
+              urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'google-fonts-cache',
+                expiration: {
+                  maxEntries: 10,
+                  maxAgeSeconds: 60 * 60 * 24 * 365,
+                },
+              },
+            },
+            {
+              urlPattern: /\/api\/.*/i,
+              handler: 'NetworkFirst',
+              options: {
+                cacheName: 'api-cache',
+                networkTimeoutSeconds: 5,
+                expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 },
+              },
+            },
+          ],
+        },
+      }),
+    ],
     resolve: { alias: aliases },
     build: {
       rollupOptions: {
@@ -45,7 +79,8 @@ export default defineConfig(({ mode }) => {
               if (/\/react\//.test(id) || /\/react@/.test(id))
                 return 'vendor-react';
               if (id.includes('@tanstack/react-query')) return 'vendor-query';
-              if (id.includes('framer-motion')) return 'vendor-motion';
+              if (id.includes('framer-motion') || id.includes('motion'))
+                return 'vendor-motion';
               if (
                 id.includes('react-hook-form') ||
                 id.includes('@hookform/resolvers') ||
@@ -70,9 +105,9 @@ export default defineConfig(({ mode }) => {
           },
         },
       },
-      chunkSizeWarningLimit: 600,
+      chunkSizeWarningLimit: 800,
       minify: 'esbuild',
-      target: 'esnext',
+      target: ['es2022', 'chrome85', 'firefox79', 'safari15.4'],
       cssCodeSplit: true,
       sourcemap: !isProduction,
     },

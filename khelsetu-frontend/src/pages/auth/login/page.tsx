@@ -266,7 +266,7 @@ export const LoginPage = () => {
         </Link>
       </p>
 
-      <div className="mt-6 flex justify-center">
+      <div className="relative mt-6 flex items-center justify-between">
         <LanguageToggle size="sm" />
       </div>
     </div>

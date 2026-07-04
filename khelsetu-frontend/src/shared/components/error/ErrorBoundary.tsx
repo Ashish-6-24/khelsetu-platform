@@ -3,6 +3,15 @@ import { AlertTriangle, ArrowLeft, Home, RefreshCw } from 'lucide-react';
 
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 
+const isProd = import.meta.env.PROD;
+
+const sanitizeErrorMessage = (error: Error): string => {
+  if (isProd) {
+    return 'An unexpected error occurred. Please try refreshing the page.';
+  }
+  return error.message;
+};
+
 interface ErrorBoundaryProps {
   children: ReactNode;
   fallback?: ReactNode;
@@ -31,7 +40,9 @@ export class ErrorBoundary extends Component<
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     this.setState({ error, errorInfo });
     this.props.onError?.(error, errorInfo);
-    console.error('ErrorBoundary caught:', error, errorInfo);
+    if (!isProd) {
+      console.error('ErrorBoundary caught:', error, errorInfo);
+    }
   }
 
   handleReset = (): void => {
@@ -62,7 +73,7 @@ export class ErrorBoundary extends Component<
                   Error details
                 </summary>
                 <pre className="mt-2 text-xs text-red-600 dark:text-red-400 overflow-auto">
-                  {this.state.error.message}
+                  {sanitizeErrorMessage(this.state.error)}
                 </pre>
               </details>
             )}
@@ -76,7 +87,7 @@ export class ErrorBoundary extends Component<
               </button>
               <a
                 href={ROUTES.HOME}
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-400"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-[var(--brand-primary)] text-[var(--brand-primary-ink)] hover:bg-[var(--brand-primary-hover)]"
               >
                 <Home className="w-4 h-4" />
                 Go Home
@@ -115,7 +126,7 @@ export const ServerErrorPage = () => (
         </button>
         <a
           href={ROUTES.HOME}
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-400"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-[var(--brand-primary)] text-[var(--brand-primary-ink)] hover:bg-[var(--brand-primary-hover)]"
         >
           <ArrowLeft className="w-4 h-4" />
           Go Home
@@ -152,7 +163,7 @@ export const OfflinePage = () => (
       </p>
       <button
         onClick={() => window.location.reload()}
-        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-400"
+        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-[var(--brand-primary)] text-[var(--brand-primary-ink)] hover:bg-[var(--brand-primary-hover)]"
       >
         <RefreshCw className="w-4 h-4" />
         Retry Connection
@@ -181,7 +192,16 @@ export const CrashRecoveryPage = ({
       <div className="flex gap-3 justify-center">
         <button
           onClick={() => {
+            const keysToPreserve = ['auth_token', 'auth-storage', 'ui-storage'];
+            const preserved: Record<string, string> = {};
+            keysToPreserve.forEach((k) => {
+              const v = localStorage.getItem(k);
+              if (v !== null) preserved[k] = v;
+            });
             localStorage.clear();
+            Object.entries(preserved).forEach(([k, v]) =>
+              localStorage.setItem(k, v),
+            );
             window.location.reload();
           }}
           className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg border border-red-300 dark:border-red-600 text-red-700 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20"
@@ -190,7 +210,7 @@ export const CrashRecoveryPage = ({
         </button>
         <button
           onClick={onRecovery}
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-400"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-[var(--brand-primary)] text-[var(--brand-primary-ink)] hover:bg-[var(--brand-primary-hover)]"
         >
           Continue
         </button>

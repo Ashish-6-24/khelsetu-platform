@@ -94,19 +94,19 @@ export const sports: {
     name: 'Football',
     sport: 'football',
     count: '520+ tournaments',
-    accent: 'from-[#1E40AF] to-[#1E3A8A]',
+    accent: 'from-[var(--sport-football)] to-[var(--sport-football)]',
   },
   {
     name: 'Volleyball',
     sport: 'volleyball',
     count: '180+ tournaments',
-    accent: 'from-[#B45309] to-[#92400E]',
+    accent: 'from-[var(--sport-volleyball)] to-[var(--sport-volleyball)]',
   },
   {
     name: 'Basketball',
     sport: 'basketball',
     count: '210+ tournaments',
-    accent: 'from-[#C2410C] to-[#9A3412]',
+    accent: 'from-[var(--sport-basketball)] to-[var(--sport-basketball)]',
   },
 ];
 

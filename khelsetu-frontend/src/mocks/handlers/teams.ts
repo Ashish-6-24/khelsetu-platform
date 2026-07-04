@@ -9,18 +9,18 @@ const teams = [
 ];
 
 export const teamHandlers = [
-  http.get('/api/teams', () => {
+  http.get('/teams', () => {
     return HttpResponse.json({ data: teams, total: teams.length });
   }),
 
-  http.get('/api/teams/:id', ({ params }) => {
+  http.get('/teams/:id', ({ params }) => {
     const team = teams.find((t) => t.id === params.id);
     if (!team)
       return HttpResponse.json({ error: 'Not found' }, { status: 404 });
     return HttpResponse.json(team);
   }),
 
-  http.get('/api/teams/:id/players', ({ params }) => {
+  http.get('/teams/:id/players', ({ params }) => {
     return HttpResponse.json({
       data: [
         makePlayer({ teamId: params.id as string, name: 'Rohit Paudel' }),

@@ -3,6 +3,7 @@ import type {
   NotificationType,
 } from '@features/notifications/types';
 import { notificationUtils } from '@features/notifications/utils';
+import { useFocusTrap } from '@shared/hooks/useFocusTrap';
 import {
   Activity,
   Bell,
@@ -14,7 +15,7 @@ import {
   Trophy,
 } from 'lucide-react';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { NotificationItem } from './NotificationItem';
 
@@ -47,14 +48,33 @@ export const NotificationDropdown = ({
   onViewAll,
 }: NotificationDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useFocusTrap<HTMLDivElement>(isOpen);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const groupedNotifications = notificationUtils.groupByDate(
     notifications,
   ) as Record<string, Notification[]>;
 
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (!isOpen) return;
+      if (e.key === 'Escape') {
+        setIsOpen(false);
+        buttonRef.current?.focus();
+      }
+    },
+    [isOpen],
+  );
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
+
   return (
     <div className="relative">
       <button
+        ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         aria-label={`Notifications, ${unreadCount} unread`}
         aria-expanded={isOpen}
@@ -73,10 +93,14 @@ export const NotificationDropdown = ({
         <>
           <div
             className="fixed inset-0 z-40"
-            onClick={() => setIsOpen(false)}
+            onClick={() => {
+              setIsOpen(false);
+              buttonRef.current?.focus();
+            }}
             aria-hidden="true"
           />
           <div
+            ref={dropdownRef}
             role="dialog"
             aria-label="Notifications"
             className="absolute right-0 z-50 mt-2 w-96 max-w-[calc(100vw-2rem)] overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] shadow-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-canvas)]"

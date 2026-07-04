@@ -1,5 +1,7 @@
 import { clsx } from 'clsx';
 
+import { useState } from 'react';
+
 interface AvatarProps {
   src?: string;
   alt?: string;
@@ -63,6 +65,8 @@ export const Avatar = ({
   status,
   ring = false,
 }: AvatarProps) => {
+  const [imgError, setImgError] = useState(false);
+
   const initials =
     name
       ?.split(' ')
@@ -84,13 +88,14 @@ export const Avatar = ({
           sizeStyles[size],
         )}
       >
-        {src ? (
+        {src && !imgError ? (
           <img
             src={src}
             alt={alt || name || 'Avatar'}
             className="h-full w-full object-cover"
             loading="lazy"
             decoding="async"
+            onError={() => setImgError(true)}
           />
         ) : (
           <span className="select-none">{initials}</span>

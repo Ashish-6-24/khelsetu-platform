@@ -28,7 +28,7 @@ import {
   Users,
 } from 'lucide-react';
 
-import { Suspense } from 'react';
+import { Suspense, useMemo } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -83,6 +83,27 @@ export const DashboardPage = () => {
 
   const isLoading = loadingTournaments || loadingMatches;
 
+  const totalTournaments = useMemo(
+    () => tournaments?.length ?? 0,
+    [tournaments],
+  );
+  const liveMatches = useMemo(
+    () => matches?.filter((m) => m.status === 'live').length ?? 0,
+    [matches],
+  );
+  const totalTeams = useMemo(
+    () => tournaments?.reduce((sum, t) => sum + t.currentTeams, 0) ?? 0,
+    [tournaments],
+  );
+  const totalPlayers = useMemo(
+    () => tournaments?.reduce((sum, t) => sum + t.currentTeams * 12, 0) ?? 0,
+    [tournaments],
+  );
+  const upcomingMatches = useMemo(
+    () => matches?.filter((m) => m.status === 'scheduled').slice(0, 3) ?? [],
+    [matches],
+  );
+
   if (isLoading) {
     return (
       <div className="space-y-6">
@@ -102,15 +123,6 @@ export const DashboardPage = () => {
       </div>
     );
   }
-
-  const totalTournaments = tournaments?.length ?? 0;
-  const liveMatches = matches?.filter((m) => m.status === 'live').length ?? 0;
-  const totalTeams =
-    tournaments?.reduce((sum, t) => sum + t.currentTeams, 0) ?? 0;
-  const totalPlayers =
-    tournaments?.reduce((sum, t) => sum + t.currentTeams * 12, 0) ?? 0;
-  const upcomingMatches =
-    matches?.filter((m) => m.status === 'scheduled').slice(0, 3) ?? [];
 
   return (
     <div className="relative space-y-6">
@@ -267,6 +279,7 @@ export const DashboardPage = () => {
                 return (
                   <button
                     key={match.id}
+                    aria-label={`${match.teamA.name} vs ${match.teamB.name} - live match`}
                     onClick={() => navigate(`/scoring/${match.id}`)}
                     className="live-card spring-bounce relative group flex-shrink-0 w-72 snap-start rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-4 shadow-[var(--shadow-sm)] transition-all hover:shadow-[var(--shadow-md)] cursor-pointer overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-canvas)]"
                     style={{ animationDelay: `${idx * 150}ms` }}

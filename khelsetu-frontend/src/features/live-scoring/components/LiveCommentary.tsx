@@ -1,10 +1,14 @@
 import type { CricketBall } from '@shared/types/scoring';
 
+import { useMemo } from 'react';
+
 interface LiveCommentaryProps {
   balls: CricketBall[];
 }
 
 export const LiveCommentary = ({ balls }: LiveCommentaryProps) => {
+  const reversedBalls = useMemo(() => [...balls].reverse(), [balls]);
+
   if (balls.length === 0) {
     return (
       <div className="text-center py-8">
@@ -16,8 +20,13 @@ export const LiveCommentary = ({ balls }: LiveCommentaryProps) => {
   }
 
   return (
-    <div className="space-y-2 max-h-96 overflow-y-auto">
-      {[...balls].reverse().map((ball) => (
+    <div
+      className="space-y-2 max-h-96 overflow-y-auto"
+      role="log"
+      aria-live="polite"
+      aria-label="Live commentary"
+    >
+      {reversedBalls.map((ball) => (
         <div
           key={ball.id}
           className={`p-3 rounded-lg ${

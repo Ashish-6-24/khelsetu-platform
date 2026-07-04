@@ -39,10 +39,10 @@ export const OfflineSyncPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
           Offline Sync
         </h1>
-        <p className="text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-[var(--text-tertiary)] mt-1">
           Manage queued operations and sync status
         </p>
       </div>
@@ -67,7 +67,7 @@ export const OfflineSyncPage = () => {
               <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
                 {pendingCount}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              <p className="text-sm text-[var(--text-tertiary)] mt-1">
                 Pending
               </p>
             </div>
@@ -79,9 +79,7 @@ export const OfflineSyncPage = () => {
               <p className="text-3xl font-bold text-red-600 dark:text-red-400">
                 {failedCount}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                Failed
-              </p>
+              <p className="text-sm text-[var(--text-tertiary)] mt-1">Failed</p>
             </div>
           </CardBody>
         </Card>
@@ -91,9 +89,7 @@ export const OfflineSyncPage = () => {
               <p className="text-3xl font-bold text-green-600 dark:text-green-400">
                 {completedCount}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                Synced
-              </p>
+              <p className="text-sm text-[var(--text-tertiary)] mt-1">Synced</p>
             </div>
           </CardBody>
         </Card>
@@ -103,13 +99,13 @@ export const OfflineSyncPage = () => {
 
       <Card>
         <CardHeader>
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+          <h3 className="text-lg font-bold text-[var(--text-primary)]">
             Sync Queue ({filteredEntries.length})
           </h3>
         </CardHeader>
         <CardBody>
           {filteredEntries.length === 0 ? (
-            <p className="text-center text-gray-500 dark:text-gray-400 py-8">
+            <p className="text-center text-[var(--text-tertiary)] py-8">
               No entries in queue
             </p>
           ) : (
@@ -127,7 +123,7 @@ export const OfflineSyncPage = () => {
       </Card>
 
       {queue.lastSyncedAt && (
-        <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+        <p className="text-xs text-[var(--text-tertiary)] text-center">
           Last synced: {new Date(queue.lastSyncedAt).toLocaleString()}
         </p>
       )}

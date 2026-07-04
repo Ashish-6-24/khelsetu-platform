@@ -23,6 +23,7 @@ export const ViewTransitionLink = ({
   ...props
 }: ViewTransitionLinkProps) => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (e.defaultPrevented) return;
     if (
       typeof document !== 'undefined' &&
       'startViewTransition' in document &&

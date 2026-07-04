@@ -1,3 +1,4 @@
+import { useFocusTrap } from '@shared/hooks/useFocusTrap';
 import {
   ChevronLeft,
   ChevronRight,
@@ -32,16 +33,21 @@ export function LightboxViewer({
   onNext,
   onPrevious,
 }: LightboxViewerProps) {
-  const closeRef = useRef<HTMLButtonElement>(null);
+  const containerRef = useFocusTrap<HTMLDivElement>(isOpen);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      previouslyFocusedRef.current = document.activeElement as HTMLElement;
+      return () => {
+        previouslyFocusedRef.current?.focus();
+      };
+    }
+  }, [isOpen]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (!isOpen) return;
-      if (e.key === 'Tab') {
-        e.preventDefault();
-        closeRef.current?.focus();
-        return;
-      }
       switch (e.key) {
         case 'Escape':
           onClose();
@@ -59,9 +65,8 @@ export function LightboxViewer({
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
-    if (isOpen) closeRef.current?.focus();
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleKeyDown, isOpen]);
+  }, [handleKeyDown]);
 
   const handleFullscreen = async () => {
     if (document.fullscreenElement) {
@@ -93,13 +98,13 @@ export function LightboxViewer({
 
   return (
     <div
+      ref={containerRef}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-xl"
       role="dialog"
       aria-modal="true"
       aria-label={`Media viewer: ${item.title}`}
     >
       <button
-        ref={closeRef}
         onClick={onClose}
         aria-label="Close lightbox"
         className="absolute right-4 top-4 z-50 rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 min-h-[44px] min-w-[44px] flex items-center justify-center"
@@ -135,6 +140,7 @@ export function LightboxViewer({
           <video
             src={item.url}
             controls
+            aria-label={item.title}
             className="max-h-[70vh] max-w-full rounded-lg"
           />
         ) : (

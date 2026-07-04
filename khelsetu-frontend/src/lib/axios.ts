@@ -9,6 +9,12 @@ let failedQueue: Array<{
   reject: (reason?: unknown) => void;
 }> = [];
 
+let accessToken: string | null = null;
+
+export const setAccessToken = (token: string | null) => {
+  accessToken = token;
+};
+
 const processQueue = (error: unknown, token: string | null = null) => {
   failedQueue.forEach((prom) => {
     if (error) {
@@ -30,9 +36,8 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('auth_token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     logger.debug(`API Request: ${config.method?.toUpperCase()} ${config.url}`);
     return config;
@@ -80,7 +85,7 @@ axiosInstance.interceptors.response.use(
           const { authService } = await import('@features/auth/services/auth');
           const response = await authService.refreshToken();
           const newToken = response.tokens.accessToken;
-          localStorage.setItem('auth_token', newToken);
+          setAccessToken(newToken);
           processQueue(null, newToken);
 
           if (originalRequest.headers) {
@@ -89,7 +94,7 @@ axiosInstance.interceptors.response.use(
           return axiosInstance(originalRequest);
         } catch (refreshError) {
           processQueue(refreshError, null);
-          localStorage.removeItem('auth_token');
+          setAccessToken(null);
 
           const { useAuthStore } = await import('@store/authStore');
           useAuthStore.getState().logout();
@@ -126,9 +131,5 @@ export const api = {
   delete: <T>(url: string, config?: AxiosRequestConfig) =>
     axiosInstance.delete<T>(url, config),
 };
-
-if (import.meta.env.DEV) {
-  import('./mock-api').then(({ setupMockApi }) => setupMockApi(axiosInstance));
-}
 
 export { axiosInstance };

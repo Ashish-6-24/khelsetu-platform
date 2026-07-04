@@ -1,5 +1,8 @@
 import { useEffect, useRef } from 'react';
 
+const FOCUSABLE =
+  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export const useFocusTrap = <T extends HTMLElement = HTMLDivElement>(
   isActive: boolean,
 ): React.RefObject<T | null> => {
@@ -9,31 +12,34 @@ export const useFocusTrap = <T extends HTMLElement = HTMLDivElement>(
     if (!isActive || !ref.current) return;
 
     const element = ref.current;
-    const focusableElements = element.querySelectorAll<HTMLElement>(
-      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-    );
-    const firstElement = focusableElements[0];
-    const lastElement = focusableElements[focusableElements.length - 1];
 
-    firstElement?.focus();
+    const getFocusable = () =>
+      Array.from(element.querySelectorAll<HTMLElement>(FOCUSABLE));
+
+    const focusable = getFocusable();
+    focusable[0]?.focus();
 
     const handleKeyDown = (e: KeyboardEvent): void => {
       if (e.key !== 'Tab') return;
 
-      if (focusableElements.length === 0) {
+      const current = getFocusable();
+      if (current.length === 0) {
         e.preventDefault();
         return;
       }
 
+      const first = current[0];
+      const last = current[current.length - 1];
+
       if (e.shiftKey) {
-        if (document.activeElement === firstElement) {
+        if (document.activeElement === first) {
           e.preventDefault();
-          lastElement?.focus();
+          last?.focus();
         }
       } else {
-        if (document.activeElement === lastElement) {
+        if (document.activeElement === last) {
           e.preventDefault();
-          firstElement?.focus();
+          first?.focus();
         }
       }
     };

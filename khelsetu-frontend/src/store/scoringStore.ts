@@ -27,13 +27,18 @@ interface BasketballScoringState {
   score: BasketballScore | null;
 }
 
+const MAX_HISTORY = 50;
+
 interface ScoringState {
   activeMatchId: string | null;
   activeSport: SportType | null;
   isScoring: boolean;
   lastUpdate: string | null;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  history: Array<{ type: string; data?: any; snapshot: Partial<ScoringState> }>;
+  history: Array<{
+    type: string;
+    data?: CricketBall | FootballEvent | VolleyballEvent | BasketballEvent;
+    snapshot: Partial<ScoringState>;
+  }>;
   cricket: CricketScoringState;
   football: FootballScoringState;
   volleyball: VolleyballScoringState;
@@ -149,7 +154,7 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
           },
         },
         history: [
-          ...state.history,
+          ...state.history.slice(-(MAX_HISTORY - 1)),
           {
             type: 'cricket_ball',
             data: ball,
@@ -175,7 +180,7 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
           },
         },
         history: [
-          ...state.history,
+          ...state.history.slice(-(MAX_HISTORY - 1)),
           {
             type: 'football_event',
             data: event,
@@ -224,7 +229,7 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
           score: { ...state.volleyball.score, currentPoint: newPoint },
         },
         history: [
-          ...state.history,
+          ...state.history.slice(-(MAX_HISTORY - 1)),
           {
             type: 'volleyball_point',
             team,
@@ -265,7 +270,7 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
           },
         },
         history: [
-          ...state.history,
+          ...state.history.slice(-(MAX_HISTORY - 1)),
           {
             type: 'volleyball_set_end',
             winner,
@@ -308,7 +313,7 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
           },
         },
         history: [
-          ...state.history,
+          ...state.history.slice(-(MAX_HISTORY - 1)),
           {
             type: 'basketball_event',
             data: event,
@@ -344,7 +349,7 @@ export const useScoringStore = create<ScoringState & ScoringActions>((set) => ({
           },
         },
         history: [
-          ...state.history,
+          ...state.history.slice(-(MAX_HISTORY - 1)),
           {
             type: 'basketball_quarter_end',
             snapshot: { basketball: { score: state.basketball.score } },

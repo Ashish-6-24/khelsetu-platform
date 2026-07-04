@@ -153,12 +153,12 @@ export const AnalyticsPage = () => {
                 <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                   Live Now
                 </p>
-                <p className="text-3xl font-bold text-green-600 dark:text-green-400 mt-1">
+                <p className="text-3xl font-bold text-red-600 dark:text-red-400 mt-1">
                   {stats.liveTournaments}
                 </p>
               </div>
-              <div className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                <BarChart3 className="w-6 h-6 text-green-600 dark:text-green-400" />
+              <div className="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                <BarChart3 className="w-6 h-6 text-red-600 dark:text-red-400" />
               </div>
             </div>
           </CardBody>

@@ -1,5 +1,6 @@
 import { Button } from '@shared/components/ui/Button';
 import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
+import { Input } from '@shared/components/ui/Input';
 import { MessageCircle, Send, Users } from 'lucide-react';
 
 import { useState } from 'react';
@@ -84,11 +85,11 @@ export const CommunicationPage = () => {
                 ))}
               </div>
               <div className="flex gap-2 mt-4">
-                <input
+                <Input
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="Type a message..."
-                  className="flex-1 px-3 py-2 border rounded-lg dark:bg-[var(--bg-surface)] dark:border-[var(--border-subtle)]"
+                  className="flex-1"
                 />
                 <Button variant="primary">
                   <Send className="w-4 h-4" />

@@ -1,23 +1,34 @@
+import { axiosInstance } from '@lib/axios';
 import { logger } from '@lib/logger';
 import { storageService } from '@lib/storage';
 
 import { useCallback, useEffect, useState } from 'react';
 
+export interface OfflineQueueItem {
+  url: string;
+  method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+  data?: unknown;
+  headers?: Record<string, string>;
+}
+
 interface UseOfflineReturn {
   isOnline: boolean;
-  queue: unknown[];
-  addToQueue: (item: unknown) => void;
+  wasOffline: boolean;
+  queue: OfflineQueueItem[];
+  addToQueue: (item: OfflineQueueItem) => void;
   syncQueue: () => Promise<void>;
 }
 
 export const useOffline = (): UseOfflineReturn => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [queue, setQueue] = useState<unknown[]>(
+  const [wasOffline, setWasOffline] = useState(false);
+  const [queue, setQueue] = useState<OfflineQueueItem[]>(
     storageService.getOfflineQueue(),
   );
 
   useEffect(() => {
     const handleOnline = () => {
+      setWasOffline(true);
       setIsOnline(true);
       logger.info('Connection restored');
     };
@@ -36,7 +47,7 @@ export const useOffline = (): UseOfflineReturn => {
     };
   }, []);
 
-  const addToQueue = useCallback((item: unknown) => {
+  const addToQueue = useCallback((item: OfflineQueueItem) => {
     storageService.addToOfflineQueue(item);
     setQueue(storageService.getOfflineQueue());
   }, []);
@@ -52,7 +63,13 @@ export const useOffline = (): UseOfflineReturn => {
 
     for (const item of items) {
       try {
-        logger.debug('Synced item:', item);
+        await axiosInstance.request({
+          url: item.url,
+          method: item.method,
+          data: item.data,
+          headers: item.headers,
+        });
+        logger.debug('Synced item:', item.url);
       } catch (error) {
         logger.error('Failed to sync item:', error);
         storageService.addToOfflineQueue(item);
@@ -64,6 +81,7 @@ export const useOffline = (): UseOfflineReturn => {
 
   return {
     isOnline,
+    wasOffline,
     queue,
     addToQueue,
     syncQueue,

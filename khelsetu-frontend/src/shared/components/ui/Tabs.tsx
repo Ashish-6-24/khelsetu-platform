@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
 
-import { useCallback, useRef } from 'react';
+import { useCallback, useId, useRef } from 'react';
 
 interface TabsProps {
   tabs: { id: string; label: string; icon?: React.ReactNode; count?: number }[];
@@ -20,6 +20,7 @@ export const Tabs = ({
   variant = 'default',
   fullWidth = false,
 }: TabsProps) => {
+  const uniqueId = useId();
   const tabRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
 
   const handleKeyDown = useCallback(
@@ -61,7 +62,7 @@ export const Tabs = ({
       className={clsx(
         'inline-flex',
         variant === 'pills' &&
-          'rounded-xl bg-slate-100/80 p-1 dark:bg-slate-800/60',
+          'rounded-xl bg-[var(--bg-surface-sunken)]/80 p-1 dark:bg-[var(--bg-surface-sunken)]/60',
         variant === 'underline' && 'border-b border-[var(--border-subtle)]',
         className,
       )}
@@ -82,22 +83,22 @@ export const Tabs = ({
             onClick={() => onChange(tab.id)}
             className={clsx(
               'relative inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-colors duration-200',
-              'focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+              'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]',
               fullWidth && 'flex-1',
               variant === 'pills' && 'h-9 px-3.5',
               variant === 'default' && 'h-9 px-3.5',
               variant === 'underline' && 'h-10 px-3',
               variant === 'pills' && isActive
-                ? 'text-slate-900 dark:text-white'
+                ? 'text-[var(--text-primary)] dark:text-white'
                 : variant === 'pills'
-                  ? 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                  ? 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] dark:text-[var(--text-secondary)] dark:hover:text-white'
                   : variant === 'underline'
                     ? isActive
-                      ? 'text-blue-600 dark:text-blue-400'
-                      : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+                      ? 'text-[var(--brand-primary)] dark:text-[var(--brand-primary)]'
+                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] dark:text-[var(--text-secondary)] dark:hover:text-[var(--text-primary)]'
                     : isActive
-                      ? 'text-blue-700 dark:text-blue-300'
-                      : 'text-slate-600 hover:bg-slate-100/60 dark:text-slate-300 dark:hover:bg-slate-800/50',
+                      ? 'text-[var(--brand-primary)] dark:text-[var(--brand-primary)]'
+                      : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-sunken)]/60 dark:text-[var(--text-secondary)] dark:hover:bg-[var(--bg-surface-sunken)]/50',
             )}
           >
             {tab.icon}
@@ -107,8 +108,8 @@ export const Tabs = ({
                 className={clsx(
                   'ml-0.5 inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-semibold tabular-nums',
                   isActive
-                    ? 'bg-blue-600/10 text-blue-700 dark:bg-blue-400/20 dark:text-blue-300'
-                    : 'bg-slate-200/70 text-slate-600 dark:bg-slate-700/60 dark:text-slate-300',
+                    ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] dark:bg-[var(--brand-primary)]/20 dark:text-[var(--brand-primary)]'
+                    : 'bg-[var(--bg-surface-sunken)]/70 text-[var(--text-secondary)] dark:bg-[var(--bg-surface-sunken)]/60 dark:text-[var(--text-secondary)]',
                 )}
               >
                 {tab.count}
@@ -117,21 +118,21 @@ export const Tabs = ({
             {/* Animated underline / active indicator */}
             {isActive && variant === 'underline' && (
               <motion.div
-                layoutId="tab-underline"
-                className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-blue-600 dark:bg-blue-400"
+                layoutId={`${uniqueId}-tab-underline`}
+                className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-[var(--brand-primary)] dark:bg-[var(--brand-primary)]"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
             {isActive && variant === 'default' && (
               <motion.div
-                layoutId="tab-default-bg"
-                className="absolute inset-0 -z-10 rounded-lg bg-blue-50 dark:bg-blue-500/15"
+                layoutId={`${uniqueId}-tab-default-bg`}
+                className="absolute inset-0 -z-10 rounded-lg bg-[var(--brand-primary-soft)] dark:bg-[var(--brand-primary)]/15"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
             {isActive && variant === 'pills' && (
               <motion.div
-                layoutId="tab-pills-bg"
+                layoutId={`${uniqueId}-tab-pills-bg`}
                 className="absolute inset-0 -z-10 rounded-lg bg-white shadow-sm dark:bg-slate-900"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />

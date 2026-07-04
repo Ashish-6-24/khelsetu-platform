@@ -3,9 +3,74 @@ import { Card, CardBody } from '@shared/components/ui/Card';
 import { Input } from '@shared/components/ui/Input';
 import { Select } from '@shared/components/ui/Select';
 import type { TournamentFormat } from '@shared/types/tournament';
+import { formatCurrency } from '@shared/utils/formatting';
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
+
+interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  label?: string;
+  error?: string;
+}
+
+const Textarea = ({ label, error, id, className, ...props }: TextareaProps) => {
+  const textareaId = id || label?.toLowerCase().replace(/\s+/g, '-');
+
+  return (
+    <div className="w-full">
+      {label && (
+        <div className="mb-1.5">
+          <label
+            htmlFor={textareaId}
+            className="text-sm font-medium text-[var(--text-secondary)] dark:text-[var(--text-secondary)]"
+          >
+            {label}
+          </label>
+        </div>
+      )}
+      <textarea
+        id={textareaId}
+        className={clsx(
+          'block w-full rounded-xl border bg-[var(--bg-surface)] text-sm text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)]',
+          'px-3.5 py-2.5 transition-all duration-200 ease-out',
+          'border-[var(--border-subtle)] hover:border-[var(--border-strong)] hover:shadow-sm',
+          'focus:border-[var(--brand-primary)] focus:outline-none focus:ring-4 focus:ring-[var(--brand-primary)]/12 focus:shadow-md',
+          'dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface-sunken)] dark:text-white dark:placeholder:text-slate-500',
+          'dark:hover:border-[var(--border-strong)] dark:hover:shadow-sm dark:focus:border-[var(--brand-primary)] dark:focus:ring-[var(--brand-primary)]/15 dark:focus:shadow-md',
+          'disabled:cursor-not-allowed disabled:opacity-50 resize-none',
+          error &&
+            'border-red-400 focus:border-red-500 focus:ring-red-500/15 dark:border-red-500/60',
+          className,
+        )}
+        aria-invalid={error ? 'true' : 'false'}
+        aria-describedby={error ? `${textareaId}-error` : undefined}
+        {...props}
+      />
+      {error && (
+        <p
+          id={`${textareaId}-error`}
+          className="mt-1.5 text-sm text-red-600 dark:text-red-400"
+        >
+          {error}
+        </p>
+      )}
+    </div>
+  );
+};
+
+export interface TournamentFormData {
+  name: string;
+  description: string;
+  sport: string;
+  venue: string;
+  format: TournamentFormat | '';
+  maxTeams: number;
+  entryFee: number;
+  prizePool: number;
+  startDate: string;
+  endDate: string;
+  rules: string;
+}
 
 interface TournamentStep {
   id: number;
@@ -57,34 +122,36 @@ export const TournamentStepIndicator = ({
   completedSteps,
 }: StepIndicatorProps) => {
   return (
-    <div className="mb-8">
-      <div className="flex items-center justify-between">
+    <nav aria-label="Tournament setup steps" className="mb-8">
+      <ol className="flex items-center justify-between list-none">
         {TOURNAMENT_STEPS.map((step, index) => (
-          <div
+          <li
             key={step.id}
             className="flex items-center flex-1 last:flex-none"
+            aria-current={currentStep === step.id ? 'step' : undefined}
           >
             <div className="flex flex-col items-center">
               <div
                 className={clsx(
-                  'w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300',
+                  'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300',
                   completedSteps.includes(step.id)
-                    ? 'bg-green-500 text-white'
+                    ? 'bg-[var(--brand-primary)] text-white'
                     : currentStep === step.id
                       ? 'bg-blue-600 text-white ring-4 ring-blue-100 dark:ring-blue-900'
                       : 'bg-gray-200 dark:bg-[var(--bg-surface-raised)] text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]',
                 )}
+                aria-label={`Step ${index + 1}: ${step.title}${completedSteps.includes(step.id) ? ', completed' : currentStep === step.id ? ', current' : ''}`}
               >
                 {completedSteps.includes(step.id) ? (
-                  <Check className="w-5 h-5" />
+                  <Check className="w-5 h-5" aria-hidden="true" />
                 ) : (
                   <span className="text-sm font-semibold">{step.id}</span>
                 )}
               </div>
-              <div className="mt-2 text-center hidden sm:block">
+              <div className="mt-2 text-center">
                 <p
                   className={clsx(
-                    'text-xs font-medium',
+                    'text-[10px] sm:text-xs font-medium',
                     currentStep === step.id
                       ? 'text-blue-600 dark:text-blue-400'
                       : 'text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]',
@@ -99,25 +166,28 @@ export const TournamentStepIndicator = ({
                 className={clsx(
                   'flex-1 h-0.5 mx-2 sm:mx-4',
                   completedSteps.includes(step.id + 1)
-                    ? 'bg-green-500'
+                    ? 'bg-[var(--brand-primary)]'
                     : 'bg-gray-200 dark:bg-[var(--bg-surface-raised)]',
                 )}
               />
             )}
-          </div>
+          </li>
         ))}
-      </div>
-    </div>
+      </ol>
+    </nav>
   );
 };
 
 interface TournamentFormWizardProps {
-  formData: Record<string, unknown>;
-  errors: Record<string, string | undefined>;
+  formData: TournamentFormData;
+  errors: Partial<Record<keyof TournamentFormData, string>>;
   currentStep: number;
   isSubmitting: boolean;
   onStepChange: (step: number) => void;
-  onFieldChange: (field: string, value: unknown) => void;
+  onFieldChange: (
+    field: keyof TournamentFormData,
+    value: string | number,
+  ) => void;
   onSubmit: () => void;
   onBack: () => void;
 }
@@ -162,7 +232,7 @@ export const TournamentFormWizard = ({
             </h2>
             <Input
               label="Tournament Name"
-              value={(formData.name as string) ?? ''}
+              value={formData.name}
               onChange={(e) => onFieldChange('name', e.target.value)}
               placeholder="e.g., Summer Cricket League 2026"
               error={errors.name}
@@ -170,13 +240,13 @@ export const TournamentFormWizard = ({
             />
             <Input
               label="Description"
-              value={(formData.description as string) ?? ''}
+              value={formData.description}
               onChange={(e) => onFieldChange('description', e.target.value)}
               placeholder="Brief description of the tournament"
             />
             <Select
               label="Sport"
-              value={(formData.sport as string) ?? ''}
+              value={formData.sport}
               onChange={(value) => onFieldChange('sport', value)}
               options={sportOptions}
               error={errors.sport}
@@ -184,7 +254,7 @@ export const TournamentFormWizard = ({
             />
             <Input
               label="Venue"
-              value={(formData.venue as string) ?? ''}
+              value={formData.venue}
               onChange={(e) => onFieldChange('venue', e.target.value)}
               placeholder="e.g., City Stadium"
               error={errors.venue}
@@ -204,7 +274,7 @@ export const TournamentFormWizard = ({
             </h2>
             <Select
               label="Format"
-              value={(formData.format as string) ?? ''}
+              value={formData.format}
               onChange={(value) => onFieldChange('format', value)}
               options={formatOptions}
               error={errors.format}
@@ -213,7 +283,7 @@ export const TournamentFormWizard = ({
             <Input
               label="Maximum Teams"
               type="number"
-              value={(formData.maxTeams as number)?.toString() ?? ''}
+              value={formData.maxTeams?.toString() ?? ''}
               onChange={(e) =>
                 onFieldChange('maxTeams', parseInt(e.target.value, 10))
               }
@@ -225,7 +295,7 @@ export const TournamentFormWizard = ({
               <Input
                 label="Entry Fee (Optional)"
                 type="number"
-                value={(formData.entryFee as number)?.toString() ?? ''}
+                value={formData.entryFee?.toString() ?? ''}
                 onChange={(e) =>
                   onFieldChange('entryFee', parseFloat(e.target.value) || 0)
                 }
@@ -234,7 +304,7 @@ export const TournamentFormWizard = ({
               <Input
                 label="Prize Pool (Optional)"
                 type="number"
-                value={(formData.prizePool as number)?.toString() ?? ''}
+                value={formData.prizePool?.toString() ?? ''}
                 onChange={(e) =>
                   onFieldChange('prizePool', parseFloat(e.target.value) || 0)
                 }
@@ -257,7 +327,7 @@ export const TournamentFormWizard = ({
               <Input
                 label="Start Date"
                 type="date"
-                value={(formData.startDate as string) ?? ''}
+                value={formData.startDate}
                 onChange={(e) => onFieldChange('startDate', e.target.value)}
                 error={errors.startDate}
                 required
@@ -265,7 +335,7 @@ export const TournamentFormWizard = ({
               <Input
                 label="End Date"
                 type="date"
-                value={(formData.endDate as string) ?? ''}
+                value={formData.endDate}
                 onChange={(e) => onFieldChange('endDate', e.target.value)}
                 error={errors.endDate}
                 required
@@ -283,18 +353,13 @@ export const TournamentFormWizard = ({
             <h2 className="text-xl font-semibold text-[var(--text-primary)] dark:text-white">
               Rules & Regulations
             </h2>
-            <div>
-              <label className="block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-1">
-                Tournament Rules
-              </label>
-              <textarea
-                value={(formData.rules as string) ?? ''}
-                onChange={(e) => onFieldChange('rules', e.target.value)}
-                placeholder="Enter tournament rules and regulations..."
-                rows={6}
-                className="w-full px-3 py-2 border border-[var(--border-strong)] dark:border-[var(--border-strong)] rounded-xl bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] text-[var(--text-primary)] dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-              />
-            </div>
+            <Textarea
+              label="Tournament Rules"
+              value={formData.rules}
+              onChange={(e) => onFieldChange('rules', e.target.value)}
+              placeholder="Enter tournament rules and regulations..."
+              rows={6}
+            />
           </motion.div>
         );
       case 5:
@@ -315,7 +380,7 @@ export const TournamentFormWizard = ({
                       Tournament Name
                     </p>
                     <p className="font-medium text-[var(--text-primary)] dark:text-white">
-                      {(formData.name as string) || '—'}
+                      {formData.name || '—'}
                     </p>
                   </div>
                   <div>
@@ -323,7 +388,7 @@ export const TournamentFormWizard = ({
                       Sport
                     </p>
                     <p className="font-medium text-[var(--text-primary)] dark:text-white">
-                      {(formData.sport as string) || '—'}
+                      {formData.sport || '—'}
                     </p>
                   </div>
                   <div>
@@ -331,7 +396,7 @@ export const TournamentFormWizard = ({
                       Format
                     </p>
                     <p className="font-medium text-[var(--text-primary)] dark:text-white capitalize">
-                      {(formData.format as string) || '—'}
+                      {formData.format || '—'}
                     </p>
                   </div>
                   <div>
@@ -339,7 +404,7 @@ export const TournamentFormWizard = ({
                       Max Teams
                     </p>
                     <p className="font-medium text-[var(--text-primary)] dark:text-white">
-                      {(formData.maxTeams as number) || '—'}
+                      {formData.maxTeams || '—'}
                     </p>
                   </div>
                   <div>
@@ -347,7 +412,7 @@ export const TournamentFormWizard = ({
                       Start Date
                     </p>
                     <p className="font-medium text-[var(--text-primary)] dark:text-white">
-                      {(formData.startDate as string) || '—'}
+                      {formData.startDate || '—'}
                     </p>
                   </div>
                   <div>
@@ -355,7 +420,7 @@ export const TournamentFormWizard = ({
                       End Date
                     </p>
                     <p className="font-medium text-[var(--text-primary)] dark:text-white">
-                      {(formData.endDate as string) || '—'}
+                      {formData.endDate || '—'}
                     </p>
                   </div>
                   <div>
@@ -363,7 +428,7 @@ export const TournamentFormWizard = ({
                       Venue
                     </p>
                     <p className="font-medium text-[var(--text-primary)] dark:text-white">
-                      {(formData.venue as string) || '—'}
+                      {formData.venue || '—'}
                     </p>
                   </div>
                   <div>
@@ -372,18 +437,18 @@ export const TournamentFormWizard = ({
                     </p>
                     <p className="font-medium text-[var(--text-primary)] dark:text-white">
                       {formData.entryFee
-                        ? `$${formData.entryFee as number}`
+                        ? formatCurrency(formData.entryFee)
                         : 'Free'}
                     </p>
                   </div>
                 </div>
-                {(formData.rules as string) && (
+                {formData.rules && (
                   <div className="mt-4 pt-4 border-t border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
                     <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] text-sm">
                       Rules
                     </p>
                     <p className="text-sm text-[var(--text-primary)] dark:text-[var(--text-secondary)] mt-1 whitespace-pre-wrap">
-                      {String(formData.rules)}
+                      {formData.rules}
                     </p>
                   </div>
                 )}

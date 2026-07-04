@@ -44,7 +44,8 @@ export const EmptyState = ({
         compact ? 'gap-2 px-4 py-8' : 'gap-3 px-6 py-14',
         className,
       )}
-      role="status"
+      role="region"
+      aria-label={title}
     >
       {illustration ? (
         <div className="mb-1" aria-hidden>
@@ -55,14 +56,14 @@ export const EmptyState = ({
           aria-hidden
           className={clsx(
             'relative flex items-center justify-center rounded-2xl',
-            'bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-800/80 dark:to-slate-900',
+            'bg-gradient-to-br from-[var(--bg-surface)] to-[var(--bg-surface-raised)] dark:from-[var(--bg-surface-raised)]/80 dark:to-[var(--bg-surface-sunken)]',
             'ring-1 ring-[var(--border-subtle)] shadow-sm',
             compact ? 'h-12 w-12' : 'h-16 w-16',
           )}
         >
           <Icon
             className={clsx(
-              'text-slate-400 dark:text-slate-500',
+              'text-[var(--text-muted)] dark:text-[var(--text-muted)]',
               compact ? 'h-5 w-5' : 'h-7 w-7',
             )}
           />
@@ -74,11 +75,11 @@ export const EmptyState = ({
       )}
 
       <div className="max-w-sm">
-        <h3 className="text-base font-semibold tracking-tight text-slate-900 dark:text-white">
+        <h3 className="text-base font-semibold tracking-tight text-[var(--text-primary)] dark:text-white">
           {title}
         </h3>
         {description && (
-          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+          <p className="mt-1 text-sm text-[var(--text-secondary)] dark:text-[var(--text-muted)]">
             {description}
           </p>
         )}

@@ -1,6 +1,7 @@
 import { notificationService } from '@features/notifications/services';
 import { useNotificationStore } from '@features/notifications/store';
 import type { Notification } from '@features/notifications/types';
+import { useToast } from '@shared/components/ui/toast-context';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useNotifications = () => {
@@ -13,6 +14,7 @@ export const useNotifications = () => {
   } = useNotificationStore();
 
   const queryClient = useQueryClient();
+  const { addToast } = useToast();
 
   const { isLoading, error } = useQuery<Notification[]>({
     queryKey: ['notifications'],
@@ -25,6 +27,12 @@ export const useNotifications = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
     },
+    onError: () => {
+      addToast({
+        type: 'error',
+        message: 'Failed to mark notification as read',
+      });
+    },
   });
 
   const markAllAsReadMutation = useMutation({
@@ -32,12 +40,18 @@ export const useNotifications = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
     },
+    onError: () => {
+      addToast({ type: 'error', message: 'Failed to mark all as read' });
+    },
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => notificationService.deleteNotification(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
+    },
+    onError: () => {
+      addToast({ type: 'error', message: 'Failed to delete notification' });
     },
   });
 

@@ -229,13 +229,17 @@ const ContactForm = ({
     </div>
 
     <div className="mt-4">
-      <label className="mb-1.5 block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-primary)]">
+      <label
+        htmlFor="contact-message"
+        className="mb-1.5 block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-primary)]"
+      >
         Message
         <span className="ml-2 text-xs font-normal text-[var(--text-tertiary)]">
           {form.message.length} / 500
         </span>
       </label>
       <textarea
+        id="contact-message"
         value={form.message}
         onChange={(e) => setForm({ ...form, message: e.target.value })}
         rows={6}
@@ -265,6 +269,8 @@ const ContactForm = ({
           <button
             key={lang}
             type="button"
+            role="radio"
+            aria-checked={form.language === lang}
             onClick={() => setForm({ ...form, language: lang })}
             className={clsx(
               'h-8 rounded-full px-4 text-sm font-semibold transition-all',

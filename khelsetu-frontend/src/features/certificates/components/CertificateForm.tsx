@@ -40,10 +40,14 @@ export function CertificateForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label
+          htmlFor="cert-type"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
           Certificate Type
         </label>
         <select
+          id="cert-type"
           value={type}
           onChange={(e) => setType(e.target.value as CertificateType)}
           className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
@@ -57,10 +61,14 @@ export function CertificateForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label
+          htmlFor="cert-player"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
           Recipient Name
         </label>
         <input
+          id="cert-player"
           type="text"
           value={playerName}
           onChange={(e) => setPlayerName(e.target.value)}
@@ -71,10 +79,14 @@ export function CertificateForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label
+          htmlFor="cert-team"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
           Team Name
         </label>
         <input
+          id="cert-team"
           type="text"
           value={teamName}
           onChange={(e) => setTeamName(e.target.value)}
@@ -85,10 +97,14 @@ export function CertificateForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label
+          htmlFor="cert-tournament"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
           Tournament Name
         </label>
         <input
+          id="cert-tournament"
           type="text"
           value={tournamentName}
           onChange={(e) => setTournamentName(e.target.value)}
@@ -99,10 +115,14 @@ export function CertificateForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label
+          htmlFor="cert-date"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
           Date
         </label>
         <input
+          id="cert-date"
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
@@ -112,10 +132,14 @@ export function CertificateForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label
+          htmlFor="cert-organizer"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
           Organizer
         </label>
         <input
+          id="cert-organizer"
           type="text"
           value={organizer}
           onChange={(e) => setOrganizer(e.target.value)}

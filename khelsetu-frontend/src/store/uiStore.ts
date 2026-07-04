@@ -12,6 +12,7 @@ interface UIState {
   activeModal: string | null;
   notifications: UINotification[];
   isLoading: boolean;
+  isAuthContextActive: boolean;
 }
 
 interface UINotification {
@@ -24,7 +25,10 @@ interface UINotification {
 interface UIActions {
   setTheme: (theme: Theme) => void;
   forceLightMode: () => void;
+  forceDarkMode: () => void;
   allowDarkMode: () => void;
+  setAuthContext: (value: boolean) => void;
+  isAuthContext: () => boolean;
   toggleSidebar: () => void;
   setSidebarState: (state: SidebarState) => void;
   toggleMobileMenu: () => void;
@@ -37,18 +41,12 @@ interface UIActions {
   setLoading: (isLoading: boolean) => void;
 }
 
-let isAuthContext = false;
-
-const setAuthContext = (value: boolean) => {
-  isAuthContext = value;
-};
-
-const applyThemeToDOM = (theme: Theme) => {
+const applyThemeToDOM = (theme: Theme, isAuth = false) => {
   if (typeof document === 'undefined') return;
   const root = document.documentElement;
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const isDark =
-    isAuthContext && (theme === 'dark' || (theme === 'system' && prefersDark));
+    isAuth && (theme === 'dark' || (theme === 'system' && prefersDark));
   root.classList.toggle('dark', isDark);
   root.dataset.theme = theme;
 };
@@ -62,25 +60,39 @@ export const useUIStore = create<UIState & UIActions>()(
       activeModal: null,
       notifications: [],
       isLoading: false,
+      isAuthContextActive: false,
 
       setTheme: (theme) => {
-        applyThemeToDOM(theme);
-        localStorage.setItem(STORAGE_KEYS.THEME, theme);
+        applyThemeToDOM(theme, get().isAuthContextActive);
         set({ theme });
       },
 
+      setAuthContext: (value) => {
+        set({ isAuthContextActive: value });
+      },
+
+      isAuthContext: () => get().isAuthContextActive,
+
       forceLightMode: () => {
-        setAuthContext(false);
+        set({ isAuthContextActive: false });
         if (typeof document !== 'undefined') {
           document.documentElement.classList.remove('dark');
           document.documentElement.dataset.theme = 'light';
         }
       },
 
+      forceDarkMode: () => {
+        set({ isAuthContextActive: true });
+        if (typeof document !== 'undefined') {
+          document.documentElement.classList.add('dark');
+          document.documentElement.dataset.theme = 'dark';
+        }
+      },
+
       allowDarkMode: () => {
-        setAuthContext(true);
+        set({ isAuthContextActive: true });
         const { theme } = get();
-        applyThemeToDOM(theme);
+        applyThemeToDOM(theme, true);
       },
 
       toggleSidebar: () =>
@@ -130,10 +142,11 @@ export const useUIStore = create<UIState & UIActions>()(
         sidebarState: state.sidebarState,
       }),
       onRehydrateStorage: () => (state) => {
-        if (state?.theme) applyThemeToDOM(state.theme);
+        if (state?.theme)
+          applyThemeToDOM(state.theme, state.isAuthContextActive);
       },
     },
   ),
 );
 
-export { setAuthContext, applyThemeToDOM };
+export { applyThemeToDOM };

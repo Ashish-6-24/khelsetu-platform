@@ -1,10 +1,15 @@
 type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
+const isProd = import.meta.env.PROD;
+
 class Logger {
   private level: LogLevel;
   private prefix: string;
 
-  constructor(prefix = 'KhelSetu', level: LogLevel = 'debug') {
+  constructor(
+    prefix = 'KhelSetu',
+    level: LogLevel = isProd ? 'error' : 'debug',
+  ) {
     this.prefix = prefix;
     this.level = level;
   }

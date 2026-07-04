@@ -10,7 +10,7 @@ class WebSocketService {
   private listeners: Map<WebSocketEvent, Set<(data: unknown) => void>> =
     new Map();
 
-  connect(): Promise<void> {
+  connect(accessToken?: string): Promise<void> {
     return new Promise((resolve, reject) => {
       if (this.socket?.connected) {
         resolve();
@@ -19,8 +19,10 @@ class WebSocketService {
 
       this.socket = io(env.wsUrl, {
         transports: ['websocket', 'polling'],
+        auth: accessToken ? { token: accessToken } : undefined,
         reconnection: true,
         reconnectionDelay: 1000,
+        reconnectionDelayMax: 30000,
         reconnectionAttempts: this.maxReconnectAttempts,
         timeout: 10000,
       });
@@ -47,9 +49,28 @@ class WebSocketService {
       });
 
       this.socket.onAny((event: string, data: unknown) => {
-        this.emit(event as WebSocketEvent, data);
+        if (this.isValidEvent(event)) {
+          this.emit(event as WebSocketEvent, data);
+        }
       });
     });
+  }
+
+  private isValidEvent(event: string): boolean {
+    const knownEvents: WebSocketEvent[] = [
+      'connect',
+      'disconnect',
+      'score_update',
+      'match_start',
+      'match_end',
+      'tournament_update',
+      'standings_update',
+      'notification',
+      'user_join',
+      'user_leave',
+      'error',
+    ];
+    return (knownEvents as string[]).includes(event);
   }
 
   disconnect(): void {

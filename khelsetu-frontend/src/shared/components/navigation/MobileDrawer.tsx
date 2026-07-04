@@ -1,10 +1,11 @@
 import { Logo } from '@shared/components/ui/Logo';
+import { useFocusTrap } from '@shared/hooks/useFocusTrap';
 import { ROUTES } from '@shared/utils/constants';
 import { clsx } from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { Link, useLocation } from 'react-router-dom';
 
@@ -17,6 +18,8 @@ interface MobileDrawerProps {
 
 export const MobileDrawer = ({ open, onClose }: MobileDrawerProps) => {
   const location = useLocation();
+  const containerRef = useFocusTrap<HTMLDivElement>(open);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
   // Auto-close on route change
   useEffect(() => {
@@ -24,20 +27,30 @@ export const MobileDrawer = ({ open, onClose }: MobileDrawerProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
-  // Body scroll lock
+  // Body scroll lock + focus restoration + Escape key
   useEffect(() => {
     if (!open) return;
+    previouslyFocusedRef.current = document.activeElement as HTMLElement;
     const previous = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleEscape);
+
     return () => {
       document.body.style.overflow = previous;
+      document.removeEventListener('keydown', handleEscape);
+      previouslyFocusedRef.current?.focus();
     };
-  }, [open]);
+  }, [open, onClose]);
 
   return (
     <AnimatePresence>
       {open && (
         <div
+          ref={containerRef}
           className="fixed inset-0 z-50 lg:hidden"
           role="dialog"
           aria-modal="true"
