@@ -69,10 +69,10 @@ export const TournamentDetailPage = () => {
   if (!tournament) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
           Tournament Not Found
         </h1>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-[var(--text-secondary)]">
           The tournament you are looking for does not exist.
         </p>
       </div>
@@ -83,10 +83,10 @@ export const TournamentDetailPage = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">
             {tournament.name}
           </h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-[var(--text-tertiary)]">
             {tournament.sport} &middot; {tournament.format} &middot;{' '}
             <Badge variant={tournament.status === 'live' ? 'success' : 'info'}>
               {tournament.status}
@@ -112,31 +112,31 @@ export const TournamentDetailPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardBody>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Teams</p>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+            <p className="text-sm text-[var(--text-tertiary)]">Teams</p>
+            <p className="text-2xl font-bold text-[var(--text-primary)] mt-1">
               {teams?.length ?? tournament.currentTeams}
             </p>
           </CardBody>
         </Card>
         <Card>
           <CardBody>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Matches</p>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+            <p className="text-sm text-[var(--text-tertiary)]">Matches</p>
+            <p className="text-2xl font-bold text-[var(--text-primary)] mt-1">
               {matches?.length ?? 0}
             </p>
           </CardBody>
         </Card>
         <Card>
           <CardBody>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Live</p>
-            <p className="text-2xl font-bold text-green-600 dark:text-green-400 mt-1">
+            <p className="text-sm text-[var(--text-tertiary)]">Live</p>
+            <p className="text-2xl font-bold text-red-600 dark:text-red-400 mt-1">
               {matches?.filter((m) => m.status === 'live').length ?? 0}
             </p>
           </CardBody>
         </Card>
         <Card>
           <CardBody>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-[var(--text-tertiary)]">
               Completed
             </p>
             <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">
@@ -167,14 +167,14 @@ export const TournamentDetailPage = () => {
                 {matches.map((match) => (
                   <div
                     key={match.id}
-                    className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    className="flex items-center justify-between p-3 bg-[var(--bg-surface)] rounded-lg cursor-pointer hover:bg-[var(--bg-surface-raised)] transition-colors"
                     onClick={() => navigate(`/scoring/${match.id}`)}
                   >
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white">
+                      <p className="font-medium text-[var(--text-primary)]">
                         {match.teamA.name} vs {match.teamB.name}
                       </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-[var(--text-tertiary)]">
                         {match.venue}
                       </p>
                     </div>
@@ -194,7 +194,7 @@ export const TournamentDetailPage = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 dark:text-gray-400 text-center py-8">
+              <p className="text-[var(--text-tertiary)] text-center py-8">
                 No matches scheduled yet. Add matches to get the tournament
                 rolling.
               </p>
@@ -217,20 +217,20 @@ export const TournamentDetailPage = () => {
                 {teams.map((team) => (
                   <div
                     key={team.id}
-                    className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    className="p-3 bg-[var(--bg-surface)] rounded-lg cursor-pointer hover:bg-[var(--bg-surface-raised)] transition-colors"
                     onClick={() => navigate(`/teams/${team.id}`)}
                   >
-                    <p className="font-medium text-gray-900 dark:text-white">
+                    <p className="font-medium text-[var(--text-primary)]">
                       {team.name}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-sm text-[var(--text-tertiary)]">
                       {team.players.length} players
                     </p>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 dark:text-gray-400 text-center py-8">
+              <p className="text-[var(--text-tertiary)] text-center py-8">
                 No teams signed up yet. Register teams to compete.
               </p>
             )}

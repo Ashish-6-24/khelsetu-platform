@@ -3,6 +3,7 @@ import { teamService } from '@features/teams/services/team';
 import { Button } from '@shared/components/ui/Button';
 import { Input } from '@shared/components/ui/Input';
 import { Modal } from '@shared/components/ui/Modal';
+import { useToast } from '@shared/components/ui/toast-context';
 import { Skeleton } from '@shared/components/ui/Skeleton';
 import { Tabs } from '@shared/components/ui/Tabs';
 import type { Team } from '@shared/types/tournament';
@@ -22,6 +23,7 @@ const TABS = [
 export const TeamsPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { addToast } = useToast();
   const [activeTab, setActiveTab] = useState('all');
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [newTeamName, setNewTeamName] = useState('');
@@ -44,6 +46,9 @@ export const TeamsPage = () => {
       setShowCreateModal(false);
       setNewTeamName('');
       setNewTeamShortName('');
+    },
+    onError: () => {
+      addToast({ type: 'error', message: 'Failed to create team' });
     },
   });
 

@@ -11,7 +11,6 @@ import { useUIStore } from '@store/uiStore';
 import { useMutation } from '@tanstack/react-query';
 import { clsx } from 'clsx';
 import {
-  Loader2,
   Moon,
   Phone,
   Save,
@@ -21,7 +20,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const profileSchema = z.object({
   name: z
@@ -50,8 +49,6 @@ const passwordSchema = z
 
 type PasswordFormData = z.infer<typeof passwordSchema>;
 
-type SaveState = 'idle' | 'loading' | 'success';
-
 const SaveButton = ({
   isLoading,
   onSuccess,
@@ -61,37 +58,31 @@ const SaveButton = ({
   onSuccess?: () => void;
   label?: string;
 }) => {
-  const [state, setState] = useState<SaveState>('idle');
+  const [showSuccess, setShowSuccess] = useState(false);
+  const prevLoading = useRef(isLoading);
 
   useEffect(() => {
-    if (isLoading) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setState('loading');
-    } else if (state === 'loading') {
-      setState('success');
+    if (prevLoading.current && !isLoading) {
       onSuccess?.();
-      const timer = setTimeout(() => setState('idle'), 2000);
+      setShowSuccess(true);
+      const timer = setTimeout(() => setShowSuccess(false), 2000);
+      prevLoading.current = isLoading;
       return () => clearTimeout(timer);
     }
-  }, [isLoading, state, onSuccess]);
+    prevLoading.current = isLoading;
+  }, [isLoading, onSuccess]);
 
   return (
-    <button
+    <Button
       type="submit"
-      disabled={state === 'loading'}
+      variant="create"
+      disabled={isLoading}
+      isLoading={isLoading}
       className={clsx(
-        'btn-save shine relative inline-flex items-center justify-center gap-2',
-        'rounded-xl px-5 py-2.5 text-sm font-semibold',
-        'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-primary)]',
-        'dark:focus-visible:ring-[var(--brand-primary)] dark:focus-visible:ring-offset-slate-900',
-        'disabled:cursor-not-allowed disabled:opacity-50',
-        state === 'success'
-          ? 'btn-save-success text-white'
-          : 'bg-gradient-to-br from-[var(--color-danger)] via-[var(--brand-primary-hover)] to-[var(--brand-primary)] text-white shadow-[0_4px_14px_-2px_rgb(153_27_27/0.45)] hover:from-[var(--brand-primary-hover)] hover:via-[var(--brand-primary)] hover:to-[var(--brand-primary-active)] hover:shadow-[0_8px_28px_-4px_rgb(153_27_27/0.55)] hover:brightness-110',
+        showSuccess && 'btn-save-success',
       )}
     >
-      {state === 'loading' && <Loader2 className="h-4 w-4 animate-spin" />}
-      {state === 'success' && (
+      {showSuccess && (
         <svg
           className="h-4 w-4"
           viewBox="0 0 24 24"
@@ -104,9 +95,9 @@ const SaveButton = ({
           <polyline points="20 6 9 17 4 12" className="check-draw" />
         </svg>
       )}
-      {state === 'idle' && <Save className="h-4 w-4" />}
-      {state === 'loading' ? 'Saving…' : state === 'success' ? 'Saved' : label}
-    </button>
+      {!showSuccess && <Save className="h-4 w-4" />}
+      {isLoading ? 'Saving…' : showSuccess ? 'Saved' : label}
+    </Button>
   );
 };
 
@@ -154,7 +145,11 @@ export const SettingsPage = () => {
   });
 
   const updatePasswordMutation = useMutation({
-    mutationFn: (_data: PasswordFormData) => Promise.resolve(),
+    mutationFn: (_data: PasswordFormData) => {
+      // TODO: implement when backend password change endpoint is available
+      addToast({ type: 'warning', message: 'Password change is not yet connected to the backend.' });
+      return Promise.resolve();
+    },
     onSuccess: () => {
       addToast({ type: 'success', message: 'Password updated successfully' });
       resetPassword();

@@ -5,6 +5,7 @@ import {
 } from '@features/billing/components';
 import { useBilling } from '@features/billing/hooks';
 import { Card, CardBody } from '@shared/components/ui/Card';
+import { Skeleton } from '@shared/components/ui/Skeleton';
 import { Tabs } from '@shared/components/ui/Tabs';
 
 import { useState } from 'react';
@@ -58,15 +59,12 @@ export const BillingPage = () => {
           {[1, 2, 3].map((i) => (
             <Card key={i}>
               <CardBody>
-                <div className="animate-pulse space-y-4">
-                  <div className="h-4 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded w-24" />
-                  <div className="h-8 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded w-32" />
+                <div className="space-y-4">
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-8 w-32" />
                   <div className="space-y-2">
                     {[1, 2, 3].map((j) => (
-                      <div
-                        key={j}
-                        className="h-3 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded"
-                      />
+                      <Skeleton key={j} className="h-3 w-full" />
                     ))}
                   </div>
                 </div>

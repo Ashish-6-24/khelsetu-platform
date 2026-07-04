@@ -7,6 +7,7 @@ import { Input } from '@shared/components/ui/Input';
 import { Modal } from '@shared/components/ui/Modal';
 import { Skeleton } from '@shared/components/ui/Skeleton';
 import { Tabs } from '@shared/components/ui/Tabs';
+import { useToast } from '@shared/components/ui/toast-context';
 import type { Player, Team } from '@shared/types/tournament';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
@@ -24,6 +25,7 @@ const TABS = [
 export const TeamDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
+  const { addToast } = useToast();
   const [activeTab, setActiveTab] = useState('roster');
   const [showAddPlayerModal, setShowAddPlayerModal] = useState(false);
   const [newPlayerName, setNewPlayerName] = useState('');
@@ -61,12 +63,18 @@ export const TeamDetailPage = () => {
       setNewPlayerJersey('');
       setNewPlayerPosition('');
     },
+    onError: () => {
+      addToast({ type: 'error', message: 'Failed to add player' });
+    },
   });
 
   const removePlayer = useMutation({
     mutationFn: (playerId: string) => playerService.delete(playerId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['team-players', id] });
+    },
+    onError: () => {
+      addToast({ type: 'error', message: 'Failed to remove player' });
     },
   });
 

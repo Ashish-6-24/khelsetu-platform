@@ -48,10 +48,10 @@ export const PlayerDetailPage = () => {
   if (!player) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
           Player Not Found
         </h1>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-[var(--text-secondary)]">
           The player you are looking for does not exist.
         </p>
         <Button onClick={() => navigate('/players')}>Back to Players</Button>
@@ -68,20 +68,20 @@ export const PlayerDetailPage = () => {
             Back
           </Button>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-2xl font-bold text-[var(--text-primary)]">
               {player.name}
             </h1>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-sm text-[var(--text-tertiary)]">
               {player.position && (
                 <Badge variant="info">{player.position}</Badge>
               )}
               {player.jerseyNumber && (
-                <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">
+                <span className="ml-2 text-sm text-[var(--text-tertiary)]">
                   #{player.jerseyNumber}
                 </span>
               )}
               {team && (
-                <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">
+                <span className="ml-2 text-sm text-[var(--text-tertiary)]">
                   · {team.name}
                 </span>
               )}
@@ -100,8 +100,8 @@ export const PlayerDetailPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardBody>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Matches</p>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+            <p className="text-sm text-[var(--text-tertiary)]">Matches</p>
+            <p className="text-2xl font-bold text-[var(--text-primary)] mt-1">
               {player.stats.matches}
             </p>
           </CardBody>
@@ -109,8 +109,8 @@ export const PlayerDetailPage = () => {
         {player.stats.runs !== undefined && (
           <Card>
             <CardBody>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Runs</p>
-              <p className="text-2xl font-bold text-green-600 dark:text-green-400 mt-1">
+              <p className="text-sm text-[var(--text-tertiary)]">Runs</p>
+              <p className="text-2xl font-bold text-[var(--color-success)] mt-1">
                 {player.stats.runs}
               </p>
             </CardBody>
@@ -119,7 +119,7 @@ export const PlayerDetailPage = () => {
         {player.stats.wickets !== undefined && (
           <Card>
             <CardBody>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-[var(--text-tertiary)]">
                 Wickets
               </p>
               <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">
@@ -131,7 +131,7 @@ export const PlayerDetailPage = () => {
         {player.stats.goals !== undefined && (
           <Card>
             <CardBody>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Goals</p>
+              <p className="text-sm text-[var(--text-tertiary)]">Goals</p>
               <p className="text-2xl font-bold text-orange-600 dark:text-orange-400 mt-1">
                 {player.stats.goals}
               </p>
@@ -141,7 +141,7 @@ export const PlayerDetailPage = () => {
         {player.stats.assists !== undefined && (
           <Card>
             <CardBody>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-[var(--text-tertiary)]">
                 Assists
               </p>
               <p className="text-2xl font-bold text-purple-600 dark:text-purple-400 mt-1">
@@ -168,16 +168,16 @@ export const PlayerDetailPage = () => {
                   {player.name.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                  <h2 className="text-xl font-bold text-[var(--text-primary)]">
                     {player.name}
                   </h2>
                   {player.position && (
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-sm text-[var(--text-tertiary)]">
                       {player.position}
                     </p>
                   )}
                   {team && (
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-sm text-[var(--text-tertiary)]">
                       Team: {team.name}
                     </p>
                   )}
@@ -185,17 +185,17 @@ export const PlayerDetailPage = () => {
               </div>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="text-gray-500 dark:text-gray-400">Player ID</p>
-                  <p className="font-medium text-gray-900 dark:text-white">
+                  <p className="text-[var(--text-tertiary)]">Player ID</p>
+                  <p className="font-medium text-[var(--text-primary)]">
                     {player.id}
                   </p>
                 </div>
                 {player.jerseyNumber && (
                   <div>
-                    <p className="text-gray-500 dark:text-gray-400">
+                    <p className="text-[var(--text-tertiary)]">
                       Jersey Number
                     </p>
-                    <p className="font-medium text-gray-900 dark:text-white">
+                    <p className="font-medium text-[var(--text-primary)]">
                       #{player.jerseyNumber}
                     </p>
                   </div>
@@ -210,25 +210,25 @@ export const PlayerDetailPage = () => {
         <Card>
           <CardBody>
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+              <h3 className="text-lg font-semibold text-[var(--text-primary)] flex items-center gap-2">
                 <Trophy className="w-5 h-5" />
                 Career Statistics
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 text-center">
-                  <p className="text-3xl font-bold text-gray-900 dark:text-white">
+                <div className="bg-[var(--bg-surface)] rounded-lg p-4 text-center">
+                  <p className="text-3xl font-bold text-[var(--text-primary)]">
                     {player.stats.matches}
                   </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                  <p className="text-sm text-[var(--text-tertiary)] mt-1">
                     Matches
                   </p>
                 </div>
                 {player.stats.runs !== undefined && (
-                  <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 text-center">
-                    <p className="text-3xl font-bold text-green-600 dark:text-green-400">
+                  <div className="bg-[var(--color-success)]/10 rounded-lg p-4 text-center">
+                    <p className="text-3xl font-bold text-[var(--color-success)]">
                       {player.stats.runs}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    <p className="text-sm text-[var(--text-tertiary)] mt-1">
                       Runs
                     </p>
                   </div>
@@ -238,7 +238,7 @@ export const PlayerDetailPage = () => {
                     <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">
                       {player.stats.wickets}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    <p className="text-sm text-[var(--text-tertiary)] mt-1">
                       Wickets
                     </p>
                   </div>
@@ -248,7 +248,7 @@ export const PlayerDetailPage = () => {
                     <p className="text-3xl font-bold text-orange-600 dark:text-orange-400">
                       {player.stats.goals}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    <p className="text-sm text-[var(--text-tertiary)] mt-1">
                       Goals
                     </p>
                   </div>
@@ -258,7 +258,7 @@ export const PlayerDetailPage = () => {
                     <p className="text-3xl font-bold text-purple-600 dark:text-purple-400">
                       {player.stats.assists}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    <p className="text-sm text-[var(--text-tertiary)] mt-1">
                       Assists
                     </p>
                   </div>

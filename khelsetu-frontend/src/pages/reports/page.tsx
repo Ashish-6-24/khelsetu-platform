@@ -1,6 +1,7 @@
 import { ReportCard, ReportGenerator } from '@features/reports/components';
 import { useReports } from '@features/reports/hooks';
 import type { ExportFormat, ReportType } from '@features/reports/types';
+import { Skeleton } from '@shared/components/ui/Skeleton';
 
 export const ReportsPage = () => {
   const {
@@ -41,10 +42,7 @@ export const ReportsPage = () => {
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[1, 2].map((i) => (
-            <div
-              key={i}
-              className="animate-pulse h-48 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded-2xl"
-            />
+            <Skeleton key={i} className="h-48 rounded-2xl" />
           ))}
         </div>
       ) : reports.length === 0 ? (
