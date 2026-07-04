@@ -81,37 +81,37 @@ export const Tabs = ({
             aria-controls={`tabpanel-${tab.id}`}
             tabIndex={isActive ? 0 : -1}
             onClick={() => onChange(tab.id)}
-              className={clsx(
-                'relative inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-colors duration-200',
-                'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]',
-                fullWidth && 'flex-1',
-                variant === 'pills' && 'h-9 px-3.5',
-                variant === 'default' && 'h-9 px-3.5',
-                variant === 'underline' && 'h-10 px-3',
-                variant === 'pills' && isActive
-                  ? 'text-[var(--text-primary)] dark:text-white'
-                  : variant === 'pills'
-                    ? 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] dark:text-[var(--text-secondary)] dark:hover:text-white'
-                    : variant === 'underline'
-                      ? isActive
-                        ? 'text-[var(--brand-primary)] dark:text-[var(--brand-primary)]'
-                        : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] dark:text-[var(--text-secondary)] dark:hover:text-[var(--text-primary)]'
-                      : isActive
-                        ? 'text-[var(--brand-primary)] dark:text-[var(--brand-primary)]'
-                        : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-sunken)]/60 dark:text-[var(--text-secondary)] dark:hover:bg-[var(--bg-surface-sunken)]/50',
-              )}
+            className={clsx(
+              'relative inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-colors duration-200',
+              'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]',
+              fullWidth && 'flex-1',
+              variant === 'pills' && 'h-9 px-3.5',
+              variant === 'default' && 'h-9 px-3.5',
+              variant === 'underline' && 'h-10 px-3',
+              variant === 'pills' && isActive
+                ? 'text-[var(--text-primary)] dark:text-white'
+                : variant === 'pills'
+                  ? 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] dark:text-[var(--text-secondary)] dark:hover:text-white'
+                  : variant === 'underline'
+                    ? isActive
+                      ? 'text-[var(--brand-primary)] dark:text-[var(--brand-primary)]'
+                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] dark:text-[var(--text-secondary)] dark:hover:text-[var(--text-primary)]'
+                    : isActive
+                      ? 'text-[var(--brand-primary)] dark:text-[var(--brand-primary)]'
+                      : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-sunken)]/60 dark:text-[var(--text-secondary)] dark:hover:bg-[var(--bg-surface-sunken)]/50',
+            )}
           >
             {tab.icon}
             <span>{tab.label}</span>
-              {tab.count !== undefined && (
-                <span
-                  className={clsx(
-                    'ml-0.5 inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-semibold tabular-nums',
-                    isActive
-                      ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] dark:bg-[var(--brand-primary)]/20 dark:text-[var(--brand-primary)]'
-                      : 'bg-[var(--bg-surface-sunken)]/70 text-[var(--text-secondary)] dark:bg-[var(--bg-surface-sunken)]/60 dark:text-[var(--text-secondary)]',
-                  )}
-                >
+            {tab.count !== undefined && (
+              <span
+                className={clsx(
+                  'ml-0.5 inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-semibold tabular-nums',
+                  isActive
+                    ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] dark:bg-[var(--brand-primary)]/20 dark:text-[var(--brand-primary)]'
+                    : 'bg-[var(--bg-surface-sunken)]/70 text-[var(--text-secondary)] dark:bg-[var(--bg-surface-sunken)]/60 dark:text-[var(--text-secondary)]',
+                )}
+              >
                 {tab.count}
               </span>
             )}
