@@ -26,7 +26,7 @@ export const MomentumChart = ({
   const svgPath = useMemo(() => {
     if (data.length === 0) return '';
 
-    const maxOver = Math.max(...data.map((d) => d.over), 1);
+    const maxOver = data.reduce((max, d) => Math.max(max, d.over), 1);
     const width = 400;
     const padding = 2;
 
@@ -59,7 +59,7 @@ export const MomentumChart = ({
     if (!svgPath) return '';
     const lastPoint = data[data.length - 1];
     if (!lastPoint) return svgPath;
-    const maxOver = Math.max(...data.map((d) => d.over), 1);
+    const maxOver = data.reduce((max, d) => Math.max(max, d.over), 1);
     const width = 400;
     const padding = 2;
     const endX = padding + (lastPoint.over / maxOver) * (width - padding * 2);
@@ -148,7 +148,7 @@ export const MomentumChart = ({
         {/* Current position dot — pulsing glow */}
         {data.length > 0 &&
           (() => {
-            const maxOver = Math.max(...data.map((d) => d.over), 1);
+            const maxOver = data.reduce((max, d) => Math.max(max, d.over), 1);
             const padding = 2;
             const lastPt = data[data.length - 1];
             if (!lastPt) return null;
