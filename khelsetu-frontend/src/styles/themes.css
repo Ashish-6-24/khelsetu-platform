@@ -100,6 +100,14 @@
   --radius-xl: 16px;
   --radius-2xl: 24px;
 
+  /* Motion */
+  --motion-instant: 100ms;
+  --motion-fast: 180ms;
+  --motion-base: 240ms;
+  --motion-slow: 400ms;
+  --motion-page: 500ms;
+  --motion-stagger: 60ms;
+
   /* Legacy aliases (kept for components still using old names) */
   --color-primary: var(--brand-primary);
   --color-primary-dark: var(--brand-primary-hover);

@@ -36,7 +36,7 @@ const variantStyles: Record<BadgeVariant, string> = {
     'bg-[var(--color-danger-soft)] text-[var(--color-danger)] ring-1 ring-inset ring-[var(--color-danger)]/20',
   info: 'bg-[var(--color-info-soft)] text-[var(--color-info)] ring-1 ring-inset ring-[var(--color-info)]/20',
   // AA-safe live badge: deep maroon-red bg + white text + warm glow ring
-  live: 'bg-[var(--color-live)] text-white shadow-[0_0_0_3px_rgb(220_38_38/0.18),0_2px_8px_-2px_rgb(220_38_38/0.45)] /* live shadow */',
+  live: 'bg-[var(--color-live)] text-white shadow-[0_0_0_3px_rgb(220_38_38/0.18),0_2px_8px_-2px_rgb(220_38_38/0.45)]',
   // Gold = premium tier, awards, verified
   gold: 'bg-gradient-to-r from-[var(--brand-accent)] via-[var(--brand-accent-hover)] to-[var(--brand-accent)] text-[var(--brand-primary-ink)] shadow-sm ring-1 ring-inset ring-[var(--brand-accent-hover)]/30',
   // Brand = primary callout, maroon

@@ -49,7 +49,7 @@ export const Hero = () => (
         </div>
 
         <h1
-          className="animate-fade-in-up mt-6 text-balance font-display text-4xl font-medium -tracking-[0.02em] text-[var(--text-primary)] sm:text-6xl lg:text-7xl dark:text-white gradient-shimmer-text"
+          className="animate-fade-in-up mt-6 text-balance font-display text-4xl font-medium -tracking-[0.02em] text-[var(--text-primary)] sm:text-6xl lg:text-7xl dark:text-white"
           style={{ animationDelay: '60ms' }}
         >
           Run your local tournament{' '}

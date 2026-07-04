@@ -122,7 +122,7 @@ export const ScoreTicker = ({
   const [flash, setFlash] = useState<{ id: string; side: 'A' | 'B' } | null>(
     null,
   );
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Simulate live score updates every 4-8 seconds
   useEffect(() => {
@@ -157,15 +157,18 @@ export const ScoreTicker = ({
       });
     };
 
-    // Random interval between 4-8 seconds
+    // Random interval between 4-8 seconds using setTimeout chain
     const scheduleNext = () => {
       const delay = 4000 + Math.random() * 4000;
-      intervalRef.current = setInterval(tick, delay);
+      intervalRef.current = setTimeout(() => {
+        tick();
+        scheduleNext();
+      }, delay);
     };
 
     scheduleNext();
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (intervalRef.current) clearTimeout(intervalRef.current);
     };
   }, []);
 

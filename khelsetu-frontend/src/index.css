@@ -1027,6 +1027,15 @@
   animation: shimmer-text-sweep 3s ease-in-out infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .gradient-shimmer-text {
+    animation: none;
+    background-image: none;
+    -webkit-text-fill-color: initial;
+    color: var(--text-primary);
+  }
+}
+
 /* Digit flip keyframe */
 @keyframes digit-flip-in {
   0% {
