@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AlertTriangle, CheckCircle2, Info, X, XCircle } from 'lucide-react';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { ToastType } from './ToastType';
 import { type Toast, ToastContext } from './toast-context';
@@ -204,6 +204,15 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
+  const timeoutsRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+
+  useEffect(() => {
+    return () => {
+      for (const t of timeoutsRef.current.values()) clearTimeout(t);
+      timeoutsRef.current.clear();
+    };
+  }, []);
+
   const addToast = useCallback(
     (toast: Omit<Toast, 'id'>) => {
       const id =
@@ -213,7 +222,11 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
       setToasts((prev) => [...prev, { ...toast, id }]);
       if (toast.duration !== 0) {
         const ms = toast.duration ?? 5000;
-        setTimeout(() => removeToast(id), ms);
+        const timeout = setTimeout(() => {
+          timeoutsRef.current.delete(id);
+          removeToast(id);
+        }, ms);
+        timeoutsRef.current.set(id, timeout);
       }
     },
     [removeToast],
