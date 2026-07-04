@@ -4,6 +4,7 @@ export { StandingRow } from './StandingRow';
 export {
   TournamentFormWizard,
   TournamentStepIndicator,
+  type TournamentFormData,
 } from './TournamentFormWizard';
 export {
   BracketVisualizer,

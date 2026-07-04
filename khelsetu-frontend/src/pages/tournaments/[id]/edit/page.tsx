@@ -1,4 +1,4 @@
-import { TournamentFormWizard } from '@features/tournaments/components';
+import { TournamentFormWizard, type TournamentFormData } from '@features/tournaments/components';
 import { tournamentService } from '@features/tournaments/services/tournament';
 import type { Tournament } from '@shared/types/tournament';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -8,7 +8,6 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 interface FormErrors {
-  [key: string]: string | undefined;
   name?: string;
   sport?: string;
   venue?: string;
@@ -31,7 +30,7 @@ export const TournamentEditPage = () => {
     enabled: !!id,
   });
 
-  const [formData, setFormData] = useState<Record<string, unknown>>({
+  const [formData, setFormData] = useState<TournamentFormData>({
     name: tournament?.name ?? '',
     description: tournament?.description ?? '',
     sport: tournament?.sport ?? '',
@@ -46,8 +45,11 @@ export const TournamentEditPage = () => {
   });
 
   const updateTournament = useMutation({
-    mutationFn: (data: Record<string, unknown>) =>
-      tournamentService.update(id!, data as Partial<Tournament>),
+    mutationFn: (data: TournamentFormData) =>
+      tournamentService.update(id!, {
+        ...data,
+        format: data.format || undefined,
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tournament', id] });
       queryClient.invalidateQueries({ queryKey: ['tournaments'] });
@@ -60,12 +62,12 @@ export const TournamentEditPage = () => {
 
     switch (step) {
       case 1:
-        if (!formData.name || (formData.name as string).trim() === '') {
+        if (!formData.name || formData.name.trim() === '') {
           newErrors.name = 'Tournament name is required';
         }
         break;
       case 2:
-        if (!formData.maxTeams || (formData.maxTeams as number) < 2) {
+        if (!formData.maxTeams || formData.maxTeams < 2) {
           newErrors.maxTeams = 'Minimum 2 teams required';
         }
         break;
@@ -73,8 +75,7 @@ export const TournamentEditPage = () => {
         if (
           formData.startDate &&
           formData.endDate &&
-          new Date(formData.endDate as string) <
-            new Date(formData.startDate as string)
+          new Date(formData.endDate) < new Date(formData.startDate)
         ) {
           newErrors.endDate = 'End date must be after start date';
         }
@@ -92,7 +93,7 @@ export const TournamentEditPage = () => {
   };
 
   const handleFieldChange = (field: string, value: unknown) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value as never }));
     if (errors[field as keyof FormErrors]) {
       setErrors((prev) => ({ ...prev, [field]: undefined }));
     }

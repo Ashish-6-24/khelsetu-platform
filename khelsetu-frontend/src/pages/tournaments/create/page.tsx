@@ -1,5 +1,6 @@
-import { TournamentFormWizard } from '@features/tournaments/components';
+import { TournamentFormWizard, type TournamentFormData } from '@features/tournaments/components';
 import { tournamentService } from '@features/tournaments/services/tournament';
+import type { TournamentFormat } from '@shared/types/tournament';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { useState } from 'react';
@@ -7,7 +8,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface FormErrors {
-  [key: string]: string | undefined;
   name?: string;
   sport?: string;
   venue?: string;
@@ -21,7 +21,7 @@ export const TournamentCreatePage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState<Record<string, unknown>>({
+  const [formData, setFormData] = useState<TournamentFormData>({
     name: '',
     description: '',
     sport: '',
@@ -37,8 +37,20 @@ export const TournamentCreatePage = () => {
   const [errors, setErrors] = useState<FormErrors>({});
 
   const createTournament = useMutation({
-    mutationFn: (data: Record<string, unknown>) =>
-      tournamentService.create(data as never),
+    mutationFn: (data: TournamentFormData) =>
+      tournamentService.create({
+        name: data.name,
+        description: data.description,
+        sport: data.sport,
+        format: data.format as TournamentFormat,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        venue: data.venue,
+        maxTeams: data.maxTeams,
+        entryFee: data.entryFee,
+        prizePool: data.prizePool,
+        rules: data.rules,
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tournaments'] });
       navigate('/tournaments');
@@ -50,39 +62,35 @@ export const TournamentCreatePage = () => {
 
     switch (step) {
       case 1:
-        if (!formData.name || (formData.name as string).trim() === '') {
+        if (!formData.name || formData.name.trim() === '') {
           newErrors.name = 'Tournament name is required';
         }
-        if (!formData.sport || (formData.sport as string).trim() === '') {
+        if (!formData.sport || formData.sport.trim() === '') {
           newErrors.sport = 'Sport is required';
         }
-        if (!formData.venue || (formData.venue as string).trim() === '') {
+        if (!formData.venue || formData.venue.trim() === '') {
           newErrors.venue = 'Venue is required';
         }
         break;
       case 2:
-        if (!formData.format || (formData.format as string).trim() === '') {
+        if (!formData.format || formData.format.trim() === '') {
           newErrors.format = 'Format is required';
         }
-        if (!formData.maxTeams || (formData.maxTeams as number) < 2) {
+        if (!formData.maxTeams || formData.maxTeams < 2) {
           newErrors.maxTeams = 'Minimum 2 teams required';
         }
         break;
       case 3:
-        if (
-          !formData.startDate ||
-          (formData.startDate as string).trim() === ''
-        ) {
+        if (!formData.startDate || formData.startDate.trim() === '') {
           newErrors.startDate = 'Start date is required';
         }
-        if (!formData.endDate || (formData.endDate as string).trim() === '') {
+        if (!formData.endDate || formData.endDate.trim() === '') {
           newErrors.endDate = 'End date is required';
         }
         if (
           formData.startDate &&
           formData.endDate &&
-          new Date(formData.endDate as string) <
-            new Date(formData.startDate as string)
+          new Date(formData.endDate) < new Date(formData.startDate)
         ) {
           newErrors.endDate = 'End date must be after start date';
         }
@@ -100,7 +108,7 @@ export const TournamentCreatePage = () => {
   };
 
   const handleFieldChange = (field: string, value: unknown) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value as never }));
     if (errors[field as keyof FormErrors]) {
       setErrors((prev) => ({ ...prev, [field]: undefined }));
     }
