@@ -25,7 +25,15 @@ export const TournamentCard = ({
     <motion.div
       whileHover={{ y: -4 }}
       className="cursor-pointer"
+      role="button"
+      tabIndex={0}
       onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick?.();
+        }
+      }}
     >
       <Card hover className="overflow-hidden">
         <div className="h-2 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-accent)]" />
