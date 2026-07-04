@@ -23,9 +23,8 @@ export const DraggablePlayer = ({
     _: unknown,
     info: { point: { x: number; y: number } },
   ) => {
-    const pitchEl = (info.point as unknown as HTMLElement).closest?.(
-      '[data-pitch]',
-    ) as HTMLElement | null;
+    // Find the pitch container element from the DOM
+    const pitchEl = document.querySelector<HTMLElement>('[data-pitch]');
     if (!pitchEl) return;
 
     const rect = pitchEl.getBoundingClientRect();

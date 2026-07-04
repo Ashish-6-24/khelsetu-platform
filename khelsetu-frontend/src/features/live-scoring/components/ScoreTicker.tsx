@@ -157,18 +157,15 @@ export const ScoreTicker = ({
       });
     };
 
+    // Random interval between 4-8 seconds
     const scheduleNext = () => {
       const delay = 4000 + Math.random() * 4000;
-      intervalRef.current = setTimeout(() => {
-        tick();
-        scheduleNext();
-      }, delay) as unknown as ReturnType<typeof setTimeout>;
+      intervalRef.current = setInterval(tick, delay);
     };
 
     scheduleNext();
     return () => {
-      if (intervalRef.current)
-        clearTimeout(intervalRef.current as unknown as number);
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, []);
 
@@ -183,7 +180,7 @@ export const ScoreTicker = ({
           className,
         ),
       )}
-      role="marquee"
+      role="region"
       aria-live="off"
       aria-label="Live scores"
     >

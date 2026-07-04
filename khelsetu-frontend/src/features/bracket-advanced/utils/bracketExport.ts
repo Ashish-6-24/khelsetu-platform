@@ -53,14 +53,17 @@ export async function exportBracketAsImage(
   link.click();
 }
 
-export function printBracket(elementId: string): void {
-  const el = document.getElementById(elementId);
+export async function printBracket(elementId: string): Promise<void> {
+  const [{ default: DOMPurify }, el] = await Promise.all([
+    import('dompurify'),
+    Promise.resolve(document.getElementById(elementId)),
+  ]);
   if (!el) return;
 
   const printWindow = window.open('', '_blank');
   if (!printWindow) return;
 
-  const sanitized = el.innerHTML;
+  const sanitized = DOMPurify.sanitize(el.innerHTML);
   printWindow.document.write(`
     <!DOCTYPE html>
     <html>

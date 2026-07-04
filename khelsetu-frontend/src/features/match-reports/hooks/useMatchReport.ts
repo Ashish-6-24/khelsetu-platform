@@ -1,4 +1,5 @@
 import { api } from '@lib/axios';
+import { useToast } from '@shared/components/ui/toast-context';
 import { API_ENDPOINTS } from '@shared/utils/constants';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -6,6 +7,7 @@ import type { MatchReport } from '../types';
 
 export function useMatchReport(matchId: string) {
   const queryClient = useQueryClient();
+  const { addToast } = useToast();
 
   const query = useQuery<MatchReport>({
     queryKey: ['match-report', matchId],
@@ -28,6 +30,9 @@ export function useMatchReport(matchId: string) {
     onSuccess: (data) => {
       queryClient.setQueryData(['match-report', matchId], data);
     },
+    onError: () => {
+      addToast({ type: 'error', message: 'Failed to generate match report' });
+    },
   });
 
   const updateMutation = useMutation({
@@ -43,6 +48,9 @@ export function useMatchReport(matchId: string) {
     onSuccess: (data) => {
       queryClient.setQueryData(['match-report', matchId], data);
     },
+    onError: () => {
+      addToast({ type: 'error', message: 'Failed to update match report' });
+    },
   });
 
   const publishMutation = useMutation({
@@ -55,6 +63,9 @@ export function useMatchReport(matchId: string) {
     },
     onSuccess: (data) => {
       queryClient.setQueryData(['match-report', matchId], data);
+    },
+    onError: () => {
+      addToast({ type: 'error', message: 'Failed to publish match report' });
     },
   });
 

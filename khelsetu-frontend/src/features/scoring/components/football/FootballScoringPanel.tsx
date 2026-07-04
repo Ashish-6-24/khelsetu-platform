@@ -46,24 +46,24 @@ export const FootballScoringPanel = ({
 
   return (
     <div className="space-y-4">
-      <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg p-4">
+      <div className="bg-gradient-to-r from-[var(--brand-primary)]/5 to-[var(--brand-accent)]/5 dark:from-[var(--brand-primary)]/10 dark:to-[var(--brand-accent)]/10 rounded-lg p-4">
         <div className="flex items-center justify-between">
           <div className="text-center flex-1">
-            <p className="text-lg font-bold text-gray-900 dark:text-white">
+            <p className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
               {score.teamA.teamName}
             </p>
-            <p className="text-4xl font-bold text-green-600 dark:text-green-400 mt-1">
+            <p className="text-4xl font-bold text-[var(--text-primary)] dark:text-white mt-1">
               {score.teamA.goals}
             </p>
           </div>
           <div className="text-center px-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">VS</p>
+            <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">VS</p>
           </div>
           <div className="text-center flex-1">
-            <p className="text-lg font-bold text-gray-900 dark:text-white">
+            <p className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
               {score.teamB.teamName}
             </p>
-            <p className="text-4xl font-bold text-green-600 dark:text-green-400 mt-1">
+            <p className="text-4xl font-bold text-[var(--text-primary)] dark:text-white mt-1">
               {score.teamB.goals}
             </p>
           </div>
