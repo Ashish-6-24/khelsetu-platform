@@ -18,9 +18,11 @@
       media="(prefers-color-scheme: light)"
     />
     <meta name="color-scheme" content="light dark" />
+    <meta name="X-Frame-Options" content="DENY" />
+    <meta name="Referrer-Policy" content="strict-origin-when-cross-origin" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' ws://localhost:8080 http://localhost:8080; frame-src 'self'"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' ws://localhost:8080 http://localhost:8080; frame-src 'self'"
     />
     <meta
       name="description"
@@ -86,29 +88,7 @@
   </head>
   <body class="antialiased">
     <div id="root"></div>
-    <script>
-      // Zero-flash theme bootstrap. Runs synchronously before React mounts.
-      (function () {
-        try {
-          var stored = localStorage.getItem('khelsetu-theme');
-          var theme =
-            stored === 'light' || stored === 'dark' || stored === 'system'
-              ? stored
-              : 'system';
-          var prefersDark = window.matchMedia(
-            '(prefers-color-scheme: dark)',
-          ).matches;
-          var isDark = theme === 'dark' || (theme === 'system' && prefersDark);
-          document.documentElement.classList.toggle('dark', isDark);
-          document.documentElement.dataset.theme = theme;
-          document.documentElement.style.colorScheme = isDark
-            ? 'dark'
-            : 'light';
-        } catch (_) {
-          /* localStorage may be blocked; fall through to system */
-        }
-      })();
-    </script>
+    <script src="/theme-bootstrap.js"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
