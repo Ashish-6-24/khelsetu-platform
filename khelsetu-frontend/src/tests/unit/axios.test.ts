@@ -1,4 +1,4 @@
-import { api, axiosInstance } from '@lib/axios';
+import { api, axiosInstance, setAccessToken } from '@lib/axios';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('@lib/env', () => ({
@@ -19,12 +19,12 @@ vi.mock('@lib/logger', () => ({
 describe('Axios Instance', () => {
   beforeEach(() => {
     vi.restoreAllMocks();
-    localStorage.clear();
+    setAccessToken(null);
   });
 
   describe('Request Interceptor', () => {
     it('should add Authorization header when token exists', () => {
-      localStorage.setItem('auth_token', 'test-token');
+      setAccessToken('test-token');
       const config = {
         url: '/test',
         method: 'get' as const,

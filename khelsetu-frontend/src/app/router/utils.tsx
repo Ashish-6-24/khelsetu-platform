@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { Suspense, lazy } from 'react';
 
 import { Skeleton } from '@shared/components/ui/Skeleton';

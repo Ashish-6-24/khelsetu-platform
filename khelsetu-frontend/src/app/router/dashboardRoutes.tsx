@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { DashboardLayout } from '@app/layouts/DashboardLayout';
 import { ROUTES } from '@shared/utils/constants';
 import { useAuthStore } from '@store/authStore';

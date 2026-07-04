@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { ErrorBoundary } from '@shared/components/error/ErrorBoundary';
 import { ROUTES } from '@shared/utils/constants';
 import { useAuthStore } from '@store/authStore';
