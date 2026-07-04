@@ -29,11 +29,13 @@ export class FeatureBoundary extends Component<
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     this.props.onError?.(error, errorInfo);
-    console.error(
-      `FeatureBoundary [${this.props.featureName ?? 'unknown'}] caught:`,
-      error,
-      errorInfo,
-    );
+    if (!import.meta.env.PROD) {
+      console.error(
+        `FeatureBoundary [${this.props.featureName ?? 'unknown'}] caught:`,
+        error,
+        errorInfo,
+      );
+    }
   }
 
   handleReset = (): void => {
