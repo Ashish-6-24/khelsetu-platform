@@ -29,6 +29,9 @@ export const ToastContext = createContext<ToastContextValue | null>(null);
 export const useToast = (): ToastContextValue => {
   const ctx = useContext(ToastContext);
   if (!ctx) {
+    if (!import.meta.env.PROD) {
+      console.warn('useToast must be used within a ToastProvider');
+    }
     return {
       toasts: [],
       addToast: () => {},
