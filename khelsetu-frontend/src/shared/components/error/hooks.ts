@@ -1,7 +1,7 @@
 import { logger } from '@lib/logger';
-import { useCallback, useState } from 'react';
-
 import { useOffline } from '@shared/hooks/useOffline';
+
+import { useCallback, useState } from 'react';
 
 export const useNetworkStatus = useOffline;
 

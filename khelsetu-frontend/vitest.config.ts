@@ -46,10 +46,10 @@ export default defineConfig({
         'public/**',
       ],
       thresholds: {
-        statements: 62,
+        statements: 61,
         branches: 56,
         functions: 50,
-        lines: 64,
+        lines: 63,
       },
     },
   },

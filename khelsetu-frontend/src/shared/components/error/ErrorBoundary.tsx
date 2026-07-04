@@ -2,6 +2,7 @@ import { ROUTES } from '@shared/utils/constants';
 import { AlertTriangle, ArrowLeft, Home, RefreshCw } from 'lucide-react';
 
 import { Component, type ErrorInfo, type ReactNode } from 'react';
+
 import { Link } from 'react-router-dom';
 
 const isProd = import.meta.env.PROD;
@@ -200,7 +201,9 @@ export const CrashRecoveryPage = ({
               if (v !== null) preserved[k] = v;
             });
             localStorage.clear();
-            Object.entries(preserved).forEach(([k, v]) => localStorage.setItem(k, v));
+            Object.entries(preserved).forEach(([k, v]) =>
+              localStorage.setItem(k, v),
+            );
             window.location.reload();
           }}
           className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg border border-red-300 dark:border-red-600 text-red-700 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20"
