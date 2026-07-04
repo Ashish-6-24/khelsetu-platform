@@ -4,7 +4,7 @@ import { clsx } from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useId, useRef } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -36,6 +36,8 @@ export const Modal = ({
   const dialogRef = useFocusTrap<HTMLDivElement>(isOpen);
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
   const prefersReducedMotion = useReducedMotion();
+  const titleId = useId();
+  const descId = useId();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -86,8 +88,8 @@ export const Modal = ({
               ref={dialogRef}
               role="dialog"
               aria-modal="true"
-              aria-labelledby={title ? 'modal-title' : undefined}
-              aria-describedby={description ? 'modal-description' : undefined}
+              aria-labelledby={title ? titleId : undefined}
+              aria-describedby={description ? descId : undefined}
               initial={{ opacity: 0, scale: 0.96, y: 16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 16 }}
@@ -102,7 +104,7 @@ export const Modal = ({
                   <div>
                     {title && (
                       <h2
-                        id="modal-title"
+                        id={titleId}
                         className="text-lg font-semibold tracking-tight text-slate-900 dark:text-white"
                       >
                         {title}
@@ -110,7 +112,7 @@ export const Modal = ({
                     )}
                     {description && (
                       <p
-                        id="modal-description"
+                        id={descId}
                         className="mt-1 text-sm text-slate-500 dark:text-slate-400"
                       >
                         {description}
