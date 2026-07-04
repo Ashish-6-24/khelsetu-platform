@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 
 type KeyCombo = {
   /** Lowercase character or special key. e.g. 'k', '/', '?', 'Escape' */
@@ -48,35 +48,50 @@ export const useShortcut = (
   handler: (e: KeyboardEvent) => void,
   options: ShortcutOptions = {},
 ): void => {
+  const handlerRef = useRef(handler);
+  handlerRef.current = handler;
+
+  const comboKey = useMemo(
+    () => JSON.stringify(combo),
+    [JSON.stringify(combo)],
+  );
+
+  const optionsKey = useMemo(
+    () => JSON.stringify(options),
+    [JSON.stringify(options)],
+  );
+
   useEffect(() => {
+    const parsedCombo: KeyCombo = JSON.parse(comboKey);
+    const parsedOptions: ShortcutOptions = JSON.parse(optionsKey);
     const onKey = (e: KeyboardEvent) => {
       // Auto-flip to platform: Cmd on macOS, Ctrl elsewhere for letter shortcuts.
       const isMac = /Mac|iPod|iPhone|iPad/.test(navigator.platform);
-      const wantsCmd = combo.meta ?? !combo.ctrl;
+      const wantsCmd = parsedCombo.meta ?? !parsedCombo.ctrl;
       const effective: KeyCombo = {
-        ...combo,
+        ...parsedCombo,
         meta: wantsCmd ? e.metaKey : false,
-        ctrl: wantsCmd ? e.ctrlKey : (combo.ctrl ?? false),
+        ctrl: wantsCmd ? e.ctrlKey : (parsedCombo.ctrl ?? false),
       };
-      if (isMac && !combo.meta && !combo.ctrl) {
+      if (isMac && !parsedCombo.meta && !parsedCombo.ctrl) {
         // Letter shortcuts become Cmd on mac by default
         effective.meta = e.metaKey;
         effective.ctrl = false;
-      } else if (!isMac && !combo.meta && !combo.ctrl) {
+      } else if (!isMac && !parsedCombo.meta && !parsedCombo.ctrl) {
         effective.meta = false;
         effective.ctrl = e.ctrlKey;
       }
 
       if (!matchesCombo(e, effective)) return;
-      if (!options.ignoreInputs && isFormElement(e.target)) return;
+      if (!parsedOptions.ignoreInputs && isFormElement(e.target)) return;
 
       e.preventDefault();
-      handler(e);
+      handlerRef.current(e);
     };
-    window.addEventListener('keydown', onKey, { capture: options.capture });
+    window.addEventListener('keydown', onKey, { capture: parsedOptions.capture });
     return () =>
       window.removeEventListener('keydown', onKey, {
-        capture: options.capture,
+        capture: parsedOptions.capture,
       });
-  }, [combo, handler, options.ignoreInputs, options.capture]);
+  }, [comboKey, optionsKey]);
 };
