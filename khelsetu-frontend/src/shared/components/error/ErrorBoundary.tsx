@@ -3,8 +3,6 @@ import { AlertTriangle, ArrowLeft, Home, RefreshCw } from 'lucide-react';
 
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 
-import { Link } from 'react-router-dom';
-
 const isProd = import.meta.env.PROD;
 
 const sanitizeErrorMessage = (error: Error): string => {
@@ -87,13 +85,13 @@ export class ErrorBoundary extends Component<
                 <RefreshCw className="w-4 h-4" />
                 Try Again
               </button>
-              <Link
-                to={ROUTES.HOME}
+              <a
+                href={ROUTES.HOME}
                 className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-[var(--brand-primary)] text-[var(--brand-primary-ink)] hover:bg-[var(--brand-primary-hover)]"
               >
                 <Home className="w-4 h-4" />
                 Go Home
-              </Link>
+              </a>
             </div>
           </div>
         </div>
@@ -126,13 +124,13 @@ export const ServerErrorPage = () => (
           <RefreshCw className="w-4 h-4" />
           Refresh
         </button>
-        <Link
-          to={ROUTES.HOME}
+        <a
+          href={ROUTES.HOME}
           className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-[var(--brand-primary)] text-[var(--brand-primary-ink)] hover:bg-[var(--brand-primary-hover)]"
         >
           <ArrowLeft className="w-4 h-4" />
           Go Home
-        </Link>
+        </a>
       </div>
     </div>
   </div>
