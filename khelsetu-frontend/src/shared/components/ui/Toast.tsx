@@ -207,9 +207,10 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   const timeoutsRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
 
   useEffect(() => {
+    const timeouts = timeoutsRef.current;
     return () => {
-      for (const t of timeoutsRef.current.values()) clearTimeout(t);
-      timeoutsRef.current.clear();
+      for (const t of timeouts.values()) clearTimeout(t);
+      timeouts.clear();
     };
   }, []);
 

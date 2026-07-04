@@ -49,17 +49,14 @@ export const useShortcut = (
   options: ShortcutOptions = {},
 ): void => {
   const handlerRef = useRef(handler);
-  handlerRef.current = handler;
+  useEffect(() => {
+    handlerRef.current = handler;
+  });
 
-  const comboKey = useMemo(
-    () => JSON.stringify(combo),
-    [JSON.stringify(combo)],
-  );
-
-  const optionsKey = useMemo(
-    () => JSON.stringify(options),
-    [JSON.stringify(options)],
-  );
+  const comboStr = JSON.stringify(combo);
+  const optionsStr = JSON.stringify(options);
+  const comboKey = useMemo(() => comboStr, [comboStr]);
+  const optionsKey = useMemo(() => optionsStr, [optionsStr]);
 
   useEffect(() => {
     const parsedCombo: KeyCombo = JSON.parse(comboKey);

@@ -83,6 +83,24 @@ export const DashboardPage = () => {
 
   const isLoading = loadingTournaments || loadingMatches;
 
+  const totalTournaments = useMemo(() => tournaments?.length ?? 0, [tournaments]);
+  const liveMatches = useMemo(
+    () => matches?.filter((m) => m.status === 'live').length ?? 0,
+    [matches],
+  );
+  const totalTeams = useMemo(
+    () => tournaments?.reduce((sum, t) => sum + t.currentTeams, 0) ?? 0,
+    [tournaments],
+  );
+  const totalPlayers = useMemo(
+    () => tournaments?.reduce((sum, t) => sum + t.currentTeams * 12, 0) ?? 0,
+    [tournaments],
+  );
+  const upcomingMatches = useMemo(
+    () => matches?.filter((m) => m.status === 'scheduled').slice(0, 3) ?? [],
+    [matches],
+  );
+
   if (isLoading) {
     return (
       <div className="space-y-6">
@@ -102,24 +120,6 @@ export const DashboardPage = () => {
       </div>
     );
   }
-
-  const totalTournaments = useMemo(() => tournaments?.length ?? 0, [tournaments]);
-  const liveMatches = useMemo(
-    () => matches?.filter((m) => m.status === 'live').length ?? 0,
-    [matches],
-  );
-  const totalTeams = useMemo(
-    () => tournaments?.reduce((sum, t) => sum + t.currentTeams, 0) ?? 0,
-    [tournaments],
-  );
-  const totalPlayers = useMemo(
-    () => tournaments?.reduce((sum, t) => sum + t.currentTeams * 12, 0) ?? 0,
-    [tournaments],
-  );
-  const upcomingMatches = useMemo(
-    () => matches?.filter((m) => m.status === 'scheduled').slice(0, 3) ?? [],
-    [matches],
-  );
 
   return (
     <div className="relative space-y-6">
