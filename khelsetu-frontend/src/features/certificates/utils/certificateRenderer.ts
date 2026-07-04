@@ -3,7 +3,12 @@ import { CERTIFICATE_TEMPLATES } from '../types';
 
 export function generateCertificateId(): string {
   const timestamp = Date.now().toString(36).toUpperCase();
-  const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+  const array = new Uint8Array(6);
+  crypto.getRandomValues(array);
+  const random = Array.from(array, (b) => b.toString(16).padStart(2, '0'))
+    .join('')
+    .toUpperCase()
+    .substring(0, 8);
   return `KHS-${timestamp}-${random}`;
 }
 

@@ -11,7 +11,6 @@ interface FeatureBoundaryProps {
 
 interface FeatureBoundaryState {
   hasError: boolean;
-  error: Error | null;
 }
 
 export class FeatureBoundary extends Component<
@@ -20,11 +19,11 @@ export class FeatureBoundary extends Component<
 > {
   constructor(props: FeatureBoundaryProps) {
     super(props);
-    this.state = { hasError: false, error: null };
+    this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error: Error): FeatureBoundaryState {
-    return { hasError: true, error };
+  static getDerivedStateFromError(_error: Error): FeatureBoundaryState {
+    return { hasError: true };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
@@ -39,7 +38,7 @@ export class FeatureBoundary extends Component<
   }
 
   handleReset = (): void => {
-    this.setState({ hasError: false, error: null });
+    this.setState({ hasError: false });
   };
 
   render(): ReactNode {
