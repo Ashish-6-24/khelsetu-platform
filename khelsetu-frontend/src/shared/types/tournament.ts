@@ -59,6 +59,7 @@ export interface Match {
   round?: string;
   score?: MatchScore;
   winner?: Team;
+  sport?: string;
 }
 
 export interface MatchScore {

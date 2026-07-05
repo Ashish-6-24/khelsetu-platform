@@ -35,14 +35,14 @@ export const SchedulePage = () => {
   const [activeStatus, setActiveStatus] = useState('upcoming');
   const [activeSport, setActiveSport] = useState('all');
 
-  const { data: matches = [], isLoading } = useQuery<Match[]>({
+  const { data: matches = [], isLoading, isError, error } = useQuery<Match[]>({
     queryKey: ['matches'],
     queryFn: () => matchService.getAll(),
   });
 
   const filteredMatches = useMemo(() => {
     return matches.filter((m) => {
-      const sport = (m as Match & { sport?: string }).sport ?? 'cricket';
+      const sport = m.sport ?? 'cricket';
       const matchesSport = activeSport === 'all' || sport === activeSport;
 
       if (activeStatus === 'live') return m.status === 'live' && matchesSport;
@@ -78,6 +78,21 @@ export const SchedulePage = () => {
       minute: '2-digit',
     });
   };
+
+  if (isError) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">
+            Schedule
+          </h1>
+          <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+            Failed to load matches: {error?.message ?? 'Unknown error'}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
