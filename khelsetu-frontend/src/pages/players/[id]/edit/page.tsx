@@ -1,4 +1,4 @@
-import { playerService } from '@features/teams/services/team';
+import { playerService } from '@features/players/services/playerService';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@shared/components/ui/Button';
 import { Card, CardBody } from '@shared/components/ui/Card';

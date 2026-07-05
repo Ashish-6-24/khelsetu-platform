@@ -1,4 +1,4 @@
-import { playerService } from '@features/teams/services/team';
+import { playerService } from '@features/players/services/playerService';
 import { teamService } from '@features/teams/services/team';
 import { Badge } from '@shared/components/ui/Badge';
 import { Button } from '@shared/components/ui/Button';

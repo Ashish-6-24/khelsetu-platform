@@ -1,5 +1,5 @@
 import { PlayerCard } from '@features/teams/components/PlayerCard';
-import { playerService } from '@features/teams/services/team';
+import { playerService } from '@features/players/services/playerService';
 import { Input } from '@shared/components/ui/Input';
 import { Skeleton } from '@shared/components/ui/Skeleton';
 import { Tabs } from '@shared/components/ui/Tabs';

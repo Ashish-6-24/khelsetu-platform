@@ -1,9 +1,8 @@
-import {
-  playerService,
-  type CreatePlayerInput,
-} from '@features/teams/services/team';
+import { playerService } from '../services/playerService';
+import type { CreatePlayerInput } from '../services/playerService';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useMemo } from 'react';
+import type { Player } from '@shared/types/tournament';
 
 interface UsePlayersOptions {
   teamId?: string;
@@ -56,6 +55,21 @@ export function usePlayers({
     },
   });
 
+  const updateMutation = useMutation({
+    mutationFn: ({ id, data }: { id: string; data: Partial<Player> }) =>
+      playerService.update(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['players'] });
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => playerService.delete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['players'] });
+    },
+  });
+
   return {
     players: sortedPlayers,
     allPlayers,
@@ -64,6 +78,10 @@ export function usePlayers({
     error,
     createPlayer: createMutation.mutateAsync,
     isCreating: createMutation.isPending,
+    updatePlayer: updateMutation.mutateAsync,
+    isUpdating: updateMutation.isPending,
+    deletePlayer: deleteMutation.mutateAsync,
+    isDeleting: deleteMutation.isPending,
   };
 }
 
