@@ -8,12 +8,13 @@ interface UseTeamsOptions {
 }
 
 export function useTeams({ tournamentId, search }: UseTeamsOptions = {}) {
-  const { data: allTeams = [], isLoading } = useQuery({
+  const { data: allTeams = [], isLoading, isError, error } = useQuery({
     queryKey: ['teams', tournamentId],
     queryFn: () =>
       tournamentId
         ? teamService.getByTournament(tournamentId)
         : teamService.getAll(),
+    staleTime: 5 * 60 * 1000,
   });
 
   const filteredTeams = useMemo(() => {
@@ -34,15 +35,18 @@ export function useTeams({ tournamentId, search }: UseTeamsOptions = {}) {
     teams: sortedTeams,
     allTeams,
     isLoading,
+    isError,
+    error,
   };
 }
 
 export function useTeamDetail(teamId: string) {
-  const { data: team, isLoading } = useQuery({
+  const { data: team, isLoading, isError, error } = useQuery({
     queryKey: ['team', teamId],
     queryFn: () => teamService.getById(teamId),
     enabled: !!teamId,
+    staleTime: 5 * 60 * 1000,
   });
 
-  return { team, isLoading };
+  return { team, isLoading, isError, error };
 }
