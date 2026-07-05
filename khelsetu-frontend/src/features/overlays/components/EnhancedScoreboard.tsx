@@ -1,5 +1,5 @@
 import type { Match } from '@shared/types/tournament';
-import { motion } from 'framer-motion';
+import { LivePulse } from '@shared/components/animations';
 
 interface EnhancedScoreboardProps {
   match: Match;
@@ -52,13 +52,9 @@ export function EnhancedScoreboard({
 
           <div className="text-center">
             {status === 'live' && (
-              <motion.div
-                animate={{ opacity: [1, 0.5, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="text-xs font-bold text-red-400 mb-1"
-              >
-                LIVE
-              </motion.div>
+              <div className="mb-1">
+                <LivePulse color="red" size="sm" />
+              </div>
             )}
             <div className="text-xs text-gray-400">
               {score?.teamAInnings?.[0]
@@ -108,14 +104,10 @@ export function EnhancedScoreboard({
 
         <div className="text-center">
           {status === 'live' && (
-            <motion.div
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="inline-flex items-center gap-1 px-3 py-1 bg-red-500 rounded-full text-xs font-bold"
-            >
-              <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+            <div className="inline-flex items-center gap-1 px-3 py-1 bg-red-500 rounded-full text-xs font-bold">
+              <LivePulse color="red" size="sm" />
               LIVE
-            </motion.div>
+            </div>
           )}
           {status === 'completed' && (
             <div className="inline-flex items-center gap-1 px-3 py-1 bg-green-500 rounded-full text-xs font-bold">

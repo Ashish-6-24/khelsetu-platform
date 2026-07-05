@@ -6,18 +6,35 @@ interface MatchStatsOverlayProps {
 }
 
 export function MatchStatsOverlay({ match }: MatchStatsOverlayProps) {
-  const innings = match.score?.teamAInnings?.[0];
-  const totalOvers = innings?.overs ?? 0;
-  const totalWickets = innings?.wickets ?? 0;
-  const runRate = totalOvers > 0
-    ? ((innings?.runs ?? 0) / totalOvers).toFixed(2)
-    : '0.00';
+  const teamAInnings = match.score?.teamAInnings?.[0];
+  const teamBInnings = match.score?.teamBInnings?.[0];
+
+  const runRate = (innings: typeof teamAInnings) => {
+    if (!innings || innings.overs === 0) return '0.00';
+    return (innings.runs / innings.overs).toFixed(2);
+  };
 
   const stats = [
-    { label: 'Run Rate', value: runRate, trend: null },
-    { label: 'Boundaries', value: '12', trend: null },
-    { label: 'Wickets', value: String(totalWickets), trend: null },
-    { label: 'Extras', value: String(innings?.extras ?? 0), trend: null },
+    {
+      label: `${match.teamA?.name ?? 'Team A'} Run Rate`,
+      value: runRate(teamAInnings),
+      trend: null,
+    },
+    {
+      label: `${match.teamB?.name ?? 'Team B'} Run Rate`,
+      value: runRate(teamBInnings),
+      trend: null,
+    },
+    {
+      label: 'Total Wickets',
+      value: ((teamAInnings?.wickets ?? 0) + (teamBInnings?.wickets ?? 0)).toString(),
+      trend: null,
+    },
+    {
+      label: 'Total Extras',
+      value: ((teamAInnings?.extras ?? 0) + (teamBInnings?.extras ?? 0)).toString(),
+      trend: null,
+    },
   ];
 
   return (
