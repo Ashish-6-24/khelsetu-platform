@@ -1,3 +1,4 @@
+import { TeamCard } from '@features/teams/components/TeamCard';
 import { useTeams } from '@features/teams/hooks/useTeams';
 import { Button } from '@shared/components/ui/Button';
 import { Card, CardBody } from '@shared/components/ui/Card';
@@ -83,38 +84,12 @@ export const TeamsPage = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {teams.map((team) => (
-            <div
+            <TeamCard
               key={team.id}
-              className="cursor-pointer"
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  navigate(`/teams/${team.id}`);
-                }
-              }}
+              team={team}
               onClick={() => navigate(`/teams/${team.id}`)}
-            >
-              <Card className="cursor-pointer hover:shadow-md transition-shadow">
-                <CardBody className="p-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 rounded-full bg-[var(--bg-surface)] flex items-center justify-center">
-                      <span className="text-xl font-bold text-[var(--text-primary)]">
-                        {team.shortName}
-                      </span>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-[var(--text-primary)]">
-                        {team.name}
-                      </h3>
-                      <p className="text-sm text-[var(--text-tertiary)]">
-                        {team.players?.length ?? 0} players
-                      </p>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            </div>
+              showStats={false}
+            />
           ))}
         </div>
       )}
