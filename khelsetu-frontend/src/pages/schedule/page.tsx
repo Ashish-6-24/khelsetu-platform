@@ -1,114 +1,231 @@
+import { matchService } from '@features/tournaments/services/tournament';
 import { Badge } from '@shared/components/ui/Badge';
-import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
-import { Calendar, Clock } from 'lucide-react';
+import { Card, CardBody } from '@shared/components/ui/Card';
+import { Skeleton } from '@shared/components/ui/Skeleton';
+import { Tabs } from '@shared/components/ui/Tabs';
+import type { Match } from '@shared/types/tournament';
+import { useQuery } from '@tanstack/react-query';
+import {
+  Calendar,
+  Clock,
+  Filter,
+  MapPin,
+  Play,
+  Trophy,
+} from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { useState } from 'react';
+const STATUS_TABS = [
+  { id: 'upcoming', label: 'Upcoming' },
+  { id: 'live', label: 'Live Now' },
+  { id: 'completed', label: 'Completed' },
+];
 
-interface MatchSchedule {
-  id: string;
-  home: string;
-  away: string;
-  date: string;
-  time: string;
-  venue: string;
-  status: 'scheduled' | 'live' | 'completed';
-}
-
-const mockSchedule: MatchSchedule[] = [
-  {
-    id: '1',
-    home: 'Kathmandu Kings',
-    away: 'Pokhara Warriors',
-    date: '2024-02-01',
-    time: '14:00',
-    venue: 'Dasharath Stadium',
-    status: 'scheduled',
-  },
-  {
-    id: '2',
-    home: 'Biratnagar Bulls',
-    away: 'Dhangadhi Stars',
-    date: '2024-02-01',
-    time: '18:00',
-    venue: 'Pokhara Stadium',
-    status: 'scheduled',
-  },
-  {
-    id: '3',
-    home: 'Chitwan Rhinos',
-    away: 'Lumbini Lions',
-    date: '2024-02-02',
-    time: '10:00',
-    venue: 'Bharatpur Stadium',
-    status: 'scheduled',
-  },
+const SPORT_FILTERS = [
+  { id: 'all', label: 'All Sports' },
+  { id: 'cricket', label: 'Cricket' },
+  { id: 'football', label: 'Football' },
+  { id: 'volleyball', label: 'Volleyball' },
+  { id: 'basketball', label: 'Basketball' },
 ];
 
 export const SchedulePage = () => {
-  const [schedule] = useState<MatchSchedule[]>(mockSchedule);
+  const navigate = useNavigate();
+  const [activeStatus, setActiveStatus] = useState('upcoming');
+  const [activeSport, setActiveSport] = useState('all');
+
+  const { data: matches = [], isLoading } = useQuery<Match[]>({
+    queryKey: ['matches'],
+    queryFn: () => matchService.getAll(),
+  });
+
+  const filteredMatches = useMemo(() => {
+    return matches.filter((m) => {
+      const sport = (m as Match & { sport?: string }).sport ?? 'cricket';
+      const matchesSport = activeSport === 'all' || sport === activeSport;
+
+      if (activeStatus === 'live') return m.status === 'live' && matchesSport;
+      if (activeStatus === 'completed')
+        return m.status === 'completed' && matchesSport;
+      return m.status === 'scheduled' && matchesSport;
+    });
+  }, [matches, activeStatus, activeSport]);
+
+  const liveCount = useMemo(
+    () => matches.filter((m) => m.status === 'live').length,
+    [matches],
+  );
+
+  const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    if (date.toDateString() === today.toDateString()) return 'Today';
+    if (date.toDateString() === tomorrow.toDateString()) return 'Tomorrow';
+    return date.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+    });
+  };
+
+  const formatTime = (dateStr: string) => {
+    return new Date(dateStr).toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <Skeleton className="h-8 w-40" />
+        <Skeleton className="h-10 w-full" />
+        <div className="space-y-4">
+          {[1, 2, 3].map((i) => (
+            <Skeleton key={i} className="h-32" />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
           Schedule
         </h1>
-        <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-1">
-          Match calendar and scheduling
+        <p className="text-[var(--text-tertiary)] mt-1">
+          Match calendar and upcoming fixtures
         </p>
       </div>
 
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-            <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
-              Upcoming Matches
-            </h3>
-          </div>
-        </CardHeader>
-        <CardBody>
-          <div className="space-y-3">
-            {schedule.map((match) => (
-              <div
-                key={match.id}
-                className="flex items-center justify-between p-4 rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]"
+      <div className="flex flex-wrap items-center gap-4">
+        <Tabs
+          tabs={STATUS_TABS}
+          activeTab={activeStatus}
+          onChange={setActiveStatus}
+          variant="pills"
+        />
+
+        <div className="flex items-center gap-2">
+          <Filter className="w-4 h-4 text-[var(--text-tertiary)]" />
+          <Tabs
+            tabs={SPORT_FILTERS}
+            activeTab={activeSport}
+            onChange={setActiveSport}
+            variant="pills"
+          />
+        </div>
+      </div>
+
+      {liveCount > 0 && activeStatus !== 'live' && (
+        <Card className="border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20">
+          <CardBody className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              <span className="font-medium text-red-700 dark:text-red-400">
+                {liveCount} match{liveCount > 1 ? 'es' : ''} live now
+              </span>
+              <button
+                onClick={() => setActiveStatus('live')}
+                className="text-sm text-red-600 dark:text-red-400 underline"
               >
-                <div className="flex-1">
-                  <div className="flex items-center gap-3">
-                    <span className="font-medium text-[var(--text-primary)] dark:text-white">
-                      {match.home}
-                    </span>
-                    <span className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] text-sm">
-                      vs
-                    </span>
-                    <span className="font-medium text-[var(--text-primary)] dark:text-white">
-                      {match.away}
-                    </span>
+                View all
+              </button>
+            </div>
+          </CardBody>
+        </Card>
+      )}
+
+      {filteredMatches.length === 0 ? (
+        <Card>
+          <CardBody className="p-12 text-center">
+            <Calendar className="w-12 h-12 mx-auto text-[var(--text-tertiary)] mb-4" />
+            <p className="text-[var(--text-tertiary)]">
+              No {activeStatus} matches{' '}
+              {activeSport !== 'all' ? `for ${activeSport}` : ''}
+            </p>
+          </CardBody>
+        </Card>
+      ) : (
+        <div className="space-y-3">
+          {filteredMatches.map((match) => (
+            <button
+              key={match.id}
+              type="button"
+              className="w-full text-left cursor-pointer hover:shadow-md transition-shadow rounded-lg"
+              onClick={() => navigate(`/scoring/${match.id}`)}
+            >
+              <Card>
+                <CardBody className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <span className="font-semibold text-[var(--text-primary)]">
+                          {match.teamA?.name ?? 'TBD'}
+                        </span>
+                        <span className="text-[var(--text-tertiary)] text-sm">
+                          vs
+                        </span>
+                        <span className="font-semibold text-[var(--text-primary)]">
+                          {match.teamB?.name ?? 'TBD'}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-4 mt-2 text-sm text-[var(--text-tertiary)]">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          {formatDate(match.scheduledAt)}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          {formatTime(match.scheduledAt)}
+                        </span>
+                        {match.venue && (
+                          <span className="flex items-center gap-1">
+                            <MapPin className="w-3 h-3" />
+                            {match.venue}
+                          </span>
+                        )}
+                      </div>
+
+                      {match.score && (
+                        <div className="mt-2 text-sm font-medium text-[var(--text-primary)]">
+                          {match.teamA?.name}: {match.score.teamAScore} ·{' '}
+                          {match.teamB?.name}: {match.score.teamBScore}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      {match.status === 'live' && (
+                        <Badge variant="error" className="animate-pulse">
+                          <Play className="w-3 h-3 mr-1" />
+                          LIVE
+                        </Badge>
+                      )}
+                      {match.status === 'completed' && match.winner && (
+                        <Badge variant="success">
+                          <Trophy className="w-3 h-3 mr-1" />
+                          {match.winner.name}
+                        </Badge>
+                      )}
+                      {match.status === 'scheduled' && (
+                        <Badge variant="default">Scheduled</Badge>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex items-center gap-4 mt-2 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-3 h-3" />
-                      {match.date}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      {match.time}
-                    </span>
-                    <span>{match.venue}</span>
-                  </div>
-                </div>
-                <Badge
-                  variant={match.status === 'live' ? 'error' : 'default'}
-                  className="capitalize"
-                >
-                  {match.status}
-                </Badge>
-              </div>
-            ))}
-          </div>
-        </CardBody>
-      </Card>
+                </CardBody>
+              </Card>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
