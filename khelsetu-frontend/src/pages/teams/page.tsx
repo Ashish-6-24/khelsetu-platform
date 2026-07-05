@@ -1,87 +1,42 @@
-import { TeamCard } from '@features/teams/components/TeamCard';
-import { teamService } from '@features/teams/services/team';
+import { useTeams } from '@features/teams/hooks/useTeams';
 import { Button } from '@shared/components/ui/Button';
+import { Card, CardBody } from '@shared/components/ui/Card';
 import { Input } from '@shared/components/ui/Input';
-import { Modal } from '@shared/components/ui/Modal';
 import { Skeleton } from '@shared/components/ui/Skeleton';
-import { Tabs } from '@shared/components/ui/Tabs';
-import { useToast } from '@shared/components/ui/toast-context';
-import type { Team } from '@shared/types/tournament';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Plus } from 'lucide-react';
-
+import { Search, Users, UserPlus } from 'lucide-react';
 import { useState } from 'react';
-
 import { useNavigate } from 'react-router-dom';
-
-const TABS = [
-  { id: 'all', label: 'All Teams' },
-  { id: 'active', label: 'Active' },
-  { id: 'archived', label: 'Archived' },
-];
 
 export const TeamsPage = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const { addToast } = useToast();
-  const [activeTab, setActiveTab] = useState('all');
-  const [showCreateModal, setShowCreateModal] = useState(false);
-  const [newTeamName, setNewTeamName] = useState('');
-  const [newTeamShortName, setNewTeamShortName] = useState('');
+  const [search, setSearch] = useState('');
 
-  const { data: teams, isLoading } = useQuery<Team[]>({
-    queryKey: ['teams'],
-    queryFn: () => teamService.getAll(),
-  });
-
-  const createTeam = useMutation({
-    mutationFn: (data: { name: string; shortName: string }) =>
-      teamService.create({
-        name: data.name,
-        shortName: data.shortName,
-        tournamentId: '',
-      }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['teams'] });
-      setShowCreateModal(false);
-      setNewTeamName('');
-      setNewTeamShortName('');
-    },
-    onError: () => {
-      addToast({ type: 'error', message: 'Failed to create team' });
-    },
-  });
-
-  const handleCreateTeam = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newTeamName.trim() && newTeamShortName.trim()) {
-      createTeam.mutate({
-        name: newTeamName.trim(),
-        shortName: newTeamShortName.trim().toUpperCase(),
-      });
-    }
-  };
-
-  const filteredTeams = teams?.filter((team) => {
-    if (activeTab === 'active') return team.stats.played > 0;
-    if (activeTab === 'archived') return team.stats.played === 0;
-    return true;
-  });
+  const { teams, isLoading, isError, error } = useTeams({ search });
 
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <Skeleton className="h-8 w-32" />
-            <Skeleton className="h-4 w-48 mt-2" />
-          </div>
-          <Skeleton className="h-10 w-36" />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[1, 2, 3, 4, 5, 6].map((i) => (
+        <Skeleton className="h-8 w-40" />
+        <Skeleton className="h-10 w-full" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[1, 2, 3, 4].map((i) => (
             <Skeleton key={i} className="h-48" />
           ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">
+            Teams
+          </h1>
+          <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+            Failed to load teams: {error?.message ?? 'Unknown error'}
+          </p>
         </div>
       </div>
     );
@@ -91,87 +46,78 @@ export const TeamsPage = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">
             Teams
           </h1>
-          <p className="mt-1 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
-            Manage teams and player rosters
+          <p className="text-[var(--text-tertiary)] mt-1">
+            {teams.length} team{teams.length !== 1 ? 's' : ''} available
           </p>
         </div>
-        <Button
-          variant="create"
-          leftIcon={<Plus className="h-4 w-4" />}
-          onClick={() => setShowCreateModal(true)}
-        >
-          Create Team
+        <Button onClick={() => navigate('/teams/create')}>
+          <UserPlus className="w-4 h-4 mr-2" />
+          Add Team
         </Button>
       </div>
 
-      <Tabs
-        tabs={TABS}
-        activeTab={activeTab}
-        onChange={setActiveTab}
-        variant="pills"
-      />
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" />
+        <Input
+          placeholder="Search teams..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="pl-10"
+        />
+      </div>
 
-      {filteredTeams && filteredTeams.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredTeams.map((team) => (
-            <TeamCard
+      {teams.length === 0 ? (
+        <Card>
+          <CardBody className="p-12 text-center">
+            <Users className="w-12 h-12 mx-auto text-[var(--text-tertiary)] mb-4" />
+            <p className="text-[var(--text-tertiary)]">
+              {search
+                ? 'No teams match your search'
+                : 'No teams available. Create a tournament to add teams.'}
+            </p>
+          </CardBody>
+        </Card>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {teams.map((team) => (
+            <div
               key={team.id}
-              team={team}
+              className="cursor-pointer"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  navigate(`/teams/${team.id}`);
+                }
+              }}
               onClick={() => navigate(`/teams/${team.id}`)}
-            />
+            >
+              <Card className="cursor-pointer hover:shadow-md transition-shadow">
+                <CardBody className="p-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 rounded-full bg-[var(--bg-surface)] flex items-center justify-center">
+                      <span className="text-xl font-bold text-[var(--text-primary)]">
+                        {team.shortName}
+                      </span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-[var(--text-primary)]">
+                        {team.name}
+                      </h3>
+                      <p className="text-sm text-[var(--text-tertiary)]">
+                        {team.players?.length ?? 0} players
+                      </p>
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+            </div>
           ))}
         </div>
-      ) : (
-        <div className="text-center py-12">
-          <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
-            No teams yet. Build your first squad and get playing.
-          </p>
-        </div>
       )}
-
-      <Modal
-        isOpen={showCreateModal}
-        onClose={() => setShowCreateModal(false)}
-        title="Create New Team"
-      >
-        <form onSubmit={handleCreateTeam} className="space-y-4">
-          <Input
-            label="Team Name"
-            value={newTeamName}
-            onChange={(e) => setNewTeamName(e.target.value)}
-            placeholder="e.g., Nepal National Team"
-            required
-          />
-          <Input
-            label="Short Name"
-            value={newTeamShortName}
-            onChange={(e) => setNewTeamShortName(e.target.value)}
-            placeholder="e.g., NEP"
-            required
-          />
-          <div className="flex gap-3 pt-4">
-            <Button
-              type="button"
-              variant="outline"
-              className="flex-1"
-              onClick={() => setShowCreateModal(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              variant="create"
-              className="flex-1"
-              isLoading={createTeam.isPending}
-            >
-              Create Team
-            </Button>
-          </div>
-        </form>
-      </Modal>
     </div>
   );
 };
