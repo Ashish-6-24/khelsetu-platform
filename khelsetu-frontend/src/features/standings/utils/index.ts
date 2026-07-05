@@ -2,7 +2,10 @@ import type { Standing } from '@features/standings/types';
 
 export const sortStandings = (standings: Standing[]): Standing[] => {
   return [...standings].sort(
-    (a, b) => b.points - a.points || (b.nrr ?? 0) - (a.nrr ?? 0),
+    (a, b) =>
+      b.points - a.points ||
+      (b.nrr ?? 0) - (a.nrr ?? 0) ||
+      a.teamName.localeCompare(b.teamName),
   );
 };
 
