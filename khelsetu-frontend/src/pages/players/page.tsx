@@ -1,5 +1,6 @@
 import { usePlayers } from '@features/players/hooks/usePlayers';
 import { useTeams } from '@features/teams/hooks/useTeams';
+import { PlayerCard } from '@features/teams/components/PlayerCard';
 import { Button } from '@shared/components/ui/Button';
 import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
 import { Input } from '@shared/components/ui/Input';
@@ -9,6 +10,7 @@ import { Tabs } from '@shared/components/ui/Tabs';
 import { Search, UserPlus } from 'lucide-react';
 import { useState } from 'react';
 
+// Position values must match backend enum — cricket (batsman, bowler, all-rounder, wicketkeeper) and football (goalkeeper, defender, midfielder, forward)
 const POSITION_TABS = [
   { id: 'all', label: 'All' },
   { id: 'batsman', label: 'Batsman' },
@@ -50,9 +52,11 @@ export const PlayersPage = () => {
 
   const { teams, isLoading: teamsLoading } = useTeams();
 
+  const isFormValid = newPlayer.name.trim() !== '' && newPlayer.teamId !== '';
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newPlayer.teamId) return;
+    if (!isFormValid) return;
     await createPlayer({
       name: newPlayer.name,
       jerseyNumber: newPlayer.jerseyNumber
@@ -184,7 +188,7 @@ export const PlayersPage = () => {
                 />
               </div>
               <div className="flex gap-3">
-                <Button type="submit" disabled={isCreating || teamsLoading}>
+                <Button type="submit" disabled={isCreating || teamsLoading || !isFormValid}>
                   {isCreating ? 'Registering...' : 'Register Player'}
                 </Button>
                 <Button
@@ -214,26 +218,7 @@ export const PlayersPage = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {players.map((player) => (
-            <Card key={player.id} className="hover:shadow-md transition-shadow">
-              <CardBody className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-[var(--bg-surface)] flex items-center justify-center">
-                    <span className="text-lg font-bold text-[var(--text-primary)]">
-                      {player.name.charAt(0)}
-                    </span>
-                  </div>
-                  <div>
-                    <div className="font-semibold text-[var(--text-primary)]">
-                      {player.name}
-                    </div>
-                    <div className="text-sm text-[var(--text-tertiary)]">
-                      {player.position ?? 'No position'}
-                      {player.jerseyNumber && ` · #${player.jerseyNumber}`}
-                    </div>
-                  </div>
-                </div>
-              </CardBody>
-            </Card>
+            <PlayerCard key={player.id} player={player} />
           ))}
         </div>
       )}
