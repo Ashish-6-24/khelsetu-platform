@@ -39,9 +39,16 @@ export function VenueForm({
     awayTeam: venue?.awayTeam ?? '',
   });
 
+  const [error, setError] = useState<string | null>(null);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await onSubmit(formData);
+    setError(null);
+    try {
+      await onSubmit(formData);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to save venue');
+    }
   };
 
   const toggleFacility = (facility: string) => {
@@ -83,6 +90,7 @@ export function VenueForm({
           <Input
             label="Capacity"
             type="number"
+            min={1}
             value={formData.capacity}
             onChange={(e) =>
               setFormData((prev) => ({
@@ -146,6 +154,12 @@ export function VenueForm({
               ))}
             </div>
           </div>
+
+          {error && (
+            <div className="text-sm text-red-600 dark:text-red-400">
+              {error}
+            </div>
+          )}
 
           <div className="flex gap-3 pt-4">
             <Button type="submit" disabled={isLoading}>
