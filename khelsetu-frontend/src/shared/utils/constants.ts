@@ -164,6 +164,12 @@ export const API_ENDPOINTS = {
     UPLOAD: '/media/upload',
     DELETE: (id: string) => `/media/${id}`,
   },
+  BRACKETS: {
+    GET: (tournamentId: string) => `/tournaments/${tournamentId}/bracket`,
+    SAVE: (tournamentId: string) => `/tournaments/${tournamentId}/bracket`,
+    UPDATE_MATCH: (tournamentId: string, matchId: string) =>
+      `/tournaments/${tournamentId}/bracket/matches/${matchId}`,
+  },
 } as const;
 
 export const WS_EVENTS = {

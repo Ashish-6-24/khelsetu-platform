@@ -6,13 +6,25 @@ import type { BracketData, BracketFormat, BracketTeam } from '../types';
 
 interface UseBracketManagerOptions {
   tournamentId: string;
+  initialFormat?: BracketFormat;
+  initialTeams?: BracketTeam[];
 }
 
 export function useBracketManager({
   tournamentId,
+  initialFormat = 'single-elimination',
+  initialTeams = [],
 }: UseBracketManagerOptions) {
   const queryClient = useQueryClient();
-  const [localBracket, setLocalBracket] = useState<BracketData | null>(null);
+  const [localBracket, setLocalBracket] = useState<BracketData | null>(() => {
+    if (initialTeams.length > 0) {
+      return bracketService.generateBracket(
+        initialFormat as 'single-elimination' | 'double-elimination' | 'round-robin',
+        initialTeams,
+      );
+    }
+    return null;
+  });
 
   const { data: savedBracket, isLoading } = useQuery({
     queryKey: ['bracket', tournamentId],
@@ -119,5 +131,7 @@ export function useBracketManager({
     isLoading,
     isGenerating: generateMutation.isPending,
     isUpdating: updateMatchMutation.isPending,
+    generateError: generateMutation.error,
+    updateError: updateMatchMutation.error,
   };
 }

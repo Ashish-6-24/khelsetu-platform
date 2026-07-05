@@ -1,4 +1,5 @@
 import { api } from '@lib/axios';
+import { API_ENDPOINTS } from '@shared/utils/constants';
 import type { BracketData, BracketTeam } from '../types';
 import {
   generateDoubleElimination,
@@ -28,21 +29,17 @@ export const bracketService = {
     bracket: BracketData,
   ): Promise<BracketData> => {
     const response = await api.post<BracketData>(
-      `/tournaments/${tournamentId}/bracket`,
+      API_ENDPOINTS.BRACKETS.SAVE(tournamentId),
       bracket,
     );
     return response.data;
   },
 
   loadBracket: async (tournamentId: string): Promise<BracketData | null> => {
-    try {
-      const response = await api.get<BracketData>(
-        `/tournaments/${tournamentId}/bracket`,
-      );
-      return response.data;
-    } catch {
-      return null;
-    }
+    const response = await api.get<BracketData>(
+      API_ENDPOINTS.BRACKETS.GET(tournamentId),
+    );
+    return response.data;
   },
 
   updateMatchResult: async (
@@ -53,7 +50,7 @@ export const bracketService = {
     scoreB: number | null,
   ): Promise<BracketData> => {
     const response = await api.patch<BracketData>(
-      `/tournaments/${tournamentId}/bracket/matches/${matchId}`,
+      API_ENDPOINTS.BRACKETS.UPDATE_MATCH(tournamentId, matchId),
       { winner, scoreA, scoreB },
     );
     return response.data;
