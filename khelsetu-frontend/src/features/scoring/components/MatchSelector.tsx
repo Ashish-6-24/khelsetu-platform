@@ -16,14 +16,6 @@ export function MatchSelector({ matches, onSelect }: MatchSelectorProps) {
           key={match.id}
           className="cursor-pointer"
           onClick={() => onSelect(match.id)}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              onSelect(match.id);
-            }
-          }}
         >
           <Card hover>
             <CardBody className="p-4">
@@ -31,11 +23,11 @@ export function MatchSelector({ matches, onSelect }: MatchSelectorProps) {
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="font-semibold text-[var(--text-primary)]">
-                      {match.teamA.name}
+                      {match.teamA?.name ?? 'TBD'}
                     </span>
                     <span className="text-[var(--text-tertiary)]">vs</span>
                     <span className="font-semibold text-[var(--text-primary)]">
-                      {match.teamB.name}
+                      {match.teamB?.name ?? 'TBD'}
                     </span>
                   </div>
                   <div className="flex items-center gap-3 mt-2 text-sm text-[var(--text-tertiary)]">
@@ -52,13 +44,7 @@ export function MatchSelector({ matches, onSelect }: MatchSelectorProps) {
                     </span>
                   </div>
                 </div>
-                <Button
-                  size="sm"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onSelect(match.id);
-                  }}
-                >
+                <Button size="sm" onClick={(e) => { e.stopPropagation(); onSelect(match.id); }}>
                   <Play className="w-4 h-4 mr-1" />
                   Score
                 </Button>

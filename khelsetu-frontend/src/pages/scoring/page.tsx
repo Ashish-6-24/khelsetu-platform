@@ -136,7 +136,15 @@ export const ScoringPage = () => {
         </div>
       )}
 
-      {matches && matches.length === 0 && (
+      {filteredMatches.length === 0 && (matches?.length ?? 0) > 0 && (
+        <div className="text-center py-12">
+          <p className="text-[var(--text-tertiary)]">
+            No {activeFilter !== 'all' ? activeFilter : ''} matches found
+          </p>
+        </div>
+      )}
+
+      {(matches?.length ?? 0) === 0 && (
         <div className="text-center py-12">
           <p className="text-[var(--text-tertiary)]">
             No matches yet. Create a tournament and add matches to start
