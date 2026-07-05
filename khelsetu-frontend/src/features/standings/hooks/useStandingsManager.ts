@@ -49,10 +49,13 @@ export function useStandingsManager({
 
   const updateAfterMatch = useCallback(
     async (winnerId: string, loserId: string, drawn: boolean = false) => {
+      const currentStandings =
+        queryClient.getQueryData<Standing[]>(['standings', tournamentId]) ?? [];
+
       const updates: Promise<Standing>[] = [];
 
       if (drawn) {
-        for (const standing of standings) {
+        for (const standing of currentStandings) {
           if (standing.teamId === winnerId || standing.teamId === loserId) {
             updates.push(
               standingsService.update(
@@ -68,7 +71,7 @@ export function useStandingsManager({
           }
         }
       } else {
-        for (const standing of standings) {
+        for (const standing of currentStandings) {
           if (standing.teamId === winnerId) {
             updates.push(
               standingsService.update(tournamentId, winnerId, {
@@ -88,10 +91,15 @@ export function useStandingsManager({
         }
       }
 
-      await Promise.all(updates);
-      queryClient.invalidateQueries({ queryKey: ['standings', tournamentId] });
+      try {
+        await Promise.all(updates);
+        queryClient.invalidateQueries({ queryKey: ['standings', tournamentId] });
+      } catch (error) {
+        console.error('Failed to update standings:', error);
+        throw error;
+      }
     },
-    [standings, tournamentId, queryClient],
+    [tournamentId, queryClient],
   );
 
   const sortedStandings = useMemo(() => {
