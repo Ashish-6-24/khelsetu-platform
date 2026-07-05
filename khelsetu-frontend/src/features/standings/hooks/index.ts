@@ -28,4 +28,5 @@ export const useStandings = (tournamentId: string) => {
   };
 };
 
+export { useStandingsManager } from './useStandingsManager';
 export { useStandingsWebSocket } from './useStandingsWebSocket';
