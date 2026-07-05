@@ -91,14 +91,31 @@ export const API_ENDPOINTS = {
     DETAIL: (id: string) => `/teams/${id}`,
     CREATE: '/teams',
     UPDATE: (id: string) => `/teams/${id}`,
+    BY_TOURNAMENT: (tournamentId: string) =>
+      `/tournaments/${tournamentId}/teams`,
   },
   PLAYERS: {
     LIST: '/players',
     DETAIL: (id: string) => `/players/${id}`,
     CREATE: '/players',
     UPDATE: (id: string) => `/players/${id}`,
+    BY_TEAM: (teamId: string) => `/teams/${teamId}/players`,
   },
-  STANDINGS: (tournamentId: string) => `/tournaments/${tournamentId}/standings`,
+  STANDINGS: {
+    LIST: (tournamentId: string) => `/tournaments/${tournamentId}/standings`,
+    CREATE: (tournamentId: string) => `/tournaments/${tournamentId}/standings`,
+    UPDATE: (tournamentId: string, teamId: string) =>
+      `/tournaments/${tournamentId}/standings/${teamId}`,
+    BULK_CREATE: (tournamentId: string) =>
+      `/tournaments/${tournamentId}/standings/bulk`,
+  },
+  VENUES: {
+    LIST: '/venues',
+    DETAIL: (id: string) => `/venues/${id}`,
+    CREATE: '/venues',
+    UPDATE: (id: string) => `/venues/${id}`,
+    DELETE: (id: string) => `/venues/${id}`,
+  },
   NOTIFICATIONS: {
     LIST: '/notifications',
     DETAIL: (id: string) => `/notifications/${id}`,

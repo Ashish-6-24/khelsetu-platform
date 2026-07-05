@@ -122,3 +122,42 @@ export interface ScoreUpdateInput {
   teamAInnings?: Innings[];
   teamBInnings?: Innings[];
 }
+
+export interface Venue {
+  id: string;
+  name: string;
+  location: string;
+  capacity: number;
+  facilities: string[];
+  status: 'available' | 'occupied' | 'maintenance';
+  homeTeam?: string;
+  awayTeam?: string;
+}
+
+export interface Standing {
+  tournamentId: string;
+  teamId: string;
+  teamName: string;
+  played: number;
+  won: number;
+  lost: number;
+  drawn: number;
+  points: number;
+  nrr?: number;
+  position: number;
+}
+
+export interface CreateStandingInput {
+  tournamentId: string;
+  teamId: string;
+  teamName: string;
+}
+
+export interface UpdateStandingInput {
+  played?: number;
+  won?: number;
+  lost?: number;
+  drawn?: number;
+  points?: number;
+  nrr?: number;
+}
