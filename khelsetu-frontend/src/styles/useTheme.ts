@@ -15,9 +15,6 @@ export function useTheme() {
   useEffect(() => {
     const root = document.documentElement;
 
-    // Sync immediately on mount / theme change
-    setIsDark(root.classList.contains('dark'));
-
     const observer = new MutationObserver(() => {
       setIsDark(root.classList.contains('dark'));
     });

@@ -174,9 +174,6 @@ export const SettingsPage = () => {
   const [showPasswordForm, setShowPasswordForm] = useState(false);
 
   // Track unsaved changes
-  const [profileDirty, setProfileDirty] = useState(false);
-  const [passwordDirty, setPasswordDirty] = useState(false);
-  const hasUnsavedChanges = profileDirty || passwordDirty;
 
   const {
     register: registerProfile,
@@ -200,20 +197,13 @@ export const SettingsPage = () => {
     resolver: zodResolver(passwordSchema),
   });
 
-  useEffect(() => {
-    setProfileDirty(isProfileFormDirty);
-  }, [isProfileFormDirty]);
-
-  useEffect(() => {
-    setPasswordDirty(isPasswordFormDirty);
-  }, [isPasswordFormDirty]);
+  const hasUnsavedChanges = isProfileFormDirty || isPasswordFormDirty;
 
   const updateProfileMutation = useMutation({
     mutationFn: (data: Partial<User>) => authService.updateProfile(data),
     onSuccess: (updatedUser) => {
       setUser(updatedUser);
       resetProfile({ name: updatedUser.name, phone: updatedUser.phone ?? '' });
-      setProfileDirty(false);
       addToast({ type: 'success', message: 'Profile updated successfully' });
     },
     onError: () => {
@@ -232,7 +222,6 @@ export const SettingsPage = () => {
     onSuccess: () => {
       addToast({ type: 'success', message: 'Password updated successfully' });
       resetPassword();
-      setPasswordDirty(false);
       setShowPasswordForm(false);
     },
     onError: () => {
@@ -250,7 +239,6 @@ export const SettingsPage = () => {
 
   const handleResetProfile = useCallback(() => {
     resetProfile({ name: user?.name ?? '', phone: user?.phone ?? '' });
-    setProfileDirty(false);
   }, [resetProfile, user?.name, user?.phone]);
 
   return (
@@ -334,7 +322,7 @@ export const SettingsPage = () => {
             <div className="flex items-center gap-2 pt-2">
               <SaveButton
                 isLoading={isProfileSubmitting}
-                hasChanges={profileDirty}
+                hasChanges={isProfileFormDirty}
                 onSuccess={() =>
                   addToast({
                     type: 'success',
@@ -347,7 +335,7 @@ export const SettingsPage = () => {
                 variant="ghost"
                 size="md"
                 onClick={handleResetProfile}
-                disabled={!profileDirty}
+                disabled={!isProfileFormDirty}
               >
                 Reset
               </Button>
@@ -419,7 +407,7 @@ export const SettingsPage = () => {
               <div className="flex items-center gap-2 pt-2">
                 <SaveButton
                   isLoading={isPasswordSubmitting}
-                  hasChanges={passwordDirty}
+                  hasChanges={isPasswordFormDirty}
                   label="Update Password"
                   onSuccess={() => {
                     addToast({
@@ -437,7 +425,6 @@ export const SettingsPage = () => {
                   onClick={() => {
                     setShowPasswordForm(false);
                     resetPassword();
-                    setPasswordDirty(false);
                   }}
                 >
                   Cancel
