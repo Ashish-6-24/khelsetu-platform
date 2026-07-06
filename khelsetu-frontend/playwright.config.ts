@@ -67,6 +67,13 @@ export default defineConfig({
       dependencies: ['setup'],
     },
 
+    // Smoke tests — critical path
+    {
+      name: 'smoke',
+      testMatch: /smoke\//,
+      use: { ...devices['Desktop Chrome'] },
+    },
+
     // Auth setup
     {
       name: 'setup',
