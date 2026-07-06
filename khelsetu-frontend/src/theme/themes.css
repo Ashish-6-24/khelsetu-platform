@@ -1,0 +1,214 @@
+/*
+ * KhelSetu v2 — "Quiet Authority" brand tokens
+ * Maroon / Navy / Gold
+ *
+ * Light and dark themes expose the same semantic tokens. Components consume
+ * `bg-brand-primary`, `text-secondary`, etc. — never raw hex.
+ */
+
+:root {
+  /* Brand */
+  --brand-primary: #7f1d1d; /* maroon-800 */
+  --brand-primary-hover: #991b1b; /* maroon-900 */
+  --brand-primary-active: #5b1414; /* maroon-950 */
+  --brand-primary-soft: #fef2f2; /* maroon-50 */
+  --brand-primary-ink: #ffffff;
+
+  --brand-secondary: #1e293b; /* slate-800 */
+  --brand-secondary-soft: #f1f5f9; /* slate-100 */
+  --brand-secondary-ink: #ffffff;
+
+  --brand-accent: #854d0e; /* dark gold — yellow-800, 5.77:1 on white */
+  --brand-accent-hover: #713f12;
+  --brand-accent-soft: #fef3c7; /* amber-100 */
+  --brand-accent-ink: #1a0a0a;
+
+  /* Surfaces */
+  --bg-canvas: #fafaf9; /* stone-50 */
+  --bg-app: #fafaf9; /* alias for bg-canvas — used in layout components */
+  --bg-surface: #ffffff;
+  --bg-surface-2: #f9fafb;
+  --bg-surface-3: #f5f5f4; /* stone-100 */
+  --bg-surface-raised: #ffffff;
+  --bg-surface-sunken: #f5f5f4; /* stone-100 */
+  --bg-elevated: #ffffff;
+  --bg-inverse: #0f172a; /* slate-900 */
+  --bg-glass: rgba(255, 255, 255, 0.7);
+  --bg-glass-strong: rgba(255, 255, 255, 0.88);
+
+  /* Text */
+  --text-primary: #0f172a; /* slate-900 */
+  --text-secondary: #475569; /* slate-600 */
+  --text-tertiary: #596879; /* custom — passes WCAG AA 4.5:1 on stone-50 and stone-100 */
+  --text-muted: #596879; /* alias for text-tertiary */
+  --text-on-brand: #ffffff;
+  --text-on-primary: #ffffff;
+  --text-on-accent: #1a0a0a;
+  --text-link: #7f1d1d;
+
+  /* Borders */
+  --border-subtle: #e7e5e4; /* stone-200 */
+  --border-default: #cbd5e1; /* stone-300 — alias for border-strong */
+  --border-strong: #d6d3d1; /* stone-300 */
+  --border-brand: #7f1d1d;
+
+  /* Functional */
+  --color-live: #b91c1c; /* red-700 — 5.74:1 on white, 5.04:1 on live-soft */
+  --color-live-soft: #fef2f2;
+  --color-success: #15803d; /* green-700 */
+  --color-success-soft: #f0fdf4;
+  --color-warning: #b45309; /* amber-700 */
+  --color-warning-soft: #fffbeb;
+  --color-danger: #b91c1c; /* red-700 */
+  --color-danger-soft: #fef2f2;
+  --color-info: #0369a1; /* sky-700 */
+  --color-info-soft: #f0f9ff;
+
+  /* Brand backgrounds — same as brand in light mode, dark maroon in dark */
+  --brand-primary-bg: #7f1d1d;
+  --brand-primary-bg-hover: #991b1b;
+  --brand-primary-bg-active: #5b1414;
+
+  /* Sport accents (never used for primary CTAs) */
+  --sport-cricket: #15803d;
+  --sport-football: #1e40af;
+  --sport-volleyball: #b45309;
+  --sport-basketball: #c2410c;
+
+  /* Shadows */
+  --shadow-color: 215 25% 27%;
+  --shadow-xs: 0 1px 2px rgb(15 23 42 / 0.04);
+  --shadow-sm: 0 1px 3px rgb(15 23 42 / 0.06), 0 1px 2px rgb(15 23 42 / 0.04);
+  --shadow-md:
+    0 4px 8px -2px rgb(15 23 42 / 0.06), 0 2px 4px -2px rgb(15 23 42 / 0.04);
+  --shadow-lg:
+    0 12px 24px -6px rgb(15 23 42 / 0.08), 0 4px 8px -2px rgb(15 23 42 / 0.05);
+  --shadow-xl:
+    0 24px 48px -12px rgb(15 23 42 / 0.12), 0 8px 16px -4px rgb(15 23 42 / 0.06);
+  --shadow-brand: 0 8px 24px -8px rgb(127 29 29 / 0.25);
+  --shadow-gold: 0 8px 24px -8px rgb(184 134 11 / 0.35);
+  --shadow-glow:
+    0 0 0 1px rgb(127 29 29 / 0.18), 0 12px 40px -8px rgb(127 29 29 / 0.35);
+
+  /* Focus ring */
+  --ring-focus: 127 29 29;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+
+  /* Motion */
+  --motion-instant: 100ms;
+  --motion-fast: 180ms;
+  --motion-base: 240ms;
+  --motion-slow: 400ms;
+  --motion-page: 500ms;
+  --motion-stagger: 60ms;
+
+  /* Legacy aliases (kept for components still using old names) */
+  --color-primary: var(--brand-primary);
+  --color-primary-dark: var(--brand-primary-hover);
+  --color-secondary: var(--brand-secondary);
+  --color-success: #15803d;
+  --color-warning: #b45309;
+  --color-error: var(--color-danger);
+  --color-info: #0369a1;
+  --bg-primary: var(--bg-surface);
+  --bg-secondary: var(--bg-canvas);
+  --bg-tertiary: var(--bg-surface-sunken);
+  --border-color: var(--border-subtle);
+  --shadow: var(--shadow-sm);
+}
+
+.dark {
+  /* Brand — brighter maroon for dark backgrounds, NOT pink */
+  --brand-primary: #dc2626; /* red-600 — visible maroon-red on dark */
+  --brand-primary-hover: #ef4444; /* red-500 — brighter on hover */
+  --brand-primary-active: #b91c1c; /* red-700 — deeper on active */
+  --brand-primary-soft: rgb(127 29 29 / 0.25);
+  --brand-primary-ink: #ffffff;
+
+  --brand-secondary: #f1f5f9; /* slate-100 */
+  --brand-secondary-soft: #1e293b;
+  --brand-secondary-ink: #0f172a;
+
+  --brand-accent: #f0c95b; /* warmer gold for dark mode */
+  --brand-accent-hover: #f5d77a;
+  --brand-accent-soft: rgb(184 134 11 / 0.2);
+  --brand-accent-ink: #1a0a0a;
+
+  /* Surfaces — slightly cooler tones */
+  --bg-canvas: #0a0a0f;
+  --bg-app: #0a0a0f; /* alias for bg-canvas */
+  --bg-surface: #0f1420;
+  --bg-surface-2: #161d2e;
+  --bg-surface-3: #1e293b;
+  --bg-surface-raised: #161d2e;
+  --bg-surface-sunken: #080c14;
+  --bg-elevated: #1a2136;
+  --bg-inverse: #fafaf9;
+  --bg-glass: rgba(15, 20, 32, 0.85);
+  --bg-glass-strong: rgba(15, 20, 32, 0.92);
+
+  /* Text */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --text-muted: #94a3b8; /* alias for text-tertiary */
+  /* Text on brand — white for contrast */
+  --text-on-brand: #ffffff;
+  --text-on-primary: #ffffff;
+  --text-on-accent: #1a0a0a;
+  --text-link: #f87171; /* red-400 — readable on dark */
+
+  /* Borders — semi-transparent for depth */
+  --border-subtle: rgba(148, 163, 184, 0.08);
+  --border-default: rgba(148, 163, 184, 0.15);
+  --border-strong: rgba(148, 163, 184, 0.25);
+  --border-brand: #dc2626;
+
+  /* Functional */
+  --color-live: #f87171;
+  --color-live-soft: rgb(127 29 29 / 0.18);
+  --color-success: #4ade80;
+  --color-success-soft: rgb(21 128 61 / 0.18);
+  --color-warning: #fbbf24;
+  --color-warning-soft: rgb(180 83 9 / 0.18);
+  --color-danger: #f87171;
+  --color-danger-soft: rgb(185 28 28 / 0.2);
+  --color-info: #38bdf8;
+  --color-info-soft: rgb(3 105 161 / 0.18);
+
+  /* Brand backgrounds — dark maroon even in dark mode (not pink) */
+  --brand-primary-bg: #6b1515;
+  --brand-primary-bg-hover: #8b1c1c;
+  --brand-primary-bg-active: #521010;
+
+  /* Sport accents (dark mode is slightly brighter) */
+  --sport-cricket: #4ade80;
+  --sport-football: #60a5fa;
+  --sport-volleyball: #fbbf24;
+  --sport-basketball: #fb923c;
+
+  /* Shadows — tinted dark blue for premium feel */
+  --shadow-color: 210 40% 6%;
+  --shadow-xs: 0 1px 2px rgb(8 11 20 / 0.3);
+  --shadow-sm: 0 1px 3px rgb(8 11 20 / 0.4), 0 1px 2px rgb(8 11 20 / 0.3);
+  --shadow-md:
+    0 4px 8px -2px rgb(8 11 20 / 0.5), 0 2px 4px -2px rgb(8 11 20 / 0.3);
+  --shadow-lg:
+    0 12px 24px -6px rgb(8 11 20 / 0.6), 0 4px 8px -2px rgb(8 11 20 / 0.4);
+  --shadow-xl:
+    0 24px 48px -12px rgb(8 11 20 / 0.7), 0 8px 16px -4px rgb(8 11 20 / 0.5);
+  /* Shadows — use actual maroon, not pink */
+  --shadow-brand: 0 8px 24px -8px rgb(127 29 29 / 0.4);
+  --shadow-gold: 0 8px 24px -8px rgb(240 201 91 / 0.35);
+  --shadow-glow:
+    0 0 0 1px rgb(220 38 38 / 0.3), 0 12px 40px -8px rgb(127 29 29 / 0.5);
+
+  /* Focus ring — red, not pink */
+  --ring-focus: 220 38 38;
+}

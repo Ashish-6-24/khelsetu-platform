@@ -10,6 +10,7 @@ import { describe, expect, it } from 'vitest';
 
 const mockStandings: Standing[] = [
   {
+    tournamentId: 'tour1',
     teamId: 't1',
     teamName: 'Team A',
     played: 10,
@@ -18,8 +19,10 @@ const mockStandings: Standing[] = [
     drawn: 1,
     points: 15,
     nrr: 1.25,
+    position: 1,
   },
   {
+    tournamentId: 'tour1',
     teamId: 't2',
     teamName: 'Team B',
     played: 10,
@@ -28,8 +31,10 @@ const mockStandings: Standing[] = [
     drawn: 1,
     points: 13,
     nrr: 0.75,
+    position: 2,
   },
   {
+    tournamentId: 'tour1',
     teamId: 't3',
     teamName: 'Team C',
     played: 10,
@@ -38,8 +43,10 @@ const mockStandings: Standing[] = [
     drawn: 1,
     points: 11,
     nrr: -0.5,
+    position: 3,
   },
   {
+    tournamentId: 'tour1',
     teamId: 't4',
     teamName: 'Team D',
     played: 10,
@@ -48,8 +55,10 @@ const mockStandings: Standing[] = [
     drawn: 1,
     points: 9,
     nrr: -1.0,
+    position: 4,
   },
   {
+    tournamentId: 'tour1',
     teamId: 't5',
     teamName: 'Team E',
     played: 10,
@@ -58,6 +67,7 @@ const mockStandings: Standing[] = [
     drawn: 1,
     points: 7,
     nrr: -1.5,
+    position: 5,
   },
 ];
 
@@ -71,6 +81,7 @@ describe('sortStandings', () => {
   it('should use NRR as tiebreaker when points are equal', () => {
     const tiedStandings: Standing[] = [
       {
+        tournamentId: 'tour1',
         teamId: 't1',
         teamName: 'Team A',
         played: 10,
@@ -79,8 +90,10 @@ describe('sortStandings', () => {
         drawn: 0,
         points: 10,
         nrr: 0.5,
+        position: 1,
       },
       {
+        tournamentId: 'tour1',
         teamId: 't2',
         teamName: 'Team B',
         played: 10,
@@ -89,8 +102,10 @@ describe('sortStandings', () => {
         drawn: 0,
         points: 10,
         nrr: 1.0,
+        position: 2,
       },
       {
+        tournamentId: 'tour1',
         teamId: 't3',
         teamName: 'Team C',
         played: 10,
@@ -99,6 +114,7 @@ describe('sortStandings', () => {
         drawn: 0,
         points: 10,
         nrr: -0.5,
+        position: 3,
       },
     ];
     const sorted = sortStandings(tiedStandings);
@@ -110,6 +126,7 @@ describe('sortStandings', () => {
   it('should handle missing NRR as 0', () => {
     const standingsWithoutNRR: Standing[] = [
       {
+        tournamentId: 'tour1',
         teamId: 't1',
         teamName: 'Team A',
         played: 5,
@@ -117,8 +134,10 @@ describe('sortStandings', () => {
         lost: 2,
         drawn: 0,
         points: 6,
+        position: 1,
       },
       {
+        tournamentId: 'tour1',
         teamId: 't2',
         teamName: 'Team B',
         played: 5,
@@ -127,6 +146,7 @@ describe('sortStandings', () => {
         drawn: 0,
         points: 6,
         nrr: 0.5,
+        position: 2,
       },
     ];
     const sorted = sortStandings(standingsWithoutNRR);
@@ -194,6 +214,7 @@ describe('isQualified', () => {
 describe('getTeamForm', () => {
   it('should return empty array for team with no matches', () => {
     const standing: Standing = {
+      tournamentId: 'tour1',
       teamId: 't1',
       teamName: 'Team A',
       played: 0,
@@ -201,12 +222,14 @@ describe('getTeamForm', () => {
       lost: 0,
       drawn: 0,
       points: 0,
+      position: 1,
     };
     expect(getTeamForm(standing)).toEqual([]);
   });
 
   it('should return form string based on wins/losses/draws', () => {
     const standing: Standing = {
+      tournamentId: 'tour1',
       teamId: 't1',
       teamName: 'Team A',
       played: 5,
@@ -214,6 +237,7 @@ describe('getTeamForm', () => {
       lost: 1,
       drawn: 1,
       points: 7,
+      position: 1,
     };
     const form = getTeamForm(standing, 5);
     expect(form.length).toBeLessThanOrEqual(5);
@@ -224,6 +248,7 @@ describe('getTeamForm', () => {
 
   it('should limit form to last N matches', () => {
     const standing: Standing = {
+      tournamentId: 'tour1',
       teamId: 't1',
       teamName: 'Team A',
       played: 10,
@@ -231,6 +256,7 @@ describe('getTeamForm', () => {
       lost: 2,
       drawn: 0,
       points: 16,
+      position: 1,
     };
     const form = getTeamForm(standing, 3);
     expect(form.length).toBe(3);

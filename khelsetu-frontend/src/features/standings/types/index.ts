@@ -1,13 +1,6 @@
-export interface Standing {
-  teamId: string;
-  teamName: string;
-  played: number;
-  won: number;
-  lost: number;
-  drawn: number;
-  points: number;
-  nrr?: number;
-}
+import type { Standing } from '@shared/types/tournament';
+
+export type { Standing };
 
 export interface StandingUpdate {
   tournamentId: string;

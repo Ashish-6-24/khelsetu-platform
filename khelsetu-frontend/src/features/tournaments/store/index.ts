@@ -1,1 +1,1 @@
-export { useTournamentStore } from '@store/tournamentStore';
+export { useTournamentStore } from '@state/tournamentStore';

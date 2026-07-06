@@ -1,4 +1,4 @@
-import { Skeleton } from '@shared/components/ui/Skeleton';
+import { Skeleton } from '@shared/ui/Skeleton';
 
 interface SkeletonMatchCardProps {
   compact?: boolean;

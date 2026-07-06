@@ -1,4 +1,4 @@
-import { LoginPage } from '@pages/auth/login/page';
+import { LoginPage } from '@routes/auth/login/page';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 

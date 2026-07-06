@@ -1,6 +1,6 @@
-import { Button } from '@shared/components/ui/Button';
-import { Modal } from '@shared/components/ui/Modal';
 import type { FootballEvent } from '@shared/types/scoring';
+import { Button } from '@shared/ui/Button';
+import { Modal } from '@shared/ui/Modal';
 
 import { useState } from 'react';
 
@@ -154,6 +154,7 @@ export const CardButtons = ({
               onClick={handleSubmit}
               disabled={!playerId}
               className="flex-1"
+              aria-label="Record card"
             >
               Record Card
             </Button>

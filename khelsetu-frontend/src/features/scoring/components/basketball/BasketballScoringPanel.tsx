@@ -3,9 +3,9 @@ import {
   getEventTypeLabel,
   getPointsForEventType,
 } from '@features/scoring/utils/basketball';
-import { Button } from '@shared/components/ui/Button';
-import { Card, CardBody } from '@shared/components/ui/Card';
 import type { BasketballEvent, BasketballScore } from '@shared/types/scoring';
+import { Button } from '@shared/ui/Button';
+import { Card, CardBody } from '@shared/ui/Card';
 import { motion } from 'framer-motion';
 
 import { useState } from 'react';

@@ -1,5 +1,5 @@
-import type { LiveMatchEvent } from '@features/live-events/types';
-import { generateMatchReport } from '@features/match-reports/utils/reportGenerator';
+import type { LiveMatchEvent } from '@features/events/types';
+import { generateMatchReport } from '@features/reports/match/utils/reportGenerator';
 import { describe, expect, it } from 'vitest';
 
 describe('Report Generator', () => {

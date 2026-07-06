@@ -1,4 +1,4 @@
-import { ROLE_PERMISSIONS } from '@features/user-roles/types';
+import { ROLE_PERMISSIONS } from '@features/access-control/types';
 import { describe, expect, it } from 'vitest';
 
 const hasPermission = (

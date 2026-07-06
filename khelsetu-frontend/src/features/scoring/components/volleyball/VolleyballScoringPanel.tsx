@@ -1,7 +1,7 @@
 import { getEventTypeIcon } from '@features/scoring/utils/volleyball';
-import { Button } from '@shared/components/ui/Button';
-import { Card, CardBody } from '@shared/components/ui/Card';
 import type { VolleyballEvent, VolleyballScore } from '@shared/types/scoring';
+import { Button } from '@shared/ui/Button';
+import { Card, CardBody } from '@shared/ui/Card';
 import { motion } from 'framer-motion';
 
 interface VolleyballScoringPanelProps {

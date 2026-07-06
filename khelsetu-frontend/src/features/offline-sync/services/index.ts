@@ -1,5 +1,6 @@
 import type { SyncEntry } from '@features/offline-sync/types';
 import { axiosInstance } from '@lib/axios';
+import { normalizeObject } from '@shared/utils/normalize';
 
 const endpointMap: Record<SyncEntry['type'], string> = {
   score: '/scores',
@@ -59,6 +60,11 @@ export const offlineSyncService = {
     total: number;
   }> => {
     const { data } = await axiosInstance.get('/sync/stats');
-    return data;
+    return (
+      normalizeObject<{ pending: number; failed: number; total: number }>(
+        data,
+        { pending: 0, failed: 0, total: 0 },
+      ) ?? { pending: 0, failed: 0, total: 0 }
+    );
   },
 };

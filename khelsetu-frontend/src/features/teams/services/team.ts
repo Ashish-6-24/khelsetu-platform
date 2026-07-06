@@ -1,6 +1,7 @@
 import { api } from '@lib/axios';
-import type { Player, Team } from '@shared/types/tournament';
+import type { Team } from '@shared/types/tournament';
 import { API_ENDPOINTS } from '@shared/utils/constants';
+import { normalizeArray, normalizeObject } from '@shared/utils/normalize';
 
 export interface CreateTeamInput {
   name: string;
@@ -17,30 +18,15 @@ export interface UpdateTeamInput {
   logo?: string;
 }
 
-export interface CreatePlayerInput {
-  name: string;
-  teamId: string;
-  jerseyNumber?: number;
-  position?: string;
-}
-
-export interface UpdatePlayerInput {
-  name?: string;
-  jerseyNumber?: number;
-  position?: string;
-}
-
 export const teamService = {
   getAll: async (params?: Record<string, string>) => {
-    const response = await api.get<Team[]>(API_ENDPOINTS.TEAMS.LIST, {
-      params,
-    });
-    return response.data;
+    const response = await api.get(API_ENDPOINTS.TEAMS.LIST, { params });
+    return normalizeArray<Team>(response.data);
   },
 
   getById: async (id: string) => {
-    const response = await api.get<Team>(API_ENDPOINTS.TEAMS.DETAIL(id));
-    return response.data;
+    const response = await api.get(API_ENDPOINTS.TEAMS.DETAIL(id));
+    return normalizeObject<Team>(response.data);
   },
 
   create: async (data: CreateTeamInput) => {
@@ -58,45 +44,7 @@ export const teamService = {
   },
 
   getByTournament: async (tournamentId: string) => {
-    const response = await api.get<Team[]>(
-      `/tournaments/${tournamentId}/teams`,
-    );
-    return response.data;
-  },
-};
-
-export const playerService = {
-  getAll: async (params?: Record<string, string>) => {
-    const response = await api.get<Player[]>(API_ENDPOINTS.PLAYERS.LIST, {
-      params,
-    });
-    return response.data;
-  },
-
-  getById: async (id: string) => {
-    const response = await api.get<Player>(API_ENDPOINTS.PLAYERS.DETAIL(id));
-    return response.data;
-  },
-
-  create: async (data: CreatePlayerInput) => {
-    const response = await api.post<Player>(API_ENDPOINTS.PLAYERS.CREATE, data);
-    return response.data;
-  },
-
-  update: async (id: string, data: UpdatePlayerInput) => {
-    const response = await api.patch<Player>(
-      API_ENDPOINTS.PLAYERS.UPDATE(id),
-      data,
-    );
-    return response.data;
-  },
-
-  delete: async (id: string) => {
-    await api.delete(API_ENDPOINTS.PLAYERS.DETAIL(id));
-  },
-
-  getByTeam: async (teamId: string) => {
-    const response = await api.get<Player[]>(`/teams/${teamId}/players`);
-    return response.data;
+    const response = await api.get(`/tournaments/${tournamentId}/teams`);
+    return normalizeArray<Team>(response.data);
   },
 };

@@ -6,27 +6,24 @@ import type {
 } from '@features/billing/types';
 import { axiosInstance } from '@lib/axios';
 import { API_ENDPOINTS } from '@shared/utils/constants';
+import { normalizeArray, normalizeObject } from '@shared/utils/normalize';
 
 export const billingService = {
   getPlans: async (): Promise<Plan[]> => {
-    const { data } = await axiosInstance.get<Plan[]>(
-      API_ENDPOINTS.BILLING.PLANS,
-    );
-    return data;
+    const { data } = await axiosInstance.get(API_ENDPOINTS.BILLING.PLANS);
+    return normalizeArray<Plan>(data);
   },
 
   getSubscription: async (): Promise<Subscription | null> => {
-    const { data } = await axiosInstance.get<Subscription>(
+    const { data } = await axiosInstance.get(
       API_ENDPOINTS.BILLING.SUBSCRIPTION,
     );
-    return data;
+    return normalizeObject<Subscription>(data);
   },
 
   getInvoices: async (): Promise<Invoice[]> => {
-    const { data } = await axiosInstance.get<Invoice[]>(
-      API_ENDPOINTS.BILLING.INVOICES,
-    );
-    return data;
+    const { data } = await axiosInstance.get(API_ENDPOINTS.BILLING.INVOICES);
+    return normalizeArray<Invoice>(data);
   },
 
   updatePlan: async (planId: string): Promise<Subscription> => {
@@ -42,10 +39,10 @@ export const billingService = {
   },
 
   getPaymentMethods: async (): Promise<PaymentMethod[]> => {
-    const { data } = await axiosInstance.get<PaymentMethod[]>(
+    const { data } = await axiosInstance.get(
       API_ENDPOINTS.BILLING.PAYMENT_METHODS,
     );
-    return data;
+    return normalizeArray<PaymentMethod>(data);
   },
 
   addPaymentMethod: async (

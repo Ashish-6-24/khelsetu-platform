@@ -1,13 +1,12 @@
 import type { Notification } from '@features/notifications/types';
 import { axiosInstance } from '@lib/axios';
 import { API_ENDPOINTS } from '@shared/utils/constants';
+import { normalizeArray } from '@shared/utils/normalize';
 
 export const notificationService = {
   getNotifications: async (): Promise<Notification[]> => {
-    const { data } = await axiosInstance.get<Notification[]>(
-      API_ENDPOINTS.NOTIFICATIONS.LIST,
-    );
-    return data;
+    const { data } = await axiosInstance.get(API_ENDPOINTS.NOTIFICATIONS.LIST);
+    return normalizeArray<Notification>(data);
   },
 
   markAsRead: async (id: string): Promise<void> => {

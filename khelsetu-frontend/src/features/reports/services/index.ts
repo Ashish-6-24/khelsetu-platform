@@ -4,6 +4,7 @@ import type {
   ReportType,
 } from '@features/reports/types';
 import { axiosInstance } from '@lib/axios';
+import { normalizeArray } from '@shared/utils/normalize';
 
 export const reportsService = {
   generateReport: async (
@@ -18,8 +19,8 @@ export const reportsService = {
   },
 
   getReports: async (): Promise<ReportData[]> => {
-    const { data } = await axiosInstance.get<ReportData[]>('/reports');
-    return data;
+    const { data } = await axiosInstance.get('/reports');
+    return normalizeArray<ReportData>(data);
   },
 
   exportReport: async (

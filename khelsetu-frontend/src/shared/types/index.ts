@@ -10,6 +10,8 @@ export type {
   Player,
   Match,
   Innings,
+  Venue,
+  Standing,
   TeamStats,
   PlayerStats,
   CreateTournamentInput,

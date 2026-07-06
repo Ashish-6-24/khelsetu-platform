@@ -1,5 +1,5 @@
 self.addEventListener('message', async (event) => {
-  if (event.origin && event.origin !== self.location.origin) {
+  if (!event.origin || event.origin !== self.location.origin) {
     return;
   }
   const { type, data } = event.data;

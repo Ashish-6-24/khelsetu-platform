@@ -3,9 +3,9 @@ import type {
   ReportData,
   ReportType,
 } from '@features/reports/types';
-import { Badge } from '@shared/components/ui/Badge';
-import { Button } from '@shared/components/ui/Button';
-import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
+import { Badge } from '@shared/ui/Badge';
+import { Button } from '@shared/ui/Button';
+import { Card, CardBody, CardHeader } from '@shared/ui/Card';
 import { BarChart3, Download, FileText, Table } from 'lucide-react';
 
 const reportIcons: Record<ReportType, React.ReactNode> = {
@@ -73,7 +73,7 @@ export const ReportCard = ({
               onClick={() => onExport(report.id, 'csv')}
               disabled={isExporting}
             >
-              <Download className="w-4 h-4 mr-1" />
+              <Download className="h-4 w-4" />
               CSV
             </Button>
             <Button
@@ -82,7 +82,7 @@ export const ReportCard = ({
               onClick={() => onExport(report.id, 'json')}
               disabled={isExporting}
             >
-              <Download className="w-4 h-4 mr-1" />
+              <Download className="h-4 w-4" />
               JSON
             </Button>
           </div>

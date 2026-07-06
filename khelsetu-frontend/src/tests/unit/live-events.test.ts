@@ -6,7 +6,7 @@ import {
   formatLiveMinute,
   getEventConfig,
   getSportEvents,
-} from '@features/live-events/utils/eventCreators';
+} from '@features/events/utils/eventCreators';
 import { describe, expect, it } from 'vitest';
 
 describe('Live Events Utils', () => {

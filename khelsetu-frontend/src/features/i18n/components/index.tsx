@@ -1,8 +1,8 @@
 import { useI18n } from '@features/i18n/hooks';
 import type { Language } from '@features/i18n/translations';
 import { languageNames } from '@features/i18n/translations';
-import { Button } from '@shared/components/ui/Button';
-import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
+import { Button } from '@shared/ui/Button';
+import { Card, CardBody, CardHeader } from '@shared/ui/Card';
 import { Globe } from 'lucide-react';
 
 export const LanguageSwitcher = () => {

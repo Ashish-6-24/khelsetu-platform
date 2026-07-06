@@ -1,6 +1,6 @@
-import { Badge, type BadgeVariant } from '@shared/components/ui/Badge';
-import { Card, CardBody } from '@shared/components/ui/Card';
 import type { Tournament } from '@shared/types/tournament';
+import { Badge, type BadgeVariant } from '@shared/ui/Badge';
+import { Card, CardBody } from '@shared/ui/Card';
 import { formatDate } from '@shared/utils/date';
 import { motion } from 'framer-motion';
 

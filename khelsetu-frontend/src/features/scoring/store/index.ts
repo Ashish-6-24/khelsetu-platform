@@ -1,1 +1,1 @@
-export { useScoringStore } from '@store/scoringStore';
+export { useScoringStore } from '@state/scoringStore';

@@ -9,8 +9,8 @@ import { StrictMode } from 'react';
 
 import './index.css';
 import { logger } from './lib/logger';
-import './styles/animations.css';
-import './styles/themes.css';
+import './theme/animations.css';
+import './theme/themes.css';
 
 window.addEventListener('unhandledrejection', (e) => {
   logger.error('Unhandled promise rejection:', e.reason);

@@ -1,5 +1,5 @@
 import { useReducedMotion } from '@features/accessibility';
-import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
+import { Card, CardBody, CardHeader } from '@shared/ui/Card';
 import { STORAGE_KEYS } from '@shared/utils/constants';
 import { ROUTES } from '@shared/utils/constants';
 import { clsx } from 'clsx';

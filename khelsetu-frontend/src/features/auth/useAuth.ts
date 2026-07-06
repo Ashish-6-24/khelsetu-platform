@@ -5,7 +5,7 @@ import {
 } from '@features/tournaments/services/tournament';
 import { logger } from '@lib/logger';
 import type { LoginCredentials, RegisterCredentials } from '@shared/types/auth';
-import { useAuthStore } from '@store/authStore';
+import { useAuthStore } from '@state/authStore';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useCallback } from 'react';

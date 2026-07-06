@@ -1,6 +1,7 @@
 import { MediaItem } from '@features/media-gallery/types';
 import { api } from '@lib/axios';
 import { API_ENDPOINTS } from '@shared/utils/constants';
+import { normalizeObject } from '@shared/utils/normalize';
 
 interface MediaResponse {
   data: MediaItem[];
@@ -9,10 +10,13 @@ interface MediaResponse {
 
 export const mediaService = {
   getAll: async (params?: Record<string, string>): Promise<MediaResponse> => {
-    const response = await api.get<MediaResponse>(API_ENDPOINTS.MEDIA.LIST, {
-      params,
-    });
-    return response.data;
+    const response = await api.get(API_ENDPOINTS.MEDIA.LIST, { params });
+    return (
+      normalizeObject<MediaResponse>(response.data, {
+        data: [],
+        total: 0,
+      }) ?? { data: [], total: 0 }
+    );
   },
 
   upload: async (

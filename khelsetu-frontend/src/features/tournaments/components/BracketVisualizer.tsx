@@ -1,6 +1,6 @@
-import { Badge } from '@shared/components/ui/Badge';
-import { Card, CardBody } from '@shared/components/ui/Card';
 import type { Match } from '@shared/types/tournament';
+import { Badge } from '@shared/ui/Badge';
+import { Card, CardBody } from '@shared/ui/Card';
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
 

@@ -1,6 +1,6 @@
 import type { SearchCategory, SearchResult } from '@features/search/types';
-import { Badge } from '@shared/components/ui/Badge';
-import { Card, CardBody } from '@shared/components/ui/Card';
+import { Badge } from '@shared/ui/Badge';
+import { Card, CardBody } from '@shared/ui/Card';
 import { Calendar, Search, Trophy, User, Users } from 'lucide-react';
 
 const categoryIcons: Record<SearchCategory, React.ReactNode> = {

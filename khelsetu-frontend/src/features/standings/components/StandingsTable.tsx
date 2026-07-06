@@ -1,10 +1,16 @@
 import { type Standing } from '@features/standings/types';
 import { isQualified, sortStandings } from '@features/standings/utils';
-import { Badge } from '@shared/components/ui/Badge';
-import { Card, CardBody } from '@shared/components/ui/Card';
-import { Skeleton } from '@shared/components/ui/Skeleton';
+import { Badge } from '@shared/ui/Badge';
+import { Card, CardBody } from '@shared/ui/Card';
+import { Skeleton } from '@shared/ui/Skeleton';
 import { motion } from 'framer-motion';
-import { ArrowDown, ArrowUp, Minus } from 'lucide-react';
+import {
+  ArrowDown,
+  ArrowDownAZ,
+  ArrowUp,
+  ArrowUpDown,
+  Minus,
+} from 'lucide-react';
 
 import { useMemo, useState } from 'react';
 
@@ -26,6 +32,7 @@ export const StandingsTable = ({
 }: StandingsTableProps) => {
   const [sortKey, setSortKey] = useState<SortKey>('points');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+  const [sortMode, setSortMode] = useState<'points' | 'alphabetical'>('points');
 
   const handleSort = (key: SortKey) => {
     if (sortKey === key) {
@@ -37,6 +44,11 @@ export const StandingsTable = ({
   };
 
   const sortedStandings = useMemo(() => {
+    if (sortMode === 'alphabetical') {
+      return [...standings].sort((a, b) =>
+        a.teamName.localeCompare(b.teamName),
+      );
+    }
     const sorted = [...standings].sort((a, b) => {
       const multiplier = sortDirection === 'asc' ? 1 : -1;
       const aVal = a[sortKey] ?? 0;
@@ -44,7 +56,7 @@ export const StandingsTable = ({
       return (aVal - bVal) * multiplier;
     });
     return sortKey === 'points' ? sortStandings(sorted) : sorted;
-  }, [standings, sortKey, sortDirection]);
+  }, [standings, sortKey, sortDirection, sortMode]);
 
   const getSortIcon = (key: SortKey) => {
     if (sortKey !== key)
@@ -87,6 +99,26 @@ export const StandingsTable = ({
   return (
     <Card>
       <CardBody className="p-0">
+        <div className="flex items-center justify-end px-4 pt-4">
+          <button
+            onClick={() =>
+              setSortMode(sortMode === 'points' ? 'alphabetical' : 'points')
+            }
+            className="flex items-center gap-1 px-3 py-1 rounded-lg text-sm bg-[var(--bg-surface)] border border-[var(--border-subtle)]"
+          >
+            {sortMode === 'points' ? (
+              <>
+                <ArrowUpDown className="w-4 h-4" />
+                By Points
+              </>
+            ) : (
+              <>
+                <ArrowDownAZ className="w-4 h-4" />
+                A-Z
+              </>
+            )}
+          </button>
+        </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>

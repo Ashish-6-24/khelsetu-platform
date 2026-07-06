@@ -1,6 +1,6 @@
 import type { User } from '@shared/types/auth';
-import { useAuthStore } from '@store/authStore';
-import { useUIStore } from '@store/uiStore';
+import { useAuthStore } from '@state/authStore';
+import { useUIStore } from '@state/uiStore';
 import { act, renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 

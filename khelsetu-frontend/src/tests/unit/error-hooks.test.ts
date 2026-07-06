@@ -1,7 +1,4 @@
-import {
-  useErrorHandler,
-  useNetworkStatus,
-} from '@shared/components/error/hooks';
+import { useErrorHandler, useNetworkStatus } from '@shared/ui/error/hooks';
 import { renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 

@@ -1,5 +1,5 @@
 import { useReducedMotion } from '@features/accessibility';
-import { Card, CardBody } from '@shared/components/ui/Card';
+import { Card, CardBody } from '@shared/ui/Card';
 import { clsx } from 'clsx';
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 

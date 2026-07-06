@@ -1,4 +1,4 @@
-import { Button } from '@shared/components/ui/Button';
+import { Button } from '@shared/ui/Button';
 import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 
