@@ -38,7 +38,7 @@ const getDateRange = (filter: string): { start: Date; end: Date } => {
 export const AnalyticsPage = () => {
   const [timeFilter, setTimeFilter] = useState('30d');
 
-  const { data: tournaments, isLoading: loadingTournaments } = useQuery<
+  const { data: tournaments = [], isLoading: loadingTournaments } = useQuery<
     Tournament[]
   >({
     queryKey: ['tournaments'],

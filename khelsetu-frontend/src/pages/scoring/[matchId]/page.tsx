@@ -9,16 +9,19 @@ import { matchService } from '@features/tournaments/services/tournament';
 import { Button } from '@shared/components/ui/Button';
 import { Card, CardBody } from '@shared/components/ui/Card';
 import { Skeleton } from '@shared/components/ui/Skeleton';
+import { ROUTES } from '@shared/utils/constants';
 import type { Match } from '@shared/types/tournament';
 import { useScoringStore } from '@store/scoringStore';
 import { useQuery } from '@tanstack/react-query';
+import { ArrowLeft } from 'lucide-react';
 
 import { useEffect } from 'react';
 
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const ScoringMatchPage = () => {
   const { matchId } = useParams<{ matchId: string }>();
+  const navigate = useNavigate();
   const {
     activeSport,
     setActiveMatch,
@@ -30,7 +33,7 @@ export const ScoringMatchPage = () => {
     basketball,
   } = useScoringStore();
 
-  const { data: match, isLoading } = useQuery<Match>({
+  const { data: match, isLoading } = useQuery<Match | null>({
     queryKey: ['match', matchId],
     queryFn: () => matchService.getById(matchId!),
     enabled: !!matchId,
@@ -78,14 +81,30 @@ export const ScoringMatchPage = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-            {match.teamA.name} vs {match.teamB.name}
-          </h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            {match.venue} &middot;{' '}
-            {sport.charAt(0).toUpperCase() + sport.slice(1)}
-          </p>
+        <div className="flex items-center gap-4">
+          <Button
+            variant="outline"
+            onClick={() => {
+              if (window.history.length > 1) {
+                navigate(-1);
+              } else {
+                navigate(ROUTES.SCORING);
+              }
+            }}
+            aria-label="Go back to scoring"
+          >
+            <ArrowLeft className="w-4 h-4 mr-1" />
+            Back
+          </Button>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+              {match.teamA.name} vs {match.teamB.name}
+            </h1>
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              {match.venue} &middot;{' '}
+              {sport.charAt(0).toUpperCase() + sport.slice(1)}
+            </p>
+          </div>
         </div>
         <MatchStatusIndicator status={match.status} />
       </div>

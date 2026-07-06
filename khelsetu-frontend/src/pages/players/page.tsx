@@ -1,12 +1,14 @@
 import { usePlayers } from '@features/players/hooks/usePlayers';
 import { useTeams } from '@features/teams/hooks/useTeams';
 import { PlayerCard } from '@features/teams/components/PlayerCard';
+import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 import { Button } from '@shared/components/ui/Button';
 import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
 import { Input } from '@shared/components/ui/Input';
 import { Select } from '@shared/components/ui/Select';
 import { Skeleton } from '@shared/components/ui/Skeleton';
 import { Tabs } from '@shared/components/ui/Tabs';
+import { motion } from 'framer-motion';
 import { Search, UserPlus } from 'lucide-react';
 import { useState } from 'react';
 
@@ -28,7 +30,9 @@ const POSITION_OPTIONS = POSITION_TABS.filter((t) => t.id !== 'all').map(
 );
 
 export const PlayersPage = () => {
+  const prefersReducedMotion = useReducedMotion();
   const [search, setSearch] = useState('');
+  const [searchFocused, setSearchFocused] = useState(false);
   const [position, setPosition] = useState('all');
   const [showRegistration, setShowRegistration] = useState(false);
   const [newPlayer, setNewPlayer] = useState({
@@ -71,12 +75,12 @@ export const PlayersPage = () => {
 
   if (isLoading) {
     return (
-      <div className="space-y-6">
-        <Skeleton className="h-8 w-40" />
-        <Skeleton className="h-10 w-full" />
+      <div className="space-y-6" aria-busy="true" aria-live="polite" aria-label="Loading players">
+        <Skeleton className="h-8 w-40" aria-hidden="true" />
+        <Skeleton className="h-10 w-full" aria-hidden="true" />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
-            <Skeleton key={i} className="h-48" />
+            <Skeleton key={i} className="h-48" aria-hidden="true" />
           ))}
         </div>
       </div>
@@ -90,17 +94,37 @@ export const PlayersPage = () => {
           <h1 className="text-2xl font-bold text-[var(--text-primary)]">
             Players
           </h1>
-          <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+          <div role="alert" className="mt-1 text-sm text-red-600 dark:text-red-400">
             Failed to load players: {error?.message ?? 'Unknown error'}
-          </p>
+          </div>
         </div>
       </div>
     );
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 12 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' as const } },
+  } as const;
+
+  const listVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.05 } },
+  } as const;
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 12 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' as const } },
+  } as const;
+
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <motion.div
+      variants={prefersReducedMotion ? undefined : containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-6"
+    >
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-[var(--text-primary)]">
             Players
@@ -109,28 +133,37 @@ export const PlayersPage = () => {
             {players.length} player{players.length !== 1 ? 's' : ''} registered
           </p>
         </div>
-        <Button onClick={() => setShowRegistration(true)}>
-          <UserPlus className="w-4 h-4 mr-2" />
+        <Button variant="create" leftIcon={<UserPlus className="h-4 w-4" />} onClick={() => setShowRegistration(true)}>
           Register Player
         </Button>
       </div>
 
-      <div className="flex flex-wrap items-center gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" />
+          <motion.div
+            animate={searchFocused ? { scale: 1.1 } : { scale: 1 }}
+            transition={{ duration: 0.2 }}
+            className="absolute left-3 top-1/2 -translate-y-1/2"
+          >
+            <Search className="w-4 h-4 text-[var(--text-tertiary)]" aria-hidden="true" />
+          </motion.div>
           <Input
             placeholder="Search players..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            onFocus={() => setSearchFocused(true)}
+            onBlur={() => setSearchFocused(false)}
             className="pl-10"
           />
         </div>
-        <Tabs
-          tabs={POSITION_TABS}
-          activeTab={position}
-          onChange={setPosition}
-          variant="pills"
-        />
+        <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+          <Tabs
+            tabs={POSITION_TABS}
+            activeTab={position}
+            onChange={setPosition}
+            variant="pills"
+          />
+        </div>
       </div>
 
       {showRegistration && (
@@ -188,7 +221,7 @@ export const PlayersPage = () => {
                 />
               </div>
               <div className="flex gap-3">
-                <Button type="submit" disabled={isCreating || teamsLoading || !isFormValid}>
+                <Button type="submit" variant="create" disabled={isCreating || teamsLoading || !isFormValid}>
                   {isCreating ? 'Registering...' : 'Register Player'}
                 </Button>
                 <Button
@@ -207,7 +240,7 @@ export const PlayersPage = () => {
       {players.length === 0 ? (
         <Card>
           <CardBody className="p-12 text-center">
-            <UserPlus className="w-12 h-12 mx-auto text-[var(--text-tertiary)] mb-4" />
+            <UserPlus className="w-12 h-12 mx-auto text-[var(--text-tertiary)] mb-4" aria-hidden="true" />
             <p className="text-[var(--text-tertiary)]">
               {search
                 ? 'No players match your search'
@@ -216,12 +249,19 @@ export const PlayersPage = () => {
           </CardBody>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <motion.div
+          variants={prefersReducedMotion ? undefined : listVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
           {players.map((player) => (
-            <PlayerCard key={player.id} player={player} />
+            <motion.div key={player.id} variants={prefersReducedMotion ? undefined : itemVariants}>
+              <PlayerCard player={player} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };

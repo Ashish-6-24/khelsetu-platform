@@ -8,7 +8,9 @@ import { Card, CardBody } from '@shared/components/ui/Card';
 import { Skeleton } from '@shared/components/ui/Skeleton';
 import { Tabs } from '@shared/components/ui/Tabs';
 import type { Match, Team, Tournament } from '@shared/types/tournament';
+import { ROUTES } from '@shared/utils/constants';
 import { useQuery } from '@tanstack/react-query';
+import { ArrowLeft } from 'lucide-react';
 
 import { useState } from 'react';
 
@@ -26,25 +28,25 @@ export const TournamentDetailPage = () => {
   const [activeTab, setActiveTab] = useState('matches');
 
   const { data: tournament, isLoading: loadingTournament } =
-    useQuery<Tournament>({
+    useQuery<Tournament | null>({
       queryKey: ['tournament', id],
       queryFn: () => tournamentService.getById(id!),
       enabled: !!id,
     });
 
-  const { data: matches, isLoading: loadingMatches } = useQuery<Match[]>({
+  const { data: matches = [], isLoading: loadingMatches } = useQuery<Match[]>({
     queryKey: ['tournament-matches', id],
     queryFn: () => tournamentService.getMatches(id!),
     enabled: !!id,
   });
 
-  const { data: teams, isLoading: loadingTeams } = useQuery<Team[]>({
+  const { data: teams = [], isLoading: loadingTeams } = useQuery<Team[]>({
     queryKey: ['tournament-teams', id],
     queryFn: () => tournamentService.getTeams(id!),
     enabled: !!id,
   });
 
-  const { data: standings, isLoading: loadingStandings } = useQuery<Standing[]>(
+  const { data: standings = [], isLoading: loadingStandings } = useQuery<Standing[]>(
     {
       queryKey: ['tournament-standings', id],
       queryFn: () => tournamentService.getStandings(id!) as Promise<Standing[]>,
@@ -82,16 +84,32 @@ export const TournamentDetailPage = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-[var(--text-primary)]">
-            {tournament.name}
-          </h1>
-          <p className="mt-1 text-sm text-[var(--text-tertiary)]">
-            {tournament.sport} &middot; {tournament.format} &middot;{' '}
-            <Badge variant={tournament.status === 'live' ? 'success' : 'info'}>
-              {tournament.status}
-            </Badge>
-          </p>
+        <div className="flex items-center gap-4">
+          <Button
+            variant="outline"
+            onClick={() => {
+              if (window.history.length > 1) {
+                navigate(-1);
+              } else {
+                navigate(ROUTES.TOURNAMENTS);
+              }
+            }}
+            aria-label="Go back to tournaments"
+          >
+            <ArrowLeft className="w-4 h-4 mr-1" />
+            Back
+          </Button>
+          <div>
+            <h1 className="text-2xl font-bold text-[var(--text-primary)]">
+              {tournament.name}
+            </h1>
+            <p className="mt-1 text-sm text-[var(--text-tertiary)]">
+              {tournament.sport} &middot; {tournament.format} &middot;{' '}
+              <Badge variant={tournament.status === 'live' ? 'success' : 'info'}>
+                {tournament.status}
+              </Badge>
+            </p>
+          </div>
         </div>
         <div className="flex gap-3">
           <Button

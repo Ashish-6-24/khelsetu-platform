@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 export const LiveEventCenterPage = () => {
   const { matchId } = useParams<{ matchId: string }>();
 
-  const { data: match, isLoading } = useQuery<Match>({
+  const { data: match, isLoading } = useQuery<Match | null>({
     queryKey: ['match', matchId],
     queryFn: () => matchService.getById(matchId!),
     enabled: !!matchId,

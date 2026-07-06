@@ -9,6 +9,7 @@ import type { Player, Team } from '@shared/types/tournament';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, Edit, Trophy } from 'lucide-react';
 
+import { ROUTES } from '@shared/utils/constants';
 import { useState } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
@@ -23,13 +24,13 @@ export const PlayerDetailPage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
 
-  const { data: player, isLoading: loadingPlayer } = useQuery<Player>({
+  const { data: player, isLoading: loadingPlayer } = useQuery<Player | null>({
     queryKey: ['player', id],
     queryFn: () => playerService.getById(id!),
     enabled: !!id,
   });
 
-  const { data: team } = useQuery<Team>({
+  const { data: team } = useQuery<Team | null>({
     queryKey: ['team', player?.teamId],
     queryFn: () => teamService.getById(player!.teamId!),
     enabled: !!player?.teamId,
@@ -63,7 +64,17 @@ export const PlayerDetailPage = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Button variant="outline" onClick={() => navigate(-1)}>
+          <Button
+            variant="outline"
+            onClick={() => {
+              if (window.history.length > 1) {
+                navigate(-1);
+              } else {
+                navigate(ROUTES.PLAYERS);
+              }
+            }}
+            aria-label="Go back"
+          >
             <ArrowLeft className="w-4 h-4 mr-1" />
             Back
           </Button>

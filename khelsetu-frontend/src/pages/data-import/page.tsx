@@ -1,5 +1,6 @@
 import { Button } from '@shared/components/ui/Button';
 import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
+import { useToast } from '@shared/components/ui/toast-context';
 import {
   AlertCircle,
   CheckCircle,
@@ -8,7 +9,7 @@ import {
   Upload,
 } from 'lucide-react';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 interface ImportJob {
   id: string;
@@ -48,6 +49,42 @@ const mockImports: ImportJob[] = [
 
 export const DataImportPage = () => {
   const [imports] = useState<ImportJob[]>(mockImports);
+  const [exportingType, setExportingType] = useState<string | null>(null);
+  const { addToast } = useToast();
+
+  const handleExport = useCallback(async (type: string) => {
+    setExportingType(type);
+    try {
+      const data = mockImports.filter((j) => j.type === type);
+      const csv = [
+        'File Name,Type,Status,Records,Date',
+        ...data.map((j) => `${j.fileName},${j.type},${j.status},${j.records},${j.date}`),
+      ].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${type.toLowerCase()}_export.csv`;
+      link.click();
+      URL.revokeObjectURL(url);
+      addToast({ type: 'success', message: `${type} data exported successfully` });
+    } catch {
+      addToast({ type: 'error', message: `Failed to export ${type} data` });
+    } finally {
+      setExportingType(null);
+    }
+  }, [addToast]);
+
+  const handleDownloadTemplate = useCallback(() => {
+    const template = 'Team Name,Short Name,Sport\nExample FC,EXM,Cricket';
+    const blob = new Blob([template], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'import_template.csv';
+    link.click();
+    URL.revokeObjectURL(url);
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -76,14 +113,22 @@ export const DataImportPage = () => {
               <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mb-4">
                 or
               </p>
-              <Button variant="primary">Browse Files</Button>
+              <Button variant="primary" aria-label="Browse files to import">
+                Browse Files
+              </Button>
               <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-4">
                 Supported: CSV, JSON (max 10MB)
               </p>
             </div>
             <div className="mt-4 space-y-2">
-              <Button variant="outline" className="w-full">
-                <FileText className="w-4 h-4 mr-2" />
+              <Button
+                variant="outline"
+                size="sm"
+                leftIcon={<FileText className="w-4 h-4" />}
+                className="w-full"
+                onClick={handleDownloadTemplate}
+                aria-label="Download import CSV template"
+              >
                 Download Template
               </Button>
             </div>
@@ -108,12 +153,15 @@ export const DataImportPage = () => {
                       {type}
                     </span>
                     <Button
-                      variant="gold"
+                      variant="create"
                       size="sm"
-                      className="group transition-all duration-200 hover:shadow-md hover:shadow-yellow-500/20 active:scale-[0.98]"
+                      leftIcon={!exportingType || exportingType !== type ? <Download className="w-4 h-4" /> : undefined}
+                      onClick={() => handleExport(type)}
+                      isLoading={exportingType === type}
+                      disabled={exportingType !== null}
+                      aria-label={`Export ${type} data`}
                     >
-                      <Download className="w-4 h-4 mr-1 transition-transform duration-200 group-hover:translate-y-0.5" />
-                      Export
+                      {exportingType === type ? 'Exporting...' : 'Export'}
                     </Button>
                   </div>
                 ),

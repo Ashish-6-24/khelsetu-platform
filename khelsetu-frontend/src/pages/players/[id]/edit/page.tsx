@@ -11,6 +11,7 @@ import { ArrowLeft, Save } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { ROUTES } from '@shared/utils/constants';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const playerSchema = z.object({
@@ -42,7 +43,7 @@ export const PlayerEditPage = () => {
   const queryClient = useQueryClient();
   const { addToast } = useToast();
 
-  const { data: player, isLoading } = useQuery<Player>({
+  const { data: player, isLoading } = useQuery<Player | null>({
     queryKey: ['player', id],
     queryFn: () => playerService.getById(id!),
     enabled: !!id,
@@ -114,7 +115,17 @@ export const PlayerEditPage = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <Button variant="outline" onClick={() => navigate(-1)}>
+        <Button
+          variant="outline"
+          onClick={() => {
+            if (window.history.length > 1) {
+              navigate(-1);
+            } else {
+              navigate(ROUTES.PLAYERS);
+            }
+          }}
+          aria-label="Go back"
+        >
           <ArrowLeft className="w-4 h-4 mr-1" />
           Back
         </Button>

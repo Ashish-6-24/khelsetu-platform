@@ -27,7 +27,7 @@ export const StandingsPage = () => {
   const [activeSport, setActiveSport] = useState('all');
   const [selectedTournamentId, setSelectedTournamentId] = useState<string>('');
 
-  const { data: tournaments, isLoading: loadingTournaments } = useQuery<
+  const { data: tournaments = [], isLoading: loadingTournaments } = useQuery<
     Tournament[]
   >({
     queryKey: ['tournaments'],

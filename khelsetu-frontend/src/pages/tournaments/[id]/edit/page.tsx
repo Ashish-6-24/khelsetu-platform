@@ -27,7 +27,7 @@ export const TournamentEditPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [errors, setErrors] = useState<FormErrors>({});
 
-  const { data: tournament, isLoading } = useQuery<Tournament>({
+  const { data: tournament, isLoading } = useQuery<Tournament | null>({
     queryKey: ['tournament', id],
     queryFn: () => tournamentService.getById(id!),
     enabled: !!id,

@@ -10,12 +10,13 @@ import { Skeleton } from '@shared/components/ui/Skeleton';
 import { Tabs } from '@shared/components/ui/Tabs';
 import { useToast } from '@shared/components/ui/toast-context';
 import type { Player, Team } from '@shared/types/tournament';
+import { ROUTES } from '@shared/utils/constants';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Plus } from 'lucide-react';
+import { ArrowLeft, Plus } from 'lucide-react';
 
 import { useState } from 'react';
 
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const TABS = [
   { id: 'roster', label: 'Roster' },
@@ -25,6 +26,7 @@ const TABS = [
 
 export const TeamDetailPage = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { addToast } = useToast();
   const [activeTab, setActiveTab] = useState('roster');
@@ -33,13 +35,13 @@ export const TeamDetailPage = () => {
   const [newPlayerJersey, setNewPlayerJersey] = useState('');
   const [newPlayerPosition, setNewPlayerPosition] = useState('');
 
-  const { data: team, isLoading: loadingTeam } = useQuery<Team>({
+  const { data: team, isLoading: loadingTeam } = useQuery<Team | null>({
     queryKey: ['team', id],
     queryFn: () => teamService.getById(id!),
     enabled: !!id,
   });
 
-  const { data: players, isLoading: loadingPlayers } = useQuery<Player[]>({
+  const { data: players = [], isLoading: loadingPlayers } = useQuery<Player[]>({
     queryKey: ['team-players', id],
     queryFn: () => playerService.getByTeam(id!),
     enabled: !!id,
@@ -120,14 +122,30 @@ export const TeamDetailPage = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
-            {team.name}
-          </h1>
-          <p className="mt-1 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
-            <Badge variant="info">{team.shortName}</Badge>
-            {roster.length} players
-          </p>
+        <div className="flex items-center gap-4">
+          <Button
+            variant="outline"
+            onClick={() => {
+              if (window.history.length > 1) {
+                navigate(-1);
+              } else {
+                navigate(ROUTES.TEAMS);
+              }
+            }}
+            aria-label="Go back to teams"
+          >
+            <ArrowLeft className="w-4 h-4 mr-1" />
+            Back
+          </Button>
+          <div>
+            <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
+              {team.name}
+            </h1>
+            <p className="mt-1 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+              <Badge variant="info">{team.shortName}</Badge>
+              {roster.length} players
+            </p>
+          </div>
         </div>
         <div className="flex gap-3">
           <Button

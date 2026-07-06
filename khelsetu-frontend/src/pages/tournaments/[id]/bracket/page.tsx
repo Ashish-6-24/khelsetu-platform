@@ -6,12 +6,13 @@ import { Button } from '@shared/components/ui/Button';
 import { Card, CardBody } from '@shared/components/ui/Card';
 import { Skeleton } from '@shared/components/ui/Skeleton';
 import { Tabs } from '@shared/components/ui/Tabs';
+import { ROUTES } from '@shared/utils/constants';
 import type { Match, Tournament } from '@shared/types/tournament';
 import { useQuery } from '@tanstack/react-query';
 
 import { useState } from 'react';
 
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const TABS = [
   { id: 'bracket', label: 'Bracket' },
@@ -20,16 +21,17 @@ const TABS = [
 
 export const TournamentBracketPage = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('bracket');
 
   const { data: tournament, isLoading: loadingTournament } =
-    useQuery<Tournament>({
+    useQuery<Tournament | null>({
       queryKey: ['tournament', id],
       queryFn: () => tournamentService.getById(id!),
       enabled: !!id,
     });
 
-  const { data: matches, isLoading: loadingMatches } = useQuery<Match[]>({
+  const { data: matches = [], isLoading: loadingMatches } = useQuery<Match[]>({
     queryKey: ['tournament-matches', id],
     queryFn: () => tournamentService.getMatches(id!),
     enabled: !!id,
@@ -75,7 +77,19 @@ export const TournamentBracketPage = () => {
             {matches?.length ?? 0} matches
           </p>
         </div>
-        <Button onClick={() => window.history.back()}>Back</Button>
+        <Button
+          variant="outline"
+          onClick={() => {
+            if (window.history.length > 1) {
+              navigate(-1);
+            } else {
+              navigate(ROUTES.TOURNAMENTS);
+            }
+          }}
+          aria-label="Go back to tournament"
+        >
+          Back
+        </Button>
       </div>
 
       <Tabs

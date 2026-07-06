@@ -57,26 +57,26 @@ export const CTA = () => (
             >
               <Zap className="h-7 w-7" />
             </div>
-            <h2 className="mt-6 font-display text-4xl font-medium -tracking-[0.02em] text-white sm:text-5xl">
+            <h2 className="mt-6 font-display text-4xl font-bold -tracking-[0.02em] text-white sm:text-5xl">
               Ready to run your{' '}
-              <span className="italic text-[var(--brand-accent)]">
+              <span className="italic text-yellow-300">
                 best tournament
               </span>{' '}
               yet?
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-pretty text-base text-stone-200 sm:text-lg">
+            <p className="mx-auto mt-4 max-w-xl text-pretty text-base font-medium text-white sm:text-lg">
               Join 1,200+ organizers who trust KhelSetu to deliver unforgettable
               sporting moments across Nepal.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link to={ROUTES.REGISTER}>
-                <button className="shine inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-white px-6 text-sm font-semibold text-[var(--brand-primary)] shadow-lg transition-all hover:shadow-xl dark:text-[var(--brand-primary)]">
+                <button className="shine inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-white px-6 text-sm font-bold text-[var(--brand-primary)] shadow-lg transition-all hover:shadow-xl">
                   Start a tournament — free
                   <ChevronRight className="h-4 w-4" />
                 </button>
               </Link>
               <Link to={ROUTES.LOGIN}>
-                <button className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 text-sm font-semibold text-white backdrop-blur transition-all hover:bg-white/15">
+                <button className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border-2 border-white/30 bg-white/10 px-6 text-sm font-bold text-white backdrop-blur transition-all hover:bg-white/20">
                   <ShieldCheck className="h-4 w-4" />
                   Sign in
                 </button>
@@ -91,14 +91,14 @@ export const CTA = () => (
               ].map((chip) => (
                 <div
                   key={chip.label}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs font-medium text-white/80 backdrop-blur"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 text-xs font-semibold text-white backdrop-blur"
                 >
-                  <chip.icon className="h-3.5 w-3.5 text-[var(--brand-accent)]" />
+                  <chip.icon className="h-3.5 w-3.5 text-yellow-300" />
                   {chip.label}
                 </div>
               ))}
             </div>
-            <div className="mt-8 flex items-center justify-center gap-2 text-xs text-stone-300">
+            <div className="mt-8 flex items-center justify-center gap-2 text-xs font-medium text-white/90">
               <Logo size="sm" variant="white" withWordmark={false} />
               Made with care in Nepal
             </div>

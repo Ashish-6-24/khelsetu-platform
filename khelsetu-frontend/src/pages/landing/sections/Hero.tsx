@@ -10,6 +10,7 @@ import {
   ChevronRight,
   Play,
   Radio,
+  Search,
   ShieldCheck,
   Sparkles,
   Trophy,
@@ -153,24 +154,37 @@ export const Hero = () => (
             <span className="h-3 w-3 rounded-full bg-[var(--color-live)]" />
             <span className="h-3 w-3 rounded-full bg-[var(--brand-accent)]" />
             <span className="h-3 w-3 rounded-full bg-[var(--color-success)]" />
-            <div className="ml-4 flex-1">
-              <div className="mx-auto h-5 w-72 max-w-full rounded-md bg-[var(--border-subtle)] dark:bg-[var(--border-strong)]" />
+            <div className="ml-4 flex-1 max-w-xs sm:max-w-sm">
+              <div className="flex items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-white/90 px-3 py-1 text-[11px] text-[var(--text-secondary)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-canvas)]/90">
+                <Search className="h-3 w-3 text-[var(--text-tertiary)]" />
+                <span>Search tournaments, teams, scorers...</span>
+                <span className="ml-auto rounded bg-[var(--bg-surface-sunken)] px-1.5 py-0.5 text-[9px] font-mono text-[var(--text-tertiary)] dark:bg-[var(--bg-surface)]">⌘K</span>
+              </div>
             </div>
           </div>
           <div className="grid grid-cols-12 gap-4 p-4 sm:p-6">
-            <div className="col-span-12 sm:col-span-3">
-              <div className="space-y-2">
-                {[Trophy, Users, Calendar, BarChart3, Radio, Tv].map(
-                  (Icon, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center gap-3 rounded-lg bg-[var(--brand-primary)]/5 px-2.5 py-2 text-xs"
-                    >
-                      <Icon className="h-4 w-4 text-[var(--brand-primary)]" />
-                      <span className="h-2 w-24 rounded bg-[var(--border-subtle)] dark:bg-[var(--border-strong)]" />
-                    </div>
-                  ),
-                )}
+            <div className="col-span-12 sm:col-span-3 border-r border-[var(--border-subtle)] dark:border-[var(--border-strong)] pr-2">
+              <div className="space-y-1">
+                {[
+                  { icon: Trophy, label: 'Tournaments', active: true },
+                  { icon: Users, label: 'Teams & Players' },
+                  { icon: Calendar, label: 'Fixtures' },
+                  { icon: BarChart3, label: 'Analytics' },
+                  { icon: Radio, label: 'Live Console' },
+                  { icon: Tv, label: 'OBS Overlays' },
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    className={`flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-semibold cursor-pointer transition-colors ${
+                      item.active
+                        ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] dark:bg-[var(--brand-primary)]/20 dark:text-red-400'
+                        : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-sunken)] dark:text-[var(--text-tertiary)] dark:hover:bg-[var(--bg-surface)]'
+                    }`}
+                  >
+                    <item.icon className={`h-4 w-4 ${item.active ? 'text-[var(--brand-primary)] dark:text-red-400' : 'text-[var(--text-tertiary)]'}`} />
+                    <span>{item.label}</span>
+                  </div>
+                ))}
               </div>
             </div>
             <div className="col-span-12 space-y-4 sm:col-span-9">

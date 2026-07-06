@@ -2,7 +2,6 @@ import { authService } from '@features/auth/services/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ThemeToggleSegmented } from '@shared/components/theme-toggle';
 import { Button } from '@shared/components/ui/Button';
-import { Card, CardBody } from '@shared/components/ui/Card';
 import { Input } from '@shared/components/ui/Input';
 import { useToast } from '@shared/components/ui/toast-context';
 import type { User } from '@shared/types/auth';
@@ -10,12 +9,25 @@ import { useAuthStore } from '@store/authStore';
 import { useUIStore } from '@store/uiStore';
 import { useMutation } from '@tanstack/react-query';
 import { clsx } from 'clsx';
-import { Moon, Phone, Save, Sun, User as UserIcon } from 'lucide-react';
+import {
+  Bell,
+  Check,
+  Lock,
+  Mail,
+  Moon,
+  Palette,
+  Phone,
+  Save,
+  Shield,
+  Sun,
+  User as UserIcon,
+} from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
+// ─── Schemas ──────────────────────────────────────────────────
 const profileSchema = z.object({
   name: z
     .string()
@@ -43,12 +55,72 @@ const passwordSchema = z
 
 type PasswordFormData = z.infer<typeof passwordSchema>;
 
+// ─── Toggle Component ─────────────────────────────────────────
+const Toggle = ({
+  checked,
+  onChange,
+  label,
+  description,
+}: {
+  checked: boolean;
+  onChange: (v: boolean) => void;
+  label: string;
+  description?: string;
+}) => (
+  <div className="settings-row">
+    <div className="min-w-0 flex-1">
+      <p className="text-sm font-medium text-[var(--text-primary)]">{label}</p>
+      {description && (
+        <p className="mt-0.5 text-xs text-[var(--text-tertiary)]">{description}</p>
+      )}
+    </div>
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      onClick={() => onChange(!checked)}
+      className="settings-toggle"
+    />
+  </div>
+);
+
+// ─── Section Card ─────────────────────────────────────────────
+const SectionCard = ({
+  icon: Icon,
+  title,
+  description,
+  children,
+  className,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <div className={clsx('settings-section', className)}>
+    <div className="flex items-start gap-3.5 px-6 pt-6 pb-4">
+      <div className="settings-section-icon">
+        <Icon className="h-5 w-5" />
+      </div>
+      <div>
+        <h3 className="text-base font-semibold text-[var(--text-primary)]">{title}</h3>
+        <p className="mt-0.5 text-xs text-[var(--text-tertiary)]">{description}</p>
+      </div>
+    </div>
+    <div className="px-6 pb-6">{children}</div>
+  </div>
+);
+
+// ─── Save Button ──────────────────────────────────────────────
 const SaveButton = ({
   isLoading,
+  hasChanges,
   onSuccess,
   label = 'Save Changes',
 }: {
   isLoading: boolean;
+  hasChanges: boolean;
   onSuccess?: () => void;
   label?: string;
 }) => {
@@ -69,30 +141,29 @@ const SaveButton = ({
   return (
     <Button
       type="submit"
-      variant="create"
-      disabled={isLoading}
+      variant="primary"
+      size="lg"
+      disabled={isLoading || (!hasChanges && !showSuccess)}
       isLoading={isLoading}
-      className={clsx(showSuccess && 'btn-save-success')}
-    >
-      {showSuccess && (
-        <svg
-          className="h-4 w-4"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <polyline points="20 6 9 17 4 12" className="check-draw" />
-        </svg>
+      leftIcon={!isLoading && !showSuccess ? <Save className="h-4 w-4" /> : undefined}
+      className={clsx(
+        'min-w-[160px] transition-all duration-300',
+        showSuccess && '!bg-gradient-to-r !from-green-500 !to-green-600 !shadow-green-500/30',
       )}
-      {!showSuccess && <Save className="h-4 w-4" />}
-      {isLoading ? 'Saving…' : showSuccess ? 'Saved' : label}
+    >
+      {showSuccess ? (
+        <>
+          <Check className="h-4 w-4 mr-2" />
+          Saved!
+        </>
+      ) : (
+        isLoading ? 'Saving...' : label
+      )}
     </Button>
   );
 };
 
+// ─── Page ─────────────────────────────────────────────────────
 export const SettingsPage = () => {
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
@@ -102,10 +173,15 @@ export const SettingsPage = () => {
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [showPasswordForm, setShowPasswordForm] = useState(false);
 
+  // Track unsaved changes
+  const [profileDirty, setProfileDirty] = useState(false);
+  const [passwordDirty, setPasswordDirty] = useState(false);
+  const hasUnsavedChanges = profileDirty || passwordDirty;
+
   const {
     register: registerProfile,
     handleSubmit: handleProfileSubmit,
-    formState: { errors: profileErrors, isSubmitting: isProfileSubmitting },
+    formState: { errors: profileErrors, isSubmitting: isProfileSubmitting, isDirty: isProfileFormDirty },
     reset: resetProfile,
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -118,17 +194,26 @@ export const SettingsPage = () => {
   const {
     register: registerPassword,
     handleSubmit: handlePasswordSubmit,
-    formState: { errors: passwordErrors, isSubmitting: isPasswordSubmitting },
+    formState: { errors: passwordErrors, isSubmitting: isPasswordSubmitting, isDirty: isPasswordFormDirty },
     reset: resetPassword,
   } = useForm<PasswordFormData>({
     resolver: zodResolver(passwordSchema),
   });
+
+  useEffect(() => {
+    setProfileDirty(isProfileFormDirty);
+  }, [isProfileFormDirty]);
+
+  useEffect(() => {
+    setPasswordDirty(isPasswordFormDirty);
+  }, [isPasswordFormDirty]);
 
   const updateProfileMutation = useMutation({
     mutationFn: (data: Partial<User>) => authService.updateProfile(data),
     onSuccess: (updatedUser) => {
       setUser(updatedUser);
       resetProfile({ name: updatedUser.name, phone: updatedUser.phone ?? '' });
+      setProfileDirty(false);
       addToast({ type: 'success', message: 'Profile updated successfully' });
     },
     onError: () => {
@@ -138,7 +223,6 @@ export const SettingsPage = () => {
 
   const updatePasswordMutation = useMutation({
     mutationFn: (_data: PasswordFormData) => {
-      // TODO: implement when backend password change endpoint is available
       addToast({
         type: 'warning',
         message: 'Password change is not yet connected to the backend.',
@@ -148,6 +232,7 @@ export const SettingsPage = () => {
     onSuccess: () => {
       addToast({ type: 'success', message: 'Password updated successfully' });
       resetPassword();
+      setPasswordDirty(false);
       setShowPasswordForm(false);
     },
     onError: () => {
@@ -163,195 +248,287 @@ export const SettingsPage = () => {
     updatePasswordMutation.mutate(data);
   };
 
+  const handleResetProfile = useCallback(() => {
+    resetProfile({ name: user?.name ?? '', phone: user?.phone ?? '' });
+    setProfileDirty(false);
+  }, [resetProfile, user?.name, user?.phone]);
+
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
-          Settings
-        </h1>
-        <p className="mt-1 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
-          Manage your account settings and preferences
-        </p>
+    <div className="mx-auto max-w-2xl">
+      {/* ── Sticky Save Bar ── */}
+      <div
+        className={clsx(
+          'settings-save-bar rounded-t-2xl',
+          hasUnsavedChanges && 'settings-save-bar--dirty',
+        )}
+      >
+        <div className="flex items-center gap-3">
+          <h1 className="text-lg font-semibold text-[var(--text-primary)]">Settings</h1>
+          {hasUnsavedChanges && <div className="unsaved-dot" aria-label="Unsaved changes" />}
+        </div>
+        {hasUnsavedChanges && (
+          <SaveButton
+            isLoading={isProfileSubmitting || isPasswordSubmitting}
+            hasChanges={hasUnsavedChanges}
+            onSuccess={() => {
+              addToast({ type: 'success', message: 'Changes saved successfully' });
+            }}
+          />
+        )}
       </div>
 
-      <Card>
-        <CardBody>
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-hover)] flex items-center justify-center text-white text-2xl font-bold">
-              {user?.name?.charAt(0).toUpperCase() ?? 'U'}
+      {/* ── Content ── */}
+      <div className="space-y-5 px-1 py-6">
+        {/* Profile Card */}
+        <SectionCard
+          icon={UserIcon}
+          title="Profile"
+          description="Your personal information and account details"
+        >
+          {/* Avatar + Name Header */}
+          <div className="mb-6 flex items-center gap-4">
+            <div className="avatar-ring relative">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary-hover, #991b1b)] text-xl font-bold text-white shadow-md">
+                {user?.name?.charAt(0).toUpperCase() ?? 'U'}
+              </div>
+              <div className="absolute -bottom-0.5 -right-0.5 flex h-5 w-5 items-center justify-center rounded-full border-2 border-[var(--bg-surface)] bg-emerald-500">
+                <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
+              </div>
             </div>
-            <div>
-              <h2 className="text-lg font-semibold text-[var(--text-primary)] dark:text-white">
+            <div className="min-w-0">
+              <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                 {user?.name}
-              </h2>
-              <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
-                {user?.role}
               </p>
+              <p className="truncate text-xs text-[var(--text-tertiary)]">{user?.email}</p>
+              <span className="mt-1 inline-flex items-center rounded-md bg-[var(--brand-primary)]/8 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--brand-primary)]">
+                {user?.role}
+              </span>
             </div>
           </div>
 
-          <form onSubmit={handleProfileSubmit(onProfileSubmit)}>
-            <h3 className="text-sm font-semibold text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-3 flex items-center gap-2">
-              <UserIcon className="w-4 h-4" />
-              Profile Information
-            </h3>
-            <div className="space-y-4">
+          {/* Profile Form */}
+          <form onSubmit={handleProfileSubmit(onProfileSubmit)} className="space-y-4">
+            <Input
+              label="Full Name"
+              placeholder="Your full name"
+              {...registerProfile('name')}
+              error={profileErrors.name?.message}
+              leftIcon={<UserIcon className="h-4 w-4" />}
+            />
+            <Input
+              label="Email Address"
+              value={user?.email}
+              disabled
+              helperText="Contact support to change your email"
+              leftIcon={<Mail className="h-4 w-4" />}
+            />
+            <Input
+              label="Phone Number"
+              placeholder="+977 98XXXXXXXX"
+              {...registerProfile('phone')}
+              error={profileErrors.phone?.message}
+              leftIcon={<Phone className="h-4 w-4" />}
+              optional
+            />
+
+            <div className="flex items-center gap-2 pt-2">
+              <SaveButton
+                isLoading={isProfileSubmitting}
+                hasChanges={profileDirty}
+                onSuccess={() =>
+                  addToast({
+                    type: 'success',
+                    message: 'Profile updated successfully',
+                  })
+                }
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="md"
+                onClick={handleResetProfile}
+                disabled={!profileDirty}
+              >
+                Reset
+              </Button>
+            </div>
+          </form>
+        </SectionCard>
+
+        {/* Security Card */}
+        <SectionCard
+          icon={Shield}
+          title="Security"
+          description="Manage your password and account security"
+        >
+          {!showPasswordForm ? (
+            <button
+              type="button"
+              onClick={() => setShowPasswordForm(true)}
+              className="flex w-full items-center justify-between rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface-2)] px-4 py-3 text-left transition-colors hover:border-[var(--brand-primary)]/30 hover:bg-[var(--brand-primary)]/5"
+            >
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--brand-primary)]/8">
+                  <Lock className="h-4 w-4 text-[var(--brand-primary)]" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-[var(--text-primary)]">Password</p>
+                  <p className="text-xs text-[var(--text-tertiary)]">
+                    Last changed 30+ days ago
+                  </p>
+                </div>
+              </div>
+              <svg
+                className="h-4 w-4 text-[var(--text-tertiary)]"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
+          ) : (
+            <form onSubmit={handlePasswordSubmit(onPasswordSubmit)} className="space-y-4">
               <Input
-                label="Name"
-                {...registerProfile('name')}
-                error={profileErrors.name?.message}
+                label="Current Password"
+                type="password"
+                placeholder="Enter current password"
+                {...registerPassword('currentPassword')}
+                error={passwordErrors.currentPassword?.message}
+                leftIcon={<Lock className="h-4 w-4" />}
               />
               <Input
-                label="Email"
-                value={user?.email}
-                disabled
-                helperText="Email cannot be changed"
+                label="New Password"
+                type="password"
+                placeholder="Enter new password"
+                {...registerPassword('newPassword')}
+                error={passwordErrors.newPassword?.message}
+                leftIcon={<Lock className="h-4 w-4" />}
+                helperText="Minimum 8 characters"
               />
               <Input
-                label="Phone"
-                {...registerProfile('phone')}
-                error={profileErrors.phone?.message}
-                leftIcon={<Phone className="w-4 h-4" />}
+                label="Confirm New Password"
+                type="password"
+                placeholder="Confirm new password"
+                {...registerPassword('confirmPassword')}
+                error={passwordErrors.confirmPassword?.message}
+                leftIcon={<Lock className="h-4 w-4" />}
               />
-              <div className="flex gap-2">
+
+              <div className="flex items-center gap-2 pt-2">
                 <SaveButton
-                  isLoading={isProfileSubmitting}
-                  onSuccess={() =>
+                  isLoading={isPasswordSubmitting}
+                  hasChanges={passwordDirty}
+                  label="Update Password"
+                  onSuccess={() => {
                     addToast({
-                      title: 'Profile updated',
                       type: 'success',
-                      message: 'Profile updated successfully',
-                    })
-                  }
+                      message: 'Password updated successfully',
+                    });
+                    setShowPasswordForm(false);
+                    resetPassword();
+                  }}
                 />
                 <Button
                   type="button"
-                  variant="outline"
-                  size="lg"
-                  onClick={() => resetProfile()}
+                  variant="ghost"
+                  size="md"
+                  onClick={() => {
+                    setShowPasswordForm(false);
+                    resetPassword();
+                    setPasswordDirty(false);
+                  }}
                 >
-                  Reset
+                  Cancel
                 </Button>
-              </div>
-            </div>
-          </form>
-        </CardBody>
-      </Card>
-
-      <Card>
-        <CardBody>
-          <h3 className="text-sm font-semibold text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-3">
-            Security
-          </h3>
-          {!showPasswordForm ? (
-            <Button variant="outline" onClick={() => setShowPasswordForm(true)}>
-              Change Password
-            </Button>
-          ) : (
-            <form onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
-              <div className="space-y-4">
-                <Input
-                  label="Current Password"
-                  type="password"
-                  {...registerPassword('currentPassword')}
-                  error={passwordErrors.currentPassword?.message}
-                />
-                <Input
-                  label="New Password"
-                  type="password"
-                  {...registerPassword('newPassword')}
-                  error={passwordErrors.newPassword?.message}
-                />
-                <Input
-                  label="Confirm Password"
-                  type="password"
-                  {...registerPassword('confirmPassword')}
-                  error={passwordErrors.confirmPassword?.message}
-                />
-                <div className="flex gap-2">
-                  <SaveButton
-                    isLoading={isPasswordSubmitting}
-                    label="Update Password"
-                    onSuccess={() => {
-                      addToast({
-                        title: 'Password updated',
-                        type: 'success',
-                        message: 'Password updated successfully',
-                      });
-                      setShowPasswordForm(false);
-                      resetPassword();
-                    }}
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="lg"
-                    onClick={() => {
-                      setShowPasswordForm(false);
-                      resetPassword();
-                    }}
-                  >
-                    Cancel
-                  </Button>
-                </div>
               </div>
             </form>
           )}
-        </CardBody>
-      </Card>
+        </SectionCard>
 
-      <Card>
-        <CardBody>
-          <h3 className="text-sm font-semibold text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-3">
-            Preferences
-          </h3>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between py-3 border-b border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
-              <div>
-                <p className="font-medium text-[var(--text-primary)] dark:text-white">
-                  Email Notifications
-                </p>
-                <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
-                  Receive email updates for match events
-                </p>
-              </div>
-              <button
-                onClick={() => setEmailNotifications(!emailNotifications)}
-                className={clsx(
-                  'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
-                  emailNotifications
-                    ? 'bg-blue-600 dark:bg-blue-500'
-                    : 'bg-gray-300 dark:bg-gray-600',
-                )}
-              >
-                <span
-                  className={clsx(
-                    'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
-                    emailNotifications ? 'translate-x-6' : 'translate-x-1',
-                  )}
-                />
-              </button>
-            </div>
+        {/* Preferences Card */}
+        <SectionCard
+          icon={Palette}
+          title="Preferences"
+          description="Customize your experience and notifications"
+        >
+          <div className="space-y-0">
+            <Toggle
+              checked={emailNotifications}
+              onChange={setEmailNotifications}
+              label="Email Notifications"
+              description="Receive match updates, scores, and tournament news via email"
+            />
 
-            <div className="flex items-center justify-between py-3">
-              <div>
-                <p className="font-medium text-[var(--text-primary)] dark:text-white flex items-center gap-2">
+            <div className="settings-row">
+              <div className="min-w-0 flex-1">
+                <p className="flex items-center gap-2 text-sm font-medium text-[var(--text-primary)]">
                   {theme === 'dark' ? (
-                    <Moon className="w-4 h-4" />
+                    <Moon className="h-3.5 w-3.5" />
                   ) : (
-                    <Sun className="w-4 h-4" />
+                    <Sun className="h-3.5 w-3.5" />
                   )}
-                  Dark Mode
+                  Appearance
                 </p>
-                <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
-                  Toggle dark theme
+                <p className="mt-0.5 text-xs text-[var(--text-tertiary)]">
+                  Choose between light, dark, or system theme
                 </p>
               </div>
               <ThemeToggleSegmented />
             </div>
+
+            <div className="settings-row">
+              <div className="min-w-0 flex-1">
+                <p className="flex items-center gap-2 text-sm font-medium text-[var(--text-primary)]">
+                  <Bell className="h-3.5 w-3.5" />
+                  Push Notifications
+                </p>
+                <p className="mt-0.5 text-xs text-[var(--text-tertiary)]">
+                  Get notified about live match events in real-time
+                </p>
+              </div>
+              <Toggle
+                checked={true}
+                onChange={() => {}}
+                label=""
+              />
+            </div>
           </div>
-        </CardBody>
-      </Card>
+        </SectionCard>
+
+        {/* Danger Zone */}
+        <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-6">
+          <div className="flex items-start gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-red-500/10">
+              <Shield className="h-4 w-4 text-red-500" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-sm font-semibold text-red-600 dark:text-red-400">
+                Danger Zone
+              </h3>
+              <p className="mt-1 text-xs text-[var(--text-tertiary)]">
+                Permanently delete your account and all associated data. This action cannot be
+                undone.
+              </p>
+              <Button
+                type="button"
+                variant="danger"
+                size="sm"
+                className="mt-3"
+                onClick={() =>
+                  addToast({
+                    type: 'warning',
+                    message: 'Account deletion is not yet available.',
+                  })
+                }
+              >
+                Delete Account
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

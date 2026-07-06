@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 export const TournamentsPage = () => {
   const navigate = useNavigate();
   const {
-    data: tournaments,
+    data: tournaments = [],
     isLoading,
     error,
     refetch,

@@ -1,9 +1,10 @@
 import { Badge } from '@shared/components/ui/Badge';
 import { Button } from '@shared/components/ui/Button';
 import { Card, CardBody } from '@shared/components/ui/Card';
+import { useToast } from '@shared/components/ui/toast-context';
 import { Download, Image, Trash2, Upload } from 'lucide-react';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 interface MediaItem {
   id: string;
@@ -44,12 +45,48 @@ const mockMedia: MediaItem[] = [
 export const MediaPage = () => {
   const [media] = useState<MediaItem[]>(mockMedia);
   const [activeFilter, setActiveFilter] = useState<string>('all');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { addToast } = useToast();
 
   const filters = ['all', 'image', 'video', 'logo'];
   const filtered =
     activeFilter === 'all'
       ? media
       : media.filter((m) => m.type === activeFilter);
+
+  const handleUpload = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      addToast({
+        type: 'success',
+        message: `Uploading ${files.length} file(s)...`,
+      });
+      // TODO: Connect to actual upload API endpoint
+    }
+  };
+
+  const handleDownload = (item: MediaItem) => {
+    const link = document.createElement('a');
+    link.href = item.url;
+    link.download = item.name;
+    link.click();
+    addToast({
+      type: 'success',
+      message: `Downloading ${item.name}...`,
+    });
+  };
+
+  const handleDelete = (item: MediaItem) => {
+    addToast({
+      type: 'warning',
+      message: `Delete ${item.name}? This action cannot be undone.`,
+    });
+    // TODO: Connect to actual delete API endpoint
+  };
 
   return (
     <div className="space-y-6">
@@ -62,10 +99,18 @@ export const MediaPage = () => {
             Manage images, videos, and logos
           </p>
         </div>
-        <Button variant="primary">
-          <Upload className="w-4 h-4 mr-2" />
-          Upload
+        <Button variant="create" size="lg" leftIcon={<Upload className="h-4 w-4" />} onClick={handleUpload} aria-label="Upload media files">
+          Upload Media
         </Button>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*,video/*"
+          multiple
+          onChange={handleFileChange}
+          className="hidden"
+          aria-hidden="true"
+        />
       </div>
 
       <div className="flex gap-2">
@@ -75,8 +120,8 @@ export const MediaPage = () => {
             onClick={() => setActiveFilter(f)}
             className={`px-3 py-1.5 text-sm rounded-lg capitalize ${
               activeFilter === f
-                ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
-                : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+                ? 'bg-[var(--brand-primary)] text-white shadow-md'
+                : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
             }`}
           >
             {f}
@@ -113,13 +158,20 @@ export const MediaPage = () => {
                     {item.type}
                   </Badge>
                   <div className="flex gap-1">
-                    <Button variant="ghost" size="sm">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDownload(item)}
+                      aria-label={`Download ${item.name}`}
+                    >
                       <Download className="w-3 h-3" />
                     </Button>
                     <Button
                       variant="ghost"
                       size="sm"
                       className="text-red-600 dark:text-red-400"
+                      onClick={() => handleDelete(item)}
+                      aria-label={`Delete ${item.name}`}
                     >
                       <Trash2 className="w-3 h-3" />
                     </Button>

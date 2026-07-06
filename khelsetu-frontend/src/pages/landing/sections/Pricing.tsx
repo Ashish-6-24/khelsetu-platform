@@ -73,7 +73,7 @@ export const Pricing = () => {
               return (
                 <div
                   key={p.name}
-                  className={`lift-1 relative flex flex-col overflow-hidden rounded-3xl border p-7 ${p.highlight ? 'border-[var(--brand-primary)] bg-gradient-to-br from-[var(--brand-primary-soft)] via-white to-[var(--bg-surface)] shadow-[0_20px_60px_-15px_rgb(127_29_29/0.35)] dark:from-[var(--brand-primary)]/10 dark:via-[var(--bg-surface)] dark:to-[var(--bg-surface-raised)]' : 'border-[var(--border-subtle)] bg-white dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)]'}`}
+                  className={`lift-1 relative flex flex-col overflow-hidden rounded-3xl border p-7 ${p.highlight ? 'gradient-border-glow border-transparent bg-gradient-to-br from-[var(--brand-primary-soft)] via-white to-[var(--bg-surface)] shadow-[0_20px_60px_-15px_rgb(127_29_29/0.35)] dark:from-[var(--brand-primary)]/15 dark:via-[var(--bg-canvas)] dark:to-[var(--bg-surface-raised)]' : 'border-[var(--border-subtle)] bg-white dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)]'}`}
                 >
                   {p.highlight && (
                     <div

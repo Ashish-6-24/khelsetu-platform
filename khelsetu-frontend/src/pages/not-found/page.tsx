@@ -70,7 +70,14 @@ export const NotFoundPage = () => {
         </motion.div>
 
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => {
+            if (window.history.length > 1) {
+              navigate(-1);
+            } else {
+              navigate(ROUTES.HOME);
+            }
+          }}
+          aria-label="Go back to previous page"
           className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 transition-colors hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
