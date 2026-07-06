@@ -273,10 +273,17 @@ const ContactForm = ({
           const idx = LANGUAGES.indexOf(form.language);
           if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
             e.preventDefault();
-            setForm({ ...form, language: LANGUAGES[(idx + 1) % LANGUAGES.length]! });
+            setForm({
+              ...form,
+              language: LANGUAGES[(idx + 1) % LANGUAGES.length]!,
+            });
           } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
             e.preventDefault();
-            setForm({ ...form, language: LANGUAGES[(idx - 1 + LANGUAGES.length) % LANGUAGES.length]! });
+            setForm({
+              ...form,
+              language:
+                LANGUAGES[(idx - 1 + LANGUAGES.length) % LANGUAGES.length]!,
+            });
           }
         }}
         className="inline-flex rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface-sunken)] p-1 dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)]"

@@ -80,7 +80,9 @@ export const LiveBroadcastPage = () => {
                     <p className="text-[var(--text-muted)]">Stream Preview</p>
                   </>
                 ) : (
-                  <p className="text-[var(--text-tertiary)]">Stream is offline</p>
+                  <p className="text-[var(--text-tertiary)]">
+                    Stream is offline
+                  </p>
                 )}
               </div>
             </div>

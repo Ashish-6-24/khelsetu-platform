@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { DashboardLayout } from '@core/layouts/DashboardLayout';
-import { ROUTES } from '@shared/utils/constants';
 import type { UserRole } from '@shared/types/auth';
+import { ROUTES } from '@shared/utils/constants';
 import { useAuthStore } from '@state/authStore';
 
 import { Navigate, Route } from 'react-router-dom';

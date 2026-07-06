@@ -1,7 +1,7 @@
 import { Card, CardBody } from '@shared/ui/Card';
 import { Skeleton } from '@shared/ui/Skeleton';
 
-import { lazy, Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 
 import type { MatchStatistics } from '../types';
 import { PlayerStatsTable } from './PlayerStatsTable';

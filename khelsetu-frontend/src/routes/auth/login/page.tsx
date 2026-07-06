@@ -184,7 +184,10 @@ export const LoginPage = () => {
         </div>
 
         <div className="flex items-center justify-between pt-2 text-sm">
-          <label htmlFor="remember-me" className="group inline-flex cursor-pointer items-center gap-2 text-[var(--text-secondary)]">
+          <label
+            htmlFor="remember-me"
+            className="group inline-flex cursor-pointer items-center gap-2 text-[var(--text-secondary)]"
+          >
             <input
               id="remember-me"
               name="remember-me"

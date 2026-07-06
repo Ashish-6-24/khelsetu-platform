@@ -78,69 +78,71 @@ function AnimatedNumber({
   return <span>{display.toLocaleString()}</span>;
 }
 
-export const StatsCard = memo(({
-  title,
-  value,
-  change,
-  icon,
-  iconBg,
-  iconColor,
-  accent = 'blue',
-  delay = 0,
-}: StatsCardProps) => {
-  const reducedMotion = useReducedMotion();
+export const StatsCard = memo(
+  ({
+    title,
+    value,
+    change,
+    icon,
+    iconBg,
+    iconColor,
+    accent = 'blue',
+    delay = 0,
+  }: StatsCardProps) => {
+    const reducedMotion = useReducedMotion();
 
-  return (
-    <div
-      className="animate-fade-in-up"
-      style={{ animationDelay: `${delay}s`, animationFillMode: 'both' }}
-    >
-      <Card hover elevated className="group relative overflow-hidden">
-        <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-gradient-to-br from-[var(--brand-primary)]/0 to-[var(--brand-accent)]/0 transition-all duration-500 group-hover:from-[var(--brand-primary)]/5 group-hover:to-[var(--brand-accent)]/10" />
-        <CardBody>
-          <div className="flex items-start justify-between gap-4">
-            <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium text-[var(--text-tertiary)]">
-                {title}
-              </p>
-              <p className="mt-2 text-3xl font-bold tabular-nums tracking-tight text-[var(--text-primary)]">
-                <AnimatedNumber value={value} reducedMotion={reducedMotion} />
-              </p>
-              {change && (
+    return (
+      <div
+        className="animate-fade-in-up"
+        style={{ animationDelay: `${delay}s`, animationFillMode: 'both' }}
+      >
+        <Card hover elevated className="group relative overflow-hidden">
+          <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-gradient-to-br from-[var(--brand-primary)]/0 to-[var(--brand-accent)]/0 transition-all duration-500 group-hover:from-[var(--brand-primary)]/5 group-hover:to-[var(--brand-accent)]/10" />
+          <CardBody>
+            <div className="flex items-start justify-between gap-4">
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium text-[var(--text-tertiary)]">
+                  {title}
+                </p>
+                <p className="mt-2 text-3xl font-bold tabular-nums tracking-tight text-[var(--text-primary)]">
+                  <AnimatedNumber value={value} reducedMotion={reducedMotion} />
+                </p>
+                {change && (
+                  <div
+                    className={clsx(
+                      'mt-2.5 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold',
+                      change.isPositive
+                        ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400'
+                        : 'bg-red-50 text-red-700 dark:bg-red-500/10 dark:text-red-400',
+                    )}
+                  >
+                    {change.isPositive ? (
+                      <ArrowUpRight className="h-3 w-3" />
+                    ) : (
+                      <ArrowDownRight className="h-3 w-3" />
+                    )}
+                    {change.value}%
+                    <span className="font-normal text-[var(--text-tertiary)]">
+                      vs last week
+                    </span>
+                  </div>
+                )}
+              </div>
+              {icon && (
                 <div
                   className={clsx(
-                    'mt-2.5 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold',
-                    change.isPositive
-                      ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400'
-                      : 'bg-red-50 text-red-700 dark:bg-red-500/10 dark:text-red-400',
+                    'flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-white shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3',
+                    iconBg ?? `bg-gradient-to-br ${accentMap[accent]}`,
+                    iconColor,
                   )}
                 >
-                  {change.isPositive ? (
-                    <ArrowUpRight className="h-3 w-3" />
-                  ) : (
-                    <ArrowDownRight className="h-3 w-3" />
-                  )}
-                  {change.value}%
-                  <span className="font-normal text-[var(--text-tertiary)]">
-                    vs last week
-                  </span>
+                  {icon}
                 </div>
               )}
             </div>
-            {icon && (
-              <div
-                className={clsx(
-                  'flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-white shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3',
-                  iconBg ?? `bg-gradient-to-br ${accentMap[accent]}`,
-                  iconColor,
-                )}
-              >
-                {icon}
-              </div>
-            )}
-          </div>
-        </CardBody>
-      </Card>
-    </div>
-  );
-});
+          </CardBody>
+        </Card>
+      </div>
+    );
+  },
+);

@@ -15,7 +15,7 @@ import { useScoringStore } from '@state/scoringStore';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft } from 'lucide-react';
 
-import { useEffect, useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -42,7 +42,12 @@ export const ScoringMatchPage = () => {
   const basketball = useScoringStore((s) => s.basketball);
 
   const addFootballEvent = useCallback(
-    (event: Omit<Parameters<typeof storeAddFootballEvent>[0], 'id' | 'timestamp'>) =>
+    (
+      event: Omit<
+        Parameters<typeof storeAddFootballEvent>[0],
+        'id' | 'timestamp'
+      >,
+    ) =>
       storeAddFootballEvent({
         ...event,
         id: crypto.randomUUID(),
@@ -52,7 +57,12 @@ export const ScoringMatchPage = () => {
   );
 
   const addBasketballEvent = useCallback(
-    (event: Omit<Parameters<typeof storeAddBasketballEvent>[0], 'id' | 'timestamp'>) =>
+    (
+      event: Omit<
+        Parameters<typeof storeAddBasketballEvent>[0],
+        'id' | 'timestamp'
+      >,
+    ) =>
       storeAddBasketballEvent({
         ...event,
         id: crypto.randomUUID(),

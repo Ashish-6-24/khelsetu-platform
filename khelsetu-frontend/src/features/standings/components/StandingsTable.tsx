@@ -281,7 +281,8 @@ export const StandingsTable = ({
                   transition={{ delay: index * 0.05 }}
                   className={clsx(
                     'border-b border-[var(--border-subtle)] last:border-0 hover:bg-[var(--bg-surface-sunken)] dark:hover:bg-[var(--bg-surface-raised)]/50 transition-colors',
-                    isQualified(index, playoffSpots) && 'bg-green-50/50 dark:bg-green-900/10',
+                    isQualified(index, playoffSpots) &&
+                      'bg-green-50/50 dark:bg-green-900/10',
                   )}
                 >
                   <td className="px-4 py-3">

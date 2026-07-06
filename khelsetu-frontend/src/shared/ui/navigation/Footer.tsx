@@ -81,10 +81,26 @@ export const Footer = () => {
               sports tournaments. Built for organizers, loved by fans.
             </p>
             <div className="mt-6 flex items-center gap-2">
-              <SocialLink href="https://twitter.com" icon={TwitterIcon} label="Twitter" />
-              <SocialLink href="https://linkedin.com" icon={LinkedInIcon} label="LinkedIn" />
-              <SocialLink href="https://github.com" icon={GitHubIcon} label="GitHub" />
-              <SocialLink href="https://youtube.com" icon={YouTubeIcon} label="YouTube" />
+              <SocialLink
+                href="https://twitter.com"
+                icon={TwitterIcon}
+                label="Twitter"
+              />
+              <SocialLink
+                href="https://linkedin.com"
+                icon={LinkedInIcon}
+                label="LinkedIn"
+              />
+              <SocialLink
+                href="https://github.com"
+                icon={GitHubIcon}
+                label="GitHub"
+              />
+              <SocialLink
+                href="https://youtube.com"
+                icon={YouTubeIcon}
+                label="YouTube"
+              />
             </div>
           </div>
 
@@ -98,7 +114,10 @@ export const Footer = () => {
                   {group.links.map((l) => (
                     <li key={l.name}>
                       {l.href === '#' ? (
-                        <span className="text-sm text-[var(--text-secondary)] cursor-default" aria-disabled="true">
+                        <span
+                          className="text-sm text-[var(--text-secondary)] cursor-default"
+                          aria-disabled="true"
+                        >
                           {l.name}
                         </span>
                       ) : (
