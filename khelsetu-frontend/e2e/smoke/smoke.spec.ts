@@ -28,7 +28,9 @@ test.describe('Smoke Tests', () => {
       page.getByRole('heading', { name: /create your account/i }),
     ).toBeVisible({ timeout: 10000 });
     await expect(page.getByLabel('Full name')).toBeVisible();
-    await expect(page.getByRole('button', { name: /create account/i })).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: /create account/i }),
+    ).toBeVisible();
   });
 
   test('smoke: tournaments page loads', async ({ page }) => {

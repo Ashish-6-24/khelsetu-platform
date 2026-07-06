@@ -18,10 +18,7 @@
           "throughputKbps": 10240,
           "cpuSlowdownMultiplier": 1
         },
-        "skipAudits": [
-          "unsized-images",
-          "network-dependency-tree-insight"
-        ],
+        "skipAudits": ["unsized-images", "network-dependency-tree-insight"],
         "disableStorageReset": false
       }
     },
