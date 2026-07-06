@@ -1,6 +1,6 @@
-import { Button } from '@shared/components/ui/Button';
-import { Card, CardBody } from '@shared/components/ui/Card';
 import type { Match } from '@shared/types/tournament';
+import { Button } from '@shared/ui/Button';
+import { Card, CardBody } from '@shared/ui/Card';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Play, Zap } from 'lucide-react';
 

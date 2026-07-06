@@ -4,7 +4,7 @@ import type {
   FootballScore,
   VolleyballScore,
 } from '@shared/types/scoring';
-import { useScoringStore } from '@store/scoringStore';
+import { useScoringStore } from '@state/scoringStore';
 import { act, renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 

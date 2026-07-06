@@ -1,6 +1,6 @@
 import { wsService } from '@lib/websocket-client';
 import type { WebSocketEvent } from '@shared/types/websocket';
-import { useScoringStore } from '@store/scoringStore';
+import { useScoringStore } from '@state/scoringStore';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 

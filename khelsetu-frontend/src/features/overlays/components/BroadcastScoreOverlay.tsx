@@ -1,5 +1,5 @@
-import { LivePulse } from '@shared/components/animations';
-import { Badge } from '@shared/components/ui/Badge';
+import { Badge } from '@shared/ui/Badge';
+import { LivePulse } from '@shared/ui/animations';
 import { motion } from 'framer-motion';
 
 interface BroadcastScoreOverlayProps {

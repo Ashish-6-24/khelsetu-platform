@@ -1,8 +1,8 @@
-import { Badge, BadgeDot } from '@shared/components/ui/Badge';
-import { Button } from '@shared/components/ui/Button';
-import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
-import { EmptyState } from '@shared/components/ui/EmptyState';
 import type { Match } from '@shared/types/tournament';
+import { Badge, BadgeDot } from '@shared/ui/Badge';
+import { Button } from '@shared/ui/Button';
+import { Card, CardBody, CardHeader } from '@shared/ui/Card';
+import { EmptyState } from '@shared/ui/EmptyState';
 import { ROUTES } from '@shared/utils/constants';
 import { ChevronRight, Radio } from 'lucide-react';
 

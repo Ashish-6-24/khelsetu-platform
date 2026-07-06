@@ -1,8 +1,8 @@
-import { Button } from '@shared/components/ui/Button';
-import { Card, CardBody } from '@shared/components/ui/Card';
-import { Input } from '@shared/components/ui/Input';
-import { Select } from '@shared/components/ui/Select';
 import type { TournamentFormat } from '@shared/types/tournament';
+import { Button } from '@shared/ui/Button';
+import { Card, CardBody } from '@shared/ui/Card';
+import { Input } from '@shared/ui/Input';
+import { Select } from '@shared/ui/Select';
 import { formatCurrency } from '@shared/utils/formatting';
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';

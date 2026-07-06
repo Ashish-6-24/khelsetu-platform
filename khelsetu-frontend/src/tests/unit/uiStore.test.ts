@@ -1,4 +1,4 @@
-import { useUIStore } from '@store/uiStore';
+import { useUIStore } from '@state/uiStore';
 import { act, renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 

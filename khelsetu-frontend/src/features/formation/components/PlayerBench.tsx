@@ -1,5 +1,5 @@
-import { Badge } from '@shared/components/ui/Badge';
-import { Card, CardBody } from '@shared/components/ui/Card';
+import { Badge } from '@shared/ui/Badge';
+import { Card, CardBody } from '@shared/ui/Card';
 import { clsx } from 'clsx';
 
 import type { BenchPlayer } from '../types/index';

@@ -1,6 +1,6 @@
 import type { SyncEntry } from '@features/offline-sync/types';
-import { Badge } from '@shared/components/ui/Badge';
-import { Button } from '@shared/components/ui/Button';
+import { Badge } from '@shared/ui/Badge';
+import { Button } from '@shared/ui/Button';
 import {
   CheckCircle,
   Clock,

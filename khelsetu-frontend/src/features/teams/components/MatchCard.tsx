@@ -1,6 +1,6 @@
-import { Avatar } from '@shared/components/ui/Avatar';
-import { Badge, type BadgeVariant } from '@shared/components/ui/Badge';
 import type { Match } from '@shared/types/tournament';
+import { Avatar } from '@shared/ui/Avatar';
+import { Badge, type BadgeVariant } from '@shared/ui/Badge';
 import { formatDate, formatTime } from '@shared/utils/date';
 import { motion } from 'framer-motion';
 

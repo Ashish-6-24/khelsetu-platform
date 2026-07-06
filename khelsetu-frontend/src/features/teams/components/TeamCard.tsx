@@ -1,7 +1,7 @@
-import { Avatar } from '@shared/components/ui/Avatar';
-import { Badge } from '@shared/components/ui/Badge';
-import { Card, CardBody } from '@shared/components/ui/Card';
 import type { Team } from '@shared/types/tournament';
+import { Avatar } from '@shared/ui/Avatar';
+import { Badge } from '@shared/ui/Badge';
+import { Card, CardBody } from '@shared/ui/Card';
 import { motion } from 'framer-motion';
 
 interface TeamCardProps {

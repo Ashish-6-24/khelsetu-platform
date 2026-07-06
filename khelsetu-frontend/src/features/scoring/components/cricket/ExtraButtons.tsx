@@ -1,5 +1,5 @@
-import { Button } from '@shared/components/ui/Button';
 import type { CricketExtraType } from '@shared/types/scoring';
+import { Button } from '@shared/ui/Button';
 import { clsx } from 'clsx';
 
 interface ExtraButtonsProps {

@@ -1,8 +1,8 @@
 import { type Standing } from '@features/standings/types';
 import { isQualified, sortStandings } from '@features/standings/utils';
-import { Badge } from '@shared/components/ui/Badge';
-import { Card, CardBody } from '@shared/components/ui/Card';
-import { Skeleton } from '@shared/components/ui/Skeleton';
+import { Badge } from '@shared/ui/Badge';
+import { Card, CardBody } from '@shared/ui/Card';
+import { Skeleton } from '@shared/ui/Skeleton';
 import { motion } from 'framer-motion';
 import {
   ArrowDown,

@@ -96,7 +96,7 @@ axiosInstance.interceptors.response.use(
           processQueue(refreshError, null);
           setAccessToken(null);
 
-          const { useAuthStore } = await import('@store/authStore');
+          const { useAuthStore } = await import('@state/authStore');
           useAuthStore.getState().logout();
 
           window.location.href = '/auth/login';

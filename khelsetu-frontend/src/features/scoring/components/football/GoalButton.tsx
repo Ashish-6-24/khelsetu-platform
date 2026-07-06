@@ -1,7 +1,7 @@
-import { Button } from '@shared/components/ui/Button';
-import { Input } from '@shared/components/ui/Input';
-import { Modal } from '@shared/components/ui/Modal';
 import type { FootballEvent } from '@shared/types/scoring';
+import { Button } from '@shared/ui/Button';
+import { Input } from '@shared/ui/Input';
+import { Modal } from '@shared/ui/Modal';
 
 import { useState } from 'react';
 

@@ -8,13 +8,13 @@ const src = path.resolve(__dirname, './src');
 
 const aliases = {
   '@': src,
-  '@app': path.resolve(src, './app'),
-  '@pages': path.resolve(src, './pages'),
+  '@core': path.resolve(src, './core'),
+  '@routes': path.resolve(src, './routes'),
   '@shared': path.resolve(src, './shared'),
   '@features': path.resolve(src, './features'),
-  '@store': path.resolve(src, './store'),
+  '@state': path.resolve(src, './state'),
   '@lib': path.resolve(src, './lib'),
-  '@styles': path.resolve(src, './styles'),
+  '@theme': path.resolve(src, './theme'),
   '@assets': path.resolve(src, './assets'),
   '@tests': path.resolve(src, './tests'),
   '@workers': path.resolve(src, './workers'),

@@ -1,10 +1,10 @@
-import type { BracketTeam } from '@features/bracket-advanced/types';
+import type { BracketTeam } from '@features/brackets/types';
 import {
   advanceWinner,
   generateDoubleElimination,
   generateRoundRobin,
   generateSingleElimination,
-} from '@features/bracket-advanced/utils/bracketGenerator';
+} from '@features/brackets/utils/bracketGenerator';
 import { describe, expect, it } from 'vitest';
 
 const createTeam = (id: string, name: string): BracketTeam => ({

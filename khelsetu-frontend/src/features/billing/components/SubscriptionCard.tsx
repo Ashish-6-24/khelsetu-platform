@@ -1,7 +1,7 @@
 import type { Subscription } from '@features/billing/types';
-import { Badge } from '@shared/components/ui/Badge';
-import { Button } from '@shared/components/ui/Button';
-import { Card, CardBody } from '@shared/components/ui/Card';
+import { Badge } from '@shared/ui/Badge';
+import { Button } from '@shared/ui/Button';
+import { Card, CardBody } from '@shared/ui/Card';
 import { Calendar, CreditCard, X } from 'lucide-react';
 
 interface SubscriptionCardProps {

@@ -1,7 +1,7 @@
-import { Button } from '@shared/components/ui/Button';
-import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
-import { Input } from '@shared/components/ui/Input';
-import { Select } from '@shared/components/ui/Select';
+import { Button } from '@shared/ui/Button';
+import { Card, CardBody, CardHeader } from '@shared/ui/Card';
+import { Input } from '@shared/ui/Input';
+import { Select } from '@shared/ui/Select';
 
 import { useState } from 'react';
 

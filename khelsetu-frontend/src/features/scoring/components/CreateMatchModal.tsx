@@ -1,7 +1,7 @@
 import { useTeams } from '@features/teams/hooks/useTeams';
-import { Button } from '@shared/components/ui/Button';
-import { Input } from '@shared/components/ui/Input';
-import { Select } from '@shared/components/ui/Select';
+import { Button } from '@shared/ui/Button';
+import { Input } from '@shared/ui/Input';
+import { Select } from '@shared/ui/Select';
 import { CalendarDays, MapPin, Trophy } from 'lucide-react';
 
 import { useState } from 'react';

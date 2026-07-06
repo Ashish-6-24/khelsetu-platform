@@ -1,8 +1,8 @@
-import { AdvancedBracketView } from '@features/bracket-advanced/components/AdvancedBracketView';
+import { AdvancedBracketView } from '@features/brackets/components/AdvancedBracketView';
 import { render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-vi.mock('@features/bracket-advanced/hooks/useBracketData', () => ({
+vi.mock('@features/brackets/hooks/useBracketData', () => ({
   useBracketData: () => ({
     bracket: {
       format: 'single-elimination',

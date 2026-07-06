@@ -1,9 +1,4 @@
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-} from '@shared/components/ui/Card';
+import { Card, CardBody, CardFooter, CardHeader } from '@shared/ui/Card';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 

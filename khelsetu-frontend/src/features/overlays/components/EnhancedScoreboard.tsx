@@ -1,5 +1,5 @@
-import { LivePulse } from '@shared/components/animations';
 import type { Match } from '@shared/types/tournament';
+import { LivePulse } from '@shared/ui/animations';
 import { motion } from 'framer-motion';
 
 interface EnhancedScoreboardProps {

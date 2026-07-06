@@ -1,6 +1,6 @@
 import type { Plan } from '@features/billing/types';
-import { Button } from '@shared/components/ui/Button';
-import { Card, CardBody } from '@shared/components/ui/Card';
+import { Button } from '@shared/ui/Button';
+import { Card, CardBody } from '@shared/ui/Card';
 import { Check } from 'lucide-react';
 
 interface PlanCardProps {

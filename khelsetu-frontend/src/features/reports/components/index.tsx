@@ -3,9 +3,9 @@ import type {
   ReportData,
   ReportType,
 } from '@features/reports/types';
-import { Badge } from '@shared/components/ui/Badge';
-import { Button } from '@shared/components/ui/Button';
-import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
+import { Badge } from '@shared/ui/Badge';
+import { Button } from '@shared/ui/Button';
+import { Card, CardBody, CardHeader } from '@shared/ui/Card';
 import { BarChart3, Download, FileText, Table } from 'lucide-react';
 
 const reportIcons: Record<ReportType, React.ReactNode> = {

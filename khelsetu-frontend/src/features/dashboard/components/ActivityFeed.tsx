@@ -1,5 +1,5 @@
-import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
-import { RelativeTime } from '@shared/components/ui/RelativeTime';
+import { Card, CardBody, CardHeader } from '@shared/ui/Card';
+import { RelativeTime } from '@shared/ui/RelativeTime';
 import { motion } from 'framer-motion';
 import {
   Activity,

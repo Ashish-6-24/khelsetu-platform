@@ -1,7 +1,7 @@
 import type {
   PlayerMatchStat,
   TeamStatistics,
-} from '@features/match-statistics/types';
+} from '@features/statistics/types';
 import {
   calculatePassAccuracy,
   calculatePlayerRating,
@@ -9,7 +9,7 @@ import {
   getRatingBg,
   getRatingColor,
   sortPlayersByRating,
-} from '@features/match-statistics/utils/statCalculations';
+} from '@features/statistics/utils/statCalculations';
 import { describe, expect, it } from 'vitest';
 
 describe('Stat Calculations', () => {
