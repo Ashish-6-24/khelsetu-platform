@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './e2e',
-  testIgnore: ['**/visual/**', '**/smoke/**'],
+  testIgnore: [/\/visual\//, /\/smoke\//],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
@@ -27,27 +27,27 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-      testIgnore: /a11y\//,
+      testIgnore: [/a11y\//, /visual\//, /smoke\//],
     },
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
-      testIgnore: /a11y\//,
+      testIgnore: [/a11y\//, /visual\//, /smoke\//],
     },
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
-      testIgnore: /a11y\//,
+      testIgnore: [/a11y\//, /visual\//, /smoke\//],
     },
     {
       name: 'Mobile Chrome',
       use: { ...devices['Pixel 5'] },
-      testIgnore: /a11y\//,
+      testIgnore: [/a11y\//, /visual\//, /smoke\//],
     },
     {
       name: 'Mobile Safari',
       use: { ...devices['iPhone 12'] },
-      testIgnore: /a11y\//,
+      testIgnore: [/a11y\//, /visual\//, /smoke\//],
     },
 
     // A11y tests — public pages (no auth)
