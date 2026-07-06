@@ -41,12 +41,12 @@ export const Progress = ({
       {(showLabel || label) && (
         <div className="mb-1.5 flex items-center justify-between text-xs">
           {label && (
-            <span className="font-medium text-slate-600 dark:text-slate-400">
+            <span className="font-medium text-[var(--text-secondary)]">
               {label}
             </span>
           )}
           {showLabel && (
-            <span className="font-semibold tabular-nums text-slate-700 dark:text-slate-300">
+            <span className="font-semibold tabular-nums text-[var(--text-primary)]">
               {Math.round(percentage)}%
             </span>
           )}
@@ -59,7 +59,7 @@ export const Progress = ({
         aria-valuemax={100}
         aria-label={label || `Progress: ${Math.round(percentage)}%`}
         className={clsx(
-          'w-full overflow-hidden rounded-full bg-slate-200/70 dark:bg-slate-800/60',
+          'w-full overflow-hidden rounded-full bg-[var(--bg-surface-sunken)]',
           sizeStyles[size],
         )}
       >

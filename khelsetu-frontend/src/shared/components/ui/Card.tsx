@@ -29,7 +29,7 @@ export const Card = ({
               ? 'surface shadow-[var(--shadow-md)]'
               : 'surface',
           hover &&
-            'cursor-pointer hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)] hover:border-[var(--border-strong)] dark:hover:border-[var(--border-strong)]',
+            'cursor-pointer hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)] hover:border-[var(--border-strong)]',
           className,
         ),
       )}

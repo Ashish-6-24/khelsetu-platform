@@ -83,7 +83,7 @@ export const Avatar = ({
           'inline-flex items-center justify-center overflow-hidden rounded-full',
           'bg-gradient-to-br font-semibold text-white',
           'shadow-sm',
-          ring && 'ring-2 ring-white dark:ring-slate-900',
+          ring && 'ring-2 ring-[var(--bg-surface)]',
           gradient,
           sizeStyles[size],
         )}
@@ -105,7 +105,7 @@ export const Avatar = ({
         <span
           aria-label={`Status: ${status}`}
           className={clsx(
-            'absolute right-0 bottom-0 block rounded-full ring-2 ring-white dark:ring-slate-900',
+            'absolute right-0 bottom-0 block rounded-full ring-2 ring-[var(--bg-surface)]',
             statusColors[status],
             statusSize[size],
           )}

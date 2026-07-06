@@ -94,13 +94,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <div className="mb-1.5 flex items-center justify-between">
             <label
               htmlFor={inputId}
-              className="text-sm font-medium text-[var(--text-secondary)] dark:text-[var(--text-secondary)]"
+              className="text-sm font-medium text-[var(--text-secondary)]"
             >
               {label}
               {!optional && <span className="ml-0.5 text-red-500">*</span>}
             </label>
             {optional && (
-              <span className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+              <span className="text-xs text-[var(--text-tertiary)]">
                 Optional
               </span>
             )}
@@ -108,7 +108,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className="relative">
           {leftIcon && (
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[var(--text-tertiary)]">
               {leftIcon}
             </div>
           )}
@@ -121,8 +121,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               'h-11 transition-all duration-200 ease-out',
               'border-[var(--border-subtle)] hover:border-[var(--border-strong)] hover:shadow-sm',
               'focus:border-[var(--brand-primary)] focus:outline-none focus:ring-4 focus:ring-[var(--brand-primary)]/12 focus:shadow-md',
-              'dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface-sunken)] dark:text-white dark:placeholder:text-slate-500',
-              'dark:hover:border-[var(--border-strong)] dark:hover:shadow-sm dark:focus:border-[var(--brand-primary)] dark:focus:ring-[var(--brand-primary)]/15 dark:focus:shadow-md',
               'disabled:cursor-not-allowed disabled:opacity-50',
               leftIcon ? 'pl-10' : 'pl-3.5',
               rightIcon || isPassword || validationState ? 'pr-12' : 'pr-3.5',
@@ -146,7 +144,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               onClick={() => setShowPassword((s) => !s)}
               aria-label={showPassword ? 'Hide password' : 'Show password'}
               aria-pressed={showPassword}
-              className="absolute inset-y-0 right-0 flex min-h-11 min-w-11 items-center justify-center pr-3 text-slate-400 transition-colors hover:text-slate-600 focus-visible:rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] dark:hover:text-slate-200"
+              className="absolute inset-y-0 right-0 flex min-h-11 min-w-11 items-center justify-center pr-3 text-[var(--text-tertiary)] transition-colors hover:text-[var(--text-secondary)] focus-visible:rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]"
             >
               {showPassword ? (
                 <EyeOff className="h-4 w-4" />
@@ -164,7 +162,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             </div>
           ) : (
             rightIcon && (
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400">
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-[var(--text-tertiary)]">
                 {rightIcon}
               </div>
             )
@@ -183,7 +181,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         ) : helperText ? (
           <p
             id={`${inputId}-help`}
-            className="mt-1.5 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]"
+            className="mt-1.5 text-sm text-[var(--text-tertiary)]"
           >
             {helperText}
           </p>

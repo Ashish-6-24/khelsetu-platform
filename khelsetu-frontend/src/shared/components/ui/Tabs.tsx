@@ -62,7 +62,7 @@ export const Tabs = ({
       className={clsx(
         'inline-flex',
         variant === 'pills' &&
-          'rounded-xl bg-[var(--bg-surface-sunken)]/80 p-1 dark:bg-[var(--bg-surface-sunken)]/60',
+          'rounded-xl bg-[var(--bg-surface-sunken)]/80 p-1',
         variant === 'underline' && 'border-b border-[var(--border-subtle)]',
         className,
       )}
@@ -78,7 +78,6 @@ export const Tabs = ({
             role="tab"
             id={`tab-${tab.id}`}
             aria-selected={isActive}
-            aria-controls={`tabpanel-${tab.id}`}
             tabIndex={isActive ? 0 : -1}
             onClick={() => onChange(tab.id)}
             className={clsx(
@@ -89,16 +88,16 @@ export const Tabs = ({
               variant === 'default' && 'h-9 px-3.5',
               variant === 'underline' && 'h-10 px-3',
               variant === 'pills' && isActive
-                ? 'text-[var(--text-primary)] dark:text-white'
+                ? 'text-[var(--text-primary)]'
                 : variant === 'pills'
-                  ? 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] dark:text-[var(--text-secondary)] dark:hover:text-white'
+                  ? 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                   : variant === 'underline'
                     ? isActive
-                      ? 'text-[var(--brand-primary)] dark:text-[var(--brand-primary)]'
-                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] dark:text-[var(--text-secondary)] dark:hover:text-[var(--text-primary)]'
+                      ? 'text-[var(--brand-primary)]'
+                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                     : isActive
-                      ? 'text-[var(--brand-primary)] dark:text-[var(--brand-primary)]'
-                      : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-sunken)]/60 dark:text-[var(--text-secondary)] dark:hover:bg-[var(--bg-surface-sunken)]/50',
+                      ? 'text-[var(--brand-primary)]'
+                      : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-sunken)]/60',
             )}
           >
             {tab.icon}
@@ -108,8 +107,8 @@ export const Tabs = ({
                 className={clsx(
                   'ml-0.5 inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-semibold tabular-nums',
                   isActive
-                    ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] dark:bg-[var(--brand-primary)]/20 dark:text-[var(--brand-primary)]'
-                    : 'bg-[var(--bg-surface-sunken)]/70 text-[var(--text-secondary)] dark:bg-[var(--bg-surface-sunken)]/60 dark:text-[var(--text-secondary)]',
+                    ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)]'
+                    : 'bg-[var(--bg-surface-sunken)]/70 text-[var(--text-secondary)]',
                 )}
               >
                 {tab.count}
@@ -119,21 +118,21 @@ export const Tabs = ({
             {isActive && variant === 'underline' && (
               <motion.div
                 layoutId={`${uniqueId}-tab-underline`}
-                className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-[var(--brand-primary)] dark:bg-[var(--brand-primary)]"
+                className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-[var(--brand-primary)]"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
             {isActive && variant === 'default' && (
               <motion.div
                 layoutId={`${uniqueId}-tab-default-bg`}
-                className="absolute inset-0 -z-10 rounded-lg bg-[var(--brand-primary-soft)] dark:bg-[var(--brand-primary)]/15"
+                className="absolute inset-0 -z-10 rounded-lg bg-[var(--brand-primary-soft)]"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
             {isActive && variant === 'pills' && (
               <motion.div
                 layoutId={`${uniqueId}-tab-pills-bg`}
-                className="absolute inset-0 -z-10 rounded-lg bg-white shadow-sm dark:bg-slate-900"
+                className="absolute inset-0 -z-10 rounded-lg bg-[var(--bg-surface)] shadow-sm"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}

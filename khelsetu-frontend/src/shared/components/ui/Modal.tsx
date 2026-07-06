@@ -79,7 +79,7 @@ export const Modal = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={backdropTransition}
-            className="fixed inset-0 bg-slate-950/40 backdrop-blur-md dark:bg-slate-950/70"
+            className="fixed inset-0 bg-[var(--bg-inverse)]/40 backdrop-blur-md"
             onClick={onClose}
             aria-hidden="true"
           />
@@ -105,7 +105,7 @@ export const Modal = ({
                     {title && (
                       <h2
                         id={titleId}
-                        className="text-lg font-semibold tracking-tight text-slate-900 dark:text-white"
+                        className="text-lg font-semibold tracking-tight text-[var(--text-primary)]"
                       >
                         {title}
                       </h2>
@@ -113,7 +113,7 @@ export const Modal = ({
                     {description && (
                       <p
                         id={descId}
-                        className="mt-1 text-sm text-slate-500 dark:text-slate-400"
+                        className="mt-1 text-sm text-[var(--text-secondary)]"
                       >
                         {description}
                       </p>
@@ -122,7 +122,7 @@ export const Modal = ({
                   <button
                     onClick={onClose}
                     aria-label="Close dialog"
-                    className="inline-flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+                    className="inline-flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-lg text-[var(--text-tertiary)] transition-colors hover:bg-[var(--bg-surface-sunken)] hover:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2"
                   >
                     <X className="h-5 w-5" />
                   </button>
@@ -130,7 +130,7 @@ export const Modal = ({
               )}
               <div className="px-6 py-5">{children}</div>
               {footer && (
-                <div className="flex items-center justify-end gap-2 border-t border-[var(--border-subtle)] bg-slate-50/60 px-6 py-3.5 dark:bg-slate-900/40">
+                <div className="flex items-center justify-end gap-2 border-t border-[var(--border-subtle)] bg-[var(--bg-surface-sunken)]/60 px-6 py-3.5">
                   {footer}
                 </div>
               )}

@@ -63,7 +63,7 @@ export const EmptyState = ({
         >
           <Icon
             className={clsx(
-              'text-[var(--text-muted)] dark:text-[var(--text-muted)]',
+              'text-[var(--text-muted)]',
               compact ? 'h-5 w-5' : 'h-7 w-7',
             )}
           />
@@ -75,11 +75,11 @@ export const EmptyState = ({
       )}
 
       <div className="max-w-sm">
-        <h3 className="text-base font-semibold tracking-tight text-[var(--text-primary)] dark:text-white">
+        <h3 className="text-base font-semibold tracking-tight text-[var(--text-primary)]">
           {title}
         </h3>
         {description && (
-          <p className="mt-1 text-sm text-[var(--text-secondary)] dark:text-[var(--text-muted)]">
+            <p className="mt-1 text-sm text-[var(--text-secondary)]">
             {description}
           </p>
         )}
