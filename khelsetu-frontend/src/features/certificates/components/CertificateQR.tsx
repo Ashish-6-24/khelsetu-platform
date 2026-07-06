@@ -37,9 +37,10 @@ export function CertificateQR({ value, size = 56 }: CertificateQRProps) {
     <img
       src={src}
       alt={`QR code for ${value}`}
+      loading="lazy"
       width={size}
       height={size}
-      className="rounded border border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-800"
+      className="rounded border border-[var(--border-subtle)] bg-white dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)]"
       style={{ width: size, height: size }}
     />
   );

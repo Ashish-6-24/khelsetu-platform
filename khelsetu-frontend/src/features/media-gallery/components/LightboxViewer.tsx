@@ -147,6 +147,7 @@ export function LightboxViewer({
           <img
             src={item.url}
             alt={item.title}
+            loading="lazy"
             className="max-h-[70vh] max-w-full rounded-lg object-contain"
           />
         )}

@@ -25,7 +25,7 @@ const strengthColors = [
   'bg-emerald-500',
 ] as const;
 const strengthTextColors = [
-  'text-slate-400',
+  'text-[var(--text-muted)]',
   'text-red-600 dark:text-red-400',
   'text-amber-600 dark:text-amber-400',
   'text-blue-600 dark:text-blue-400',

@@ -106,11 +106,12 @@ export const BracketMatchCard = ({
               <img
                 src={match.teamA.logo}
                 alt={`${match.teamA.shortName || match.teamA.name} logo`}
+                loading="lazy"
                 className="h-5 w-5 rounded-full object-cover flex-shrink-0"
               />
             ) : match.teamA?.seed !== null &&
               match.teamA?.seed !== undefined ? (
-              <span className="h-5 w-5 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-[10px] font-bold text-[var(--text-tertiary)] dark:text-[var(--text-secondary)] flex-shrink-0">
+              <span className="h-5 w-5 rounded-full bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-3)] flex items-center justify-center text-[10px] font-bold text-[var(--text-tertiary)] dark:text-[var(--text-secondary)] flex-shrink-0">
                 {match.teamA?.seed}
               </span>
             ) : null}
@@ -162,11 +163,12 @@ export const BracketMatchCard = ({
               <img
                 src={match.teamB.logo}
                 alt={`${match.teamB.shortName || match.teamB.name} logo`}
+                loading="lazy"
                 className="h-5 w-5 rounded-full object-cover flex-shrink-0"
               />
             ) : match.teamB?.seed !== null &&
               match.teamB?.seed !== undefined ? (
-              <span className="h-5 w-5 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-[10px] font-bold text-[var(--text-tertiary)] dark:text-[var(--text-secondary)] flex-shrink-0">
+              <span className="h-5 w-5 rounded-full bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-3)] flex items-center justify-center text-[10px] font-bold text-[var(--text-tertiary)] dark:text-[var(--text-secondary)] flex-shrink-0">
                 {match.teamB?.seed}
               </span>
             ) : null}

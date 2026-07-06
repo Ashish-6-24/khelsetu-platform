@@ -171,6 +171,7 @@ export function NewsArticle({
                 <img
                   src={img}
                   alt={`Gallery ${i + 1}`}
+                  loading="lazy"
                   className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </button>
@@ -195,6 +196,7 @@ export function NewsArticle({
                   <img
                     src={related.coverImage}
                     alt={related.title}
+                    loading="lazy"
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>

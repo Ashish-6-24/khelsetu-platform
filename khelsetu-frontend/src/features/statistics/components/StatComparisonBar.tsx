@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 interface StatComparisonBarProps {
   label: string;
   teamAValue: number;
@@ -6,7 +8,7 @@ interface StatComparisonBarProps {
   higherIsBetter?: boolean;
 }
 
-export const StatComparisonBar = ({
+export const StatComparisonBar = memo(({
   label,
   teamAValue,
   teamBValue,
@@ -32,20 +34,20 @@ export const StatComparisonBar = ({
           className={`font-semibold tabular-nums ${
             teamABetter && !isDraw
               ? 'text-emerald-600 dark:text-emerald-400'
-              : 'text-gray-900 dark:text-white'
+              : 'text-[var(--text-primary)] dark:text-white'
           }`}
         >
           {teamAValue}
           {unit}
         </span>
-        <span className="px-3 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+        <span className="px-3 text-xs font-medium text-[var(--text-tertiary)] dark:text-[var(--text-muted)] uppercase tracking-wider">
           {label}
         </span>
         <span
           className={`font-semibold tabular-nums ${
             teamBBetter && !isDraw
               ? 'text-emerald-600 dark:text-emerald-400'
-              : 'text-gray-900 dark:text-white'
+              : 'text-[var(--text-primary)] dark:text-white'
           }`}
         >
           {teamBValue}
@@ -53,7 +55,7 @@ export const StatComparisonBar = ({
         </span>
       </div>
       <div
-        className="flex h-2.5 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700"
+        className="flex h-2.5 w-full overflow-hidden rounded-full bg-[var(--bg-surface-sunken)] dark:bg-gray-700"
         role="group"
         aria-label={`${label} comparison: Team A ${teamAValue}${unit}, Team B ${teamBValue}${unit}`}
       >
@@ -78,4 +80,4 @@ export const StatComparisonBar = ({
       </div>
     </div>
   );
-};
+});

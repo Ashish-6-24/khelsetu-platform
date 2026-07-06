@@ -36,8 +36,6 @@ const linkGroups = [
       { name: 'Features', href: '#features' },
       { name: 'Sports', href: '#sports' },
       { name: 'Pricing', href: '#pricing' },
-      { name: 'Changelog', href: '#' },
-      { name: 'Roadmap', href: '#' },
     ],
   },
   {
@@ -78,33 +76,39 @@ export const Footer = () => {
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <Logo size="md" />
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-[var(--text-secondary)] dark:text-[var(--text-secondary)]">
               The all-in-one platform to run, score, and broadcast world-class
               sports tournaments. Built for organizers, loved by fans.
             </p>
             <div className="mt-6 flex items-center gap-2">
-              <SocialLink href="#" icon={TwitterIcon} label="Twitter" />
-              <SocialLink href="#" icon={LinkedInIcon} label="LinkedIn" />
-              <SocialLink href="#" icon={GitHubIcon} label="GitHub" />
-              <SocialLink href="#" icon={YouTubeIcon} label="YouTube" />
+              <SocialLink href="https://twitter.com" icon={TwitterIcon} label="Twitter" />
+              <SocialLink href="https://linkedin.com" icon={LinkedInIcon} label="LinkedIn" />
+              <SocialLink href="https://github.com" icon={GitHubIcon} label="GitHub" />
+              <SocialLink href="https://youtube.com" icon={YouTubeIcon} label="YouTube" />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:col-span-8">
             {linkGroups.map((group) => (
               <div key={group.title}>
-                <h3 className="text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
+                <h3 className="text-sm font-semibold tracking-wide text-[var(--text-primary)] dark:text-white">
                   {group.title}
                 </h3>
                 <ul className="mt-4 space-y-2.5">
                   {group.links.map((l) => (
                     <li key={l.name}>
-                      <a
-                        href={l.href}
-                        className="text-sm text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-                      >
-                        {l.name}
-                      </a>
+                      {l.href === '#' ? (
+                        <span className="text-sm text-[var(--text-secondary)] cursor-default" aria-disabled="true">
+                          {l.name}
+                        </span>
+                      ) : (
+                        <a
+                          href={l.href}
+                          className="text-sm text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)] dark:text-[var(--text-secondary)] dark:hover:text-white"
+                        >
+                          {l.name}
+                        </a>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -114,22 +118,22 @@ export const Footer = () => {
         </div>
 
         <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-[var(--border-subtle)] pt-8 sm:flex-row sm:items-center">
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-secondary)]">
             &copy; {new Date().getFullYear()} {APP_NAME}. Crafted in Kathmandu.
           </p>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500 dark:text-slate-400">
-            <a href="#" className="hover:text-slate-900 dark:hover:text-white">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-secondary)]">
+            <span aria-disabled="true" className="cursor-default">
               Privacy
-            </a>
-            <a href="#" className="hover:text-slate-900 dark:hover:text-white">
+            </span>
+            <span aria-disabled="true" className="cursor-default">
               Terms
-            </a>
-            <a href="#" className="hover:text-slate-900 dark:hover:text-white">
+            </span>
+            <span aria-disabled="true" className="cursor-default">
               Security
-            </a>
-            <a href="#" className="hover:text-slate-900 dark:hover:text-white">
+            </span>
+            <span aria-disabled="true" className="cursor-default">
               Cookies
-            </a>
+            </span>
           </div>
         </div>
       </div>
@@ -149,7 +153,7 @@ const SocialLink = ({
   <a
     href={href}
     aria-label={label}
-    className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-subtle)] text-slate-500 transition-all hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900 dark:hover:border-slate-600 dark:hover:bg-slate-800 dark:hover:text-white"
+    className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-subtle)] text-[var(--text-tertiary)] transition-all hover:-translate-y-0.5 hover:border-[var(--border-strong)] hover:bg-[var(--bg-surface-sunken)] hover:text-[var(--text-primary)] dark:hover:border-[var(--border-strong)] dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-white"
   >
     <Icon className="h-4 w-4" />
   </a>

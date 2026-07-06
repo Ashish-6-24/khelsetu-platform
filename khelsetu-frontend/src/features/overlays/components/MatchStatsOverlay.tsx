@@ -44,8 +44,8 @@ export function MatchStatsOverlay({ match }: MatchStatsOverlayProps) {
   ];
 
   return (
-    <div className="bg-gray-900 rounded-xl p-4 text-white">
-      <h3 className="text-sm font-bold uppercase tracking-wider text-gray-300 mb-3">
+    <div className="bg-[var(--bg-inverse)] rounded-xl p-4 text-white">
+      <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--text-muted)] mb-3">
         Match Stats
       </h3>
       <div className="grid grid-cols-2 gap-3">
@@ -59,7 +59,7 @@ export function MatchStatsOverlay({ match }: MatchStatsOverlayProps) {
             }
             className="bg-white/10 rounded-lg p-3"
           >
-            <div className="text-xs font-medium text-gray-400 truncate">
+            <div className="text-xs font-medium text-[var(--text-muted)] truncate">
               {stat.label}
             </div>
             <div className="text-lg font-bold text-white">{stat.value}</div>

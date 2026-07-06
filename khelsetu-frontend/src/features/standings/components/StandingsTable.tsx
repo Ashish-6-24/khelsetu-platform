@@ -3,6 +3,7 @@ import { isQualified, sortStandings } from '@features/standings/utils';
 import { Badge } from '@shared/ui/Badge';
 import { Card, CardBody } from '@shared/ui/Card';
 import { Skeleton } from '@shared/ui/Skeleton';
+import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
 import {
   ArrowDown,
@@ -149,7 +150,7 @@ export const StandingsTable = ({
                   tabIndex={0}
                 >
                   <div className="flex items-center justify-center gap-1">
-                    P {getSortIcon('played')}
+                    <abbr title="Played">P</abbr> {getSortIcon('played')}
                   </div>
                 </th>
                 <th
@@ -172,7 +173,7 @@ export const StandingsTable = ({
                   tabIndex={0}
                 >
                   <div className="flex items-center justify-center gap-1">
-                    W {getSortIcon('won')}
+                    <abbr title="Won">W</abbr> {getSortIcon('won')}
                   </div>
                 </th>
                 <th
@@ -195,7 +196,7 @@ export const StandingsTable = ({
                   tabIndex={0}
                 >
                   <div className="flex items-center justify-center gap-1">
-                    L {getSortIcon('lost')}
+                    <abbr title="Lost">L</abbr> {getSortIcon('lost')}
                   </div>
                 </th>
                 <th
@@ -218,7 +219,7 @@ export const StandingsTable = ({
                   tabIndex={0}
                 >
                   <div className="flex items-center justify-center gap-1">
-                    D {getSortIcon('drawn')}
+                    <abbr title="Drawn">D</abbr> {getSortIcon('drawn')}
                   </div>
                 </th>
                 {sport === 'cricket' && (
@@ -242,7 +243,7 @@ export const StandingsTable = ({
                     tabIndex={0}
                   >
                     <div className="flex items-center justify-center gap-1">
-                      NRR {getSortIcon('nrr')}
+                      <abbr title="Net Run Rate">NRR</abbr> {getSortIcon('nrr')}
                     </div>
                   </th>
                 )}
@@ -266,7 +267,7 @@ export const StandingsTable = ({
                   tabIndex={0}
                 >
                   <div className="flex items-center justify-center gap-1">
-                    PTS {getSortIcon('points')}
+                    <abbr title="Points">PTS</abbr> {getSortIcon('points')}
                   </div>
                 </th>
               </tr>
@@ -278,20 +279,20 @@ export const StandingsTable = ({
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className={`border-b border-gray-100 dark:border-[var(--border-subtle)] last:border-0 hover:bg-[var(--bg-surface-sunken)] dark:hover:bg-[var(--bg-surface-raised)]/50 transition-colors ${
-                    isQualified(index, playoffSpots)
-                      ? 'bg-green-50/50 dark:bg-green-900/10'
-                      : ''
-                  }`}
+                  className={clsx(
+                    'border-b border-[var(--border-subtle)] last:border-0 hover:bg-[var(--bg-surface-sunken)] dark:hover:bg-[var(--bg-surface-raised)]/50 transition-colors',
+                    isQualified(index, playoffSpots) && 'bg-green-50/50 dark:bg-green-900/10',
+                  )}
                 >
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
                       <span
-                        className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                        className={clsx(
+                          'w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold',
                           isQualified(index, playoffSpots)
                             ? 'bg-[var(--brand-primary)] text-white'
-                            : 'bg-gray-200 dark:bg-[var(--bg-surface-raised)] text-[var(--text-primary)] dark:text-[var(--text-secondary)]'
-                        }`}
+                            : 'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)] text-[var(--text-primary)] dark:text-[var(--text-secondary)]',
+                        )}
                       >
                         {index + 1}
                       </span>
@@ -317,11 +318,11 @@ export const StandingsTable = ({
                   {sport === 'cricket' && (
                     <td className="px-4 py-3 text-center text-sm font-medium">
                       <span
-                        className={`${
+                        className={clsx(
                           (standing.nrr ?? 0) >= 0
                             ? 'text-green-600 dark:text-green-400'
-                            : 'text-red-600 dark:text-red-400'
-                        }`}
+                            : 'text-red-600 dark:text-red-400',
+                        )}
                       >
                         {(standing.nrr ?? 0) > 0 ? '+' : ''}
                         {(standing.nrr ?? 0).toFixed(3)}

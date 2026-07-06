@@ -43,10 +43,10 @@ export const InvoiceList = ({
             {[1, 2, 3].map((i) => (
               <div key={i} className="animate-pulse flex justify-between">
                 <div className="space-y-2">
-                  <div className="h-4 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded w-24" />
-                  <div className="h-3 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded w-32" />
+                  <div className="h-4 bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)] rounded w-24" />
+                  <div className="h-3 bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)] rounded w-32" />
                 </div>
-                <div className="h-4 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded w-16" />
+                <div className="h-4 bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)] rounded w-16" />
               </div>
             ))}
           </div>

@@ -186,6 +186,7 @@ export const OverlayControl = ({
                       size="sm"
                       onClick={() => onRemove(overlay.id)}
                       className="text-red-600 dark:text-red-400"
+                      aria-label={`Remove ${overlay.type} overlay`}
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>

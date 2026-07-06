@@ -84,7 +84,7 @@ export const TacticalBoard = ({
             'rounded-lg px-3 py-1.5 text-xs font-semibold transition-all',
             isDrawing
               ? 'bg-gradient-to-r from-[var(--brand-primary-bg)] to-[var(--brand-primary-bg-hover)] text-white'
-              : 'bg-gray-100 text-[var(--text-primary)] hover:bg-gray-200 dark:bg-[var(--bg-surface-raised)] dark:text-[var(--text-secondary)] dark:hover:bg-gray-600',
+              : 'bg-[var(--bg-surface-sunken)] text-[var(--text-primary)] hover:bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)] dark:text-[var(--text-secondary)] dark:hover:bg-[var(--bg-surface-3)]',
           )}
         >
           {isDrawing ? 'Drawing ON' : 'Draw'}
@@ -92,7 +92,7 @@ export const TacticalBoard = ({
 
         {isDrawing && (
           <>
-            <div className="h-5 w-px bg-gray-300 dark:bg-gray-600" />
+            <div className="h-5 w-px bg-[var(--border-strong)] dark:bg-[var(--bg-surface-3)]" />
 
             <div className="flex gap-1">
               {TOOL_TYPES.map((tool) => (
@@ -105,7 +105,7 @@ export const TacticalBoard = ({
                     'flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg text-sm transition-all',
                     activeTool === tool.type
                       ? 'bg-[var(--brand-primary-bg)] text-white'
-                      : 'bg-gray-100 text-[var(--text-secondary)] hover:bg-gray-200 dark:bg-[var(--bg-surface-raised)] dark:text-[var(--text-tertiary)] dark:hover:bg-gray-600',
+                      : 'bg-[var(--bg-surface-sunken)] text-[var(--text-secondary)] hover:bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)] dark:text-[var(--text-tertiary)] dark:hover:bg-[var(--bg-surface-3)]',
                   )}
                 >
                   {tool.icon}
@@ -113,7 +113,7 @@ export const TacticalBoard = ({
               ))}
             </div>
 
-            <div className="h-5 w-px bg-gray-300 dark:bg-gray-600" />
+            <div className="h-5 w-px bg-[var(--border-strong)] dark:bg-[var(--bg-surface-3)]" />
 
             <div className="flex gap-1">
               {TACTICAL_COLORS.map((color) => (
@@ -125,15 +125,15 @@ export const TacticalBoard = ({
                   className={clsx(
                     'flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg transition-all',
                     activeColor === color
-                      ? 'bg-gray-200 dark:bg-gray-600'
-                      : 'hover:bg-gray-100 dark:hover:bg-[var(--bg-surface-raised)]',
+                      ? 'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-3)]'
+                      : 'hover:bg-[var(--bg-surface-sunken)] dark:hover:bg-[var(--bg-surface-raised)]',
                   )}
                 >
                   <span
                     className={clsx(
                       'h-5 w-5 rounded-full border-2',
                       activeColor === color
-                        ? 'border-gray-900 scale-110 dark:border-white'
+                        ? 'border-[var(--bg-inverse)] scale-110 dark:border-white'
                         : 'border-[var(--border-strong)] dark:border-[var(--border-strong)]',
                     )}
                     style={{ backgroundColor: color }}
@@ -142,7 +142,7 @@ export const TacticalBoard = ({
               ))}
             </div>
 
-            <div className="h-5 w-px bg-gray-300 dark:bg-gray-600" />
+            <div className="h-5 w-px bg-[var(--border-strong)] dark:bg-[var(--bg-surface-3)]" />
 
             <button
               onClick={onClearDrawings}

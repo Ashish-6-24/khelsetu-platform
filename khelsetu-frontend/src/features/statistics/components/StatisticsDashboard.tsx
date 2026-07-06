@@ -1,10 +1,15 @@
 import { Card, CardBody } from '@shared/ui/Card';
 import { Skeleton } from '@shared/ui/Skeleton';
 
+import { lazy, Suspense } from 'react';
+
 import type { MatchStatistics } from '../types';
 import { PlayerStatsTable } from './PlayerStatsTable';
-import { StatChart } from './StatChart';
 import { StatComparisonBar } from './StatComparisonBar';
+
+const StatChart = lazy(() =>
+  import('./StatChart').then((m) => ({ default: m.StatChart })),
+);
 
 interface StatisticsDashboardProps {
   data: MatchStatistics;
@@ -114,24 +119,33 @@ export const StatisticsDashboard = ({ data }: StatisticsDashboardProps) => {
       </Card>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <StatChart
-          type="bar"
-          teamA={teamA}
-          teamB={teamB}
-          teamAName={teamA.teamName}
-          teamBName={teamB.teamName}
-          title="Stat Comparison"
-        />
-        <StatChart
-          type="radar"
-          teamA={teamA}
-          teamB={teamB}
-          teamAName={teamA.teamName}
-          teamBName={teamB.teamName}
-          title="Performance Profile"
-        />
-      </div>
+      <Suspense
+        fallback={
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <Skeleton className="h-[350px] w-full rounded-2xl" />
+            <Skeleton className="h-[350px] w-full rounded-2xl" />
+          </div>
+        }
+      >
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <StatChart
+            type="bar"
+            teamA={teamA}
+            teamB={teamB}
+            teamAName={teamA.teamName}
+            teamBName={teamB.teamName}
+            title="Stat Comparison"
+          />
+          <StatChart
+            type="radar"
+            teamA={teamA}
+            teamB={teamB}
+            teamAName={teamA.teamName}
+            teamBName={teamB.teamName}
+            title="Performance Profile"
+          />
+        </div>
+      </Suspense>
 
       {/* Player Ratings Table */}
       <div>
@@ -159,7 +173,7 @@ export const StatisticsDashboardSkeleton = () => (
 export const StatisticsDashboardEmpty = () => (
   <div className="flex flex-col items-center justify-center py-16">
     <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 px-8 py-12 text-center backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80">
-      <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100 dark:bg-[var(--bg-surface)]">
+      <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface)]">
         <svg
           className="h-8 w-8 text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]"
           fill="none"

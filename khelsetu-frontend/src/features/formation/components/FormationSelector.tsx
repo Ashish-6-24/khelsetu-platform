@@ -24,7 +24,7 @@ export const FormationSelector = ({
             'border',
             value === template.type
               ? 'border-amber-400 bg-gradient-to-r from-[var(--brand-primary-bg)] to-[var(--brand-primary-bg-hover)] text-white shadow-md'
-              : 'border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-primary)] hover:border-[var(--border-strong)] hover:bg-[var(--bg-surface-2)] dark:text-[var(--text-secondary)] dark:hover:border-gray-600',
+              : 'border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-primary)] hover:border-[var(--border-strong)] hover:bg-[var(--bg-surface-2)] dark:text-[var(--text-secondary)] dark:hover:border-[var(--border-strong)]',
           )}
         >
           {template.name}
@@ -38,7 +38,7 @@ export const FormationSelector = ({
           'border',
           value === 'custom'
             ? 'border-amber-400 bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-accent-hover)] text-black shadow-md'
-            : 'border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-primary)] hover:border-[var(--border-strong)] hover:bg-[var(--bg-surface-2)] dark:text-[var(--text-secondary)] dark:hover:border-gray-600',
+            : 'border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-primary)] hover:border-[var(--border-strong)] hover:bg-[var(--bg-surface-2)] dark:text-[var(--text-secondary)] dark:hover:border-[var(--border-strong)]',
         )}
       >
         Custom

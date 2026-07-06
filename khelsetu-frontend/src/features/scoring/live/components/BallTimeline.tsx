@@ -23,12 +23,12 @@ const ballColor = (event: BallEvent): string => {
     return 'bg-yellow-500';
   if (event.extra === 'byes' || event.extra === 'leg-byes')
     return 'bg-blue-400';
-  if (event.runs === undefined) return 'bg-gray-400';
-  if (event.runs === 0) return 'bg-gray-400';
+  if (event.runs === undefined) return 'bg-[var(--text-muted)]';
+  if (event.runs === 0) return 'bg-[var(--text-muted)]';
   if (event.runs === 4) return 'bg-blue-600';
   if (event.runs === 6) return 'bg-purple-600';
   if (event.runs >= 1 && event.runs <= 3) return 'bg-green-500';
-  return 'bg-gray-400';
+  return 'bg-[var(--text-muted)]';
 };
 
 const ballLabel = (event: BallEvent): string => {
@@ -90,7 +90,7 @@ export const BallTimeline = ({
               className={clsx(
                 'absolute -top-8 left-1/2 -translate-x-1/2',
                 'px-2 py-1 rounded text-[10px] font-medium whitespace-nowrap',
-                'bg-gray-900 text-white',
+                'bg-[var(--bg-inverse)] text-white',
                 'opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none',
                 'z-10',
               )}
@@ -114,7 +114,7 @@ export const BallLegend = ({ className }: { className?: string }) => (
     )}
   >
     <span className="inline-flex items-center gap-1">
-      <span className="h-2.5 w-2.5 rounded-full bg-gray-400" /> dot
+      <span className="h-2.5 w-2.5 rounded-full bg-[var(--text-muted)]" /> dot
     </span>
     <span className="inline-flex items-center gap-1">
       <span className="h-2.5 w-2.5 rounded-full bg-green-500" /> 1-3

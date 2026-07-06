@@ -3,7 +3,7 @@ import { Card, CardBody } from '@shared/ui/Card';
 import { clsx } from 'clsx';
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 
 interface StatsCardProps {
   title: string;
@@ -78,7 +78,7 @@ function AnimatedNumber({
   return <span>{display.toLocaleString()}</span>;
 }
 
-export const StatsCard = ({
+export const StatsCard = memo(({
   title,
   value,
   change,
@@ -143,4 +143,4 @@ export const StatsCard = ({
       </Card>
     </div>
   );
-};
+});

@@ -35,7 +35,7 @@ const Textarea = ({ label, error, id, className, ...props }: TextareaProps) => {
           'px-3.5 py-2.5 transition-all duration-200 ease-out',
           'border-[var(--border-subtle)] hover:border-[var(--border-strong)] hover:shadow-sm',
           'focus:border-[var(--brand-primary)] focus:outline-none focus:ring-4 focus:ring-[var(--brand-primary)]/12 focus:shadow-md',
-          'dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface-sunken)] dark:text-white dark:placeholder:text-slate-500',
+          'dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface-sunken)] dark:text-white dark:placeholder:text-[var(--text-muted)]',
           'dark:hover:border-[var(--border-strong)] dark:hover:shadow-sm dark:focus:border-[var(--brand-primary)] dark:focus:ring-[var(--brand-primary)]/15 dark:focus:shadow-md',
           'disabled:cursor-not-allowed disabled:opacity-50 resize-none',
           error &&
@@ -138,7 +138,7 @@ export const TournamentStepIndicator = ({
                     ? 'bg-[var(--brand-primary)] text-white'
                     : currentStep === step.id
                       ? 'bg-blue-600 text-white ring-4 ring-blue-100 dark:ring-blue-900'
-                      : 'bg-gray-200 dark:bg-[var(--bg-surface-raised)] text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]',
+                      : 'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)] text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]',
                 )}
                 aria-label={`Step ${index + 1}: ${step.title}${completedSteps.includes(step.id) ? ', completed' : currentStep === step.id ? ', current' : ''}`}
               >
@@ -167,7 +167,7 @@ export const TournamentStepIndicator = ({
                   'flex-1 h-0.5 mx-2 sm:mx-4',
                   completedSteps.includes(step.id + 1)
                     ? 'bg-[var(--brand-primary)]'
-                    : 'bg-gray-200 dark:bg-[var(--bg-surface-raised)]',
+                    : 'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)]',
                 )}
               />
             )}

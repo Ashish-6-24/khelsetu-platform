@@ -184,19 +184,21 @@ export const LoginPage = () => {
         </div>
 
         <div className="flex items-center justify-between pt-2 text-sm">
-          <label className="group inline-flex cursor-pointer items-center gap-2 text-[var(--text-secondary)]">
+          <label htmlFor="remember-me" className="group inline-flex cursor-pointer items-center gap-2 text-[var(--text-secondary)]">
             <input
+              id="remember-me"
+              name="remember-me"
               type="checkbox"
               className="h-4 w-4 rounded border-[var(--border-strong)] text-[var(--brand-primary)] transition-colors focus:ring-2 focus:ring-[var(--brand-primary)]/30 dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-sunken)]"
             />
             Remember me
           </label>
-          <Link
-            to="#"
+          <button
+            type="button"
             className="font-medium text-[var(--text-link)] transition-colors hover:text-[var(--brand-primary-hover)]"
           >
             Forgot password?
-          </Link>
+          </button>
         </div>
 
         <Button

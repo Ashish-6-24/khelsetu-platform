@@ -41,7 +41,7 @@ export const BracketMatch = ({ match, isWinner }: BracketMatchProps) => {
             </span>
           )}
         </div>
-        <div className="my-1 border-t border-gray-100 dark:border-[var(--border-subtle)]" />
+        <div className="my-1 border-t border-[var(--border-subtle)] dark:border-[var(--border-subtle)]" />
         <div
           className={clsx(
             'flex items-center justify-between p-2 rounded-lg',
@@ -67,7 +67,7 @@ export const BracketMatch = ({ match, isWinner }: BracketMatchProps) => {
           )}
         </div>
       </div>
-      <div className="px-3 py-2 bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)]/30 border-t border-gray-100 dark:border-[var(--border-subtle)] flex items-center justify-between">
+      <div className="px-3 py-2 bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)]/30 border-t border-[var(--border-subtle)] dark:border-[var(--border-subtle)] flex items-center justify-between">
         <Badge
           variant={
             match.status === 'live'
@@ -198,7 +198,7 @@ export const FixtureTable = ({ matches }: FixtureTableProps) => {
               {matches.map((match) => (
                 <tr
                   key={match.id}
-                  className="border-b border-gray-100 dark:border-[var(--border-subtle)] last:border-0"
+                  className="border-b border-[var(--border-subtle)] dark:border-[var(--border-subtle)] last:border-0"
                 >
                   <td className="px-4 py-3 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                     #{match.id}

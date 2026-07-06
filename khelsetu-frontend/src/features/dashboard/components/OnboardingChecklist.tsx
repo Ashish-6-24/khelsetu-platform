@@ -129,7 +129,7 @@ export const OnboardingChecklist = ({
                 <Sparkles className="h-5 w-5" aria-hidden />
               </div>
               <div>
-                <h3 className="text-base font-semibold tracking-tight text-slate-900 dark:text-white">
+                <h3 className="text-base font-semibold tracking-tight text-[var(--text-primary)] dark:text-white">
                   Get set up in 4 steps
                 </h3>
                 <p className="mt-0.5 text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
@@ -186,7 +186,7 @@ export const OnboardingChecklist = ({
                             'truncate text-sm font-semibold',
                             step.done
                               ? 'text-[var(--text-tertiary)] line-through dark:text-[var(--text-tertiary)]'
-                              : 'text-slate-900 dark:text-white',
+                              : 'text-[var(--text-primary)] dark:text-white',
                           )}
                         >
                           {step.title}

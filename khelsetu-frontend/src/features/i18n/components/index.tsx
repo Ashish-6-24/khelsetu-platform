@@ -19,7 +19,7 @@ export const LanguageSwitcher = () => {
             className={`px-2 py-1 text-xs rounded-lg transition-colors ${
               language === lang.code
                 ? 'bg-[var(--brand-primary-soft)] text-[var(--brand-primary)] dark:bg-[rgb(127_29_29/0.18)] dark:text-[var(--brand-primary)] font-medium'
-                : 'text-[var(--text-secondary)] dark:text-[var(--text-tertiary)] hover:bg-gray-100 dark:hover:bg-[var(--bg-surface-raised)]'
+                : 'text-[var(--text-secondary)] dark:text-[var(--text-tertiary)] hover:bg-[var(--bg-surface-sunken)] dark:hover:bg-[var(--bg-surface-raised)]'
             }`}
             title={lang.name}
           >

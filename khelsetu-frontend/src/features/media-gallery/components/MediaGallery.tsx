@@ -87,7 +87,7 @@ export function MediaGallery({
           {Array.from({ length: 8 }).map((_, i) => (
             <div
               key={i}
-              className="aspect-square animate-pulse rounded-xl bg-gray-200 dark:bg-[var(--bg-surface-raised)]"
+              className="aspect-square animate-pulse rounded-xl bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)]"
             />
           ))}
         </div>

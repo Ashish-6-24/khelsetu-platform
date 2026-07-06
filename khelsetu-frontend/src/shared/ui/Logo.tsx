@@ -65,7 +65,7 @@ export const Logo = ({
             s.text,
             variant === 'white' && 'text-white',
             variant === 'default' && 'text-[#7F1D1D] dark:text-[#FCA5A5]',
-            variant === 'mono' && 'text-slate-900 dark:text-white',
+            variant === 'mono' && 'text-[var(--text-primary)] dark:text-white',
           )}
         >
           KhelSetu

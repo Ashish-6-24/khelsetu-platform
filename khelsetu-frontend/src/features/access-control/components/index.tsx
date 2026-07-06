@@ -15,7 +15,7 @@ const roleColors: Record<Role, string> = {
   scorer:
     'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
   viewer:
-    'bg-gray-100 text-[var(--text-primary)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-secondary)]',
+    'bg-[var(--bg-surface-sunken)] text-[var(--text-primary)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-secondary)]',
 };
 
 interface RoleCardProps {
@@ -156,7 +156,7 @@ export const PermissionTable = ({ permissions }: PermissionTableProps) => {
               {permissions.map((perm) => (
                 <tr
                   key={perm.resource}
-                  className="border-b border-gray-100 dark:border-[var(--border-subtle)]"
+                  className="border-b border-[var(--border-subtle)] dark:border-[var(--border-subtle)]"
                 >
                   <td className="py-2 px-3 font-medium text-[var(--text-primary)] dark:text-white capitalize">
                     {perm.resource}

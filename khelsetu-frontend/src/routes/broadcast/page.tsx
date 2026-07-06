@@ -24,10 +24,10 @@ export const LiveBroadcastPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white">
           Live Broadcast
         </h1>
-        <p className="text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-[var(--text-tertiary)] dark:text-[var(--text-muted)] mt-1">
           Manage live streams, overlays, and broadcast settings
         </p>
       </div>
@@ -44,7 +44,7 @@ export const LiveBroadcastPage = () => {
         <Card>
           <CardBody>
             <div className="space-y-4">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+              <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
                 Preview
               </h3>
               <div className="aspect-video bg-gray-900 rounded-lg flex items-center justify-center relative overflow-hidden">
@@ -77,10 +77,10 @@ export const LiveBroadcastPage = () => {
                           {overlay.type}
                         </div>
                       ))}
-                    <p className="text-gray-400">Stream Preview</p>
+                    <p className="text-[var(--text-muted)]">Stream Preview</p>
                   </>
                 ) : (
-                  <p className="text-gray-500">Stream is offline</p>
+                  <p className="text-[var(--text-tertiary)]">Stream is offline</p>
                 )}
               </div>
             </div>

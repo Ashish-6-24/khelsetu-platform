@@ -42,7 +42,7 @@ export function CertificateForm({
       <div>
         <label
           htmlFor="cert-type"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-1"
         >
           Certificate Type
         </label>
@@ -50,7 +50,7 @@ export function CertificateForm({
           id="cert-type"
           value={type}
           onChange={(e) => setType(e.target.value as CertificateType)}
-          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className="w-full rounded-lg border border-[var(--border-strong)] bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)] dark:text-white"
         >
           {certificateTypes.map((t) => (
             <option key={t.type} value={t.type}>
@@ -63,7 +63,7 @@ export function CertificateForm({
       <div>
         <label
           htmlFor="cert-player"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-1"
         >
           Recipient Name
         </label>
@@ -74,14 +74,14 @@ export function CertificateForm({
           onChange={(e) => setPlayerName(e.target.value)}
           placeholder="Enter recipient name"
           required
-          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className="w-full rounded-lg border border-[var(--border-strong)] bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)] dark:text-white"
         />
       </div>
 
       <div>
         <label
           htmlFor="cert-team"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-1"
         >
           Team Name
         </label>
@@ -92,14 +92,14 @@ export function CertificateForm({
           onChange={(e) => setTeamName(e.target.value)}
           placeholder="Enter team name"
           required
-          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className="w-full rounded-lg border border-[var(--border-strong)] bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)] dark:text-white"
         />
       </div>
 
       <div>
         <label
           htmlFor="cert-tournament"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-1"
         >
           Tournament Name
         </label>
@@ -110,14 +110,14 @@ export function CertificateForm({
           onChange={(e) => setTournamentName(e.target.value)}
           placeholder="Enter tournament name"
           required
-          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className="w-full rounded-lg border border-[var(--border-strong)] bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)] dark:text-white"
         />
       </div>
 
       <div>
         <label
           htmlFor="cert-date"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-1"
         >
           Date
         </label>
@@ -127,14 +127,14 @@ export function CertificateForm({
           value={date}
           onChange={(e) => setDate(e.target.value)}
           required
-          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className="w-full rounded-lg border border-[var(--border-strong)] bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)] dark:text-white"
         />
       </div>
 
       <div>
         <label
           htmlFor="cert-organizer"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-1"
         >
           Organizer
         </label>
@@ -145,7 +145,7 @@ export function CertificateForm({
           onChange={(e) => setOrganizer(e.target.value)}
           placeholder="Enter organizer name"
           required
-          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          className="w-full rounded-lg border border-[var(--border-strong)] bg-white px-3 py-2.5 text-sm shadow-sm transition-colors focus:border-[var(--brand-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-primary)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)] dark:text-white"
         />
       </div>
 

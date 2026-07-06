@@ -27,6 +27,7 @@ export const TournamentCard = ({
       className="cursor-pointer"
       role="button"
       tabIndex={0}
+      aria-label={`Open ${tournament.name}`}
       onClick={onClick}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -63,7 +64,14 @@ export const TournamentCard = ({
             </span>
           </div>
           <div className="mt-3">
-            <div className="w-full bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)] rounded-full h-2">
+            <div
+              className="w-full bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)] rounded-full h-2"
+              role="progressbar"
+              aria-valuenow={tournament.currentTeams}
+              aria-valuemin={0}
+              aria-valuemax={tournament.maxTeams}
+              aria-label={`${tournament.currentTeams} of ${tournament.maxTeams} teams registered`}
+            >
               <div
                 className="bg-blue-600 h-2 rounded-full transition-all duration-500"
                 style={{

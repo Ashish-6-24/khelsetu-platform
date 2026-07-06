@@ -24,6 +24,8 @@ const topics = [
   'Bug report',
 ] as const;
 
+const LANGUAGES = ['en', 'ne'] as const;
+
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 12 },
   show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
@@ -264,8 +266,22 @@ const ContactForm = ({
       <legend className="mb-2 text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-primary)]">
         Preferred language
       </legend>
-      <div className="inline-flex rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface-sunken)] p-1 dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)]">
-        {(['en', 'ne'] as const).map((lang) => (
+      <div
+        role="radiogroup"
+        aria-label="Preferred language"
+        onKeyDown={(e) => {
+          const idx = LANGUAGES.indexOf(form.language);
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            setForm({ ...form, language: LANGUAGES[(idx + 1) % LANGUAGES.length]! });
+          } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            setForm({ ...form, language: LANGUAGES[(idx - 1 + LANGUAGES.length) % LANGUAGES.length]! });
+          }
+        }}
+        className="inline-flex rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface-sunken)] p-1 dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)]"
+      >
+        {LANGUAGES.map((lang) => (
           <button
             key={lang}
             type="button"

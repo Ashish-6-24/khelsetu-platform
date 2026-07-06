@@ -35,12 +35,12 @@ export const MatchStatusIndicator = ({
         {label}
       </Badge>
       {startedAt && status === 'live' && (
-        <span className="text-xs text-gray-500 dark:text-gray-400">
+        <span className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-muted)]">
           Started {new Date(startedAt).toLocaleTimeString()}
         </span>
       )}
       {endedAt && status === 'completed' && (
-        <span className="text-xs text-gray-500 dark:text-gray-400">
+        <span className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-muted)]">
           Ended {new Date(endedAt).toLocaleTimeString()}
         </span>
       )}

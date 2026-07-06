@@ -79,7 +79,7 @@ export const WicketModal = ({
       <div className="space-y-4">
         {step === 1 && (
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+            <h3 className="text-lg font-semibold text-[var(--text-primary)] dark:text-white mb-3">
               Select Wicket Type
             </h3>
             <div className="grid grid-cols-2 gap-2">
@@ -99,7 +99,7 @@ export const WicketModal = ({
 
         {step === 2 && (
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+            <h3 className="text-lg font-semibold text-[var(--text-primary)] dark:text-white mb-3">
               Who is out?
             </h3>
             <div className="space-y-2">
@@ -119,7 +119,7 @@ export const WicketModal = ({
                     }
                   >
                     <span className="font-medium">{batsman.playerName}</span>
-                    <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">
+                    <span className="ml-2 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-muted)]">
                       ({batsman.runs} runs)
                     </span>
                   </Button>
@@ -135,7 +135,7 @@ export const WicketModal = ({
 
         {step === 3 && (
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+            <h3 className="text-lg font-semibold text-[var(--text-primary)] dark:text-white mb-3">
               New Batsman (optional)
             </h3>
             {availableBatsmen.length > 0 ? (
@@ -156,7 +156,7 @@ export const WicketModal = ({
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-[var(--text-tertiary)] dark:text-[var(--text-muted)]">
                 No available batsmen. Select manually later.
               </p>
             )}

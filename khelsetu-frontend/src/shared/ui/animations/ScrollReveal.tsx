@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { type Variants, motion, useInView } from 'framer-motion';
 
 import { useEffect, useRef, useState } from 'react';
@@ -97,7 +98,7 @@ export const ScrollReveal = ({
 
   // Non-stagger: use CSS scroll-driven animations with framer-motion fallback
   return (
-    <div ref={ref} className={`${cssClass} ${className ?? ''}`}>
+    <div ref={ref} className={clsx(cssClass, className)}>
       <motion.div
         initial={{
           opacity: 0,
@@ -153,7 +154,7 @@ export const Reveal = ({
   const shouldShow = isInView || fallbackVisible;
 
   return (
-    <div ref={ref} className={`${cssClass} ${className ?? ''}`}>
+    <div ref={ref} className={clsx(cssClass, className)}>
       <motion.div
         initial={{ opacity: 0, y: offset, scale }}
         animate={shouldShow ? { opacity: 1, y: 0, scale: 1 } : undefined}

@@ -35,15 +35,32 @@ export function NewsCarousel({ articles }: NewsCarouselProps) {
     return () => clearInterval(timer);
   }, [isPaused, next, articles.length]);
 
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prev();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        next();
+      }
+    },
+    [prev, next],
+  );
+
   if (articles.length === 0) return null;
 
   const article = articles[current]!;
 
   return (
     <div
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="News articles"
       className="relative overflow-hidden rounded-3xl"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
+      onKeyDown={handleKeyDown}
     >
       <Link to={`${ROUTES.NEWS}/${article.id}`} className="block">
         <div className="relative aspect-[21/9] min-h-[300px] md:min-h-[400px]">

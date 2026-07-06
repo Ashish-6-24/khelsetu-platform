@@ -53,14 +53,14 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
           <div className="cert-divider my-2">
             <span className="text-xs text-accent-700">✦</span>
           </div>
-          <p className="font-display text-lg italic text-gray-600 dark:text-gray-300">
+          <p className="font-display text-lg italic text-[var(--text-secondary)] dark:text-[var(--text-secondary)]">
             {template.subtitle}
           </p>
         </div>
 
         {/* Recipient */}
         <div className="text-center">
-          <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
+          <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-[var(--text-tertiary)] dark:text-[var(--text-muted)]">
             This certificate is proudly presented to
           </p>
           <h2 className="my-1 font-display text-4xl font-bold text-brand-900 md:text-5xl">
@@ -72,26 +72,26 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
         {/* Details */}
         <div className="grid grid-cols-3 gap-6 text-center text-sm">
           <div>
-            <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
+            <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--text-muted)] dark:text-[var(--text-tertiary)]">
               Team
             </p>
-            <p className="mt-0.5 font-medium text-gray-700 dark:text-gray-200">
+            <p className="mt-0.5 font-medium text-[var(--text-primary)] dark:text-gray-200">
               {data.teamName}
             </p>
           </div>
           <div>
-            <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
+            <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--text-muted)] dark:text-[var(--text-tertiary)]">
               Tournament
             </p>
-            <p className="mt-0.5 font-medium text-gray-700 dark:text-gray-200">
+            <p className="mt-0.5 font-medium text-[var(--text-primary)] dark:text-gray-200">
               {data.tournamentName}
             </p>
           </div>
           <div>
-            <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
+            <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--text-muted)] dark:text-[var(--text-tertiary)]">
               Date
             </p>
-            <p className="mt-0.5 font-medium text-gray-700 dark:text-gray-200">
+            <p className="mt-0.5 font-medium text-[var(--text-primary)] dark:text-gray-200">
               {getFormattedDate(data.date)}
             </p>
           </div>
@@ -101,10 +101,10 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
         <div className="flex w-full items-end justify-between">
           {/* Left signature */}
           <div className="cert-signature text-center">
-            <p className="text-sm font-medium text-gray-700 dark:text-gray-200">
+            <p className="text-sm font-medium text-[var(--text-primary)] dark:text-gray-200">
               {data.organizer}
             </p>
-            <p className="text-[10px] text-gray-400 dark:text-gray-500">
+            <p className="text-[10px] text-[var(--text-muted)] dark:text-[var(--text-tertiary)]">
               Organizer
             </p>
           </div>
@@ -118,10 +118,10 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
 
           {/* Right signature */}
           <div className="cert-signature text-center">
-            <p className="text-sm font-medium text-gray-700 dark:text-gray-200">
+            <p className="text-sm font-medium text-[var(--text-primary)] dark:text-gray-200">
               KhelSetu
             </p>
-            <p className="text-[10px] text-gray-400 dark:text-gray-500">
+            <p className="text-[10px] text-[var(--text-muted)] dark:text-[var(--text-tertiary)]">
               Platform
             </p>
           </div>
@@ -129,7 +129,7 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
 
         {/* Footer */}
         <div className="flex w-full items-end justify-between border-t border-accent-700/20 pt-3">
-          <div className="text-[10px] text-gray-400 dark:text-gray-500">
+          <div className="text-[10px] text-[var(--text-muted)] dark:text-[var(--text-tertiary)]">
             <p>Certificate ID: {data.certificateId}</p>
           </div>
           <CertificateQR value={data.verificationUrl} size={56} />

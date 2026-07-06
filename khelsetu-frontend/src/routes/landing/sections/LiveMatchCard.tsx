@@ -1,7 +1,8 @@
 import { GlowPulse } from '@shared/ui/GlowPulse';
+import { incrementScore } from '@shared/utils/score-helpers';
 import { clsx } from 'clsx';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface TeamScore {
   name: string;
@@ -9,25 +10,6 @@ interface TeamScore {
   overs: string;
   pct: number;
 }
-
-const parseScore = (s: string) => {
-  const match = s.match(/(\d+)\/(\d+)/);
-  if (!match || !match[1] || !match[2]) return null;
-  return { runs: parseInt(match[1]), wickets: parseInt(match[2]) };
-};
-
-const incrementScore = (s: string): string => {
-  const parsed = parseScore(s);
-  if (!parsed) return s;
-  const { runs, wickets } = parsed;
-  const rand = Math.random();
-  if (rand < 0.5) return `${runs + 1}/${wickets}`;
-  if (rand < 0.7) return `${runs + 2}/${wickets}`;
-  if (rand < 0.85) return `${runs + 4}/${wickets}`;
-  if (rand < 0.95) return `${runs + 6}/${wickets}`;
-  if (wickets < 9) return `${runs}/${wickets + 1}`;
-  return s;
-};
 
 const incrementOvers = (s: string): string => {
   const match = s.match(/(\d+)\.(\d+)/);
@@ -48,6 +30,7 @@ export const LiveMatchCard = () => {
     { name: 'Eagles', score: '128/5', overs: '14.4 ov', pct: 65 },
   ]);
   const [flash, setFlash] = useState<number | null>(null);
+  const flashTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     const tick = () => {
@@ -57,7 +40,8 @@ export const LiveMatchCard = () => {
         const newScore = incrementScore(t.score);
         if (newScore === t.score) return prev;
         setFlash(idx);
-        setTimeout(() => setFlash(null), 600);
+        clearTimeout(flashTimer.current);
+        flashTimer.current = setTimeout(() => setFlash(null), 600);
         return prev.map((it, i) =>
           i === idx
             ? {
@@ -72,7 +56,10 @@ export const LiveMatchCard = () => {
     };
 
     const interval = setInterval(tick, 4000 + Math.random() * 3000);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(flashTimer.current);
+    };
   }, []);
 
   return (

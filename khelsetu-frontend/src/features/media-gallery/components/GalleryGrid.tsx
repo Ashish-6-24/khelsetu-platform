@@ -12,7 +12,7 @@ const typeBadgeColors = {
   image: 'bg-blue-500/80',
   video: 'bg-purple-500/80',
   highlight: 'bg-[var(--brand-accent)]/80',
-  'press-conference': 'bg-gray-500/80',
+  'press-conference': 'bg-[var(--text-muted)]/80',
 };
 
 export function GalleryGrid({ items, onItemClick }: GalleryGridProps) {
@@ -40,11 +40,12 @@ export function GalleryGrid({ items, onItemClick }: GalleryGridProps) {
             key={item.id}
             onClick={() => onItemClick(index)}
             aria-label={`${item.type === 'video' || item.type === 'highlight' ? 'Play' : 'View'}: ${item.title}${item.playerName ? ` by ${item.playerName}` : ''}`}
-            className="group relative aspect-square overflow-hidden rounded-xl bg-gray-100 dark:bg-[var(--bg-surface)]"
+            className="group relative aspect-square overflow-hidden rounded-xl bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface)]"
           >
             <img
               src={item.thumbnail}
               alt={item.title}
+              loading="lazy"
               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
 

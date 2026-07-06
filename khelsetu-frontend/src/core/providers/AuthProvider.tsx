@@ -13,10 +13,11 @@ interface AuthProviderProps {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const isLoading = useAuthStore((s) => s.isLoading);
+  const accessToken = useAuthStore((s) => s.tokens?.accessToken);
 
   useEffect(() => {
     if (isAuthenticated) {
-      wsService.connect().catch((error) => {
+      wsService.connect(accessToken).catch((error) => {
         logger.error('WebSocket connection failed:', error);
       });
     }
@@ -26,7 +27,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         wsService.disconnect();
       }
     };
-  }, [isAuthenticated]);
+  }, [isAuthenticated, accessToken]);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, isLoading }}>

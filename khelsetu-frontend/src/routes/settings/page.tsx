@@ -80,6 +80,7 @@ const Toggle = ({
       type="button"
       role="switch"
       aria-checked={checked}
+      aria-label={label}
       onClick={() => onChange(!checked)}
       className="settings-toggle"
     />

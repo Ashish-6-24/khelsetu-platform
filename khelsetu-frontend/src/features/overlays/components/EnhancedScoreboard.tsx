@@ -142,7 +142,7 @@ export function EnhancedScoreboard({
                 {score?.teamAScore ?? '-'}
               </motion.span>
               {score?.teamAInnings?.[0] && (
-                <span className="text-xs sm:text-sm font-normal text-gray-400 ml-1 sm:ml-2">
+                <span className="text-xs sm:text-sm font-normal text-[var(--text-muted)] ml-1 sm:ml-2">
                   ({score.teamAInnings[0].wickets}/{score.teamAInnings[0].overs}
                   )
                 </span>
@@ -195,7 +195,7 @@ export function EnhancedScoreboard({
                 {score?.teamBScore ?? '-'}
               </motion.span>
               {score?.teamBInnings?.[0] && (
-                <span className="text-xs sm:text-sm font-normal text-gray-400 ml-1 sm:ml-2">
+                <span className="text-xs sm:text-sm font-normal text-[var(--text-muted)] ml-1 sm:ml-2">
                   ({score.teamBInnings[0].wickets}/{score.teamBInnings[0].overs}
                   )
                 </span>
@@ -211,7 +211,7 @@ export function EnhancedScoreboard({
       </div>
 
       {match.venue && (
-        <div className="text-center text-xs text-gray-400 mt-2">
+        <div className="text-center text-xs text-[var(--text-muted)] mt-2">
           {match.venue}
         </div>
       )}

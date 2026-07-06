@@ -15,23 +15,51 @@ import { useScoringStore } from '@state/scoringStore';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft } from 'lucide-react';
 
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
 export const ScoringMatchPage = () => {
   const { matchId } = useParams<{ matchId: string }>();
   const navigate = useNavigate();
-  const {
-    activeSport,
-    setActiveMatch,
-    setScoring,
-    undoLastAction,
-    cricket,
-    football,
-    volleyball,
-    basketball,
-  } = useScoringStore();
+  const activeSport = useScoringStore((s) => s.activeSport);
+  const setActiveMatch = useScoringStore((s) => s.setActiveMatch);
+  const setScoring = useScoringStore((s) => s.setScoring);
+  const undoLastAction = useScoringStore((s) => s.undoLastAction);
+  const addCricketBall = useScoringStore((s) => s.addCricketBall);
+  const storeAddFootballEvent = useScoringStore((s) => s.addFootballEvent);
+  const updateFootballMinute = useScoringStore((s) => s.updateFootballMinute);
+  const toggleFootballTimer = useScoringStore((s) => s.toggleFootballTimer);
+  const addVolleyballPoint = useScoringStore((s) => s.addVolleyballPoint);
+  const endVolleyballSet = useScoringStore((s) => s.endVolleyballSet);
+  const switchVolleyballServe = useScoringStore((s) => s.switchVolleyballServe);
+  const storeAddBasketballEvent = useScoringStore((s) => s.addBasketballEvent);
+  const nextBasketballQuarter = useScoringStore((s) => s.nextBasketballQuarter);
+  const toggleBasketballTimer = useScoringStore((s) => s.toggleBasketballTimer);
+  const cricket = useScoringStore((s) => s.cricket);
+  const football = useScoringStore((s) => s.football);
+  const volleyball = useScoringStore((s) => s.volleyball);
+  const basketball = useScoringStore((s) => s.basketball);
+
+  const addFootballEvent = useCallback(
+    (event: Omit<Parameters<typeof storeAddFootballEvent>[0], 'id' | 'timestamp'>) =>
+      storeAddFootballEvent({
+        ...event,
+        id: crypto.randomUUID(),
+        timestamp: new Date().toISOString(),
+      } as Parameters<typeof storeAddFootballEvent>[0]),
+    [storeAddFootballEvent],
+  );
+
+  const addBasketballEvent = useCallback(
+    (event: Omit<Parameters<typeof storeAddBasketballEvent>[0], 'id' | 'timestamp'>) =>
+      storeAddBasketballEvent({
+        ...event,
+        id: crypto.randomUUID(),
+        timestamp: new Date().toISOString(),
+      } as Parameters<typeof storeAddBasketballEvent>[0]),
+    [storeAddBasketballEvent],
+  );
 
   const { data: match, isLoading } = useQuery<Match | null>({
     queryKey: ['match', matchId],
@@ -134,34 +162,34 @@ export const ScoringMatchPage = () => {
                   innings={
                     cricket.score.innings[cricket.score.currentInningsIndex]!
                   }
-                  onAddBall={() => {}}
+                  onAddBall={addCricketBall}
                   onUndo={undoLastAction}
                 />
               )}
             {sport === 'football' && football.score && (
               <FootballScoringPanel
                 score={football.score}
-                onAddEvent={() => {}}
-                onMinuteUpdate={() => {}}
-                onToggleTimer={() => {}}
+                onAddEvent={addFootballEvent}
+                onMinuteUpdate={updateFootballMinute}
+                onToggleTimer={toggleFootballTimer}
                 onUndo={undoLastAction}
               />
             )}
             {sport === 'volleyball' && volleyball.score && (
               <VolleyballScoringPanel
                 score={volleyball.score}
-                onAddPoint={() => {}}
-                onEndSet={() => {}}
-                onSwitchServe={() => {}}
+                onAddPoint={addVolleyballPoint}
+                onEndSet={endVolleyballSet}
+                onSwitchServe={switchVolleyballServe}
                 onUndo={undoLastAction}
               />
             )}
             {sport === 'basketball' && basketball.score && (
               <BasketballScoringPanel
                 score={basketball.score}
-                onAddEvent={() => {}}
-                onNextQuarter={() => {}}
-                onToggleTimer={() => {}}
+                onAddEvent={addBasketballEvent}
+                onNextQuarter={nextBasketballQuarter}
+                onToggleTimer={toggleBasketballTimer}
                 onUndo={undoLastAction}
               />
             )}

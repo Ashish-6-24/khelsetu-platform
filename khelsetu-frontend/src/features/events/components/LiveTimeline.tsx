@@ -52,7 +52,7 @@ export const LiveTimeline = ({ events, sport }: LiveTimelineProps) => {
                     animate={{ opacity: 1, x: 0, height: 'auto' }}
                     exit={{ opacity: 0, x: 16, height: 0 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                    className="flex items-center gap-3 p-2.5 rounded-xl bg-[var(--bg-surface)]/60 dark:bg-[var(--bg-surface)]/60 border border-gray-100 dark:border-[var(--border-subtle)]/50"
+                    className="flex items-center gap-3 p-2.5 rounded-xl bg-[var(--bg-surface)]/60 dark:bg-[var(--bg-surface)]/60 border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]/50"
                   >
                     <span
                       className={`flex items-center justify-center w-8 h-8 rounded-lg text-sm ${config.color}/15`}

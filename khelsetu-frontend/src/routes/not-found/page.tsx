@@ -36,7 +36,7 @@ export const NotFoundPage = () => {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mt-2 text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl dark:text-white"
+          className="mt-2 text-2xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-3xl dark:text-white"
         >
           We couldn&apos;t find that page
         </motion.h2>
@@ -45,7 +45,7 @@ export const NotFoundPage = () => {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mt-3 text-pretty text-slate-600 dark:text-slate-300"
+          className="mt-3 text-pretty text-[var(--text-secondary)] dark:text-[var(--text-secondary)]"
         >
           The page you&apos;re looking for has moved, been deleted, or never
           existed. Let&apos;s get you back on track.
@@ -78,7 +78,7 @@ export const NotFoundPage = () => {
             }
           }}
           aria-label="Go back to previous page"
-          className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+          className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)] dark:text-[var(--text-muted)] dark:hover:text-[var(--text-secondary)]"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           Go back

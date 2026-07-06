@@ -23,8 +23,8 @@ export const NotificationItem = ({
       exit={{ opacity: 0, x: -20 }}
       className={`border-b px-4 py-3 transition-colors last:border-0 ${
         !notification.read
-          ? 'border-gray-100 bg-blue-50/50 hover:bg-blue-50 dark:border-[var(--border-subtle)] dark:bg-blue-900/10 dark:hover:bg-blue-900/20'
-          : 'border-gray-100 bg-[var(--bg-surface)] hover:bg-[var(--bg-surface-sunken)] dark:border-[var(--border-subtle)] dark:bg-[var(--bg-canvas)] dark:hover:bg-[var(--bg-surface-raised)]/30'
+          ? 'border-[var(--border-subtle)] bg-blue-50/50 hover:bg-blue-50 dark:border-[var(--border-subtle)] dark:bg-blue-900/10 dark:hover:bg-blue-900/20'
+          : 'border-[var(--border-subtle)] bg-[var(--bg-surface)] hover:bg-[var(--bg-surface-sunken)] dark:border-[var(--border-subtle)] dark:bg-[var(--bg-canvas)] dark:hover:bg-[var(--bg-surface-raised)]/30'
       }`}
     >
       <div className="flex items-start gap-3">
@@ -32,7 +32,7 @@ export const NotificationItem = ({
           className={`mt-0.5 inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg ${
             !notification.read
               ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400'
-              : 'bg-gray-100 text-[var(--text-tertiary)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-tertiary)]'
+              : 'bg-[var(--bg-surface-sunken)] text-[var(--text-tertiary)] dark:bg-[var(--bg-surface)] dark:text-[var(--text-tertiary)]'
           }`}
           aria-hidden="true"
         >
@@ -62,7 +62,7 @@ export const NotificationItem = ({
                     onMarkAsRead(notification.id);
                   }}
                   aria-label="Mark as read"
-                  className="inline-flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded text-[var(--text-tertiary)] transition-colors hover:bg-gray-200 hover:text-green-600 dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-green-400"
+                  className="inline-flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded text-[var(--text-tertiary)] transition-colors hover:bg-[var(--bg-surface-sunken)] hover:text-green-600 dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-green-400"
                 >
                   <Check className="h-3.5 w-3.5" />
                 </button>
@@ -73,7 +73,7 @@ export const NotificationItem = ({
                   onDelete(notification.id);
                 }}
                 aria-label="Delete notification"
-                className="inline-flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded text-[var(--text-tertiary)] transition-colors hover:bg-gray-200 hover:text-red-600 dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-red-400"
+                className="inline-flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded text-[var(--text-tertiary)] transition-colors hover:bg-[var(--bg-surface-sunken)] hover:text-red-600 dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-red-400"
               >
                 <Trash2 className="h-3.5 w-3.5" />
               </button>

@@ -36,7 +36,7 @@ export const EventInputPanel = ({
                 className={clsx(
                   'flex flex-col items-center gap-1.5 p-3 min-h-[44px] rounded-xl text-center',
                   'transition-all duration-200',
-                  'border border-gray-100 dark:border-[var(--border-subtle)]/50',
+                  'border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]/50',
                   'bg-[var(--bg-surface)]/60 dark:bg-[var(--bg-surface)]/60',
                   'hover:bg-[var(--bg-surface)] dark:hover:bg-[var(--bg-surface-raised)]/60',
                   'hover:border-[var(--border-subtle)] dark:hover:border-gray-600',

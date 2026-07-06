@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { DashboardLayout } from '@core/layouts/DashboardLayout';
 import { ROUTES } from '@shared/utils/constants';
+import type { UserRole } from '@shared/types/auth';
 import { useAuthStore } from '@state/authStore';
 
 import { Navigate, Route } from 'react-router-dom';
@@ -10,6 +11,20 @@ import { lazyPage, withSuspense } from './utils';
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   if (!isAuthenticated) return <Navigate to={ROUTES.LOGIN} replace />;
+  return <>{children}</>;
+};
+
+const RoleGuard = ({
+  children,
+  allowedRoles,
+}: {
+  children: React.ReactNode;
+  allowedRoles: UserRole[];
+}) => {
+  const user = useAuthStore((state) => state.user);
+  if (!allowedRoles.includes(user?.role ?? 'viewer')) {
+    return <Navigate to={ROUTES.DASHBOARD} replace />;
+  }
   return <>{children}</>;
 };
 
@@ -292,7 +307,9 @@ export const dashboardRoutes = (
       path={ROUTES.BILLING}
       element={
         <ProtectedRoute>
-          <DashboardLayout>{withSuspense(BillingPage)}</DashboardLayout>
+          <RoleGuard allowedRoles={['admin', 'organizer']}>
+            <DashboardLayout>{withSuspense(BillingPage)}</DashboardLayout>
+          </RoleGuard>
         </ProtectedRoute>
       }
     />
@@ -332,7 +349,9 @@ export const dashboardRoutes = (
       path={ROUTES.USER_ROLES}
       element={
         <ProtectedRoute>
-          <DashboardLayout>{withSuspense(UserRolesPage)}</DashboardLayout>
+          <RoleGuard allowedRoles={['admin']}>
+            <DashboardLayout>{withSuspense(UserRolesPage)}</DashboardLayout>
+          </RoleGuard>
         </ProtectedRoute>
       }
     />
@@ -340,7 +359,9 @@ export const dashboardRoutes = (
       path={ROUTES.I18N}
       element={
         <ProtectedRoute>
-          <DashboardLayout>{withSuspense(I18nPage)}</DashboardLayout>
+          <RoleGuard allowedRoles={['admin']}>
+            <DashboardLayout>{withSuspense(I18nPage)}</DashboardLayout>
+          </RoleGuard>
         </ProtectedRoute>
       }
     />
@@ -388,7 +409,9 @@ export const dashboardRoutes = (
       path={ROUTES.AUDIT_LOG}
       element={
         <ProtectedRoute>
-          <DashboardLayout>{withSuspense(AuditLogPage)}</DashboardLayout>
+          <RoleGuard allowedRoles={['admin']}>
+            <DashboardLayout>{withSuspense(AuditLogPage)}</DashboardLayout>
+          </RoleGuard>
         </ProtectedRoute>
       }
     />
@@ -396,7 +419,9 @@ export const dashboardRoutes = (
       path={ROUTES.DATA_IMPORT}
       element={
         <ProtectedRoute>
-          <DashboardLayout>{withSuspense(DataImportPage)}</DashboardLayout>
+          <RoleGuard allowedRoles={['admin', 'organizer']}>
+            <DashboardLayout>{withSuspense(DataImportPage)}</DashboardLayout>
+          </RoleGuard>
         </ProtectedRoute>
       }
     />

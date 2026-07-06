@@ -209,27 +209,27 @@ const CommandPalette = () => {
             <Command label="Command palette" className="flex flex-col">
               <div className="flex items-center gap-3 border-b border-[var(--border-subtle)] px-4 py-3">
                 <SearchIcon
-                  className="h-4 w-4 shrink-0 text-slate-400"
+                  className="h-4 w-4 shrink-0 text-[var(--text-muted)]"
                   aria-hidden
                 />
                 <Command.Input
                   autoFocus
                   placeholder="Type a command or search…"
-                  className="flex-1 bg-transparent text-base text-slate-900 placeholder:text-slate-400 focus:outline-none dark:text-white dark:placeholder:text-slate-500"
+                  className="flex-1 bg-transparent text-base text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none dark:text-white dark:placeholder:text-[var(--text-muted)]"
                 />
-                <kbd className="hidden rounded-md border border-slate-200 bg-white px-1.5 py-0.5 font-mono text-[10px] font-medium text-slate-500 sm:inline-block dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
+                <kbd className="hidden rounded-md border border-[var(--border-subtle)] bg-white px-1.5 py-0.5 font-mono text-[10px] font-medium text-[var(--text-tertiary)] sm:inline-block dark:border-[var(--border-strong)] dark:bg-[var(--bg-inverse)] dark:text-[var(--text-muted)]">
                   ESC
                 </kbd>
               </div>
               <Command.List className="scrollbar-thin max-h-[60vh] overflow-y-auto p-2">
-                <Command.Empty className="px-3 py-10 text-center text-sm text-slate-500 dark:text-slate-400">
+                <Command.Empty className="px-3 py-10 text-center text-sm text-[var(--text-tertiary)] dark:text-[var(--text-muted)]">
                   No results. Try a different query.
                 </Command.Empty>
                 {(['Navigate', 'Actions', 'Help'] as const).map((group) => (
                   <Command.Group
                     key={group}
                     heading={group}
-                    className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-2 [&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:text-slate-400 dark:[&_[cmdk-group-heading]]:text-slate-500"
+                    className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-2 [&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:text-[var(--text-muted)] dark:[&_[cmdk-group-heading]]:text-[var(--text-muted)]"
                   >
                     {items
                       .filter((i) => i.group === group)
@@ -243,26 +243,26 @@ const CommandPalette = () => {
                               item.perform();
                               stableSetOpen(false);
                             }}
-                            className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-700 transition-colors data-[selected=true]:bg-blue-50 data-[selected=true]:text-blue-900 dark:text-slate-200 dark:data-[selected=true]:bg-blue-500/15 dark:data-[selected=true]:text-blue-200"
+                            className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-[var(--text-primary)] transition-colors data-[selected=true]:bg-blue-50 data-[selected=true]:text-blue-900 dark:text-[var(--text-secondary)] dark:data-[selected=true]:bg-blue-500/15 dark:data-[selected=true]:text-blue-200"
                           >
-                            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--bg-surface-sunken)] text-[var(--text-tertiary)] dark:bg-[var(--bg-surface-raised)] dark:text-[var(--text-muted)]">
                               <Icon className="h-4 w-4" aria-hidden />
                             </span>
                             <span className="flex flex-1 flex-col">
                               <span className="font-medium">{item.label}</span>
                               {item.description && (
-                                <span className="text-xs text-slate-500 dark:text-slate-400">
+                                <span className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-muted)]">
                                   {item.description}
                                 </span>
                               )}
                             </span>
                             {item.shortcut && (
-                              <kbd className="rounded-md border border-slate-200 bg-white px-1.5 py-0.5 font-mono text-[10px] font-medium text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
+                              <kbd className="rounded-md border border-[var(--border-subtle)] bg-white px-1.5 py-0.5 font-mono text-[10px] font-medium text-[var(--text-tertiary)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-inverse)] dark:text-[var(--text-muted)]">
                                 {item.shortcut}
                               </kbd>
                             )}
                             <CommandIcon
-                              className="h-3.5 w-3.5 text-slate-300 dark:text-slate-600"
+                              className="h-3.5 w-3.5 text-slate-300 dark:text-[var(--text-muted)]"
                               aria-hidden
                             />
                           </Command.Item>
@@ -271,16 +271,16 @@ const CommandPalette = () => {
                   </Command.Group>
                 ))}
               </Command.List>
-              <div className="flex items-center justify-between border-t border-[var(--border-subtle)] bg-slate-50/60 px-4 py-2.5 text-[11px] text-slate-500 dark:bg-slate-900/40 dark:text-slate-400">
+              <div className="flex items-center justify-between border-t border-[var(--border-subtle)] bg-[var(--bg-surface)]/60 px-4 py-2.5 text-[11px] text-[var(--text-tertiary)] dark:bg-[var(--bg-inverse)]/40 dark:text-[var(--text-muted)]">
                 <div className="flex items-center gap-3">
                   <span className="inline-flex items-center gap-1">
-                    <kbd className="rounded border border-slate-200 bg-white px-1 py-0.5 font-mono dark:border-slate-700 dark:bg-slate-900">
+                    <kbd className="rounded border border-[var(--border-subtle)] bg-white px-1 py-0.5 font-mono dark:border-[var(--border-strong)] dark:bg-[var(--bg-inverse)]">
                       ↑↓
                     </kbd>
                     navigate
                   </span>
                   <span className="inline-flex items-center gap-1">
-                    <kbd className="rounded border border-slate-200 bg-white px-1 py-0.5 font-mono dark:border-slate-700 dark:bg-slate-900">
+                    <kbd className="rounded border border-[var(--border-subtle)] bg-white px-1 py-0.5 font-mono dark:border-[var(--border-strong)] dark:bg-[var(--bg-inverse)]">
                       ↵
                     </kbd>
                     select

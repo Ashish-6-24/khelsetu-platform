@@ -67,10 +67,10 @@ export const RegisterPage = () => {
         <Logo size="md" />
       </div>
 
-      <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl dark:text-white">
+      <h1 className="text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl dark:text-white">
         Create your account
       </h1>
-      <p className="mt-2 text-sm text-[var(--text-secondary)] dark:text-slate-400">
+      <p className="mt-2 text-sm text-[var(--text-secondary)] dark:text-[var(--text-muted)]">
         Start managing world-class tournaments in minutes.
       </p>
 
@@ -110,11 +110,11 @@ export const RegisterPage = () => {
           required
         />
 
-        <label className="flex cursor-pointer items-start gap-2.5 text-sm text-slate-600 dark:text-slate-300">
+        <label className="flex cursor-pointer items-start gap-2.5 text-sm text-[var(--text-secondary)] dark:text-[var(--text-secondary)]">
           <input
             type="checkbox"
             required
-            className="mt-0.5 h-4 w-4 rounded border-slate-300 text-blue-600 transition-colors focus:ring-2 focus:ring-blue-500/30 dark:border-slate-600 dark:bg-slate-800"
+            className="mt-0.5 h-4 w-4 rounded border-[var(--border-strong)] text-blue-600 transition-colors focus:ring-2 focus:ring-blue-500/30 dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-sunken)]"
           />
           <span>
             I agree to the{' '}
@@ -140,7 +140,7 @@ export const RegisterPage = () => {
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-slate-600 dark:text-slate-300">
+      <p className="mt-6 text-center text-sm text-[var(--text-secondary)] dark:text-[var(--text-secondary)]">
         Already have an account?{' '}
         <Link
           to={ROUTES.LOGIN}

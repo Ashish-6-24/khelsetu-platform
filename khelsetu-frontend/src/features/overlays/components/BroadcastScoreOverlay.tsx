@@ -16,7 +16,7 @@ export const BroadcastScoreOverlay = ({
   runRate,
 }: BroadcastScoreOverlayProps) => {
   return (
-    <motion.div className="bg-gradient-to-r from-gray-900 via-gray-800 to-indigo-900 text-white p-6 rounded-2xl shadow-2xl">
+    <motion.div className="bg-gradient-to-r from-[var(--bg-inverse)] via-[var(--bg-surface-raised)] to-indigo-900 text-white p-6 rounded-2xl shadow-2xl">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           {status === 'live' && <LivePulse color="red" size="lg" />}
@@ -28,7 +28,7 @@ export const BroadcastScoreOverlay = ({
           </Badge>
         </div>
         {runRate && (
-          <span className="text-sm font-medium text-gray-300">
+          <span className="text-sm font-medium text-[var(--text-muted)]">
             RR: {runRate.toFixed(2)}
           </span>
         )}
@@ -40,7 +40,7 @@ export const BroadcastScoreOverlay = ({
           <p className="text-5xl font-bold mt-2">
             {teamA.score}/{teamA.wickets}
           </p>
-          <p className="text-lg font-medium text-gray-300 mt-1">
+          <p className="text-lg font-medium text-[var(--text-muted)] mt-1">
             ({teamA.overs} overs)
           </p>
         </div>
@@ -52,7 +52,7 @@ export const BroadcastScoreOverlay = ({
           <p className="text-5xl font-bold mt-2">
             {teamB.score}/{teamB.wickets}
           </p>
-          <p className="text-lg font-medium text-gray-300 mt-1">
+          <p className="text-lg font-medium text-[var(--text-muted)] mt-1">
             ({teamB.overs} overs)
           </p>
         </div>

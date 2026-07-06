@@ -79,7 +79,7 @@ export const NotificationDropdown = ({
         aria-label={`Notifications, ${unreadCount} unread`}
         aria-expanded={isOpen}
         aria-haspopup="true"
-        className="relative inline-flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl text-[var(--text-tertiary)] transition-colors hover:bg-gray-100 dark:text-[var(--text-tertiary)] dark:hover:bg-[var(--bg-surface-raised)]"
+        className="relative inline-flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl text-[var(--text-tertiary)] transition-colors hover:bg-[var(--bg-surface-sunken)] dark:text-[var(--text-tertiary)] dark:hover:bg-[var(--bg-surface-raised)]"
       >
         <Bell className="h-5 w-5" />
         {unreadCount > 0 && (
