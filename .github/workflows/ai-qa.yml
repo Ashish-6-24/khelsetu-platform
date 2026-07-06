@@ -1,0 +1,111 @@
+name: AI QA
+
+on:
+  schedule:
+    - cron: '0 20 * * *'
+  workflow_dispatch:
+    inputs:
+      scenario:
+        description: 'Specific scenario to test (leave empty for all)'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  ai-qa:
+    name: AI Exploratory QA
+    runs-on: self-hosted
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check Ollama is running
+        run: |
+          if ! curl -s http://localhost:11434/api/tags > /dev/null 2>&1; then
+            echo "ERROR: Ollama is not running on localhost:11434"
+            echo "Start it with: ollama serve"
+            exit 1
+          fi
+          echo "Ollama is running"
+          ollama list
+
+      - name: Check Qwen3 model is available
+        run: |
+          if ! ollama list | grep -q "qwen3"; then
+            echo "ERROR: Qwen3 model not found"
+            echo "Pull it with: ollama pull qwen3"
+            exit 1
+          fi
+          echo "Qwen3 model available"
+
+      - name: Install dependencies
+        working-directory: khelsetu-frontend
+        run: |
+          npm ci
+          npx playwright install chromium --with-deps
+          npm i -D @browserbasehq/stagehand
+
+      - name: Build application
+        working-directory: khelsetu-frontend
+        run: npm run build
+
+      - name: Start application server
+        working-directory: khelsetu-frontend
+        run: |
+          npm run preview &
+          sleep 5
+          curl -s http://localhost:3000 > /dev/null && echo "Server is running" || echo "Server failed to start"
+
+      - name: Run AI QA with Stagehand
+        working-directory: khelsetu-frontend
+        run: |
+          mkdir -p ../reports/ai-qa
+          npx stagehand test --config ai-qa.config.ts 2>&1 | tee ../reports/ai-qa/output.log
+        env:
+          OPENAI_API_KEY: "http://localhost:11434/v1"
+          STAGEHAND_MODEL: "qwen3"
+
+      - name: Generate summary report
+        if: always()
+        working-directory: .
+        run: |
+          cat > reports/ai-qa/REPORT.md << 'REPORT_EOF'
+          # AI QA Report
+
+          **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Commit:** ${{ github.sha }}
+          **Branch:** ${{ github.ref_name }}
+
+          ## Test Scenarios
+
+          The following scenarios were tested by the AI agent:
+
+          1. **Homepage Exploration** - Visit as first-time user, check navigation, CTAs, content
+          2. **Authentication Flow** - Test login, register, form validation, error states
+          3. **Dashboard Navigation** - Check stats cards, recent matches, quick actions
+          4. **Settings Management** - Theme toggle, profile updates, password changes
+          5. **Tournament Browsing** - Search, filter, view tournament details
+
+          ## Output
+
+          See `output.log` for detailed AI agent output.
+
+          ## Notes
+
+          - AI QA is exploratory, not deterministic
+          - Reports are informational, not blocking
+          - Run manually for specific PRs: `gh workflow run ai-qa.yml`
+          REPORT_EOF
+          echo "Report generated"
+
+      - name: Upload AI QA report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-qa-report-${{ github.run_id }}
+          path: reports/ai-qa/
+          retention-days: 30
+          if-no-files-found: ignore

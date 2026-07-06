@@ -1,0 +1,86 @@
+name: CI Status
+
+on:
+  workflow_run:
+    workflows: ["Quality", "Build", "Test", "E2E", "Accessibility", "Lighthouse CI", "Security", "Visual Regression"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    name: CI Status
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.event != 'schedule' &&
+       github.event.workflow_run.conclusion != 'skipped')
+    steps:
+      - name: Wait for concurrent workflows
+        run: sleep 30
+
+      - name: Evaluate all required workflows
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const requiredWorkflows = [
+              'Quality',
+              'Build',
+              'Test',
+              'E2E',
+              'Accessibility',
+              'Lighthouse CI',
+              'Security',
+              'Visual Regression'
+            ];
+
+            const headSha = context.payload.workflow_run?.head_sha || context.sha;
+            console.log(`Checking workflows for SHA: ${headSha}`);
+
+            const { data: runs } = await github.rest.actions.listWorkflowRunsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head_sha: headSha,
+              per_page: 30
+            });
+
+            const statuses = {};
+            for (const name of requiredWorkflows) {
+              const run = runs.workflow_runs.find(r =>
+                r.name === name && r.head_sha === headSha
+              );
+              if (!run) {
+                statuses[name] = 'not_started';
+              } else if (run.conclusion === 'success') {
+                statuses[name] = 'success';
+              } else if (run.conclusion === 'failure') {
+                statuses[name] = 'failure';
+              } else {
+                statuses[name] = run.conclusion || 'in_progress';
+              }
+            }
+
+            console.log('Workflow statuses:');
+            for (const [name, status] of Object.entries(statuses)) {
+              const icon = status === 'success' ? '✅' : status === 'failure' ? '❌' : '⏳';
+              console.log(`  ${icon} ${name}: ${status}`);
+            }
+
+            const failed = Object.entries(statuses)
+              .filter(([_, s]) => s === 'failure')
+              .map(([n]) => n);
+
+            const pending = Object.entries(statuses)
+              .filter(([_, s]) => s === 'not_started' || s === 'in_progress')
+              .map(([n]) => n);
+
+            if (failed.length > 0) {
+              core.setFailed(`Failed workflows: ${failed.join(', ')}`);
+            } else if (pending.length > 0) {
+              console.log(`Still pending: ${pending.join(', ')}`);
+              core.setFailed(`Waiting for: ${pending.join(', ')}`);
+            } else {
+              console.log('All required workflows passed ✅');
+            }

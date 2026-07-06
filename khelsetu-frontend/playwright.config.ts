@@ -26,27 +26,27 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-      testIgnore: /a11y\//,
+      testIgnore: [/a11y\//, /visual\//, /smoke\//],
     },
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
-      testIgnore: /a11y\//,
+      testIgnore: [/a11y\//, /visual\//, /smoke\//],
     },
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
-      testIgnore: /a11y\//,
+      testIgnore: [/a11y\//, /visual\//, /smoke\//],
     },
     {
       name: 'Mobile Chrome',
       use: { ...devices['Pixel 5'] },
-      testIgnore: /a11y\//,
+      testIgnore: [/a11y\//, /visual\//, /smoke\//],
     },
     {
       name: 'Mobile Safari',
       use: { ...devices['iPhone 12'] },
-      testIgnore: /a11y\//,
+      testIgnore: [/a11y\//, /visual\//, /smoke\//],
     },
 
     // A11y tests — public pages (no auth)
@@ -65,6 +65,13 @@ export default defineConfig({
         storageState: 'e2e/.auth/user.json',
       },
       dependencies: ['setup'],
+    },
+
+    // Smoke tests — critical path
+    {
+      name: 'smoke',
+      testMatch: /smoke\//,
+      use: { ...devices['Desktop Chrome'] },
     },
 
     // Auth setup
