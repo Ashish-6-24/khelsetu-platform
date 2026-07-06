@@ -1,14 +1,79 @@
+import type { Standing } from '@shared/types/tournament';
 import { HttpResponse, http } from 'msw';
 
-import type { Standing } from '@shared/types/tournament';
-
 const standings: Standing[] = [
-  { tournamentId: 'tournament-1', teamId: 'team-2', teamName: 'Pokhara Strikers', played: 5, won: 4, lost: 1, drawn: 0, points: 8, nrr: 0.82, position: 1 },
-  { tournamentId: 'tournament-1', teamId: 'team-1', teamName: 'Kathmandu Kings', played: 5, won: 3, lost: 1, drawn: 1, points: 7, nrr: 0.45, position: 2 },
-  { tournamentId: 'tournament-1', teamId: 'team-5', teamName: 'Bhaktapur Gladiators', played: 5, won: 3, lost: 2, drawn: 0, points: 6, nrr: 0.12, position: 3 },
-  { tournamentId: 'tournament-1', teamId: 'team-6', teamName: 'Morang Falcons', played: 5, won: 2, lost: 2, drawn: 1, points: 5, nrr: 0.05, position: 4 },
-  { tournamentId: 'tournament-1', teamId: 'team-3', teamName: 'Chitwan Tigers', played: 5, won: 2, lost: 3, drawn: 0, points: 4, nrr: -0.15, position: 5 },
-  { tournamentId: 'tournament-1', teamId: 'team-4', teamName: 'Lalitpur Patriots', played: 5, won: 1, lost: 4, drawn: 0, points: 2, nrr: -0.68, position: 6 },
+  {
+    tournamentId: 'tournament-1',
+    teamId: 'team-2',
+    teamName: 'Pokhara Strikers',
+    played: 5,
+    won: 4,
+    lost: 1,
+    drawn: 0,
+    points: 8,
+    nrr: 0.82,
+    position: 1,
+  },
+  {
+    tournamentId: 'tournament-1',
+    teamId: 'team-1',
+    teamName: 'Kathmandu Kings',
+    played: 5,
+    won: 3,
+    lost: 1,
+    drawn: 1,
+    points: 7,
+    nrr: 0.45,
+    position: 2,
+  },
+  {
+    tournamentId: 'tournament-1',
+    teamId: 'team-5',
+    teamName: 'Bhaktapur Gladiators',
+    played: 5,
+    won: 3,
+    lost: 2,
+    drawn: 0,
+    points: 6,
+    nrr: 0.12,
+    position: 3,
+  },
+  {
+    tournamentId: 'tournament-1',
+    teamId: 'team-6',
+    teamName: 'Morang Falcons',
+    played: 5,
+    won: 2,
+    lost: 2,
+    drawn: 1,
+    points: 5,
+    nrr: 0.05,
+    position: 4,
+  },
+  {
+    tournamentId: 'tournament-1',
+    teamId: 'team-3',
+    teamName: 'Chitwan Tigers',
+    played: 5,
+    won: 2,
+    lost: 3,
+    drawn: 0,
+    points: 4,
+    nrr: -0.15,
+    position: 5,
+  },
+  {
+    tournamentId: 'tournament-1',
+    teamId: 'team-4',
+    teamName: 'Lalitpur Patriots',
+    played: 5,
+    won: 1,
+    lost: 4,
+    drawn: 0,
+    points: 2,
+    nrr: -0.68,
+    position: 6,
+  },
 ];
 
 export const standingHandlers = [
@@ -50,9 +115,7 @@ export const standingHandlers = [
 
   http.put('/standings/:teamId', async ({ params, request }) => {
     const body = (await request.json()) as Record<string, unknown>;
-    const index = standings.findIndex(
-      (s) => s.teamId === params.teamId,
-    );
+    const index = standings.findIndex((s) => s.teamId === params.teamId);
     if (index === -1) {
       return HttpResponse.json(
         { error: { message: 'Standing not found' } },

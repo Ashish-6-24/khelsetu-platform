@@ -1,6 +1,5 @@
-import { HttpResponse, http } from 'msw';
-
 import type { Venue } from '@shared/types/tournament';
+import { HttpResponse, http } from 'msw';
 
 const venues: Venue[] = [
   {

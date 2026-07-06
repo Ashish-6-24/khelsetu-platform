@@ -1,7 +1,6 @@
-import { HttpResponse, http } from 'msw';
-
 import type { CricketInnings } from '@shared/types/scoring';
 import type { Match, MatchStatus } from '@shared/types/tournament';
+import { HttpResponse, http } from 'msw';
 
 const teamA = {
   id: 'team-1',
@@ -55,8 +54,12 @@ const matches: Match[] = [
     score: {
       teamAScore: 145,
       teamBScore: 120,
-      teamAInnings: [{ teamId: 'team-1', runs: 145, wickets: 6, overs: 20, extras: 12 }],
-      teamBInnings: [{ teamId: 'team-2', runs: 120, wickets: 8, overs: 16, extras: 8 }],
+      teamAInnings: [
+        { teamId: 'team-1', runs: 145, wickets: 6, overs: 20, extras: 12 },
+      ],
+      teamBInnings: [
+        { teamId: 'team-2', runs: 120, wickets: 8, overs: 16, extras: 8 },
+      ],
     },
   },
   {
@@ -80,8 +83,12 @@ const matches: Match[] = [
     score: {
       teamAScore: 180,
       teamBScore: 165,
-      teamAInnings: [{ teamId: 'team-1', runs: 180, wickets: 4, overs: 20, extras: 15 }],
-      teamBInnings: [{ teamId: 'team-3', runs: 165, wickets: 9, overs: 19, extras: 10 }],
+      teamAInnings: [
+        { teamId: 'team-1', runs: 180, wickets: 4, overs: 20, extras: 15 },
+      ],
+      teamBInnings: [
+        { teamId: 'team-3', runs: 165, wickets: 9, overs: 19, extras: 10 },
+      ],
     },
   },
   {
@@ -96,8 +103,12 @@ const matches: Match[] = [
     score: {
       teamAScore: 195,
       teamBScore: 142,
-      teamAInnings: [{ teamId: 'team-1', runs: 195, wickets: 3, overs: 20, extras: 8 }],
-      teamBInnings: [{ teamId: 'team-4', runs: 142, wickets: 10, overs: 18, extras: 6 }],
+      teamAInnings: [
+        { teamId: 'team-1', runs: 195, wickets: 3, overs: 20, extras: 8 },
+      ],
+      teamBInnings: [
+        { teamId: 'team-4', runs: 142, wickets: 10, overs: 18, extras: 6 },
+      ],
     },
   },
 ];
@@ -114,16 +125,52 @@ const liveScoreData: Record<string, CricketInnings> = {
     overs: 16.3,
     balls: [],
     batsmen: [
-      { playerId: 'p4', playerName: 'Aasif Sheikh', runs: 45, balls: 32, fours: 5, sixes: 2, strikeRate: 140.62, isOnStrike: true, isOut: false },
-      { playerId: 'p5', playerName: 'Sompal Kami', runs: 12, balls: 15, fours: 1, sixes: 0, strikeRate: 80.0, isOnStrike: false, isOut: true },
+      {
+        playerId: 'p4',
+        playerName: 'Aasif Sheikh',
+        runs: 45,
+        balls: 32,
+        fours: 5,
+        sixes: 2,
+        strikeRate: 140.62,
+        isOnStrike: true,
+        isOut: false,
+      },
+      {
+        playerId: 'p5',
+        playerName: 'Sompal Kami',
+        runs: 12,
+        balls: 15,
+        fours: 1,
+        sixes: 0,
+        strikeRate: 80.0,
+        isOnStrike: false,
+        isOut: true,
+      },
     ],
     bowlers: [
-      { playerId: 'p2', playerName: 'Dipendra Singh Airee', overs: 3.3, maidens: 0, runs: 28, wickets: 1, economy: 8.0, isBowling: true },
+      {
+        playerId: 'p2',
+        playerName: 'Dipendra Singh Airee',
+        overs: 3.3,
+        maidens: 0,
+        runs: 28,
+        wickets: 1,
+        economy: 8.0,
+        isBowling: true,
+      },
     ],
     currentStrikerId: 'p4',
     currentNonStrikerId: 'p5',
     currentBowlerId: 'p2',
-    partnership: { runs: 24, balls: 18, batsmanAId: 'p4', batsmanAName: 'Aasif Sheikh', batsmanBId: 'p5', batsmanBName: 'Sompal Kami' },
+    partnership: {
+      runs: 24,
+      balls: 18,
+      batsmanAId: 'p4',
+      batsmanAName: 'Aasif Sheikh',
+      batsmanBId: 'p5',
+      batsmanBName: 'Sompal Kami',
+    },
     isComplete: false,
   },
 };
@@ -209,8 +256,8 @@ export const scoringHandlers = [
     const newMatch: Match = {
       id: `match-${matches.length + 1}`,
       tournamentId: (body.tournamentId as string) ?? 'tournament-1',
-      teamA: body.teamA as Match['teamA'] ?? teamA,
-      teamB: body.teamB as Match['teamB'] ?? teamB,
+      teamA: (body.teamA as Match['teamA']) ?? teamA,
+      teamB: (body.teamB as Match['teamB']) ?? teamB,
       status: 'scheduled',
       scheduledAt: (body.scheduledAt as string) ?? new Date().toISOString(),
       venue: (body.venue as string) ?? 'Tribhuvan University Ground',

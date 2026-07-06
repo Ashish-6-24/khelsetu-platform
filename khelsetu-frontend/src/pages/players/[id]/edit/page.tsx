@@ -6,12 +6,12 @@ import { Input } from '@shared/components/ui/Input';
 import { Select } from '@shared/components/ui/Select';
 import { useToast } from '@shared/components/ui/toast-context';
 import type { Player } from '@shared/types/tournament';
+import { ROUTES } from '@shared/utils/constants';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, Save } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { ROUTES } from '@shared/utils/constants';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const playerSchema = z.object({

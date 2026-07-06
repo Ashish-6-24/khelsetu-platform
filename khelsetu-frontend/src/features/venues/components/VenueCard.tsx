@@ -2,6 +2,7 @@ import { Badge } from '@shared/components/ui/Badge';
 import { Card, CardBody } from '@shared/components/ui/Card';
 import { motion } from 'framer-motion';
 import { MapPin, Users, Wrench } from 'lucide-react';
+
 import type { Venue } from '../types';
 
 interface VenueCardProps {

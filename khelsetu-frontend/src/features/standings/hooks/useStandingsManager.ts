@@ -1,7 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useCallback, useMemo } from 'react';
-import { standingsService } from '../services/standingsService';
 import type { Standing } from '@shared/types/tournament';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
+import { useCallback, useMemo } from 'react';
+
+import { standingsService } from '../services/standingsService';
 
 interface UseStandingsManagerOptions {
   tournamentId: string;
@@ -58,15 +60,11 @@ export function useStandingsManager({
         for (const standing of currentStandings) {
           if (standing.teamId === winnerId || standing.teamId === loserId) {
             updates.push(
-              standingsService.update(
-                tournamentId,
-                standing.teamId,
-                {
-                  played: standing.played + 1,
-                  drawn: standing.drawn + 1,
-                  points: standing.points + 1,
-                },
-              ),
+              standingsService.update(tournamentId, standing.teamId, {
+                played: standing.played + 1,
+                drawn: standing.drawn + 1,
+                points: standing.points + 1,
+              }),
             );
           }
         }
@@ -93,7 +91,9 @@ export function useStandingsManager({
 
       try {
         await Promise.all(updates);
-        queryClient.invalidateQueries({ queryKey: ['standings', tournamentId] });
+        queryClient.invalidateQueries({
+          queryKey: ['standings', tournamentId],
+        });
       } catch (error) {
         console.error('Failed to update standings:', error);
         throw error;

@@ -1,15 +1,16 @@
 import { usePlayers } from '@features/players/hooks/usePlayers';
-import { useTeams } from '@features/teams/hooks/useTeams';
 import { PlayerCard } from '@features/teams/components/PlayerCard';
-import { useReducedMotion } from '@shared/hooks/useReducedMotion';
+import { useTeams } from '@features/teams/hooks/useTeams';
 import { Button } from '@shared/components/ui/Button';
 import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
 import { Input } from '@shared/components/ui/Input';
 import { Select } from '@shared/components/ui/Select';
 import { Skeleton } from '@shared/components/ui/Skeleton';
 import { Tabs } from '@shared/components/ui/Tabs';
+import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 import { motion } from 'framer-motion';
 import { Search, UserPlus } from 'lucide-react';
+
 import { useState } from 'react';
 
 // Position values must match backend enum — cricket (batsman, bowler, all-rounder, wicketkeeper) and football (goalkeeper, defender, midfielder, forward)
@@ -26,7 +27,7 @@ const POSITION_TABS = [
 ];
 
 const POSITION_OPTIONS = POSITION_TABS.filter((t) => t.id !== 'all').map(
-  (t) => ({ value: t.id, label: t.label })
+  (t) => ({ value: t.id, label: t.label }),
 );
 
 export const PlayersPage = () => {
@@ -42,17 +43,11 @@ export const PlayersPage = () => {
     teamId: '',
   });
 
-  const {
-    players,
-    isLoading,
-    isError,
-    error,
-    createPlayer,
-    isCreating,
-  } = usePlayers({
-    search,
-    position,
-  });
+  const { players, isLoading, isError, error, createPlayer, isCreating } =
+    usePlayers({
+      search,
+      position,
+    });
 
   const { teams, isLoading: teamsLoading } = useTeams();
 
@@ -75,7 +70,12 @@ export const PlayersPage = () => {
 
   if (isLoading) {
     return (
-      <div className="space-y-6" aria-busy="true" aria-live="polite" aria-label="Loading players">
+      <div
+        className="space-y-6"
+        aria-busy="true"
+        aria-live="polite"
+        aria-label="Loading players"
+      >
         <Skeleton className="h-8 w-40" aria-hidden="true" />
         <Skeleton className="h-10 w-full" aria-hidden="true" />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -94,7 +94,10 @@ export const PlayersPage = () => {
           <h1 className="text-2xl font-bold text-[var(--text-primary)]">
             Players
           </h1>
-          <div role="alert" className="mt-1 text-sm text-red-600 dark:text-red-400">
+          <div
+            role="alert"
+            className="mt-1 text-sm text-red-600 dark:text-red-400"
+          >
             Failed to load players: {error?.message ?? 'Unknown error'}
           </div>
         </div>
@@ -104,7 +107,11 @@ export const PlayersPage = () => {
 
   const containerVariants = {
     hidden: { opacity: 0, y: 12 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' as const } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3, ease: 'easeOut' as const },
+    },
   } as const;
 
   const listVariants = {
@@ -114,7 +121,11 @@ export const PlayersPage = () => {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 12 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' as const } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.25, ease: 'easeOut' as const },
+    },
   } as const;
 
   return (
@@ -133,7 +144,11 @@ export const PlayersPage = () => {
             {players.length} player{players.length !== 1 ? 's' : ''} registered
           </p>
         </div>
-        <Button variant="create" leftIcon={<UserPlus className="h-4 w-4" />} onClick={() => setShowRegistration(true)}>
+        <Button
+          variant="create"
+          leftIcon={<UserPlus className="h-4 w-4" />}
+          onClick={() => setShowRegistration(true)}
+        >
           Register Player
         </Button>
       </div>
@@ -145,7 +160,10 @@ export const PlayersPage = () => {
             transition={{ duration: 0.2 }}
             className="absolute left-3 top-1/2 -translate-y-1/2"
           >
-            <Search className="w-4 h-4 text-[var(--text-tertiary)]" aria-hidden="true" />
+            <Search
+              className="w-4 h-4 text-[var(--text-tertiary)]"
+              aria-hidden="true"
+            />
           </motion.div>
           <Input
             placeholder="Search players..."
@@ -221,7 +239,11 @@ export const PlayersPage = () => {
                 />
               </div>
               <div className="flex gap-3">
-                <Button type="submit" variant="create" disabled={isCreating || teamsLoading || !isFormValid}>
+                <Button
+                  type="submit"
+                  variant="create"
+                  disabled={isCreating || teamsLoading || !isFormValid}
+                >
                   {isCreating ? 'Registering...' : 'Register Player'}
                 </Button>
                 <Button
@@ -240,7 +262,10 @@ export const PlayersPage = () => {
       {players.length === 0 ? (
         <Card>
           <CardBody className="p-12 text-center">
-            <UserPlus className="w-12 h-12 mx-auto text-[var(--text-tertiary)] mb-4" aria-hidden="true" />
+            <UserPlus
+              className="w-12 h-12 mx-auto text-[var(--text-tertiary)] mb-4"
+              aria-hidden="true"
+            />
             <p className="text-[var(--text-tertiary)]">
               {search
                 ? 'No players match your search'
@@ -256,7 +281,10 @@ export const PlayersPage = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
         >
           {players.map((player) => (
-            <motion.div key={player.id} variants={prefersReducedMotion ? undefined : itemVariants}>
+            <motion.div
+              key={player.id}
+              variants={prefersReducedMotion ? undefined : itemVariants}
+            >
               <PlayerCard player={player} />
             </motion.div>
           ))}

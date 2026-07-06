@@ -78,7 +78,8 @@ export const tournamentHandlers = [
       id: `tournament-${tournaments.length + 1}`,
       name: body.name as string,
       sport: body.sport as string,
-      status: body.status as 'draft' | 'upcoming' | 'live' | 'completed' | 'cancelled',
+      status: body.status as
+        'draft' | 'upcoming' | 'live' | 'completed' | 'cancelled',
       format: body.format as 'knockout' | 'league' | 'round-robin' | 'swiss',
       startDate: body.startDate as string,
       endDate: body.endDate as string,
@@ -101,7 +102,8 @@ export const tournamentHandlers = [
     }
     const tournament = tournaments[index]!;
     if (body.name) tournament.name = body.name as string;
-    if (body.status) tournament.status = body.status as typeof tournament.status;
+    if (body.status)
+      tournament.status = body.status as typeof tournament.status;
     return HttpResponse.json({ data: tournament });
   }),
 

@@ -59,9 +59,7 @@ export const CTA = () => (
             </div>
             <h2 className="mt-6 font-display text-4xl font-bold -tracking-[0.02em] text-white sm:text-5xl">
               Ready to run your{' '}
-              <span className="italic text-yellow-300">
-                best tournament
-              </span>{' '}
+              <span className="italic text-yellow-300">best tournament</span>{' '}
               yet?
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-pretty text-base font-medium text-white sm:text-lg">

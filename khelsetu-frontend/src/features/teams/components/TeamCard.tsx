@@ -44,33 +44,25 @@ export const TeamCard = ({
             <div className="mt-4 pt-4 border-t border-[var(--border-subtle)]">
               <div className="grid grid-cols-4 gap-3 text-center">
                 <div>
-                  <p className="text-xs text-[var(--text-secondary)]">
-                    Played
-                  </p>
+                  <p className="text-xs text-[var(--text-secondary)]">Played</p>
                   <p className="text-lg font-semibold text-[var(--text-primary)]">
                     {team.stats.played}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-[var(--text-secondary)]">
-                    Won
-                  </p>
+                  <p className="text-xs text-[var(--text-secondary)]">Won</p>
                   <p className="text-lg font-semibold text-green-600 dark:text-green-400">
                     {team.stats.won}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-[var(--text-secondary)]">
-                    Lost
-                  </p>
+                  <p className="text-xs text-[var(--text-secondary)]">Lost</p>
                   <p className="text-lg font-semibold text-red-600 dark:text-red-400">
                     {team.stats.lost}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-[var(--text-secondary)]">
-                    Points
-                  </p>
+                  <p className="text-xs text-[var(--text-secondary)]">Points</p>
                   <p className="text-lg font-semibold text-blue-600 dark:text-blue-400">
                     {team.stats.points}
                   </p>

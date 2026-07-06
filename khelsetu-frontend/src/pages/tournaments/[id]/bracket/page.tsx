@@ -6,8 +6,8 @@ import { Button } from '@shared/components/ui/Button';
 import { Card, CardBody } from '@shared/components/ui/Card';
 import { Skeleton } from '@shared/components/ui/Skeleton';
 import { Tabs } from '@shared/components/ui/Tabs';
-import { ROUTES } from '@shared/utils/constants';
 import type { Match, Tournament } from '@shared/types/tournament';
+import { ROUTES } from '@shared/utils/constants';
 import { useQuery } from '@tanstack/react-query';
 
 import { useState } from 'react';

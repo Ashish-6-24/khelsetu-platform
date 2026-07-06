@@ -158,7 +158,9 @@ export const Hero = () => (
               <div className="flex items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-white/90 px-3 py-1 text-[11px] text-[var(--text-secondary)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-canvas)]/90">
                 <Search className="h-3 w-3 text-[var(--text-tertiary)]" />
                 <span>Search tournaments, teams, scorers...</span>
-                <span className="ml-auto rounded bg-[var(--bg-surface-sunken)] px-1.5 py-0.5 text-[9px] font-mono text-[var(--text-tertiary)] dark:bg-[var(--bg-surface)]">⌘K</span>
+                <span className="ml-auto rounded bg-[var(--bg-surface-sunken)] px-1.5 py-0.5 text-[9px] font-mono text-[var(--text-tertiary)] dark:bg-[var(--bg-surface)]">
+                  ⌘K
+                </span>
               </div>
             </div>
           </div>
@@ -181,7 +183,9 @@ export const Hero = () => (
                         : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-sunken)] dark:text-[var(--text-tertiary)] dark:hover:bg-[var(--bg-surface)]'
                     }`}
                   >
-                    <item.icon className={`h-4 w-4 ${item.active ? 'text-[var(--brand-primary)] dark:text-red-400' : 'text-[var(--text-tertiary)]'}`} />
+                    <item.icon
+                      className={`h-4 w-4 ${item.active ? 'text-[var(--brand-primary)] dark:text-red-400' : 'text-[var(--text-tertiary)]'}`}
+                    />
                     <span>{item.label}</span>
                   </div>
                 ))}

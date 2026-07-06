@@ -99,7 +99,13 @@ export const MediaPage = () => {
             Manage images, videos, and logos
           </p>
         </div>
-        <Button variant="create" size="lg" leftIcon={<Upload className="h-4 w-4" />} onClick={handleUpload} aria-label="Upload media files">
+        <Button
+          variant="create"
+          size="lg"
+          leftIcon={<Upload className="h-4 w-4" />}
+          onClick={handleUpload}
+          aria-label="Upload media files"
+        >
           Upload Media
         </Button>
         <input

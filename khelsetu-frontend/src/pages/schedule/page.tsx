@@ -1,21 +1,16 @@
 import { matchService } from '@features/tournaments/services/tournament';
-import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 import { Badge } from '@shared/components/ui/Badge';
 import { Card, CardBody } from '@shared/components/ui/Card';
 import { Skeleton } from '@shared/components/ui/Skeleton';
 import { Tabs } from '@shared/components/ui/Tabs';
+import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 import type { Match } from '@shared/types/tournament';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import {
-  Calendar,
-  Clock,
-  Filter,
-  MapPin,
-  Play,
-  Trophy,
-} from 'lucide-react';
+import { Calendar, Clock, Filter, MapPin, Play, Trophy } from 'lucide-react';
+
 import { useMemo, useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 const STATUS_TABS = [
@@ -38,7 +33,12 @@ export const SchedulePage = () => {
   const [activeStatus, setActiveStatus] = useState('upcoming');
   const [activeSport, setActiveSport] = useState('all');
 
-  const { data: matches = [], isLoading, isError, error } = useQuery<Match[]>({
+  const {
+    data: matches = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery<Match[]>({
     queryKey: ['matches'],
     queryFn: () => matchService.getAll(),
   });
@@ -89,7 +89,10 @@ export const SchedulePage = () => {
           <h1 className="text-2xl font-bold text-[var(--text-primary)]">
             Schedule
           </h1>
-          <div role="alert" className="mt-1 text-sm text-red-600 dark:text-red-400">
+          <div
+            role="alert"
+            className="mt-1 text-sm text-red-600 dark:text-red-400"
+          >
             Failed to load matches: {error?.message ?? 'Unknown error'}
           </div>
         </div>
@@ -99,7 +102,12 @@ export const SchedulePage = () => {
 
   if (isLoading) {
     return (
-      <div className="space-y-6" aria-busy="true" aria-live="polite" aria-label="Loading schedule">
+      <div
+        className="space-y-6"
+        aria-busy="true"
+        aria-live="polite"
+        aria-label="Loading schedule"
+      >
         <Skeleton className="h-8 w-40" aria-hidden="true" />
         <Skeleton className="h-10 w-full" aria-hidden="true" />
         <div className="space-y-4">
@@ -113,7 +121,11 @@ export const SchedulePage = () => {
 
   const containerVariants = {
     hidden: { opacity: 0, y: 12 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' as const } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3, ease: 'easeOut' as const },
+    },
   } as const;
 
   const listVariants = {
@@ -123,7 +135,11 @@ export const SchedulePage = () => {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 12 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' as const } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.25, ease: 'easeOut' as const },
+    },
   } as const;
 
   return (
@@ -187,7 +203,10 @@ export const SchedulePage = () => {
       {filteredMatches.length === 0 ? (
         <Card>
           <CardBody className="p-12 text-center">
-            <Calendar className="w-12 h-12 mx-auto text-[var(--text-tertiary)] mb-4" aria-hidden="true" />
+            <Calendar
+              className="w-12 h-12 mx-auto text-[var(--text-tertiary)] mb-4"
+              aria-hidden="true"
+            />
             <p className="text-[var(--text-tertiary)]">
               No {activeStatus} matches{' '}
               {activeSport !== 'all' ? `for ${activeSport}` : ''}

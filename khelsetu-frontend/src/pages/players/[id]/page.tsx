@@ -6,10 +6,10 @@ import { Card, CardBody } from '@shared/components/ui/Card';
 import { Skeleton } from '@shared/components/ui/Skeleton';
 import { Tabs } from '@shared/components/ui/Tabs';
 import type { Player, Team } from '@shared/types/tournament';
+import { ROUTES } from '@shared/utils/constants';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, Edit, Trophy } from 'lucide-react';
 
-import { ROUTES } from '@shared/utils/constants';
 import { useState } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';

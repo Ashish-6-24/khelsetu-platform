@@ -46,13 +46,13 @@ export const TournamentDetailPage = () => {
     enabled: !!id,
   });
 
-  const { data: standings = [], isLoading: loadingStandings } = useQuery<Standing[]>(
-    {
-      queryKey: ['tournament-standings', id],
-      queryFn: () => tournamentService.getStandings(id!) as Promise<Standing[]>,
-      enabled: !!id,
-    },
-  );
+  const { data: standings = [], isLoading: loadingStandings } = useQuery<
+    Standing[]
+  >({
+    queryKey: ['tournament-standings', id],
+    queryFn: () => tournamentService.getStandings(id!) as Promise<Standing[]>,
+    enabled: !!id,
+  });
 
   const { standings: featureStandings, isLoading: featureLoadingStandings } =
     useStandings(id!);
@@ -105,7 +105,9 @@ export const TournamentDetailPage = () => {
             </h1>
             <p className="mt-1 text-sm text-[var(--text-tertiary)]">
               {tournament.sport} &middot; {tournament.format} &middot;{' '}
-              <Badge variant={tournament.status === 'live' ? 'success' : 'info'}>
+              <Badge
+                variant={tournament.status === 'live' ? 'success' : 'info'}
+              >
                 {tournament.status}
               </Badge>
             </p>

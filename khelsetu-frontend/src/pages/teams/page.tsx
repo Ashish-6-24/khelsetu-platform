@@ -1,13 +1,15 @@
 import { TeamCard } from '@features/teams/components/TeamCard';
 import { useTeams } from '@features/teams/hooks/useTeams';
-import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 import { Button } from '@shared/components/ui/Button';
 import { Card, CardBody } from '@shared/components/ui/Card';
 import { Input } from '@shared/components/ui/Input';
 import { Skeleton } from '@shared/components/ui/Skeleton';
+import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 import { motion } from 'framer-motion';
-import { Search, Users, UserPlus } from 'lucide-react';
+import { Search, UserPlus, Users } from 'lucide-react';
+
 import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 export const TeamsPage = () => {
@@ -20,7 +22,12 @@ export const TeamsPage = () => {
 
   if (isLoading) {
     return (
-      <div className="space-y-6" aria-busy="true" aria-live="polite" aria-label="Loading teams">
+      <div
+        className="space-y-6"
+        aria-busy="true"
+        aria-live="polite"
+        aria-label="Loading teams"
+      >
         <Skeleton className="h-8 w-40" aria-hidden="true" />
         <Skeleton className="h-10 w-full" aria-hidden="true" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -39,7 +46,10 @@ export const TeamsPage = () => {
           <h1 className="text-2xl font-bold text-[var(--text-primary)]">
             Teams
           </h1>
-          <div role="alert" className="mt-1 text-sm text-red-600 dark:text-red-400">
+          <div
+            role="alert"
+            className="mt-1 text-sm text-red-600 dark:text-red-400"
+          >
             Failed to load teams: {error?.message ?? 'Unknown error'}
           </div>
         </div>
@@ -49,7 +59,11 @@ export const TeamsPage = () => {
 
   const containerVariants = {
     hidden: { opacity: 0, y: 12 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' as const } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3, ease: 'easeOut' as const },
+    },
   } as const;
 
   const listVariants = {
@@ -59,7 +73,11 @@ export const TeamsPage = () => {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 12 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' as const } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.25, ease: 'easeOut' as const },
+    },
   } as const;
 
   return (
@@ -78,7 +96,11 @@ export const TeamsPage = () => {
             {teams.length} team{teams.length !== 1 ? 's' : ''} available
           </p>
         </div>
-        <Button variant="create" leftIcon={<UserPlus className="h-4 w-4" />} onClick={() => navigate('/teams/create')}>
+        <Button
+          variant="create"
+          leftIcon={<UserPlus className="h-4 w-4" />}
+          onClick={() => navigate('/teams/create')}
+        >
           Add Team
         </Button>
       </div>
@@ -89,7 +111,10 @@ export const TeamsPage = () => {
           transition={{ duration: 0.2 }}
           className="absolute left-3 top-1/2 -translate-y-1/2"
         >
-          <Search className="w-4 h-4 text-[var(--text-tertiary)]" aria-hidden="true" />
+          <Search
+            className="w-4 h-4 text-[var(--text-tertiary)]"
+            aria-hidden="true"
+          />
         </motion.div>
         <Input
           placeholder="Search teams..."
@@ -104,7 +129,10 @@ export const TeamsPage = () => {
       {teams.length === 0 ? (
         <Card>
           <CardBody className="p-12 text-center">
-            <Users className="w-12 h-12 mx-auto text-[var(--text-tertiary)] mb-4" aria-hidden="true" />
+            <Users
+              className="w-12 h-12 mx-auto text-[var(--text-tertiary)] mb-4"
+              aria-hidden="true"
+            />
             <p className="text-[var(--text-tertiary)]">
               {search
                 ? 'No teams match your search'
@@ -120,7 +148,10 @@ export const TeamsPage = () => {
           className="grid grid-cols-1 md:grid-cols-2 gap-4"
         >
           {teams.map((team) => (
-            <motion.div key={team.id} variants={prefersReducedMotion ? undefined : itemVariants}>
+            <motion.div
+              key={team.id}
+              variants={prefersReducedMotion ? undefined : itemVariants}
+            >
               <TeamCard
                 team={team}
                 onClick={() => navigate(`/teams/${team.id}`)}

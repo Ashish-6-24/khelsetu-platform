@@ -15,7 +15,9 @@ export const billingService = {
   },
 
   getSubscription: async (): Promise<Subscription | null> => {
-    const { data } = await axiosInstance.get(API_ENDPOINTS.BILLING.SUBSCRIPTION);
+    const { data } = await axiosInstance.get(
+      API_ENDPOINTS.BILLING.SUBSCRIPTION,
+    );
     return normalizeObject<Subscription>(data);
   },
 

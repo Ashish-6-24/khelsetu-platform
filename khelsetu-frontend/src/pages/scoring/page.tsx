@@ -1,16 +1,18 @@
 import { CreateMatchModal } from '@features/scoring/components/CreateMatchModal';
 import { MatchSelector } from '@features/scoring/components/MatchSelector';
 import { matchService } from '@features/tournaments/services/tournament';
-import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 import { Button } from '@shared/components/ui/Button';
 import { Modal } from '@shared/components/ui/Modal';
 import { Skeleton } from '@shared/components/ui/Skeleton';
 import { Tabs } from '@shared/components/ui/Tabs';
+import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 import type { Match } from '@shared/types/tournament';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Plus, Swords } from 'lucide-react';
+
 import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 const SPORT_FILTERS = [
@@ -53,7 +55,12 @@ export const ScoringPage = () => {
 
   if (isLoading) {
     return (
-      <div className="space-y-6" aria-busy="true" aria-live="polite" aria-label="Loading matches">
+      <div
+        className="space-y-6"
+        aria-busy="true"
+        aria-live="polite"
+        aria-label="Loading matches"
+      >
         <Skeleton className="h-8 w-40" aria-hidden="true" />
         <Skeleton className="h-10 w-full" aria-hidden="true" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -72,7 +79,10 @@ export const ScoringPage = () => {
           <h1 className="text-2xl font-bold text-[var(--text-primary)]">
             Live Scoring
           </h1>
-          <div role="alert" className="mt-1 text-sm text-red-600 dark:text-red-400">
+          <div
+            role="alert"
+            className="mt-1 text-sm text-red-600 dark:text-red-400"
+          >
             Failed to load matches: {error?.message ?? 'Unknown error'}
           </div>
         </div>
@@ -82,7 +92,11 @@ export const ScoringPage = () => {
 
   const containerVariants = {
     hidden: { opacity: 0, y: 12 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' as const } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3, ease: 'easeOut' as const },
+    },
   } as const;
 
   return (

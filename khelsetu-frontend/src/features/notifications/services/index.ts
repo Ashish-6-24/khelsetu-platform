@@ -5,9 +5,7 @@ import { normalizeArray } from '@shared/utils/normalize';
 
 export const notificationService = {
   getNotifications: async (): Promise<Notification[]> => {
-    const { data } = await axiosInstance.get(
-      API_ENDPOINTS.NOTIFICATIONS.LIST,
-    );
+    const { data } = await axiosInstance.get(API_ENDPOINTS.NOTIFICATIONS.LIST);
     return normalizeArray<Notification>(data);
   },
 

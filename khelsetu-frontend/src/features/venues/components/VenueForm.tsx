@@ -2,7 +2,9 @@ import { Button } from '@shared/components/ui/Button';
 import { Card, CardBody, CardHeader } from '@shared/components/ui/Card';
 import { Input } from '@shared/components/ui/Input';
 import { Select } from '@shared/components/ui/Select';
+
 import { useState } from 'react';
+
 import type { CreateVenueInput, Venue } from '../types';
 
 interface VenueFormProps {
@@ -157,7 +159,10 @@ export function VenueForm({
           </div>
 
           {error && (
-            <div role="alert" className="text-sm text-red-600 dark:text-red-400">
+            <div
+              role="alert"
+              className="text-sm text-red-600 dark:text-red-400"
+            >
               {error}
             </div>
           )}

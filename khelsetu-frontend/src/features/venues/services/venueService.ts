@@ -1,6 +1,7 @@
 import { api } from '@lib/axios';
 import { API_ENDPOINTS } from '@shared/utils/constants';
 import { normalizeArray, normalizeObject } from '@shared/utils/normalize';
+
 import type { CreateVenueInput, Venue } from '../types';
 
 export const venueService = {
@@ -15,10 +16,7 @@ export const venueService = {
   },
 
   create: async (data: CreateVenueInput): Promise<Venue> => {
-    const response = await api.post<Venue>(
-      API_ENDPOINTS.VENUES.CREATE,
-      data,
-    );
+    const response = await api.post<Venue>(API_ENDPOINTS.VENUES.CREATE, data);
     return response.data;
   },
 

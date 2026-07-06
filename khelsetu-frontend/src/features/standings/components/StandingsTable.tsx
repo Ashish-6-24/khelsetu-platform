@@ -4,7 +4,13 @@ import { Badge } from '@shared/components/ui/Badge';
 import { Card, CardBody } from '@shared/components/ui/Card';
 import { Skeleton } from '@shared/components/ui/Skeleton';
 import { motion } from 'framer-motion';
-import { ArrowDown, ArrowDownAZ, ArrowUp, ArrowUpDown, Minus } from 'lucide-react';
+import {
+  ArrowDown,
+  ArrowDownAZ,
+  ArrowUp,
+  ArrowUpDown,
+  Minus,
+} from 'lucide-react';
 
 import { useMemo, useState } from 'react';
 
@@ -39,7 +45,9 @@ export const StandingsTable = ({
 
   const sortedStandings = useMemo(() => {
     if (sortMode === 'alphabetical') {
-      return [...standings].sort((a, b) => a.teamName.localeCompare(b.teamName));
+      return [...standings].sort((a, b) =>
+        a.teamName.localeCompare(b.teamName),
+      );
     }
     const sorted = [...standings].sort((a, b) => {
       const multiplier = sortDirection === 'asc' ? 1 : -1;
@@ -93,7 +101,9 @@ export const StandingsTable = ({
       <CardBody className="p-0">
         <div className="flex items-center justify-end px-4 pt-4">
           <button
-            onClick={() => setSortMode(sortMode === 'points' ? 'alphabetical' : 'points')}
+            onClick={() =>
+              setSortMode(sortMode === 'points' ? 'alphabetical' : 'points')
+            }
             className="flex items-center gap-1 px-3 py-1 rounded-lg text-sm bg-[var(--bg-surface)] border border-[var(--border-subtle)]"
           >
             {sortMode === 'points' ? (

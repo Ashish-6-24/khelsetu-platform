@@ -1,9 +1,10 @@
+import { useTeams } from '@features/teams/hooks/useTeams';
 import { Button } from '@shared/components/ui/Button';
 import { Input } from '@shared/components/ui/Input';
 import { Select } from '@shared/components/ui/Select';
-import { useTeams } from '@features/teams/hooks/useTeams';
-import { useState } from 'react';
 import { CalendarDays, MapPin, Trophy } from 'lucide-react';
+
+import { useState } from 'react';
 
 interface CreateMatchModalProps {
   tournamentId?: string;
@@ -38,7 +39,11 @@ export function CreateMatchModal({
   };
 
   const teamOptions = teams.map((t) => ({ value: t.id, label: t.name }));
-  const isFormValid = formData.teamAId && formData.teamBId && formData.scheduledAt && formData.venue;
+  const isFormValid =
+    formData.teamAId &&
+    formData.teamBId &&
+    formData.scheduledAt &&
+    formData.venue;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">

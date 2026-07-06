@@ -4,27 +4,49 @@ import { MatchStatsOverlay } from '@features/overlays/components/MatchStatsOverl
 import { Button } from '@shared/components/ui/Button';
 import { Card, CardBody } from '@shared/components/ui/Card';
 import type { Match } from '@shared/types/tournament';
-import { ArrowLeft, Copy, Check } from 'lucide-react';
+import { ArrowLeft, Check, Copy } from 'lucide-react';
+
 import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 const DEMO_TEAM_A = {
-  id: 'ta', name: 'Tigers', shortName: 'TIG', tournamentId: 't-1',
-  players: [], stats: { played: 5, won: 3, lost: 1, drawn: 1, points: 7 },
+  id: 'ta',
+  name: 'Tigers',
+  shortName: 'TIG',
+  tournamentId: 't-1',
+  players: [],
+  stats: { played: 5, won: 3, lost: 1, drawn: 1, points: 7 },
   createdAt: new Date().toISOString(),
 };
 const DEMO_TEAM_B = {
-  id: 'tb', name: 'Lions', shortName: 'LIO', tournamentId: 't-1',
-  players: [], stats: { played: 5, won: 2, lost: 2, drawn: 1, points: 5 },
+  id: 'tb',
+  name: 'Lions',
+  shortName: 'LIO',
+  tournamentId: 't-1',
+  players: [],
+  stats: { played: 5, won: 2, lost: 2, drawn: 1, points: 5 },
   createdAt: new Date().toISOString(),
 };
 const DEMO_MATCH: Match = {
-  id: 'demo-1', tournamentId: 't-1', teamA: DEMO_TEAM_A, teamB: DEMO_TEAM_B,
+  id: 'demo-1',
+  tournamentId: 't-1',
+  teamA: DEMO_TEAM_A,
+  teamB: DEMO_TEAM_B,
   score: {
-    teamAScore: 187, teamAInnings: [{ teamId: 'ta', runs: 187, wickets: 4, overs: 18.4, extras: 12 }],
-    teamBScore: 165, teamBInnings: [{ teamId: 'tb', runs: 165, wickets: 6, overs: 20, extras: 8 }],
+    teamAScore: 187,
+    teamAInnings: [
+      { teamId: 'ta', runs: 187, wickets: 4, overs: 18.4, extras: 12 },
+    ],
+    teamBScore: 165,
+    teamBInnings: [
+      { teamId: 'tb', runs: 165, wickets: 6, overs: 20, extras: 8 },
+    ],
   },
-  status: 'live', scheduledAt: new Date().toISOString(), venue: 'Dasharath Stadium', sport: 'cricket',
+  status: 'live',
+  scheduledAt: new Date().toISOString(),
+  venue: 'Dasharath Stadium',
+  sport: 'cricket',
 };
 
 export const OverlaysPage = () => {
@@ -32,7 +54,9 @@ export const OverlaysPage = () => {
   const [copied, setCopied] = useState(false);
 
   const handleCopyUrl = () => {
-    navigator.clipboard.writeText(`${window.location.origin}/overlays/scoreboard`);
+    navigator.clipboard.writeText(
+      `${window.location.origin}/overlays/scoreboard`,
+    );
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -62,7 +86,13 @@ export const OverlaysPage = () => {
         <Button
           variant="outline"
           size="sm"
-          leftIcon={copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+          leftIcon={
+            copied ? (
+              <Check className="h-4 w-4" />
+            ) : (
+              <Copy className="h-4 w-4" />
+            )
+          }
           onClick={handleCopyUrl}
           className="self-start sm:self-auto"
         >
@@ -72,7 +102,9 @@ export const OverlaysPage = () => {
 
       <Card>
         <CardBody className="p-4">
-          <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-3">Score Overlay</h2>
+          <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-3">
+            Score Overlay
+          </h2>
           <div className="rounded-xl bg-gradient-to-r from-gray-900 via-gray-800 to-indigo-900 p-4">
             <BroadcastScoreOverlay
               teamA={{ name: 'Team A', score: 150, wickets: 3, overs: '18.4' }}
@@ -86,7 +118,9 @@ export const OverlaysPage = () => {
 
       <Card>
         <CardBody className="p-4">
-          <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-3">Lower Third</h2>
+          <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-3">
+            Lower Third
+          </h2>
           <div className="rounded-xl bg-gradient-to-r from-gray-900 to-gray-800 p-4">
             <LowerThirdOverlay
               title="Player of the Match"
@@ -99,7 +133,9 @@ export const OverlaysPage = () => {
 
       <Card>
         <CardBody className="p-4">
-          <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-3">Match Stats</h2>
+          <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-3">
+            Match Stats
+          </h2>
           <div className="rounded-xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4">
             <MatchStatsOverlay match={DEMO_MATCH} />
           </div>

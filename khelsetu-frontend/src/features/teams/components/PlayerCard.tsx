@@ -68,9 +68,7 @@ export const PlayerCard = ({
         <div className="mt-4 pt-3 border-t border-[var(--border-subtle)]">
           <div className="grid grid-cols-3 gap-3 text-center">
             <div>
-              <p className="text-xs text-[var(--text-secondary)]">
-                Matches
-              </p>
+              <p className="text-xs text-[var(--text-secondary)]">Matches</p>
               <p className="text-sm font-semibold text-[var(--text-primary)]">
                 {player.stats.matches}
               </p>
@@ -85,9 +83,7 @@ export const PlayerCard = ({
             )}
             {player.stats.wickets !== undefined && (
               <div>
-                <p className="text-xs text-[var(--text-secondary)]">
-                  Wickets
-                </p>
+                <p className="text-xs text-[var(--text-secondary)]">Wickets</p>
                 <p className="text-sm font-semibold text-[var(--text-primary)]">
                   {player.stats.wickets}
                 </p>

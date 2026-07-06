@@ -146,9 +146,9 @@ export const DashboardPage = () => {
           <div className="min-w-0 flex-1">
             <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur-md">
               <span className="relative inline-flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
-                </span>
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
+              </span>
               {liveMatches > 0
                 ? `${liveMatches} live match${liveMatches === 1 ? '' : 'es'} right now`
                 : 'All systems operational'}
@@ -246,9 +246,9 @@ export const DashboardPage = () => {
           <div className="mb-4 flex items-center justify-between">
             <h2 className="flex items-center gap-2.5 text-lg font-semibold text-[var(--text-primary)]">
               <span className="relative inline-flex h-2.5 w-2.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
-                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[var(--color-live)]" />
-                </span>
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[var(--color-live)]" />
+              </span>
               Live now
             </h2>
             <button

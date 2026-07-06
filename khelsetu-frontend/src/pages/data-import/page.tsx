@@ -52,28 +52,36 @@ export const DataImportPage = () => {
   const [exportingType, setExportingType] = useState<string | null>(null);
   const { addToast } = useToast();
 
-  const handleExport = useCallback(async (type: string) => {
-    setExportingType(type);
-    try {
-      const data = mockImports.filter((j) => j.type === type);
-      const csv = [
-        'File Name,Type,Status,Records,Date',
-        ...data.map((j) => `${j.fileName},${j.type},${j.status},${j.records},${j.date}`),
-      ].join('\n');
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `${type.toLowerCase()}_export.csv`;
-      link.click();
-      URL.revokeObjectURL(url);
-      addToast({ type: 'success', message: `${type} data exported successfully` });
-    } catch {
-      addToast({ type: 'error', message: `Failed to export ${type} data` });
-    } finally {
-      setExportingType(null);
-    }
-  }, [addToast]);
+  const handleExport = useCallback(
+    async (type: string) => {
+      setExportingType(type);
+      try {
+        const data = mockImports.filter((j) => j.type === type);
+        const csv = [
+          'File Name,Type,Status,Records,Date',
+          ...data.map(
+            (j) => `${j.fileName},${j.type},${j.status},${j.records},${j.date}`,
+          ),
+        ].join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${type.toLowerCase()}_export.csv`;
+        link.click();
+        URL.revokeObjectURL(url);
+        addToast({
+          type: 'success',
+          message: `${type} data exported successfully`,
+        });
+      } catch {
+        addToast({ type: 'error', message: `Failed to export ${type} data` });
+      } finally {
+        setExportingType(null);
+      }
+    },
+    [addToast],
+  );
 
   const handleDownloadTemplate = useCallback(() => {
     const template = 'Team Name,Short Name,Sport\nExample FC,EXM,Cricket';
@@ -155,7 +163,11 @@ export const DataImportPage = () => {
                     <Button
                       variant="create"
                       size="sm"
-                      leftIcon={!exportingType || exportingType !== type ? <Download className="w-4 h-4" /> : undefined}
+                      leftIcon={
+                        !exportingType || exportingType !== type ? (
+                          <Download className="w-4 h-4" />
+                        ) : undefined
+                      }
                       onClick={() => handleExport(type)}
                       isLoading={exportingType === type}
                       disabled={exportingType !== null}

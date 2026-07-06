@@ -79,7 +79,7 @@ export const EmptyState = ({
           {title}
         </h3>
         {description && (
-            <p className="mt-1 text-sm text-[var(--text-secondary)]">
+          <p className="mt-1 text-sm text-[var(--text-secondary)]">
             {description}
           </p>
         )}

@@ -75,7 +75,9 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
             <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
               Team
             </p>
-            <p className="mt-0.5 font-medium text-gray-700 dark:text-gray-200">{data.teamName}</p>
+            <p className="mt-0.5 font-medium text-gray-700 dark:text-gray-200">
+              {data.teamName}
+            </p>
           </div>
           <div>
             <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
@@ -102,7 +104,9 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
             <p className="text-sm font-medium text-gray-700 dark:text-gray-200">
               {data.organizer}
             </p>
-            <p className="text-[10px] text-gray-400 dark:text-gray-500">Organizer</p>
+            <p className="text-[10px] text-gray-400 dark:text-gray-500">
+              Organizer
+            </p>
           </div>
 
           {/* Center seal */}
@@ -114,8 +118,12 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
 
           {/* Right signature */}
           <div className="cert-signature text-center">
-            <p className="text-sm font-medium text-gray-700 dark:text-gray-200">KhelSetu</p>
-            <p className="text-[10px] text-gray-400 dark:text-gray-500">Platform</p>
+            <p className="text-sm font-medium text-gray-700 dark:text-gray-200">
+              KhelSetu
+            </p>
+            <p className="text-[10px] text-gray-400 dark:text-gray-500">
+              Platform
+            </p>
           </div>
         </div>
 

@@ -1,8 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import { useCallback, useMemo, useState } from 'react';
+
 import { bracketService } from '../services/bracketService';
-import { advanceWinner } from '../utils/bracketGenerator';
 import type { BracketData, BracketFormat, BracketTeam } from '../types';
+import { advanceWinner } from '../utils/bracketGenerator';
 
 interface UseBracketManagerOptions {
   tournamentId: string;
@@ -19,7 +21,8 @@ export function useBracketManager({
   const [localBracket, setLocalBracket] = useState<BracketData | null>(() => {
     if (initialTeams.length > 0) {
       return bracketService.generateBracket(
-        initialFormat as 'single-elimination' | 'double-elimination' | 'round-robin',
+        initialFormat as
+          'single-elimination' | 'double-elimination' | 'round-robin',
         initialTeams,
       );
     }
@@ -113,8 +116,7 @@ export function useBracketManager({
       completionPercent:
         activeBracket.totalMatches > 0
           ? Math.round(
-              (activeBracket.completedMatches /
-                activeBracket.totalMatches) *
+              (activeBracket.completedMatches / activeBracket.totalMatches) *
                 100,
             )
           : 0,

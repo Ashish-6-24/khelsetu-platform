@@ -5,9 +5,7 @@ import { normalizeArray } from '@shared/utils/normalize';
 
 export const standingsService = {
   getAll: async (tournamentId: string): Promise<Standing[]> => {
-    const response = await api.get(
-      API_ENDPOINTS.STANDINGS.LIST(tournamentId),
-    );
+    const response = await api.get(API_ENDPOINTS.STANDINGS.LIST(tournamentId));
     return normalizeArray<Standing>(response.data);
   },
 

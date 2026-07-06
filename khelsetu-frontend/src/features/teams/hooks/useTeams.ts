@@ -1,5 +1,6 @@
 import { teamService } from '@features/teams/services/team';
 import { useQuery } from '@tanstack/react-query';
+
 import { useMemo } from 'react';
 
 interface UseTeamsOptions {
@@ -8,7 +9,12 @@ interface UseTeamsOptions {
 }
 
 export function useTeams({ tournamentId, search }: UseTeamsOptions = {}) {
-  const { data: allTeams = [], isLoading, isError, error } = useQuery({
+  const {
+    data: allTeams = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ['teams', tournamentId],
     queryFn: () =>
       tournamentId
@@ -41,7 +47,12 @@ export function useTeams({ tournamentId, search }: UseTeamsOptions = {}) {
 }
 
 export function useTeamDetail(teamId: string) {
-  const { data: team, isLoading, isError, error } = useQuery({
+  const {
+    data: team,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ['team', teamId],
     queryFn: () => teamService.getById(teamId),
     enabled: !!teamId,

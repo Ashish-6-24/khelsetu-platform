@@ -47,7 +47,9 @@ export function MatchSelector({ matches, onSelect }: MatchSelectorProps) {
                       <span className="font-semibold text-[var(--text-primary)] truncate">
                         {match.teamA?.name ?? 'TBD'}
                       </span>
-                      <span className="text-[var(--text-tertiary)] shrink-0">vs</span>
+                      <span className="text-[var(--text-tertiary)] shrink-0">
+                        vs
+                      </span>
                       <span className="font-semibold text-[var(--text-primary)] truncate">
                         {match.teamB?.name ?? 'TBD'}
                       </span>
@@ -59,10 +61,13 @@ export function MatchSelector({ matches, onSelect }: MatchSelectorProps) {
                       </span>
                       <span className="flex items-center gap-1">
                         <Clock className="w-3 h-3" aria-hidden="true" />
-                        {new Date(match.scheduledAt).toLocaleTimeString('en-US', {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
+                        {new Date(match.scheduledAt).toLocaleTimeString(
+                          'en-US',
+                          {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          },
+                        )}
                       </span>
                     </div>
                   </div>
@@ -71,7 +76,10 @@ export function MatchSelector({ matches, onSelect }: MatchSelectorProps) {
                       size="sm"
                       variant="live"
                       leftIcon={<Zap className="h-4 w-4" />}
-                      onClick={(e) => { e.stopPropagation(); onSelect(match.id); }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSelect(match.id);
+                      }}
                       className="shrink-0"
                     >
                       Live
@@ -81,7 +89,10 @@ export function MatchSelector({ matches, onSelect }: MatchSelectorProps) {
                       size="sm"
                       variant="primary"
                       leftIcon={<Play className="h-4 w-4" />}
-                      onClick={(e) => { e.stopPropagation(); onSelect(match.id); }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSelect(match.id);
+                      }}
                       className="shrink-0"
                     >
                       Score

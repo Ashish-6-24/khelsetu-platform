@@ -27,7 +27,10 @@ export const ThemeToggleSegmented = ({
   return (
     <div
       className={`inline-flex rounded-xl p-0.5 shadow-sm ${className ?? ''}`}
-      style={{ border: '1px solid var(--border-subtle)', backgroundColor: 'var(--bg-surface)' }}
+      style={{
+        border: '1px solid var(--border-subtle)',
+        backgroundColor: 'var(--bg-surface)',
+      }}
       role="radiogroup"
       aria-label="Theme selection"
     >
@@ -39,13 +42,14 @@ export const ThemeToggleSegmented = ({
           aria-label={label}
           onClick={() => setTheme(value)}
           className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 ${
-            currentTheme === value
-              ? 'shadow-sm'
-              : 'hover:opacity-80'
+            currentTheme === value ? 'shadow-sm' : 'hover:opacity-80'
           }`}
           style={
             currentTheme === value
-              ? { backgroundColor: 'var(--brand-primary)', color: 'var(--text-on-brand)' }
+              ? {
+                  backgroundColor: 'var(--brand-primary)',
+                  color: 'var(--text-on-brand)',
+                }
               : { color: 'var(--text-secondary)' }
           }
         >

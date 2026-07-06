@@ -1,6 +1,6 @@
+import { playerService } from '@features/players/services/playerService';
 import { PlayerCard } from '@features/teams/components/PlayerCard';
 import { TeamCard } from '@features/teams/components/TeamCard';
-import { playerService } from '@features/players/services/playerService';
 import { teamService } from '@features/teams/services/team';
 import { Badge } from '@shared/components/ui/Badge';
 import { Button } from '@shared/components/ui/Button';

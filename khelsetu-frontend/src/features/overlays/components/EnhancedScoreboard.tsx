@@ -1,5 +1,5 @@
-import type { Match } from '@shared/types/tournament';
 import { LivePulse } from '@shared/components/animations';
+import type { Match } from '@shared/types/tournament';
 import { motion } from 'framer-motion';
 
 interface EnhancedScoreboardProps {
@@ -18,7 +18,9 @@ export function EnhancedScoreboard({
       <div className="bg-[var(--bg-surface-dark)]/90 backdrop-blur-sm rounded-lg p-3 text-[var(--text-primary-dark)] w-full sm:min-w-[200px]">
         <div className="flex items-center justify-between gap-2 sm:gap-4">
           <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 flex-1">
-            <span className="font-bold text-xs sm:text-sm truncate">{teamA?.name ?? 'TBD'}</span>
+            <span className="font-bold text-xs sm:text-sm truncate">
+              {teamA?.name ?? 'TBD'}
+            </span>
             <motion.span
               key={score?.teamAScore}
               initial={{ opacity: 0, y: -6 }}
@@ -29,7 +31,9 @@ export function EnhancedScoreboard({
               {score?.teamAScore ?? '-'}
             </motion.span>
           </div>
-          <span className="text-[var(--text-tertiary)] text-xs shrink-0">vs</span>
+          <span className="text-[var(--text-tertiary)] text-xs shrink-0">
+            vs
+          </span>
           <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 flex-1 justify-end">
             <motion.span
               key={score?.teamBScore}
@@ -40,7 +44,9 @@ export function EnhancedScoreboard({
             >
               {score?.teamBScore ?? '-'}
             </motion.span>
-            <span className="font-bold text-xs sm:text-sm truncate">{teamB?.name ?? 'TBD'}</span>
+            <span className="font-bold text-xs sm:text-sm truncate">
+              {teamB?.name ?? 'TBD'}
+            </span>
           </div>
         </div>
       </div>
@@ -58,7 +64,9 @@ export function EnhancedScoreboard({
               </span>
             </div>
             <div>
-              <div className="font-semibold text-sm">{teamA?.name ?? 'TBD'}</div>
+              <div className="font-semibold text-sm">
+                {teamA?.name ?? 'TBD'}
+              </div>
               <motion.div
                 key={score?.teamAScore}
                 initial={{ opacity: 0, y: -6 }}
@@ -86,7 +94,9 @@ export function EnhancedScoreboard({
 
           <div className="flex items-center gap-3">
             <div className="text-right">
-              <div className="font-semibold text-sm">{teamB?.name ?? 'TBD'}</div>
+              <div className="font-semibold text-sm">
+                {teamB?.name ?? 'TBD'}
+              </div>
               <motion.div
                 key={score?.teamBScore}
                 initial={{ opacity: 0, y: -6 }}
@@ -119,7 +129,9 @@ export function EnhancedScoreboard({
             </span>
           </div>
           <div className="min-w-0">
-            <div className="font-semibold text-sm sm:text-base truncate">{teamA?.name ?? 'TBD'}</div>
+            <div className="font-semibold text-sm sm:text-base truncate">
+              {teamA?.name ?? 'TBD'}
+            </div>
             <div className="text-2xl sm:text-3xl font-black">
               <motion.span
                 key={score?.teamAScore}
@@ -131,7 +143,8 @@ export function EnhancedScoreboard({
               </motion.span>
               {score?.teamAInnings?.[0] && (
                 <span className="text-xs sm:text-sm font-normal text-gray-400 ml-1 sm:ml-2">
-                  ({score.teamAInnings[0].wickets}/{score.teamAInnings[0].overs})
+                  ({score.teamAInnings[0].wickets}/{score.teamAInnings[0].overs}
+                  )
                 </span>
               )}
             </div>
@@ -141,10 +154,17 @@ export function EnhancedScoreboard({
         <div className="text-center shrink-0">
           {status === 'live' && (
             <div className="inline-flex items-center gap-1 px-2 sm:px-3 py-1 bg-red-500 rounded-full text-xs font-bold">
-              <span className="relative inline-flex items-center" aria-hidden="true">
+              <span
+                className="relative inline-flex items-center"
+                aria-hidden="true"
+              >
                 <motion.span
                   animate={{ scale: [1, 1.5, 1], opacity: [0.6, 0, 0.6] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
                   className="absolute inset-0 rounded-full bg-red-500"
                 />
                 <span className="relative inline-block h-2 w-2 rounded-full bg-red-500" />
@@ -162,7 +182,9 @@ export function EnhancedScoreboard({
 
         <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 justify-end">
           <div className="text-right min-w-0">
-            <div className="font-semibold text-sm sm:text-base truncate">{teamB?.name ?? 'TBD'}</div>
+            <div className="font-semibold text-sm sm:text-base truncate">
+              {teamB?.name ?? 'TBD'}
+            </div>
             <div className="text-2xl sm:text-3xl font-black">
               <motion.span
                 key={score?.teamBScore}
@@ -174,7 +196,8 @@ export function EnhancedScoreboard({
               </motion.span>
               {score?.teamBInnings?.[0] && (
                 <span className="text-xs sm:text-sm font-normal text-gray-400 ml-1 sm:ml-2">
-                  ({score.teamBInnings[0].wickets}/{score.teamBInnings[0].overs})
+                  ({score.teamBInnings[0].wickets}/{score.teamBInnings[0].overs}
+                  )
                 </span>
               )}
             </div>
@@ -193,7 +216,8 @@ export function EnhancedScoreboard({
         </div>
       )}
       <div aria-live="polite" aria-atomic="true" className="sr-only">
-        {status === 'live' && `Live: ${teamA?.name ?? 'Team A'} ${score?.teamAScore ?? '0'} vs ${teamB?.name ?? 'Team B'} ${score?.teamBScore ?? '0'}`}
+        {status === 'live' &&
+          `Live: ${teamA?.name ?? 'Team A'} ${score?.teamAScore ?? '0'} vs ${teamB?.name ?? 'Team B'} ${score?.teamBScore ?? '0'}`}
       </div>
     </div>
   );

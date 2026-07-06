@@ -1,6 +1,7 @@
 import { api } from '@lib/axios';
 import { API_ENDPOINTS } from '@shared/utils/constants';
 import { normalizeObject } from '@shared/utils/normalize';
+
 import type { BracketData, BracketTeam } from '../types';
 import {
   generateDoubleElimination,

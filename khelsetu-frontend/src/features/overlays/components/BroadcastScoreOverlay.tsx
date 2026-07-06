@@ -40,7 +40,9 @@ export const BroadcastScoreOverlay = ({
           <p className="text-5xl font-bold mt-2">
             {teamA.score}/{teamA.wickets}
           </p>
-          <p className="text-lg font-medium text-gray-300 mt-1">({teamA.overs} overs)</p>
+          <p className="text-lg font-medium text-gray-300 mt-1">
+            ({teamA.overs} overs)
+          </p>
         </div>
         <div className="text-center">
           <p className="text-xl font-bold">vs</p>
@@ -50,7 +52,9 @@ export const BroadcastScoreOverlay = ({
           <p className="text-5xl font-bold mt-2">
             {teamB.score}/{teamB.wickets}
           </p>
-          <p className="text-lg font-medium text-gray-300 mt-1">({teamB.overs} overs)</p>
+          <p className="text-lg font-medium text-gray-300 mt-1">
+            ({teamB.overs} overs)
+          </p>
         </div>
       </div>
     </motion.div>

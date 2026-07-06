@@ -26,8 +26,7 @@ interface BadgeProps {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  default:
-    'bg-[var(--bg-surface-sunken)] text-[var(--text-primary)]',
+  default: 'bg-[var(--bg-surface-sunken)] text-[var(--text-primary)]',
   success:
     'bg-[var(--color-success-soft)] text-[var(--color-success)] ring-1 ring-inset ring-[var(--color-success)]/20',
   warning:
@@ -51,8 +50,7 @@ const variantStyles: Record<BadgeVariant, string> = {
     'bg-[var(--sport-volleyball)]/10 text-[var(--sport-volleyball)] ring-1 ring-inset ring-[var(--sport-volleyball)]/20',
   'sport-basketball':
     'bg-[var(--sport-basketball)]/10 text-[var(--sport-basketball)] ring-1 ring-inset ring-[var(--sport-basketball)]/20',
-  outline:
-    'border border-[var(--border-subtle)] text-[var(--text-primary)]',
+  outline: 'border border-[var(--border-subtle)] text-[var(--text-primary)]',
 };
 
 const sizeStyles = {

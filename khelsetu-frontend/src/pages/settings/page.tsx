@@ -71,7 +71,9 @@ const Toggle = ({
     <div className="min-w-0 flex-1">
       <p className="text-sm font-medium text-[var(--text-primary)]">{label}</p>
       {description && (
-        <p className="mt-0.5 text-xs text-[var(--text-tertiary)]">{description}</p>
+        <p className="mt-0.5 text-xs text-[var(--text-tertiary)]">
+          {description}
+        </p>
       )}
     </div>
     <button
@@ -104,8 +106,12 @@ const SectionCard = ({
         <Icon className="h-5 w-5" />
       </div>
       <div>
-        <h3 className="text-base font-semibold text-[var(--text-primary)]">{title}</h3>
-        <p className="mt-0.5 text-xs text-[var(--text-tertiary)]">{description}</p>
+        <h3 className="text-base font-semibold text-[var(--text-primary)]">
+          {title}
+        </h3>
+        <p className="mt-0.5 text-xs text-[var(--text-tertiary)]">
+          {description}
+        </p>
       </div>
     </div>
     <div className="px-6 pb-6">{children}</div>
@@ -145,10 +151,13 @@ const SaveButton = ({
       size="lg"
       disabled={isLoading || (!hasChanges && !showSuccess)}
       isLoading={isLoading}
-      leftIcon={!isLoading && !showSuccess ? <Save className="h-4 w-4" /> : undefined}
+      leftIcon={
+        !isLoading && !showSuccess ? <Save className="h-4 w-4" /> : undefined
+      }
       className={clsx(
         'min-w-[160px] transition-all duration-300',
-        showSuccess && '!bg-gradient-to-r !from-green-500 !to-green-600 !shadow-green-500/30',
+        showSuccess &&
+          '!bg-gradient-to-r !from-green-500 !to-green-600 !shadow-green-500/30',
       )}
     >
       {showSuccess ? (
@@ -156,8 +165,10 @@ const SaveButton = ({
           <Check className="h-4 w-4 mr-2" />
           Saved!
         </>
+      ) : isLoading ? (
+        'Saving...'
       ) : (
-        isLoading ? 'Saving...' : label
+        label
       )}
     </Button>
   );
@@ -178,7 +189,11 @@ export const SettingsPage = () => {
   const {
     register: registerProfile,
     handleSubmit: handleProfileSubmit,
-    formState: { errors: profileErrors, isSubmitting: isProfileSubmitting, isDirty: isProfileFormDirty },
+    formState: {
+      errors: profileErrors,
+      isSubmitting: isProfileSubmitting,
+      isDirty: isProfileFormDirty,
+    },
     reset: resetProfile,
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -191,7 +206,11 @@ export const SettingsPage = () => {
   const {
     register: registerPassword,
     handleSubmit: handlePasswordSubmit,
-    formState: { errors: passwordErrors, isSubmitting: isPasswordSubmitting, isDirty: isPasswordFormDirty },
+    formState: {
+      errors: passwordErrors,
+      isSubmitting: isPasswordSubmitting,
+      isDirty: isPasswordFormDirty,
+    },
     reset: resetPassword,
   } = useForm<PasswordFormData>({
     resolver: zodResolver(passwordSchema),
@@ -251,15 +270,22 @@ export const SettingsPage = () => {
         )}
       >
         <div className="flex items-center gap-3">
-          <h1 className="text-lg font-semibold text-[var(--text-primary)]">Settings</h1>
-          {hasUnsavedChanges && <div className="unsaved-dot" aria-label="Unsaved changes" />}
+          <h1 className="text-lg font-semibold text-[var(--text-primary)]">
+            Settings
+          </h1>
+          {hasUnsavedChanges && (
+            <div className="unsaved-dot" aria-label="Unsaved changes" />
+          )}
         </div>
         {hasUnsavedChanges && (
           <SaveButton
             isLoading={isProfileSubmitting || isPasswordSubmitting}
             hasChanges={hasUnsavedChanges}
             onSuccess={() => {
-              addToast({ type: 'success', message: 'Changes saved successfully' });
+              addToast({
+                type: 'success',
+                message: 'Changes saved successfully',
+              });
             }}
           />
         )}
@@ -287,7 +313,9 @@ export const SettingsPage = () => {
               <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                 {user?.name}
               </p>
-              <p className="truncate text-xs text-[var(--text-tertiary)]">{user?.email}</p>
+              <p className="truncate text-xs text-[var(--text-tertiary)]">
+                {user?.email}
+              </p>
               <span className="mt-1 inline-flex items-center rounded-md bg-[var(--brand-primary)]/8 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--brand-primary)]">
                 {user?.role}
               </span>
@@ -295,7 +323,10 @@ export const SettingsPage = () => {
           </div>
 
           {/* Profile Form */}
-          <form onSubmit={handleProfileSubmit(onProfileSubmit)} className="space-y-4">
+          <form
+            onSubmit={handleProfileSubmit(onProfileSubmit)}
+            className="space-y-4"
+          >
             <Input
               label="Full Name"
               placeholder="Your full name"
@@ -360,7 +391,9 @@ export const SettingsPage = () => {
                   <Lock className="h-4 w-4 text-[var(--brand-primary)]" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-[var(--text-primary)]">Password</p>
+                  <p className="text-sm font-medium text-[var(--text-primary)]">
+                    Password
+                  </p>
                   <p className="text-xs text-[var(--text-tertiary)]">
                     Last changed 30+ days ago
                   </p>
@@ -373,11 +406,18 @@ export const SettingsPage = () => {
                 strokeWidth={2}
                 stroke="currentColor"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                />
               </svg>
             </button>
           ) : (
-            <form onSubmit={handlePasswordSubmit(onPasswordSubmit)} className="space-y-4">
+            <form
+              onSubmit={handlePasswordSubmit(onPasswordSubmit)}
+              className="space-y-4"
+            >
               <Input
                 label="Current Password"
                 type="password"
@@ -475,11 +515,7 @@ export const SettingsPage = () => {
                   Get notified about live match events in real-time
                 </p>
               </div>
-              <Toggle
-                checked={true}
-                onChange={() => {}}
-                label=""
-              />
+              <Toggle checked={true} onChange={() => {}} label="" />
             </div>
           </div>
         </SectionCard>
@@ -495,8 +531,8 @@ export const SettingsPage = () => {
                 Danger Zone
               </h3>
               <p className="mt-1 text-xs text-[var(--text-tertiary)]">
-                Permanently delete your account and all associated data. This action cannot be
-                undone.
+                Permanently delete your account and all associated data. This
+                action cannot be undone.
               </p>
               <Button
                 type="button"

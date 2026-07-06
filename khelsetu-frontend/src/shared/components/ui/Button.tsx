@@ -61,8 +61,7 @@ const variantStyles: Record<ButtonVariant, string> = {
     'shadow-sm hover:shadow-md',
   outline:
     'border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-primary)] hover:bg-[var(--bg-surface-sunken)] hover:border-[var(--border-strong)]',
-  ghost:
-    'text-[var(--text-primary)] hover:bg-[var(--bg-surface-sunken)]',
+  ghost: 'text-[var(--text-primary)] hover:bg-[var(--bg-surface-sunken)]',
   danger:
     'bg-gradient-to-br from-[var(--color-danger)] to-[var(--brand-primary)] text-white ' +
     'shadow-[0_4px_14px_-2px_rgb(185_28_28/0.45)] ' +
