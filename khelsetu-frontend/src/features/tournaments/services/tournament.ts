@@ -8,21 +8,17 @@ import type {
   Tournament,
 } from '@shared/types/tournament';
 import { API_ENDPOINTS } from '@shared/utils/constants';
+import { normalizeArray, normalizeObject } from '@shared/utils/normalize';
 
 export const tournamentService = {
   getAll: async (params?: Record<string, string>) => {
-    const response = await api.get<Tournament[]>(
-      API_ENDPOINTS.TOURNAMENTS.LIST,
-      { params },
-    );
-    return response.data;
+    const response = await api.get(API_ENDPOINTS.TOURNAMENTS.LIST, { params });
+    return normalizeArray<Tournament>(response.data);
   },
 
   getById: async (id: string) => {
-    const response = await api.get<Tournament>(
-      API_ENDPOINTS.TOURNAMENTS.DETAIL(id),
-    );
-    return response.data;
+    const response = await api.get(API_ENDPOINTS.TOURNAMENTS.DETAIL(id));
+    return normalizeObject<Tournament>(response.data);
   },
 
   create: async (data: CreateTournamentInput) => {
@@ -46,36 +42,30 @@ export const tournamentService = {
   },
 
   getMatches: async (tournamentId: string) => {
-    const response = await api.get<Match[]>(
-      `/tournaments/${tournamentId}/matches`,
-    );
-    return response.data;
+    const response = await api.get(`/tournaments/${tournamentId}/matches`);
+    return normalizeArray<Match>(response.data);
   },
 
   getTeams: async (tournamentId: string) => {
-    const response = await api.get<Team[]>(
-      `/tournaments/${tournamentId}/teams`,
-    );
-    return response.data;
+    const response = await api.get(`/tournaments/${tournamentId}/teams`);
+    return normalizeArray<Team>(response.data);
   },
 
   getStandings: async (tournamentId: string) => {
     const response = await api.get(`/tournaments/${tournamentId}/standings`);
-    return response.data;
+    return normalizeArray(response.data);
   },
 };
 
 export const matchService = {
   getAll: async (params?: Record<string, string>) => {
-    const response = await api.get<Match[]>(API_ENDPOINTS.MATCHES.LIST, {
-      params,
-    });
-    return response.data;
+    const response = await api.get(API_ENDPOINTS.MATCHES.LIST, { params });
+    return normalizeArray<Match>(response.data);
   },
 
   getById: async (id: string) => {
-    const response = await api.get<Match>(API_ENDPOINTS.MATCHES.DETAIL(id));
-    return response.data;
+    const response = await api.get(API_ENDPOINTS.MATCHES.DETAIL(id));
+    return normalizeObject<Match>(response.data);
   },
 
   create: async (data: CreateMatchInput) => {

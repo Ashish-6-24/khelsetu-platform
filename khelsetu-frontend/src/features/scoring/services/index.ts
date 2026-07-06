@@ -9,11 +9,12 @@ import type {
   VolleyballEvent,
 } from '@shared/types/scoring';
 import type { Match, MatchStatus } from '@shared/types/tournament';
+import { normalizeObject } from '@shared/utils/normalize';
 
 export const scoringService = {
   getMatch: async (matchId: string) => {
-    const { data } = await axiosInstance.get<Match>(`/matches/${matchId}`);
-    return data;
+    const { data } = await axiosInstance.get(`/matches/${matchId}`);
+    return normalizeObject<Match>(data);
   },
 
   updateMatchStatus: async (matchId: string, status: MatchStatus) => {

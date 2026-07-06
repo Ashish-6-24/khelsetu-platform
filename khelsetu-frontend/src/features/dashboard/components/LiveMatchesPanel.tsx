@@ -73,7 +73,7 @@ export const LiveMatchesPanel = ({
               >
                 <button
                   onClick={() => onMatchClick?.(match)}
-                  className="group flex w-full items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-[var(--bg-surface-sunken)]/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-inset dark:hover:bg-[var(--bg-surface)]/40"
+                  className="live-card group flex w-full items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-[var(--bg-surface-sunken)]/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-inset dark:hover:bg-[var(--bg-surface)]/40"
                 >
                   <div className="flex flex-1 items-center gap-3.5">
                     <BadgeDot variant="error" pulse />

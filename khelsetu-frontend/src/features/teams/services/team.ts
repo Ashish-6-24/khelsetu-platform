@@ -1,6 +1,7 @@
 import { api } from '@lib/axios';
 import type { Team } from '@shared/types/tournament';
 import { API_ENDPOINTS } from '@shared/utils/constants';
+import { normalizeArray, normalizeObject } from '@shared/utils/normalize';
 
 export interface CreateTeamInput {
   name: string;
@@ -19,15 +20,13 @@ export interface UpdateTeamInput {
 
 export const teamService = {
   getAll: async (params?: Record<string, string>) => {
-    const response = await api.get<Team[]>(API_ENDPOINTS.TEAMS.LIST, {
-      params,
-    });
-    return response.data;
+    const response = await api.get(API_ENDPOINTS.TEAMS.LIST, { params });
+    return normalizeArray<Team>(response.data);
   },
 
   getById: async (id: string) => {
-    const response = await api.get<Team>(API_ENDPOINTS.TEAMS.DETAIL(id));
-    return response.data;
+    const response = await api.get(API_ENDPOINTS.TEAMS.DETAIL(id));
+    return normalizeObject<Team>(response.data);
   },
 
   create: async (data: CreateTeamInput) => {
@@ -45,9 +44,7 @@ export const teamService = {
   },
 
   getByTournament: async (tournamentId: string) => {
-    const response = await api.get<Team[]>(
-      `/tournaments/${tournamentId}/teams`,
-    );
-    return response.data;
+    const response = await api.get(`/tournaments/${tournamentId}/teams`);
+    return normalizeArray<Team>(response.data);
   },
 };

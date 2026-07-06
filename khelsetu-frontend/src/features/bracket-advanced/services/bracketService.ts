@@ -1,5 +1,6 @@
 import { api } from '@lib/axios';
 import { API_ENDPOINTS } from '@shared/utils/constants';
+import { normalizeObject } from '@shared/utils/normalize';
 import type { BracketData, BracketTeam } from '../types';
 import {
   generateDoubleElimination,
@@ -36,10 +37,8 @@ export const bracketService = {
   },
 
   loadBracket: async (tournamentId: string): Promise<BracketData | null> => {
-    const response = await api.get<BracketData>(
-      API_ENDPOINTS.BRACKETS.GET(tournamentId),
-    );
-    return response.data;
+    const response = await api.get(API_ENDPOINTS.BRACKETS.GET(tournamentId));
+    return normalizeObject<BracketData>(response.data);
   },
 
   updateMatchResult: async (

@@ -1,18 +1,17 @@
 import { api } from '@lib/axios';
 import { API_ENDPOINTS } from '@shared/utils/constants';
+import { normalizeArray, normalizeObject } from '@shared/utils/normalize';
 import type { CreateVenueInput, Venue } from '../types';
 
 export const venueService = {
   getAll: async (params?: Record<string, string>): Promise<Venue[]> => {
-    const response = await api.get<Venue[]>(API_ENDPOINTS.VENUES.LIST, {
-      params,
-    });
-    return response.data;
+    const response = await api.get(API_ENDPOINTS.VENUES.LIST, { params });
+    return normalizeArray<Venue>(response.data);
   },
 
-  getById: async (id: string): Promise<Venue> => {
-    const response = await api.get<Venue>(API_ENDPOINTS.VENUES.DETAIL(id));
-    return response.data;
+  getById: async (id: string): Promise<Venue | null> => {
+    const response = await api.get(API_ENDPOINTS.VENUES.DETAIL(id));
+    return normalizeObject<Venue>(response.data);
   },
 
   create: async (data: CreateVenueInput): Promise<Venue> => {

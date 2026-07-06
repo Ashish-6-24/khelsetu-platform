@@ -146,6 +146,7 @@ export const GoalButton = ({
               onClick={handleSubmit}
               disabled={!scorerId}
               className="flex-1"
+              aria-label="Record goal"
             >
               Record Goal
             </Button>

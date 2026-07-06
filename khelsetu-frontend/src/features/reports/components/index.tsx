@@ -73,7 +73,7 @@ export const ReportCard = ({
               onClick={() => onExport(report.id, 'csv')}
               disabled={isExporting}
             >
-              <Download className="w-4 h-4 mr-1" />
+              <Download className="h-4 w-4" />
               CSV
             </Button>
             <Button
@@ -82,7 +82,7 @@ export const ReportCard = ({
               onClick={() => onExport(report.id, 'json')}
               disabled={isExporting}
             >
-              <Download className="w-4 h-4 mr-1" />
+              <Download className="h-4 w-4" />
               JSON
             </Button>
           </div>

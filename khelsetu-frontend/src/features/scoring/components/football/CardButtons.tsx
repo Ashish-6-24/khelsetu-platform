@@ -154,6 +154,7 @@ export const CardButtons = ({
               onClick={handleSubmit}
               disabled={!playerId}
               className="flex-1"
+              aria-label="Record card"
             >
               Record Card
             </Button>

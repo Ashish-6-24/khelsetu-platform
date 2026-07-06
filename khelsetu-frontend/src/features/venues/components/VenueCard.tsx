@@ -1,5 +1,6 @@
 import { Badge } from '@shared/components/ui/Badge';
 import { Card, CardBody } from '@shared/components/ui/Card';
+import { motion } from 'framer-motion';
 import { MapPin, Users, Wrench } from 'lucide-react';
 import type { Venue } from '../types';
 
@@ -18,14 +19,20 @@ export function VenueCard({ venue, onClick }: VenueCardProps) {
   const statusInfo = statusConfig[venue.status];
 
   return (
-    <div
-      className="cursor-pointer hover:shadow-md transition-shadow"
+    <motion.div
+      whileHover={{ y: -2 }}
+      whileTap={{ scale: 0.98 }}
+      className="cursor-pointer hover:shadow-md transition-shadow min-h-[48px]"
       onClick={onClick}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') onClick?.();
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick?.();
+        }
       }}
+      aria-label={`View ${venue.name} venue details, ${venue.location}, ${statusInfo.label}`}
     >
       <Card>
         <CardBody className="p-4">
@@ -35,7 +42,7 @@ export function VenueCard({ venue, onClick }: VenueCardProps) {
                 {venue.name}
               </h3>
               <div className="flex items-center gap-1 text-sm text-[var(--text-tertiary)]">
-                <MapPin className="w-3 h-3" />
+                <MapPin className="w-3 h-3" aria-hidden="true" />
                 {venue.location}
               </div>
             </div>
@@ -44,12 +51,12 @@ export function VenueCard({ venue, onClick }: VenueCardProps) {
 
           <div className="mt-3 flex items-center gap-4 text-sm text-[var(--text-secondary)]">
             <div className="flex items-center gap-1">
-              <Users className="w-3 h-3" />
+              <Users className="w-3 h-3" aria-hidden="true" />
               {venue.capacity.toLocaleString()}
             </div>
             {venue.facilities.length > 0 && (
               <div className="flex items-center gap-1">
-                <Wrench className="w-3 h-3" />
+                <Wrench className="w-3 h-3" aria-hidden="true" />
                 {venue.facilities.length} facilities
               </div>
             )}
@@ -64,6 +71,6 @@ export function VenueCard({ venue, onClick }: VenueCardProps) {
           )}
         </CardBody>
       </Card>
-    </div>
+    </motion.div>
   );
 }

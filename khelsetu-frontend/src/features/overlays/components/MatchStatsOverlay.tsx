@@ -1,4 +1,5 @@
 import type { Match } from '@shared/types/tournament';
+import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 import { motion } from 'framer-motion';
 
 interface MatchStatsOverlayProps {
@@ -6,6 +7,7 @@ interface MatchStatsOverlayProps {
 }
 
 export function MatchStatsOverlay({ match }: MatchStatsOverlayProps) {
+  const prefersReducedMotion = useReducedMotion();
   const teamAInnings = match.score?.teamAInnings?.[0];
   const teamBInnings = match.score?.teamBInnings?.[0];
 
@@ -38,19 +40,19 @@ export function MatchStatsOverlay({ match }: MatchStatsOverlayProps) {
   ];
 
   return (
-    <div className="bg-black/90 backdrop-blur-sm rounded-xl p-4 text-white">
-      <h3 className="text-sm font-semibold text-gray-400 mb-3">MATCH STATS</h3>
+    <div className="bg-gray-900 rounded-xl p-4 text-white">
+      <h3 className="text-sm font-bold uppercase tracking-wider text-gray-300 mb-3">Match Stats</h3>
       <div className="grid grid-cols-2 gap-3">
         {stats.map((stat, i) => (
           <motion.div
             key={stat.label}
-            initial={{ opacity: 0, y: 10 }}
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className="bg-white/5 rounded-lg p-3"
+            transition={prefersReducedMotion ? { duration: 0 } : { delay: i * 0.1 }}
+            className="bg-white/10 rounded-lg p-3"
           >
-            <div className="text-xs text-gray-400">{stat.label}</div>
-            <div className="text-lg font-bold">{stat.value}</div>
+            <div className="text-xs font-medium text-gray-400 truncate">{stat.label}</div>
+            <div className="text-lg font-bold text-white">{stat.value}</div>
           </motion.div>
         ))}
       </div>

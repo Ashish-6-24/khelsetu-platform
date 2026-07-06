@@ -143,7 +143,8 @@ export function VenueForm({
                   key={facility}
                   type="button"
                   onClick={() => toggleFacility(facility)}
-                  className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                  aria-pressed={formData.facilities.includes(facility)}
+                  className={`min-h-[44px] px-4 py-2 rounded-full text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-offset-2 ${
                     formData.facilities.includes(facility)
                       ? 'bg-[var(--color-primary)] text-white'
                       : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-subtle)]'
@@ -156,13 +157,13 @@ export function VenueForm({
           </div>
 
           {error && (
-            <div className="text-sm text-red-600 dark:text-red-400">
+            <div role="alert" className="text-sm text-red-600 dark:text-red-400">
               {error}
             </div>
           )}
 
           <div className="flex gap-3 pt-4">
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" variant="create" disabled={isLoading}>
               {isLoading ? 'Saving...' : venue ? 'Update Venue' : 'Add Venue'}
             </Button>
             <Button type="button" variant="secondary" onClick={onCancel}>

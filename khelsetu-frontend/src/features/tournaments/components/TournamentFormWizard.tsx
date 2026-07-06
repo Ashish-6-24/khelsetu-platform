@@ -479,6 +479,7 @@ export const TournamentFormWizard = ({
           variant="outline"
           onClick={onBack}
           disabled={currentStep === 1 || isSubmitting}
+          aria-label="Go back to previous step"
         >
           Back
         </Button>

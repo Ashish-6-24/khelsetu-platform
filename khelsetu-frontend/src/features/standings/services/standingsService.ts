@@ -1,13 +1,14 @@
 import { api } from '@lib/axios';
 import type { Standing } from '@shared/types/tournament';
 import { API_ENDPOINTS } from '@shared/utils/constants';
+import { normalizeArray } from '@shared/utils/normalize';
 
 export const standingsService = {
   getAll: async (tournamentId: string): Promise<Standing[]> => {
-    const response = await api.get<Standing[]>(
+    const response = await api.get(
       API_ENDPOINTS.STANDINGS.LIST(tournamentId),
     );
-    return response.data;
+    return normalizeArray<Standing>(response.data);
   },
 
   create: async (
@@ -25,11 +26,11 @@ export const standingsService = {
     tournamentId: string,
     teams: { teamId: string; teamName: string }[],
   ): Promise<Standing[]> => {
-    const response = await api.post<Standing[]>(
+    const response = await api.post(
       API_ENDPOINTS.STANDINGS.BULK_CREATE(tournamentId),
       { teams },
     );
-    return response.data;
+    return normalizeArray<Standing>(response.data);
   },
 
   update: async (
