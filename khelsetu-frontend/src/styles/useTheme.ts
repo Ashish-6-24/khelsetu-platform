@@ -1,16 +1,34 @@
 import { useUIStore } from '@store/uiStore';
 
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 
 import { tokens } from './tokens';
 
 export function useTheme() {
   const theme = useUIStore((s) => s.theme);
 
-  const isDark = useMemo(() => {
+  const [isDark, setIsDark] = useState(() => {
     if (typeof document === 'undefined') return false;
     return document.documentElement.classList.contains('dark');
-  }, []);
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    // Sync immediately on mount / theme change
+    setIsDark(root.classList.contains('dark'));
+
+    const observer = new MutationObserver(() => {
+      setIsDark(root.classList.contains('dark'));
+    });
+
+    observer.observe(root, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    return () => observer.disconnect();
+  }, [theme]);
 
   return {
     /** Current theme setting: 'light' | 'dark' | 'system' */

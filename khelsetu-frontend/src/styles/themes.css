@@ -39,8 +39,8 @@
   /* Text */
   --text-primary: #0f172a; /* slate-900 */
   --text-secondary: #475569; /* slate-600 */
-  --text-tertiary: #475569; /* slate-600 — 7.07:1 on white, 5.67:1 on sunken */
-  --text-muted: #475569; /* alias for text-tertiary */
+  --text-tertiary: #94a3b8; /* slate-400 — lighter than secondary for de-emphasis */
+  --text-muted: #94a3b8; /* alias for text-tertiary */
   --text-on-brand: #ffffff;
   --text-on-primary: #ffffff;
   --text-on-accent: #1a0a0a;
@@ -124,12 +124,12 @@
 }
 
 .dark {
-  /* Brand */
-  --brand-primary: #fca5a5; /* maroon-300 */
-  --brand-primary-hover: #fecaca; /* maroon-200 */
-  --brand-primary-active: #fee2e2; /* maroon-100 */
-  --brand-primary-soft: rgb(127 29 29 / 0.18);
-  --brand-primary-ink: #1a0a0a;
+  /* Brand — brighter maroon for dark backgrounds, NOT pink */
+  --brand-primary: #dc2626; /* red-600 — visible maroon-red on dark */
+  --brand-primary-hover: #ef4444; /* red-500 — brighter on hover */
+  --brand-primary-active: #b91c1c; /* red-700 — deeper on active */
+  --brand-primary-soft: rgb(127 29 29 / 0.25);
+  --brand-primary-ink: #ffffff;
 
   --brand-secondary: #f1f5f9; /* slate-100 */
   --brand-secondary-soft: #1e293b;
@@ -158,16 +158,17 @@
   --text-secondary: #cbd5e1;
   --text-tertiary: #94a3b8;
   --text-muted: #94a3b8; /* alias for text-tertiary */
-  --text-on-brand: #1a0a0a;
+  /* Text on brand — white for contrast */
+  --text-on-brand: #ffffff;
   --text-on-primary: #ffffff;
   --text-on-accent: #1a0a0a;
-  --text-link: #fca5a5;
+  --text-link: #f87171; /* red-400 — readable on dark */
 
   /* Borders — semi-transparent for depth */
   --border-subtle: rgba(148, 163, 184, 0.08);
   --border-default: rgba(148, 163, 184, 0.15);
   --border-strong: rgba(148, 163, 184, 0.25);
-  --border-brand: #fca5a5;
+  --border-brand: #dc2626;
 
   /* Functional */
   --color-live: #f87171;
@@ -176,8 +177,8 @@
   --color-success-soft: rgb(21 128 61 / 0.18);
   --color-warning: #fbbf24;
   --color-warning-soft: rgb(180 83 9 / 0.18);
-  --color-danger: #fca5a5;
-  --color-danger-soft: rgb(185 28 28 / 0.18);
+  --color-danger: #f87171;
+  --color-danger-soft: rgb(185 28 28 / 0.2);
   --color-info: #38bdf8;
   --color-info-soft: rgb(3 105 161 / 0.18);
 
@@ -202,11 +203,12 @@
     0 12px 24px -6px rgb(8 11 20 / 0.6), 0 4px 8px -2px rgb(8 11 20 / 0.4);
   --shadow-xl:
     0 24px 48px -12px rgb(8 11 20 / 0.7), 0 8px 16px -4px rgb(8 11 20 / 0.5);
-  --shadow-brand: 0 8px 24px -8px rgb(252 165 165 / 0.25);
+  /* Shadows — use actual maroon, not pink */
+  --shadow-brand: 0 8px 24px -8px rgb(127 29 29 / 0.4);
   --shadow-gold: 0 8px 24px -8px rgb(240 201 91 / 0.35);
   --shadow-glow:
-    0 0 0 1px rgb(252 165 165 / 0.25), 0 12px 40px -8px rgb(127 29 29 / 0.5);
+    0 0 0 1px rgb(220 38 38 / 0.3), 0 12px 40px -8px rgb(127 29 29 / 0.5);
 
-  /* Focus ring */
-  --ring-focus: 252 165 165;
+  /* Focus ring — red, not pink */
+  --ring-focus: 220 38 38;
 }

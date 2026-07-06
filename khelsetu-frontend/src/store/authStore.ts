@@ -40,6 +40,7 @@ export const useAuthStore = create<AuthStore>()(
       logout: () => {
         setAccessToken(null);
         useScoringStore.getState().resetScoring();
+        useUIStore.getState().forceLightMode();
         set({
           user: null,
           tokens: null,

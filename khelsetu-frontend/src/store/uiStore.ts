@@ -41,12 +41,12 @@ interface UIActions {
   setLoading: (isLoading: boolean) => void;
 }
 
-const applyThemeToDOM = (theme: Theme, isAuth = false) => {
+const applyThemeToDOM = (theme: Theme, allowDark = false) => {
   if (typeof document === 'undefined') return;
   const root = document.documentElement;
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const isDark =
-    isAuth && (theme === 'dark' || (theme === 'system' && prefersDark));
+    allowDark && (theme === 'dark' || (theme === 'system' && prefersDark));
   root.classList.toggle('dark', isDark);
   root.dataset.theme = theme;
 };

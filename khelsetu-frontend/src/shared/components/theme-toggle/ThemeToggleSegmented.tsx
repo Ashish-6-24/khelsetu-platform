@@ -26,7 +26,8 @@ export const ThemeToggleSegmented = ({
 
   return (
     <div
-      className={`inline-flex rounded-xl border border-slate-200 bg-white p-0.5 shadow-sm dark:border-slate-700 dark:bg-slate-800 ${className ?? ''}`}
+      className={`inline-flex rounded-xl p-0.5 shadow-sm ${className ?? ''}`}
+      style={{ border: '1px solid var(--border-subtle)', backgroundColor: 'var(--bg-surface)' }}
       role="radiogroup"
       aria-label="Theme selection"
     >
@@ -39,9 +40,14 @@ export const ThemeToggleSegmented = ({
           onClick={() => setTheme(value)}
           className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 ${
             currentTheme === value
-              ? 'bg-brand-maroon text-white shadow-sm'
-              : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-700/50'
+              ? 'shadow-sm'
+              : 'hover:opacity-80'
           }`}
+          style={
+            currentTheme === value
+              ? { backgroundColor: 'var(--brand-primary)', color: 'var(--text-on-brand)' }
+              : { color: 'var(--text-secondary)' }
+          }
         >
           <Icon className="h-4 w-4" />
           <span className="hidden sm:inline">{label}</span>
