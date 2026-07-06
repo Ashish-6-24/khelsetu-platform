@@ -39,8 +39,8 @@
   /* Text */
   --text-primary: #0f172a; /* slate-900 */
   --text-secondary: #475569; /* slate-600 */
-  --text-tertiary: #94a3b8; /* slate-400 — lighter than secondary for de-emphasis */
-  --text-muted: #94a3b8; /* alias for text-tertiary */
+  --text-tertiary: #64748b; /* slate-500 — meets WCAG AA 4.5:1 on white */
+  --text-muted: #64748b; /* alias for text-tertiary */
   --text-on-brand: #ffffff;
   --text-on-primary: #ffffff;
   --text-on-accent: #1a0a0a;

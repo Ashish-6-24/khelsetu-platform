@@ -23,14 +23,20 @@ interface Particle {
   round: boolean;
 }
 
+function secureRandom(max: number): number {
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  return (array[0]! / (0xffffffff + 1)) * max;
+}
+
 function generateParticles(): Particle[] {
   return Array.from({ length: 30 }, (_, i) => ({
     id: i,
-    x: Math.random() * 100,
+    x: secureRandom(100),
     color: COLORS[i % COLORS.length]!,
-    delay: Math.random() * 0.5,
-    size: 4 + Math.random() * 6,
-    round: Math.random() > 0.5,
+    delay: secureRandom(0.5),
+    size: 4 + secureRandom(6),
+    round: secureRandom(1) > 0.5,
   }));
 }
 
