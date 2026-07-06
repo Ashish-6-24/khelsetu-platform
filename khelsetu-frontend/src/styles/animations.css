@@ -140,10 +140,7 @@
   }
 }
 
-.live-card-border {
-  animation: liveCardBorder 2s ease-in-out infinite;
-  background: linear-gradient(to right, var(--color-live), transparent);
-}
+/* live-card-border is defined in index.css — this file only disables it for reduced-motion */
 
 /* Login form animations */
 @keyframes validationSuccess {
