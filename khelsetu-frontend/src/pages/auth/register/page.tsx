@@ -70,7 +70,7 @@ export const RegisterPage = () => {
       <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl dark:text-white">
         Create your account
       </h1>
-      <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+      <p className="mt-2 text-sm text-[var(--text-secondary)] dark:text-slate-400">
         Start managing world-class tournaments in minutes.
       </p>
 
