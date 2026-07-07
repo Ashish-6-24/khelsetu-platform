@@ -27,6 +27,7 @@ export default defineConfig({
     exclude: [
       'e2e/**',
       'node_modules/**',
+      '.opencode/**',
       'public/**',
       'dist/**',
       '**/*.stories.*',
@@ -36,6 +37,7 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
       exclude: [
         'node_modules/',
+        '.opencode/',
         'src/tests/',
         '**/*.d.ts',
         '**/*.config.*',
