@@ -1,73 +1,62 @@
-# React + TypeScript + Vite
+# KhelSetu
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A sports league management platform built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Framework:** React 18 + TypeScript
+- **Build:** Vite
+- **State:** Zustand
+- **Routing:** React Router v6
+- **Styling:** Tailwind CSS + CSS variables (design tokens)
+- **Testing:** Vitest + React Testing Library
+- **API:** Axios + React Query
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Project Structure
 
-```js
-// eslint.config.js
-import reactDom from 'eslint-plugin-react-dom';
-import reactX from 'eslint-plugin-react-x';
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
 ```
+src/
+├── app/              # Layouts, providers, router (was core/)
+├── features/         # 26 feature modules (self-contained)
+│   ├── auth/         # Authentication, login, register
+│   ├── billing/      # Payment, subscriptions
+│   ├── dashboard/    # Dashboard, landing, about, contact
+│   ├── players/      # Player management
+│   ├── scoring/      # Live scoring, match management
+│   ├── teams/        # Team management
+│   ├── tournaments/  # Tournament CRUD, brackets, schedule
+│   └── ...           # One folder per feature
+├── shared/           # Generic UI, hooks, utils, types
+│   ├── ui/           # Button, Modal, Input, Card, etc.
+│   ├── hooks/        # useDebounce, useLocalStorage, etc.
+│   ├── utils/        # Date formatting, string helpers
+│   ├── lib/          # Axios, env, logger, queryClient
+│   └── types/        # Global TypeScript types
+├── state/            # Zustand stores
+├── tests/            # Unit + integration tests
+├── theme/            # CSS files, design tokens
+└── workers/          # Web workers
+```
+
+## Scripts
+
+| Command                 | Description              |
+| ----------------------- | ------------------------ |
+| `npm run dev`           | Start dev server         |
+| `npm run build`         | Production build         |
+| `npm run preview`       | Preview production build |
+| `npm run lint`          | Run ESLint               |
+| `npm run test`          | Run tests                |
+| `npm run test:ui`       | Run tests with UI        |
+| `npm run test:coverage` | Run tests with coverage  |
+
+## License
+
+Private
