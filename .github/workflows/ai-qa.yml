@@ -2,8 +2,8 @@ name: AI QA
 
 on:
   schedule:
-    # Midnight Kathmandu time (UTC+5:45) = 18:15 UTC
-    - cron: '15 18 * * *'
+    # Twice a week: Sunday and Wednesday at midnight Kathmandu (UTC+5:45) = 18:15 UTC
+    - cron: '15 18 * * 0,3'
   workflow_dispatch:
     inputs:
       scenario:
@@ -17,30 +17,28 @@ permissions:
 jobs:
   ai-qa:
     name: AI Exploratory QA
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check Ollama is running
-        run: |
-          if ! curl -s http://localhost:11434/api/tags > /dev/null 2>&1; then
-            echo "ERROR: Ollama is not running on localhost:11434"
-            echo "Start it with: ollama serve"
-            exit 1
-          fi
-          echo "Ollama is running"
-          ollama list
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
-      - name: Check Qwen3 model is available
+      - name: Install and start Ollama
         run: |
-          if ! ollama list | grep -q "qwen3"; then
-            echo "ERROR: Qwen3 model not found"
-            echo "Pull it with: ollama pull qwen3"
-            exit 1
-          fi
-          echo "Qwen3 model available"
+          curl -fsSL https://ollama.com/install.sh | sh
+          ollama serve &
+          sleep 5
+          curl -s http://localhost:11434/api/tags > /dev/null && echo "Ollama is running" || echo "Ollama failed to start"
+
+      - name: Pull Qwen3 model
+        run: |
+          ollama pull qwen3
+          ollama list | grep qwen3 && echo "Qwen3 ready" || echo "Qwen3 pull failed"
 
       - name: Install dependencies
         run: |
