@@ -18,6 +18,7 @@
 ## Component Specs
 
 ### Login Form
+
 - Email field: `Input type="email" autocomplete="email"`
 - Password field: `Input type="password" autocomplete="current-password"` + show/hide toggle
 - "Forgot password?" link, right-aligned, text-sm
@@ -25,6 +26,7 @@
 - Below: "Don't have an account? Sign up" centered, text-sm
 
 ### Register Form
+
 - Name field: `Input autocomplete="name"`
 - Email field: `Input type="email" autocomplete="email"`
 - Password field: with strength indicator (4-segment bar)

@@ -16,13 +16,13 @@
 
 ### Color Palette
 
-| Role | Hex | CSS Variable |
-|------|-----|--------------|
-| Primary | `#7F1D1D` (maroon-800) | `--brand-primary` |
-| Secondary | `#1E293B` (slate-800) | `--brand-secondary` |
-| Accent | `#B8860B` (dark gold) | `--brand-accent` |
-| Background | `#FAFAF9` (stone-50) | `--bg-canvas` |
-| Text | `#0F172A` (slate-900) | `--text-primary` |
+| Role       | Hex                    | CSS Variable        |
+| ---------- | ---------------------- | ------------------- |
+| Primary    | `#7F1D1D` (maroon-800) | `--brand-primary`   |
+| Secondary  | `#1E293B` (slate-800)  | `--brand-secondary` |
+| Accent     | `#B8860B` (dark gold)  | `--brand-accent`    |
+| Background | `#FAFAF9` (stone-50)   | `--bg-canvas`       |
+| Text       | `#0F172A` (slate-900)  | `--text-primary`    |
 
 **Color Notes:** Maroon / Navy / Gold — "Quiet Authority" brand. Source of truth: `src/styles/themes.css`.
 
@@ -36,29 +36,30 @@
 - **Google Fonts:** [Cormorant Garamond + Inter](https://fonts.google.com/share?selection.family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400|Inter:wght@300;400;500;600;700)
 
 **CSS Import:**
+
 ```css
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
 ```
 
 ### Spacing Variables
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--space-xs` | `4px` / `0.25rem` | Tight gaps |
-| `--space-sm` | `8px` / `0.5rem` | Icon gaps, inline spacing |
-| `--space-md` | `16px` / `1rem` | Standard padding |
-| `--space-lg` | `24px` / `1.5rem` | Section padding |
-| `--space-xl` | `32px` / `2rem` | Large gaps |
-| `--space-2xl` | `48px` / `3rem` | Section margins |
-| `--space-3xl` | `64px` / `4rem` | Hero padding |
+| Token         | Value             | Usage                     |
+| ------------- | ----------------- | ------------------------- |
+| `--space-xs`  | `4px` / `0.25rem` | Tight gaps                |
+| `--space-sm`  | `8px` / `0.5rem`  | Icon gaps, inline spacing |
+| `--space-md`  | `16px` / `1rem`   | Standard padding          |
+| `--space-lg`  | `24px` / `1.5rem` | Section padding           |
+| `--space-xl`  | `32px` / `2rem`   | Large gaps                |
+| `--space-2xl` | `48px` / `3rem`   | Section margins           |
+| `--space-3xl` | `64px` / `4rem`   | Hero padding              |
 
 ### Shadow Depths
 
-| Level | Value | Usage |
-|-------|-------|-------|
-| `--shadow-sm` | `0 1px 2px rgba(0,0,0,0.05)` | Subtle lift |
-| `--shadow-md` | `0 4px 6px rgba(0,0,0,0.1)` | Cards, buttons |
-| `--shadow-lg` | `0 10px 15px rgba(0,0,0,0.1)` | Modals, dropdowns |
+| Level         | Value                          | Usage                       |
+| ------------- | ------------------------------ | --------------------------- |
+| `--shadow-sm` | `0 1px 2px rgba(0,0,0,0.05)`   | Subtle lift                 |
+| `--shadow-md` | `0 4px 6px rgba(0,0,0,0.1)`    | Cards, buttons              |
+| `--shadow-lg` | `0 10px 15px rgba(0,0,0,0.1)`  | Modals, dropdowns           |
 | `--shadow-xl` | `0 20px 25px rgba(0,0,0,0.15)` | Hero images, featured cards |
 
 ---

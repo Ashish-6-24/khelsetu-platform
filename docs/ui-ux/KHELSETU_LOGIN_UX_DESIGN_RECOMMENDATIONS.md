@@ -9,6 +9,7 @@
 After analyzing the KhelSetu login interface as a professional UI/UX designer, I've identified **7 critical areas for improvement** to achieve industry-grade, modern, user-friendly design. The current implementation is functional but lacks polish in visual hierarchy, micro-interactions, and accessibility patterns that premium SaaS platforms use.
 
 **Current Strengths:**
+
 - Clean, organized layout with glassmorphic elements
 - Dark mode support with theme variables
 - Good semantic structure (labels, icons, auth layout)
@@ -17,6 +18,7 @@ After analyzing the KhelSetu login interface as a professional UI/UX designer, I
 - Responsive design foundation
 
 **Critical Gaps:**
+
 - Form validation lacks real-time feedback
 - No skeleton/loading states during authentication
 - Missing smooth micro-interactions and transitions
@@ -30,6 +32,7 @@ After analyzing the KhelSetu login interface as a professional UI/UX designer, I
 ## 1. Form Validation & Real-Time Feedback
 
 ### Current State
+
 ```tsx
 // Basic validation only on submit
 const validate = () => {
@@ -40,6 +43,7 @@ const validate = () => {
 ```
 
 **Problems:**
+
 - User waits until submit to see errors
 - No visual confirmation of valid input
 - Instant validation creates jarring feedback
@@ -61,34 +65,38 @@ const [fieldStates, setFieldStates] = useState({
 // Validate on blur (not on every keystroke)
 const handleBlur = (field: string) => {
   const value = formData[field];
-  
+
   // Mark as touched
-  setFieldStates(prev => ({
+  setFieldStates((prev) => ({
     ...prev,
-    [field]: { ...prev[field], touched: true }
+    [field]: { ...prev[field], touched: true },
   }));
-  
+
   // Debounced validation
   validateField(field, value);
 };
 
 // Only show errors if field was touched
-const showError = (field: string) => 
+const showError = (field: string) =>
   fieldStates[field].touched && fieldStates[field].error;
 ```
 
 **Visual Indicators:**
+
 - **Idle State:** Light border, no error message
 - **Editing State:** Animated border, subtle loading indicator (spinner inside input)
 - **Valid State:** Green left border, green checkmark icon, no error message
 - **Invalid State:** Red left border, error message appears with 200ms fade-in, shake animation (subtle)
 
 **CSS Implementation:**
+
 ```css
 /* Input states */
 .input {
   border-left: 3px solid transparent;
-  transition: border-color 200ms ease-out, box-shadow 200ms ease-out;
+  transition:
+    border-color 200ms ease-out,
+    box-shadow 200ms ease-out;
 }
 
 .input:hover:not([disabled]) {
@@ -101,20 +109,27 @@ const showError = (field: string) =>
 }
 
 /* Valid state */
-.input[data-valid="true"] {
+.input[data-valid='true'] {
   border-left-color: var(--color-success);
 }
 
 /* Invalid state */
-.input[data-valid="false"] {
+.input[data-valid='false'] {
   border-left-color: var(--color-error);
   animation: shake 300ms ease-in-out;
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  75% { transform: translateX(4px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
 }
 ```
 
@@ -123,6 +138,7 @@ const showError = (field: string) =>
 ## 2. Password Strength Indicator
 
 ### Current State
+
 No password strength feedback. Users have no idea if their password meets security requirements.
 
 ### Recommendation: Visual Password Strength Meter
@@ -138,7 +154,7 @@ const calculatePasswordStrength = (pwd: string) => {
   if (/[A-Z]/.test(pwd)) score++; // Uppercase
   if (/[0-9]/.test(pwd)) score++; // Numbers
   if (/[^a-zA-Z0-9]/.test(pwd)) score++; // Special chars
-  
+
   return Math.min(score, 4); // 0-4 scale
 };
 
@@ -153,6 +169,7 @@ const strengthLevels = {
 ```
 
 **UI Pattern:**
+
 ```
 ┌────────────────────────────────┐
 │ Password                      ●│  <- Show/hide toggle
@@ -171,6 +188,7 @@ const strengthLevels = {
 ## 3. Loading State & Authentication Feedback
 
 ### Current State
+
 ```tsx
 <Button type="submit" isLoading={isLoading} fullWidth>
   {isLoading ? 'Signing in…' : 'Sign in'}
@@ -184,7 +202,9 @@ Shows loading text but lacks visual depth.
 Implement a premium loading experience with progress stages:
 
 ```tsx
-const [authStage, setAuthStage] = useState<'idle' | 'verifying' | 'authenticating' | 'redirecting'>('idle');
+const [authStage, setAuthStage] = useState<
+  'idle' | 'verifying' | 'authenticating' | 'redirecting'
+>('idle');
 
 const loadingMessages = {
   verifying: { text: 'Verifying credentials…', icon: 'search' },
@@ -200,10 +220,11 @@ const loadingMessages = {
     transition={{ duration: 2, ease: 'easeInOut' }}
     className="h-full bg-gradient-to-r from-brand-primary to-brand-primary-hover"
   />
-</div>
+</div>;
 ```
 
 **Button Variations:**
+
 - **Before Submit:** "Sign in" (normal state)
 - **Verifying (0-500ms):** Icon + "Verifying credentials…" (spinner)
 - **Authenticating (500-1500ms):** Icon + "Authenticating…" (different spinner)
@@ -215,11 +236,13 @@ const loadingMessages = {
 ## 4. Micro-Interactions & Transitions
 
 ### Current State
+
 Minimal transitions. Buttons and inputs lack sophisticated hover/focus feedback.
 
 ### Recommendation: Subtle But Polished Micro-Interactions
 
 **Button Hover Effects:**
+
 ```css
 .button {
   transition: all 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -237,6 +260,7 @@ Minimal transitions. Buttons and inputs lack sophisticated hover/focus feedback.
 ```
 
 **Input Focus Ripple:**
+
 ```css
 .input {
   position: relative;
@@ -250,7 +274,11 @@ Minimal transitions. Buttons and inputs lack sophisticated hover/focus feedback.
   left: 0;
   width: 0;
   height: 100%;
-  background: radial-gradient(circle, rgba(127, 29, 29, 0.1) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(127, 29, 29, 0.1) 0%,
+    transparent 70%
+  );
   transition: width 300ms ease-out;
 }
 
@@ -260,14 +288,24 @@ Minimal transitions. Buttons and inputs lack sophisticated hover/focus feedback.
 ```
 
 **Form Submission Animation:**
+
 ```css
 @keyframes formSubmitPulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.02); opacity: 0.8; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
-.form[data-submitting="true"] {
+.form[data-submitting='true'] {
   animation: formSubmitPulse 300ms ease-out;
 }
 ```
@@ -277,6 +315,7 @@ Minimal transitions. Buttons and inputs lack sophisticated hover/focus feedback.
 ## 5. Accessibility & Focus Management
 
 ### Current State
+
 Basic focus states exist but lack clarity and don't follow WCAG AAA standards.
 
 ### Recommendation: Enhanced Accessibility Pattern
@@ -308,6 +347,7 @@ Basic focus states exist but lack clarity and don't follow WCAG AAA standards.
 ```
 
 **Label Improvements:**
+
 ```tsx
 // Current: Implicit labels
 <input placeholder="you@club.org" />
@@ -317,7 +357,7 @@ Basic focus states exist but lack clarity and don't follow WCAG AAA standards.
   Email Address
   <span className="text-red-500" aria-label="required">*</span>
 </label>
-<input 
+<input
   id="email-input"
   type="email"
   aria-required="true"
@@ -335,11 +375,13 @@ Basic focus states exist but lack clarity and don't follow WCAG AAA standards.
 ## 6. Mobile-First Touch Optimization
 
 ### Current State
+
 Desktop-friendly but mobile interaction model needs refinement.
 
 ### Recommendation: Touch-Optimized Interactions
 
 **Touch Target Size:**
+
 ```css
 /* Ensure 48px minimum touch targets */
 .input,
@@ -373,23 +415,24 @@ label {
 ```
 
 **Mobile-Specific UX:**
+
 ```tsx
 // Auto-capitalize email field
-<input 
-  type="email" 
+<input
+  type="email"
   autoCapitalize="off"
   autoCorrect="off"
   spellCheck="false"
 />
 
 // Better keyboard on mobile
-<input 
-  type="email" 
+<input
+  type="email"
   inputMode="email"
   autoComplete="email"
 />
-<input 
-  type="password" 
+<input
+  type="password"
   autoComplete="current-password"
   inputMode="text"
 />
@@ -400,6 +443,7 @@ label {
 ## 7. Visual Hierarchy & Typography
 
 ### Current State
+
 ```tsx
 <h1 className="font-display text-3xl font-medium">Welcome back.</h1>
 <p className="mt-2 text-sm text-[var(--text-secondary)]">
@@ -414,19 +458,19 @@ Good start but could have better contrast and breathing room.
 ```css
 /* Font scale hierarchy */
 :root {
-  --text-xs: 0.75rem;      /* 12px */
-  --text-sm: 0.875rem;     /* 14px */
-  --text-base: 1rem;       /* 16px */
-  --text-lg: 1.125rem;     /* 18px */
-  --text-xl: 1.25rem;      /* 20px */
-  --text-2xl: 1.5rem;      /* 24px */
-  --text-3xl: 1.875rem;    /* 30px */
-  
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.5rem; /* 24px */
+  --text-3xl: 1.875rem; /* 30px */
+
   /* Line height for readability */
   --leading-tight: 1.25;
   --leading-normal: 1.5;
   --leading-relaxed: 1.625;
-  
+
   /* Letter spacing */
   --tracking-tight: -0.02em;
   --tracking-normal: 0;
@@ -468,13 +512,13 @@ Good start but could have better contrast and breathing room.
 ```
 
 **Improved Login Heading:**
+
 ```tsx
 <div className="mb-8">
-  <h1 className="heading-1 mb-2">
-    Welcome back.
-  </h1>
+  <h1 className="heading-1 mb-2">Welcome back.</h1>
   <p className="body text-text-secondary">
-    Sign in to manage your tournaments, view live scores, and engage your audience.
+    Sign in to manage your tournaments, view live scores, and engage your
+    audience.
   </p>
 </div>
 ```
@@ -484,6 +528,7 @@ Good start but could have better contrast and breathing room.
 ## 8. Color & Contrast Compliance
 
 ### Current State
+
 Using CSS variables with theme colors but lacking explicit contrast checking.
 
 ### Recommendation: WCAG AAA Compliant Color System
@@ -491,39 +536,40 @@ Using CSS variables with theme colors but lacking explicit contrast checking.
 ```css
 :root {
   /* Brand Colors */
-  --brand-primary: #7F1D1D;      /* Maroon (KhelSetu) */
-  --brand-primary-light: #991B1B;
-  --brand-primary-lighter: #DC2626;
-  
+  --brand-primary: #7f1d1d; /* Maroon (KhelSetu) */
+  --brand-primary-light: #991b1b;
+  --brand-primary-lighter: #dc2626;
+
   /* Text Colors - WCAG AAA (7:1 minimum) */
-  --text-primary: #0F172A;       /* Slate-900 on light bg */
-  --text-secondary: #334155;     /* Slate-700 on light bg */
-  --text-tertiary: #64748B;      /* Slate-500 on light bg */
-  
+  --text-primary: #0f172a; /* Slate-900 on light bg */
+  --text-secondary: #334155; /* Slate-700 on light bg */
+  --text-tertiary: #64748b; /* Slate-500 on light bg */
+
   /* Semantic Colors */
-  --color-success: #16A34A;      /* Green-600 */
-  --color-warning: #EA8C00;      /* Amber-600 */
-  --color-error: #DC2626;        /* Red-600 */
-  --color-info: #0EA5E9;         /* Sky-500 */
-  
+  --color-success: #16a34a; /* Green-600 */
+  --color-warning: #ea8c00; /* Amber-600 */
+  --color-error: #dc2626; /* Red-600 */
+  --color-info: #0ea5e9; /* Sky-500 */
+
   /* Background Colors */
-  --bg-app: #FFFFFF;
-  --bg-surface: #F8FAFC;
-  --bg-surface-sunken: #F1F5F9;
-  
+  --bg-app: #ffffff;
+  --bg-surface: #f8fafc;
+  --bg-surface-sunken: #f1f5f9;
+
   /* Border Colors */
-  --border-subtle: #E2E8F0;
-  --border-strong: #CBD5E1;
-  
+  --border-subtle: #e2e8f0;
+  --border-strong: #cbd5e1;
+
   /* Dark Mode Overrides */
-  --text-primary-dark: #F8FAFC;
-  --text-secondary-dark: #CBD5E1;
-  --bg-app-dark: #0F172A;
-  --bg-surface-dark: #1E293B;
+  --text-primary-dark: #f8fafc;
+  --text-secondary-dark: #cbd5e1;
+  --bg-app-dark: #0f172a;
+  --bg-surface-dark: #1e293b;
 }
 ```
 
 **Contrast Verification:**
+
 ```
 Primary text on white: #0F172A on #FFFFFF = 18.5:1 ✓ WCAG AAA
 Button text: #FFFFFF on #7F1D1D = 6.5:1 ✓ WCAG AA (Good)
@@ -538,6 +584,7 @@ Error text: #DC2626 on #FFFFFF = 4.8:1 ✓ WCAG AA
 ### Input Component Enhancement
 
 **Before:**
+
 ```tsx
 <Input
   label="Email"
@@ -548,6 +595,7 @@ Error text: #DC2626 on #FFFFFF = 4.8:1 ✓ WCAG AA
 ```
 
 **After - Production Grade:**
+
 ```tsx
 <Input
   id="email-input"
@@ -578,6 +626,7 @@ Error text: #DC2626 on #FFFFFF = 4.8:1 ✓ WCAG AA
 ### Button Component Enhancement
 
 **Before:**
+
 ```tsx
 <Button type="submit" isLoading={isLoading} fullWidth>
   {isLoading ? 'Signing in…' : 'Sign in'}
@@ -585,6 +634,7 @@ Error text: #DC2626 on #FFFFFF = 4.8:1 ✓ WCAG AA
 ```
 
 **After - Production Grade:**
+
 ```tsx
 <Button
   type="submit"
@@ -611,6 +661,7 @@ Error text: #DC2626 on #FFFFFF = 4.8:1 ✓ WCAG AA
 **Current:** Basic checkbox with minimal styling
 
 **Recommended:**
+
 ```tsx
 <div className="flex items-center justify-between gap-4">
   <label className="group inline-flex cursor-pointer items-center gap-2">
@@ -622,15 +673,11 @@ Error text: #DC2626 on #FFFFFF = 4.8:1 ✓ WCAG AA
       aria-label="Remember me on this device"
     />
     <span className="flex h-5 w-5 items-center justify-center rounded border-2 border-border-strong transition-all group-hover:border-brand-primary">
-      {rememberMe && (
-        <Check className="h-3 w-3 text-brand-primary" />
-      )}
+      {rememberMe && <Check className="h-3 w-3 text-brand-primary" />}
     </span>
-    <span className="text-sm font-medium text-text-secondary">
-      Remember me
-    </span>
+    <span className="text-sm font-medium text-text-secondary">Remember me</span>
   </label>
-  
+
   <Link
     to="/forgot-password"
     className="text-sm font-medium text-brand-primary transition-colors hover:text-brand-primary-hover"
@@ -643,6 +690,7 @@ Error text: #DC2626 on #FFFFFF = 4.8:1 ✓ WCAG AA
 ### Divider Section
 
 **Current:**
+
 ```tsx
 <div className="relative my-6">
   <div className="absolute inset-0 flex items-center">
@@ -657,6 +705,7 @@ Error text: #DC2626 on #FFFFFF = 4.8:1 ✓ WCAG AA
 ```
 
 **Recommended - Add visual hierarchy:**
+
 ```tsx
 <div className="relative my-8">
   <div className="absolute inset-0 flex items-center">
@@ -675,6 +724,7 @@ Error text: #DC2626 on #FFFFFF = 4.8:1 ✓ WCAG AA
 ## 11. Social Login Button Enhancement
 
 ### Current State
+
 Basic button with Google logo SVG.
 
 ### Recommendation: Premium Social Auth Pattern
@@ -689,7 +739,7 @@ Basic button with Google logo SVG.
   className="group hover:bg-gray-50 dark:hover:bg-slate-800"
   aria-label="Sign in with Google"
 >
-  <svg 
+  <svg
     className="h-4 w-4 group-hover:scale-110 transition-transform"
     viewBox="0 0 24 24"
     aria-hidden="true"
@@ -701,6 +751,7 @@ Basic button with Google logo SVG.
 ```
 
 **Visual Improvements:**
+
 - Add slight scale on icon hover
 - Better spacing between icon and text
 - Hover background to indicate interactivity
@@ -711,6 +762,7 @@ Basic button with Google logo SVG.
 ## 12. Dark Mode Implementation
 
 ### Current State
+
 Forced light mode on auth pages but CSS variables support theming.
 
 ### Recommendation: Dark Mode Support
@@ -718,12 +770,12 @@ Forced light mode on auth pages but CSS variables support theming.
 ```css
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-app: #0F172A;
-    --bg-surface: #1E293B;
-    --bg-surface-sunken: #0F172A;
-    --text-primary: #F8FAFC;
-    --text-secondary: #CBD5E1;
-    --text-tertiary: #94A3B8;
+    --bg-app: #0f172a;
+    --bg-surface: #1e293b;
+    --bg-surface-sunken: #0f172a;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-tertiary: #94a3b8;
     --border-subtle: #334155;
     --border-strong: #475569;
   }
@@ -740,6 +792,7 @@ html.light {
 ```
 
 **Dark Mode Input Focus:**
+
 ```css
 .dark {
   --focus-ring: rgba(255, 255, 255, 0.2);
@@ -750,12 +803,12 @@ html.light {
 }
 ```
 
-
 ---
 
 ## 13. Security & Trust Signals
 
 ### Current Implementation
+
 Shows "Protected by enterprise-grade security" with a shield icon.
 
 ### Recommendation: Enhanced Trust Pattern
@@ -769,7 +822,7 @@ Shows "Protected by enterprise-grade security" with a shield icon.
       Enterprise-grade security with encryption
     </span>
   </div>
-  
+
   {/* Security features grid */}
   <div className="grid grid-cols-3 gap-3 text-center text-xs">
     <div className="flex flex-col items-center gap-1">
@@ -793,6 +846,7 @@ Shows "Protected by enterprise-grade security" with a shield icon.
 ## 14. Signup CTA Enhancement
 
 ### Current State
+
 ```tsx
 <p className="mt-5 text-center text-sm text-[var(--text-secondary)]">
   New to KhelSetu?{' '}
@@ -815,7 +869,7 @@ Shows "Protected by enterprise-grade security" with a shield icon.
   >
     Create an account
   </Link>
-  
+
   {/* Additional incentive */}
   <div className="flex items-center gap-2 rounded-lg bg-brand-primary/5 px-3 py-2">
     <Sparkles className="h-4 w-4 text-brand-primary" />
@@ -831,6 +885,7 @@ Shows "Protected by enterprise-grade security" with a shield icon.
 ## 15. Language Toggle Accessibility
 
 ### Current State
+
 Simple language toggle at bottom.
 
 ### Recommendation: Accessible Language Selector
@@ -862,49 +917,47 @@ const [formError, setFormError] = useState<{
 }>({ type: null, message: '' });
 
 // Error recovery UI
-{formError.type && (
-  <div
-    className={`rounded-lg border px-4 py-3 flex gap-3 ${
-      formError.type === 'network'
-        ? 'border-color-warning bg-color-warning/5'
-        : 'border-color-error bg-color-error/5'
-    }`}
-    role="alert"
-  >
-    {formError.type === 'network' ? (
-      <AlertCircle className="h-5 w-5 flex-shrink-0 text-color-warning" />
-    ) : (
-      <XCircle className="h-5 w-5 flex-shrink-0 text-color-error" />
-    )}
-    
-    <div className="flex-1">
-      <h3 className="font-semibold text-text-primary">
-        {formError.type === 'network'
-          ? 'Connection Error'
-          : 'Sign In Failed'}
-      </h3>
-      <p className="text-sm text-text-secondary">
-        {formError.message}
-      </p>
-      {formError.type === 'network' && (
-        <button
-          onClick={() => handleRetry()}
-          className="mt-2 text-sm font-medium text-brand-primary hover:text-brand-primary-light"
-        >
-          Try again
-        </button>
-      )}
-    </div>
-    
-    <button
-      onClick={() => setFormError({ type: null, message: '' })}
-      className="flex-shrink-0 text-text-tertiary hover:text-text-primary"
-      aria-label="Dismiss error"
+{
+  formError.type && (
+    <div
+      className={`rounded-lg border px-4 py-3 flex gap-3 ${
+        formError.type === 'network'
+          ? 'border-color-warning bg-color-warning/5'
+          : 'border-color-error bg-color-error/5'
+      }`}
+      role="alert"
     >
-      <X className="h-4 w-4" />
-    </button>
-  </div>
-)}
+      {formError.type === 'network' ? (
+        <AlertCircle className="h-5 w-5 flex-shrink-0 text-color-warning" />
+      ) : (
+        <XCircle className="h-5 w-5 flex-shrink-0 text-color-error" />
+      )}
+
+      <div className="flex-1">
+        <h3 className="font-semibold text-text-primary">
+          {formError.type === 'network' ? 'Connection Error' : 'Sign In Failed'}
+        </h3>
+        <p className="text-sm text-text-secondary">{formError.message}</p>
+        {formError.type === 'network' && (
+          <button
+            onClick={() => handleRetry()}
+            className="mt-2 text-sm font-medium text-brand-primary hover:text-brand-primary-light"
+          >
+            Try again
+          </button>
+        )}
+      </div>
+
+      <button
+        onClick={() => setFormError({ type: null, message: '' })}
+        className="flex-shrink-0 text-text-tertiary hover:text-text-primary"
+        aria-label="Dismiss error"
+      >
+        <X className="h-4 w-4" />
+      </button>
+    </div>
+  );
+}
 ```
 
 ---
@@ -914,11 +967,11 @@ const [formError, setFormError] = useState<{
 ### Code Splitting & Lazy Loading
 
 ```tsx
-import { lazy, Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 
 // Lazy load social auth component
-const SocialAuthButtons = lazy(() =>
-  import('@components/auth/SocialAuthButtons')
+const SocialAuthButtons = lazy(
+  () => import('@components/auth/SocialAuthButtons'),
 );
 
 export const LoginPage = () => {
@@ -926,9 +979,13 @@ export const LoginPage = () => {
     <div>
       {/* Form renders immediately */}
       <LoginForm />
-      
+
       {/* Social auth loads below the fold */}
-      <Suspense fallback={<div className="h-12 bg-bg-surface-sunken rounded-lg animate-pulse" />}>
+      <Suspense
+        fallback={
+          <div className="h-12 bg-bg-surface-sunken rounded-lg animate-pulse" />
+        }
+      >
         <SocialAuthButtons />
       </Suspense>
     </div>
@@ -948,7 +1005,7 @@ import Image from 'next/image';
   width={32}
   height={32}
   priority // Load immediately for LCP
-/>
+/>;
 ```
 
 ---
@@ -971,9 +1028,9 @@ const handleSubmit = async () => {
     method: 'email',
     timestamp: new Date().toISOString(),
   });
-  
+
   const result = await login();
-  
+
   if (result.success) {
     trackEvent('login_success', { method: 'email' });
   } else {
@@ -990,6 +1047,7 @@ const handleSubmit = async () => {
 ## 19. Implementation Priority Matrix
 
 ### Phase 1 (Week 1-2) - Critical
+
 - [ ] Real-time form validation with debouncing
 - [ ] Password strength indicator
 - [ ] Multi-stage loading states
@@ -997,6 +1055,7 @@ const handleSubmit = async () => {
 - [ ] Accessibility enhancements (labels, ARIA)
 
 ### Phase 2 (Week 3) - Important
+
 - [ ] Micro-interactions (hover states, transitions)
 - [ ] Touch-optimized mobile interactions
 - [ ] Dark mode support for auth pages
@@ -1004,6 +1063,7 @@ const handleSubmit = async () => {
 - [ ] Better signup CTA
 
 ### Phase 3 (Week 4+) - Polish
+
 - [ ] Advanced loading skeletons
 - [ ] Analytics integration
 - [ ] A/B testing framework
@@ -1015,11 +1075,12 @@ const handleSubmit = async () => {
 ## 20. Code Example: Complete Production-Ready LoginForm
 
 ```tsx
-import { useState, useCallback, useRef } from 'react';
-import { Check, Lock, Mail, AlertCircle, X } from 'lucide-react';
-import { useAuth } from '@hooks/useAuth';
 import { useToast } from '@components/ui/toast-context';
+import { useAuth } from '@hooks/useAuth';
 import { debounce } from 'lodash-es';
+import { AlertCircle, Check, Lock, Mail, X } from 'lucide-react';
+
+import { useCallback, useRef, useState } from 'react';
 
 interface LoginFormState {
   email: string;
@@ -1036,139 +1097,137 @@ interface FieldState {
 export const LoginForm = () => {
   const { login } = useAuth();
   const { addToast } = useToast();
-  
+
   // Form state
   const [formData, setFormData] = useState<LoginFormState>({
     email: '',
     password: '',
     rememberMe: false,
   });
-  
+
   // Field validation state
   const [fieldStates, setFieldStates] = useState({
     email: { touched: false, validating: false, error: null } as FieldState,
     password: { touched: false, validating: false, error: null } as FieldState,
   });
-  
+
   // Submission state
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
-  
+
   // Validate email format
   const validateEmail = useCallback((email: string): string | null => {
     if (!email) return 'Email is required';
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email) ? null : 'Invalid email address';
   }, []);
-  
+
   // Validate password
   const validatePassword = useCallback((password: string): string | null => {
     if (!password) return 'Password is required';
     if (password.length < 8) return 'Password must be at least 8 characters';
     return null;
   }, []);
-  
+
   // Debounced async validation
   const debouncedValidate = useRef(
     debounce(async (field: string, value: string) => {
-      setFieldStates(prev => ({
+      setFieldStates((prev) => ({
         ...prev,
         [field]: { ...prev[field], validating: true },
       }));
-      
+
       // Simulate server validation (e.g., check if email exists)
-      await new Promise(resolve => setTimeout(resolve, 300));
-      
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
       const error =
-        field === 'email'
-          ? validateEmail(value)
-          : validatePassword(value);
-      
-      setFieldStates(prev => ({
+        field === 'email' ? validateEmail(value) : validatePassword(value);
+
+      setFieldStates((prev) => ({
         ...prev,
         [field]: { ...prev[field], validating: false, error },
       }));
-    }, 500)
+    }, 500),
   ).current;
-  
+
   // Handle field blur
-  const handleFieldBlur = useCallback((field: string) => {
-    setFieldStates(prev => ({
-      ...prev,
-      [field]: { ...prev[field], touched: true },
-    }));
-    
-    debouncedValidate(field, formData[field as keyof LoginFormState] as string);
-  }, [formData, debouncedValidate]);
-  
-  // Handle field change
-  const handleFieldChange = useCallback(
-    (field: string, value: string) => {
-      setFormData(prev => ({
+  const handleFieldBlur = useCallback(
+    (field: string) => {
+      setFieldStates((prev) => ({
         ...prev,
-        [field]: value,
+        [field]: { ...prev[field], touched: true },
       }));
-      setSubmitError(null);
+
+      debouncedValidate(
+        field,
+        formData[field as keyof LoginFormState] as string,
+      );
     },
-    []
+    [formData, debouncedValidate],
   );
-  
+
+  // Handle field change
+  const handleFieldChange = useCallback((field: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+    setSubmitError(null);
+  }, []);
+
   // Calculate password strength
-  const calculatePasswordStrength = useCallback(
-    (pwd: string): number => {
-      let score = 0;
-      if (pwd.length >= 8) score++;
-      if (pwd.length >= 12) score++;
-      if (/[a-z]/.test(pwd)) score++;
-      if (/[A-Z]/.test(pwd)) score++;
-      if (/[0-9]/.test(pwd)) score++;
-      if (/[^a-zA-Z0-9]/.test(pwd)) score++;
-      return Math.min(score, 4);
-    },
-    []
-  );
-  
+  const calculatePasswordStrength = useCallback((pwd: string): number => {
+    let score = 0;
+    if (pwd.length >= 8) score++;
+    if (pwd.length >= 12) score++;
+    if (/[a-z]/.test(pwd)) score++;
+    if (/[A-Z]/.test(pwd)) score++;
+    if (/[0-9]/.test(pwd)) score++;
+    if (/[^a-zA-Z0-9]/.test(pwd)) score++;
+    return Math.min(score, 4);
+  }, []);
+
   // Check if form is valid
   const isFormValid =
     !fieldStates.email.error &&
     !fieldStates.password.error &&
     formData.email &&
     formData.password;
-  
+
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate all fields
     const emailError = validateEmail(formData.email);
     const passwordError = validatePassword(formData.password);
-    
+
     if (emailError || passwordError) {
-      setFieldStates(prev => ({
+      setFieldStates((prev) => ({
         ...prev,
         email: { ...prev.email, touched: true, error: emailError },
         password: { ...prev.password, touched: true, error: passwordError },
       }));
       return;
     }
-    
+
     // Cancel previous request if still pending
     abortControllerRef.current?.abort();
     abortControllerRef.current = new AbortController();
-    
+
     setIsSubmitting(true);
     setSubmitError(null);
-    
+
     try {
       const result = await login(
         {
           email: formData.email,
           password: formData.password,
         },
-        { signal: abortControllerRef.current.signal }
+        { signal: abortControllerRef.current.signal },
       );
-      
+
       if (result.success) {
         addToast({
           type: 'success',
@@ -1178,22 +1237,22 @@ export const LoginForm = () => {
       } else {
         setSubmitError(
           result.error?.message ||
-          'Authentication failed. Please check your credentials.'
+            'Authentication failed. Please check your credentials.',
         );
       }
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') {
         return; // Request was cancelled
       }
-      
+
       setSubmitError(
-        'Connection error. Please check your internet and try again.'
+        'Connection error. Please check your internet and try again.',
       );
     } finally {
       setIsSubmitting(false);
     }
   };
-  
+
   const passwordStrength = calculatePasswordStrength(formData.password);
   const strengthLevels = [
     { label: 'Weak', color: '#EF4444', minScore: 1 },
@@ -1202,9 +1261,9 @@ export const LoginForm = () => {
     { label: 'Strong', color: '#22C55E', minScore: 4 },
   ];
   const currentStrength =
-    strengthLevels.find(l => l.minScore === passwordStrength) ||
+    strengthLevels.find((l) => l.minScore === passwordStrength) ||
     strengthLevels[0];
-  
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
       {/* Submit error alert */}
@@ -1215,9 +1274,7 @@ export const LoginForm = () => {
         >
           <AlertCircle className="h-5 w-5 flex-shrink-0 text-color-error" />
           <div className="flex-1">
-            <h3 className="font-semibold text-text-primary">
-              Sign in failed
-            </h3>
+            <h3 className="font-semibold text-text-primary">Sign in failed</h3>
             <p className="text-sm text-text-secondary">{submitError}</p>
           </div>
           <button
@@ -1229,7 +1286,7 @@ export const LoginForm = () => {
           </button>
         </div>
       )}
-      
+
       {/* Email field */}
       <div>
         <label
@@ -1237,7 +1294,9 @@ export const LoginForm = () => {
           className="block text-sm font-medium text-text-primary mb-2"
         >
           Email Address
-          <span className="text-color-error" aria-label="required">*</span>
+          <span className="text-color-error" aria-label="required">
+            *
+          </span>
         </label>
         <div className="relative">
           <input
@@ -1282,7 +1341,7 @@ export const LoginForm = () => {
           </p>
         )}
       </div>
-      
+
       {/* Password field */}
       <div>
         <label
@@ -1290,7 +1349,9 @@ export const LoginForm = () => {
           className="block text-sm font-medium text-text-primary mb-2"
         >
           Password
-          <span className="text-color-error" aria-label="required">*</span>
+          <span className="text-color-error" aria-label="required">
+            *
+          </span>
         </label>
         <div className="relative">
           <input
@@ -1328,7 +1389,7 @@ export const LoginForm = () => {
             <Check className="absolute right-3 top-3.5 h-5 w-5 text-color-success" />
           )}
         </div>
-        
+
         {/* Password strength indicator */}
         {formData.password && (
           <div className="mt-2">
@@ -1348,14 +1409,14 @@ export const LoginForm = () => {
             </div>
           </div>
         )}
-        
+
         {fieldStates.password.touched && fieldStates.password.error && (
           <p id="password-error" className="mt-1 text-sm text-color-error">
             {fieldStates.password.error}
           </p>
         )}
       </div>
-      
+
       {/* Remember me & Forgot password */}
       <div className="flex items-center justify-between gap-4">
         <label className="group inline-flex cursor-pointer items-center gap-2">
@@ -1363,7 +1424,10 @@ export const LoginForm = () => {
             type="checkbox"
             checked={formData.rememberMe}
             onChange={(e) =>
-              handleFieldChange('rememberMe', e.target.checked ? 'true' : 'false')
+              handleFieldChange(
+                'rememberMe',
+                e.target.checked ? 'true' : 'false',
+              )
             }
             disabled={isSubmitting}
             className="sr-only"
@@ -1378,7 +1442,7 @@ export const LoginForm = () => {
             Remember me
           </span>
         </label>
-        
+
         <a
           href="/forgot-password"
           className="text-sm font-medium text-brand-primary transition-colors hover:text-brand-primary-light"
@@ -1386,7 +1450,7 @@ export const LoginForm = () => {
           Forgot password?
         </a>
       </div>
-      
+
       {/* Submit button */}
       <button
         type="submit"
@@ -1406,6 +1470,7 @@ export const LoginForm = () => {
 ## 21. Testing Checklist
 
 ### Visual Testing
+
 - [ ] Login form renders correctly on 375px, 768px, 1024px, 1440px
 - [ ] Dark mode colors have sufficient contrast
 - [ ] Icons from consistent set (Lucide)
@@ -1413,6 +1478,7 @@ export const LoginForm = () => {
 - [ ] Animations respect prefers-reduced-motion
 
 ### Functionality Testing
+
 - [ ] Email validation triggers on blur
 - [ ] Password strength updates in real-time
 - [ ] Error messages appear/disappear smoothly
@@ -1422,6 +1488,7 @@ export const LoginForm = () => {
 - [ ] Google signin button functional
 
 ### Accessibility Testing
+
 - [ ] All inputs have associated labels
 - [ ] Error messages linked via aria-describedby
 - [ ] Focus order logical (tab through form)
@@ -1432,6 +1499,7 @@ export const LoginForm = () => {
 - [ ] Touch targets minimum 48px
 
 ### Performance Testing
+
 - [ ] Form renders in < 1s on 3G
 - [ ] No layout shifts during validation
 - [ ] Animations 60fps
@@ -1443,6 +1511,7 @@ export const LoginForm = () => {
 ## 22. Conclusion & Quick Wins
 
 ### Top 5 Quick Wins (< 1 hour each)
+
 1. Add password strength indicator (visual bar + text)
 2. Improve error message styling (color, icons, spacing)
 3. Add loading state feedback (button text change, spinner)
@@ -1450,6 +1519,7 @@ export const LoginForm = () => {
 5. Fix touch target sizes on mobile (48px minimum)
 
 ### Medium Effort (2-4 hours each)
+
 - Implement real-time validation with debouncing
 - Add multi-stage loading states with progress
 - Enhance accessibility (labels, ARIA)
@@ -1457,6 +1527,7 @@ export const LoginForm = () => {
 - Better error recovery flow
 
 ### High Impact Items
+
 - Form validation state management
 - Micro-interactions & transitions
 - Mobile touch optimization
@@ -1468,6 +1539,7 @@ export const LoginForm = () => {
 ## 23. Resources & References
 
 ### Design System
+
 - Color palette: Maroon (#7F1D1D) + supporting colors
 - Typography: Plus Jakarta Sans or Inter
 - Spacing: 8px base unit (4px, 8px, 12px, 16px, 24px, 32px)
@@ -1475,6 +1547,7 @@ export const LoginForm = () => {
 - Shadows: Subtle (0 2px 4px), Medium (0 4px 8px), Large (0 8px 16px)
 
 ### Accessibility Guidelines
+
 - WCAG 2.1 AA minimum (AAA recommended)
 - 4.5:1 contrast ratio for normal text
 - 3:1 contrast ratio for large text
@@ -1482,6 +1555,7 @@ export const LoginForm = () => {
 - Keyboard navigation support required
 
 ### Performance Budgets
+
 - First Contentful Paint: < 1.5s
 - Largest Contentful Paint: < 2.5s
 - Form interaction latency: < 100ms
@@ -1490,4 +1564,3 @@ export const LoginForm = () => {
 ---
 
 **Document Version:** 1.0 | **Last Updated:** July 2026 | **Status:** Ready for Implementation
-

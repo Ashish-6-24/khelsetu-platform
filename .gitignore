@@ -1,146 +1,58 @@
-# ============================================================================
-# BUILD & DEPENDENCY ARTIFACTS (MUST NEVER COMMIT)
-# ============================================================================
-# Node.js
+# Dependencies
 node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Testing
+coverage/
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-package-lock.json.backup
+*.log
+storybook.log
 
-# Build outputs
-dist/
-build/
-.next/
-out/
-coverage/
-.turbo/
-*.tsbuildinfo
-
-# Test reports (generated)
-test-results/
-playwright-report/
-blob-report/
-
-# Next.js / Vite specific
-.nuxt/
-.cache/
-.vuepress/dist/
-.serverless/
-.fusebox/
-.dynamodb/
-.tern-port
-
-# ============================================================================
-# GENERATED & TEMPORARY FILES
-# ============================================================================
-# Dependency audit results
-audit-results.json
-security-audit.log
-
-# Temp files
-*.tmp
-*.temp
-*.bak
-*~
+# IDE
+.vscode/
+.idea/
 *.swp
 *.swo
-.#*
+*~
 
-# OS files
+# OS
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
 Desktop.ini
 
-# ============================================================================
-# DEVELOPMENT ENVIRONMENT & TOOLS (LOCAL ONLY)
-# ============================================================================
-# AI/Development tools
+# Tool-specific (AI assistants - not project code)
+.cursorrules
+AGENTS.md
+CLAUDE.md
+CLAUDE.local.md
 graphify-out/
 .opencode/
 .cursor/
 .claude/
 .superpowers/
-.ai/
 
-# AI config files (tool-specific)
-.cursorrules
-AGENTS.md
-CLAUDE.md
-CLAUDE.local.md
-GEMINI.md
-GEMINI.local.md
+# Storybook
+storybook-static/
 
-# Environment & secrets
-.env
-.env.local
-.env.*.local
-.env.production.local
-.env.development.local
-.env.test.local
-*.pem
-*.key
-*.cert
-
-# Logs
-*.log
-logs/
-*.log.backup
-
-# IDE & Editor (project-specific)
-.idea/
-.vscode/
-.vscode-settings/
-*.code-workspace
-.history/
-
-# ============================================================================
-# DUPLICATE FOLDERS (CRITICAL - PREVENT RE-ENTRY)
-# ============================================================================
-# Backup/snapshot directories
-backup/
-backups/
-old/
-archive/
-archived/
-duplicate*/
-copy*/
-copy-*
-
-# ============================================================================
-# SECURITY: Prevent accidental commits
-# ============================================================================
-# Private keys, credentials, secrets
-.ssh/
-secrets/
-private/
-credentials/
-
-# Test databases
-test.db
-*.sqlite
-*.sqlite3
-
-# ============================================================================
-# MONOREPO & WORKSPACE (if applicable)
-# ============================================================================
-# Lerna
-.lerna/
-lerna-debug.log
-
-# Workspace
-.pnp
-.pnp.js
-.yarn/install-state.gz
-
-# Local auth scripts (contain credentials)
-puppeteer-auth.js
-auth-state/
-.auth/
+# Misc
+*.local

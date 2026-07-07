@@ -1,203 +1,112 @@
-# KhelSetu Frontend
+# KhelSetu
 
-Production-grade real-time multi-tenant sports tournament management platform for Nepal.
+A production-grade sports tournament management platform built with React, TypeScript, and Vite.
+
+## Features
+
+- **Live Scoring** — Real-time match updates for Cricket, Football, Volleyball, Basketball
+- **Tournament Management** — Create, schedule, and manage tournaments with bracket generation
+- **Team & Player Management** — Complete rosters, player profiles, and team analytics
+- **Live Broadcast** — WebSocket-powered live match streaming with overlays
+- **Standings & Statistics** — Dynamic league tables and detailed match analytics
+- **Offline Support** — Service worker caching for offline-first experience
+- **Dark Mode** — System-aware theme switching with smooth transitions
+- **Mobile-First** — Responsive design optimized for touch devices
 
 ## Tech Stack
 
-- Runtime: Browser (ES2022+)
-- Framework: React 19
-- Build Tool: Vite 8
-- Language: TypeScript 6
-- Styling: Tailwind CSS v4
-- Routing: React Router DOM v7
-- State Management: Zustand (client), TanStack React Query (server)
-- HTTP Client: Axios
-- Real-time: Socket.IO Client
-- Forms: React Hook Form + Zod
-- Animations: Framer Motion
-- Icons: Lucide React
-- Charts: Recharts
-- Testing: Vitest (unit), Playwright (E2E)
-- Component Docs: Storybook
+| Category  | Technology            |
+| --------- | --------------------- |
+| Framework | React 19 + TypeScript |
+| Build     | Vite 8                |
+| State     | Zustand               |
+| Routing   | React Router v7       |
+| Styling   | Tailwind CSS v4       |
+| Testing   | Vitest + Playwright   |
+| API       | Axios + React Query   |
+| Real-time | Socket.IO             |
 
-## Quick Start
-
-### Prerequisites
-
-- Node.js 18+
-
-### Installation
+## Getting Started
 
 ```bash
 # Install dependencies
 npm install
 
-# Copy environment file
-cp .env.example .env
-
-# Edit .env with your backend URL
-```
-
-### Development
-
-```bash
-# Start dev server
+# Start development server
 npm run dev
-```
 
-### Build
+# Run tests
+npm run test
 
-```bash
-# Type-check and build for production
+# Build for production
 npm run build
-
-# Preview production build
-npm run preview
 ```
-
-
-## Features
-
-| Category | Features |
-|----------|----------|
-| Auth | Login, Register, Protected Routes |
-| Dashboard | Overview, Stats, Quick Actions |
-| Tournaments | CRUD, Bracket View, Detail, Edit |
-| Teams | CRUD, Player Management, Detail |
-| Players | CRUD, Profiles, Edit |
-| Scoring | Live Scoring, Multi-sport Support (Cricket, Football, Volleyball, Basketball), Undo History |
-| Standings | Auto-calculation, Tournament Rankings |
-| Schedule | Match Scheduling, Calendar View |
-| Venues | Venue Management |
-| Live Broadcast | Streaming, Scoreboard Overlays |
-| Analytics | Data Visualization, Reports |
-| Billing | Subscription Plans, Payment Management |
-| Notifications | Real-time Alerts, Notification Center |
-| Communication | Messaging System |
-| Search | Global Search |
-| User Roles | Role/Permission Management |
-| Audit Log | Activity Tracking |
-| Data Import | Bulk Import Tools |
-| Offline Sync | Offline Queue, Web Worker Sync |
-| Accessibility | WCAG Compliance |
 
 ## Project Structure
 
 ```
 src/
-├── app/
-│   ├── layouts/              # AuthLayout, DashboardLayout, LandingLayout
-│   ├── providers/            # AppProviders, AuthProvider, QueryProvider
-│   └── router/               # Route definitions
-├── components/
-│   ├── ui/                   # Reusable UI components (Button, Card, Input, etc.)
-│   ├── scoring/              # Scoring UI components
-│   ├── navigation/           # Header, Sidebar
-│   └── ...                   # Feature-specific component groups
-├── features/                  # Feature-sliced modules (14 features)
-│   ├── auth/
-│   ├── scoring/
-│   ├── tournaments/
-│   ├── billing/
-│   ├── live-broadcast/
-│   ├── offline-sync/
-│   └── ...
-├── pages/                     # Route-level page components (27 pages)
-├── services/
-│   ├── api/                   # REST API services
-│   └── websocket/             # WebSocket service
-├── store/                     # Zustand stores (auth, tournament, scoring, UI)
-├── hooks/                     # Custom hooks
-├── lib/                       # Core utilities (axios, env, logger)
-├── types-domain/              # Domain type definitions
-├── utils/                     # Shared utilities
-└── workers/                   # Web Workers (sync)
-```
-
-## Architecture
-
-- Pattern: Feature-Sliced Design
-- Multi-tenancy: Organization-aware UI
-- State: Dual strategy (Zustand for client, React Query for server)
-- Real-time: Socket.IO for live scores and notifications
-- Offline: Web Worker sync queue with connectivity detection
-- Type Safety: Strict TypeScript, Zod runtime validation
-- Performance: Code splitting, manual vendor chunks, PWA support
-
-## Environment Variables
-
-```env
-VITE_API_URL=http://localhost:8080
-VITE_WS_URL=ws://localhost:8080
-VITE_APP_NAME=KhelSetu
-VITE_APP_ENV=development
+├── app/                  # Layouts, providers, router
+├── features/             # 26 feature modules (self-contained)
+│   ├── auth/             # Authentication, login, register
+│   ├── billing/          # Payment, subscriptions
+│   ├── brackets/         # Tournament bracket generation
+│   ├── broadcast/        # Live match broadcasting
+│   ├── certificates/     # Certificate generation
+│   ├── dashboard/        # Dashboard, landing page
+│   ├── events/           # Match events and timeline
+│   ├── formation/        # Team formation builder
+│   ├── i18n/             # Internationalization
+│   ├── media-gallery/    # Match photos and videos
+│   ├── news/             # Sports news feed
+│   ├── notifications/    # Push notifications
+│   ├── offline-sync/     # Offline data sync
+│   ├── overlays/         # Broadcast overlays
+│   ├── players/          # Player management
+│   ├── reports/          # Match reports
+│   ├── scoring/          # Live scoring engine
+│   ├── search/           # Global search
+│   ├── standings/        # League tables
+│   ├── statistics/       # Match analytics
+│   ├── teams/            # Team management
+│   ├── tournaments/      # Tournament CRUD
+│   ├── venues/           # Venue management
+│   └── websocket/        # Real-time connection
+├── shared/               # Generic UI, hooks, utils, types
+│   ├── ui/               # Button, Modal, Input, Card, etc.
+│   ├── hooks/            # useDebounce, useMediaQuery, etc.
+│   ├── utils/            # Date formatting, calculations
+│   ├── lib/              # Axios, logger, queryClient
+│   └── types/            # Global TypeScript types
+├── state/                # Zustand stores
+├── tests/                # Unit + integration tests
+├── theme/                # CSS files, design tokens
+└── workers/              # Web workers
 ```
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Type-check and production build |
-| `npm run preview` | Preview production build |
-| `npm run lint` | Run ESLint |
-| `npm run lint:fix` | Fix ESLint issues |
-| `npm run format` | Format with Prettier |
-| `npm run typecheck` | TypeScript type checking |
-| `npm run test` | Run unit tests (watch) |
-| `npm run test:run` | Run unit tests once |
-| `npm run test:coverage` | Run tests with coverage |
-| `npm run test:e2e` | Run E2E tests |
-| `npm run storybook` | Start Storybook |
-| `npm run validate` | Full validation (lint + format + typecheck + test + build) |
-| `npm run analyze` | Bundle size analysis |
+| Command                 | Description                                               |
+| ----------------------- | --------------------------------------------------------- |
+| `npm run dev`           | Start dev server with MSW mocks                           |
+| `npm run build`         | Production build                                          |
+| `npm run preview`       | Preview production build                                  |
+| `npm run lint`          | Run ESLint                                                |
+| `npm run format`        | Format with Prettier                                      |
+| `npm run typecheck`     | TypeScript type checking                                  |
+| `npm run test`          | Run unit tests                                            |
+| `npm run test:run`      | Run tests once                                            |
+| `npm run test:coverage` | Run tests with coverage                                   |
+| `npm run test:e2e`      | Run Playwright E2E tests                                  |
+| `npm run validate`      | Run all checks (lint + format + typecheck + test + build) |
 
-## Socket.IO Events
+## Architecture
 
-| Event | Direction | Description |
-|-------|-----------|-------------|
-| `subscribe:match` | Client -> Server | Join match room |
-| `match:score_update` | Server -> Client | Live score change |
-| `match:status_change` | Server -> Client | Match started/ended |
-| `scoring:event_added` | Server -> Client | New scoring event |
-| `notification:new` | Server -> Client | Real-time notification |
-
-## Testing
-
-### Unit Tests
-
-```bash
-npm run test
-```
-
-- Framework: Vitest
-- Environment: jsdom
-- 24+ test files covering stores, components, utilities
-
-### E2E Tests
-
-```bash
-npm run test:e2e
-```
-
-- Framework: Playwright
-- Browsers: Chromium, Mobile Chrome
-
-## Deployment
-
-### Vercel
-
-```bash
-vercel deploy
-```
-
-### Manual
-
-```bash
-npm run build
-# Serve dist/ with any static file server (nginx, Apache, etc.)
-```
+- **Feature-Based Structure** — Each feature is self-contained with its own components, hooks, services, and types
+- **Barrel Exports** — Features expose public API through `index.ts` files
+- **Shared Layer** — Zero business logic, reusable across all features
+- **Path Aliases** — Clean imports via `@/` prefix
 
 ## License
 
-MIT
+Private

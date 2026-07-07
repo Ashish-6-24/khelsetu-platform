@@ -20,22 +20,26 @@
 ## Component Specs
 
 ### Score Header
+
 - Team A logo + name (text-lg) + score (text-7xl Space Grotesk, tabular-nums)
 - Team B name + score + logo
 - Center: match clock (text-2xl tabular-nums) + over/quarter indicator
 - Bottom: `LivePulse` + "LIVE" badge
 
 ### Action Grid
+
 - 2×3 or 3×3 grid of large action buttons (cricket: 0/1/2/3/4/6 + WIDE/NB/OUT)
 - Each button: min-h-16, primary or accent gradient, text-xl font-bold
 - Press state: scale 0.95 + brightness reduction
 
 ### Event Log
+
 - Vertical timeline, newest at top
 - Each entry: timestamp (text-xs tabular-nums) + icon (event type) + description
 - Latest entry: highlighted with `bg-primary-soft` border-l-4 border-primary
 
 ### Undo Bar
+
 - Sticky bottom bar with "Undo Last" + "Confirm & Continue" buttons
 - Always visible during active scoring
 

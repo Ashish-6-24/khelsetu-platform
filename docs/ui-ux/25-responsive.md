@@ -7,15 +7,15 @@
 
 Standard Tailwind breakpoints, with product-named intents.
 
-| Breakpoint | Min width | Intent | Primary surfaces |
-|---|---|---|---|
-| `xs` | 0 | Phone portrait | Public portal, scorer (mini) |
-| `sm` | 640 | Phone landscape / phablet | Public portal |
-| `md` | 768 | Small tablet | Scorer console (single-pane), dashboard read-only |
-| `lg` | 1024 | Tablet landscape | Scorer console (dual-pane), dashboard |
-| `xl` | 1280 | Laptop | Dashboard primary |
-| `2xl` | 1536 | Desktop | Dashboard wide, overlay editing |
-| `3xl` | 1920 | Studio / broadcast | Overlay 1080p preview |
+| Breakpoint | Min width | Intent                    | Primary surfaces                                  |
+| ---------- | --------- | ------------------------- | ------------------------------------------------- |
+| `xs`       | 0         | Phone portrait            | Public portal, scorer (mini)                      |
+| `sm`       | 640       | Phone landscape / phablet | Public portal                                     |
+| `md`       | 768       | Small tablet              | Scorer console (single-pane), dashboard read-only |
+| `lg`       | 1024      | Tablet landscape          | Scorer console (dual-pane), dashboard             |
+| `xl`       | 1280      | Laptop                    | Dashboard primary                                 |
+| `2xl`      | 1536      | Desktop                   | Dashboard wide, overlay editing                   |
+| `3xl`      | 1920      | Studio / broadcast        | Overlay 1080p preview                             |
 
 **Nepal context**: 360px captures most Nepali budget phones (Samsung, Xiaomi,
 Realme at 360x800). Design must be functional at 360px before responsive
@@ -31,19 +31,20 @@ used for reusable components that appear in variable-width contexts.
 We don't just rely on width; the app reads device posture from a
 `<DevicePostureProvider>`:
 
-| Posture | Signal | Effect |
-|---|---|---|
-| `mobile-portrait` | width < 640 + portrait | Bottom nav, sheets |
-| `mobile-landscape` | width < 900 + landscape | Compact topbar, side action panel |
-| `tablet-portrait` | width 640–1024 + portrait | Dashboard cards 2-up, drawer-based detail |
-| `tablet-landscape` | width 900–1366 + landscape | Scorer dual-pane, dashboard 3-up |
-| `desktop` | width ≥ 1280 | Full dashboard |
-| `large-desktop` | width ≥ 1920 | Wide overlay editor, broadcast tools |
-| `overlay-render` | URL is `/overlay/:token` | No chrome, transparent, 1080p assumed |
+| Posture            | Signal                     | Effect                                    |
+| ------------------ | -------------------------- | ----------------------------------------- |
+| `mobile-portrait`  | width < 640 + portrait     | Bottom nav, sheets                        |
+| `mobile-landscape` | width < 900 + landscape    | Compact topbar, side action panel         |
+| `tablet-portrait`  | width 640–1024 + portrait  | Dashboard cards 2-up, drawer-based detail |
+| `tablet-landscape` | width 900–1366 + landscape | Scorer dual-pane, dashboard 3-up          |
+| `desktop`          | width ≥ 1280               | Full dashboard                            |
+| `large-desktop`    | width ≥ 1920               | Wide overlay editor, broadcast tools      |
+| `overlay-render`   | URL is `/overlay/:token`   | No chrome, transparent, 1080p assumed     |
 
 ## 25.3 Shell responsiveness
 
 ### Public shell
+
 - **Desktop**: top nav (links + CTA), full-width hero, multi-column
   sections.
 - **Tablet**: same as desktop with reduced padding.
@@ -51,12 +52,14 @@ We don't just rely on width; the app reads device posture from a
   pricing.
 
 ### Dashboard shell
+
 - **Desktop**: persistent left sidebar (240px) + topbar + content.
 - **Tablet**: collapsible sidebar (icons only at 80px), topbar.
 - **Mobile**: bottom nav (5 tabs: Home, Matches, Scoring, Notifications,
   More), topbar with org switcher; sidebar opens as a sheet.
 
 ### Scorer shell
+
 - **Tablet landscape** (primary): score header + dual-pane (actions left,
   event log right).
 - **Tablet portrait**: score header + actions, event log in a drawer.
@@ -65,38 +68,46 @@ We don't just rely on width; the app reads device posture from a
 - **Desktop**: rare — use tablet-landscape layout centered, max-w-1600.
 
 ### Overlay shell
+
 - **Always**: 16:9 transparent canvas; safe-area aware; uses absolute
   positioning per template.
 
 ### Admin shell
+
 - Desktop-only experience; mobile shows a "Switch to desktop" prompt.
 
 ## 25.4 Pattern adaptations
 
 ### Tables
+
 - ≥ md: full table with all columns.
 - < md: row collapses to card with primary fields + "View all" link.
 - Sticky first column in horizontal scroll on tablet+ for wide tables.
 
 ### Forms
+
 - ≥ lg: two-column for related fields.
 - < lg: single column, full-width buttons.
 - Bottom sheet for inline-edit on mobile.
 
 ### Filter bars
+
 - ≥ md: inline chips and selects.
 - < md: "Filters" button opens a left drawer.
 
 ### Modals
+
 - ≥ md: centered modal.
 - < md: bottom sheet (full-height for forms, partial for confirmations).
 
 ### Navigation
+
 - Desktop: sidebar + topbar.
 - Tablet: sidebar collapsed to icons, topbar.
 - Mobile: bottom tab bar + topbar.
 
 ### Cards & grids
+
 - 4-up on desktop, 3-up on laptop, 2-up on tablet, 1-up on mobile.
 
 ## 25.5 Scorer console specific
@@ -176,13 +187,13 @@ Kathmandu fiber: 20-100 Mbps. Kathmandu 4G evenings: 1-5 Mbps. Tier-2 cities:
 **Budget device**: V8 engine on budget Android runs JS 5-10x slower than
 developer MacBook. DOM >1,500 nodes causes jank. Passive listeners mandatory.
 
-| Surface | TTI (3G) | TTI (4G) | LCP target | Bundle |
-|---|---|---|---|---|
-| Public landing | < 4s | < 2s | < 2.5s | < 150KB |
-| Public live score | < 3s | < 1.5s | < 2s | < 100KB |
-| Dashboard home | < 4s | < 2s | < 2.5s | < 200KB |
-| Scorer console | < 3s | < 1.5s | < 2s | < 150KB |
-| Overlay | < 2s | < 1s | < 1.5s | < 50KB |
+| Surface           | TTI (3G) | TTI (4G) | LCP target | Bundle  |
+| ----------------- | -------- | -------- | ---------- | ------- |
+| Public landing    | < 4s     | < 2s     | < 2.5s     | < 150KB |
+| Public live score | < 3s     | < 1.5s   | < 2s       | < 100KB |
+| Dashboard home    | < 4s     | < 2s     | < 2.5s     | < 200KB |
+| Scorer console    | < 3s     | < 1.5s   | < 2s       | < 150KB |
+| Overlay           | < 2s     | < 1s     | < 1.5s     | < 50KB  |
 
 ## 25.12 Testing matrix
 

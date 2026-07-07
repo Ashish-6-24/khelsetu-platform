@@ -60,28 +60,28 @@ KhelSetu
 A **module** is a vertical slice of features grouped by domain. Each module
 owns its routes, services, hooks, components, store slice, and types.
 
-| Module | Routes prefix | Owns |
-|---|---|---|
-| `auth` | `/auth`, `/me` | Sessions, profile, password, navigation |
-| `organizations` | `/o/:orgSlug/...` (context), `/organizations` | Tenant context, members, invitations |
-| `sports` | `/o/:orgSlug/sports` | Sport master |
-| `tournaments` | `/o/:orgSlug/tournaments` | Tournament CRUD, status, fixtures |
-| `teams` | `/o/:orgSlug/teams` | Teams, rosters |
-| `players` | `/o/:orgSlug/players` | Players, eligibility, multi-team |
-| `matches` | `/o/:orgSlug/matches` | Match CRUD, officials, lifecycle |
-| `scoring` | `/o/:orgSlug/scoring/:matchId` | Generic, cricket, football, basketball scoring |
-| `standings` | `/o/:orgSlug/standings/:tournamentId` | League tables, snapshots, recalc |
-| `notifications` | `/o/:orgSlug/notifications` | Inbox, unread, mark-read |
-| `overlays` | `/o/:orgSlug/overlays` | Templates, active overlays, public URLs |
-| `visualization` | `/o/:orgSlug/visualization` | Formations, annotations |
-| `analytics` | `/o/:orgSlug/analytics` | Dashboard, tournament, team, player, reports |
-| `audit` | `/o/:orgSlug/audit` | Logs, entity history, user activity |
-| `rbac` | `/o/:orgSlug/settings/roles`, `/settings/permissions` | Roles, permissions, user-role matrix |
-| `billing` | `/o/:orgSlug/billing` | Plans, subscription, invoices, payment methods |
-| `sync` | `/o/:orgSlug/sync` | Queue, status, conflicts, devices |
-| `public` | `/`, `/tournaments`, `/matches`, `/players`, `/teams`, `/plans` | Public portal |
-| `overlay-public` | `/overlay/:token` | Public broadcast overlay |
-| `admin` | `/admin` (super-admin) | Tenants, plans, platform audit |
+| Module           | Routes prefix                                                   | Owns                                           |
+| ---------------- | --------------------------------------------------------------- | ---------------------------------------------- |
+| `auth`           | `/auth`, `/me`                                                  | Sessions, profile, password, navigation        |
+| `organizations`  | `/o/:orgSlug/...` (context), `/organizations`                   | Tenant context, members, invitations           |
+| `sports`         | `/o/:orgSlug/sports`                                            | Sport master                                   |
+| `tournaments`    | `/o/:orgSlug/tournaments`                                       | Tournament CRUD, status, fixtures              |
+| `teams`          | `/o/:orgSlug/teams`                                             | Teams, rosters                                 |
+| `players`        | `/o/:orgSlug/players`                                           | Players, eligibility, multi-team               |
+| `matches`        | `/o/:orgSlug/matches`                                           | Match CRUD, officials, lifecycle               |
+| `scoring`        | `/o/:orgSlug/scoring/:matchId`                                  | Generic, cricket, football, basketball scoring |
+| `standings`      | `/o/:orgSlug/standings/:tournamentId`                           | League tables, snapshots, recalc               |
+| `notifications`  | `/o/:orgSlug/notifications`                                     | Inbox, unread, mark-read                       |
+| `overlays`       | `/o/:orgSlug/overlays`                                          | Templates, active overlays, public URLs        |
+| `visualization`  | `/o/:orgSlug/visualization`                                     | Formations, annotations                        |
+| `analytics`      | `/o/:orgSlug/analytics`                                         | Dashboard, tournament, team, player, reports   |
+| `audit`          | `/o/:orgSlug/audit`                                             | Logs, entity history, user activity            |
+| `rbac`           | `/o/:orgSlug/settings/roles`, `/settings/permissions`           | Roles, permissions, user-role matrix           |
+| `billing`        | `/o/:orgSlug/billing`                                           | Plans, subscription, invoices, payment methods |
+| `sync`           | `/o/:orgSlug/sync`                                              | Queue, status, conflicts, devices              |
+| `public`         | `/`, `/tournaments`, `/matches`, `/players`, `/teams`, `/plans` | Public portal                                  |
+| `overlay-public` | `/overlay/:token`                                               | Public broadcast overlay                       |
+| `admin`          | `/admin` (super-admin)                                          | Tenants, plans, platform audit                 |
 
 ## 2.3 Feature architecture
 
@@ -127,14 +127,14 @@ deliberately separate so they don't load dashboard chrome).
 
 ## 2.6 Layout architecture
 
-| Layout | Used by | Notes |
-|---|---|---|
-| `PublicLayout` | Landing, public portal | Marketing nav, footer, language switcher |
-| `AuthLayout` | Login, register, accept invite | Minimal — logo, language, footer |
-| `DashboardLayout` | All `/o/:orgSlug/*` | Sidebar + topbar + breadcrumbs + org switcher |
-| `ScorerLayout` | `/scoring/*` | Full-bleed, sticky score header, bottom action bar |
-| `OverlayLayout` | `/overlay/:token` | No chrome; transparent; OBS-tested |
-| `AdminLayout` | `/admin/*` | Same as dashboard, different sidebar |
+| Layout            | Used by                        | Notes                                              |
+| ----------------- | ------------------------------ | -------------------------------------------------- |
+| `PublicLayout`    | Landing, public portal         | Marketing nav, footer, language switcher           |
+| `AuthLayout`      | Login, register, accept invite | Minimal — logo, language, footer                   |
+| `DashboardLayout` | All `/o/:orgSlug/*`            | Sidebar + topbar + breadcrumbs + org switcher      |
+| `ScorerLayout`    | `/scoring/*`                   | Full-bleed, sticky score header, bottom action bar |
+| `OverlayLayout`   | `/overlay/:token`              | No chrome; transparent; OBS-tested                 |
+| `AdminLayout`     | `/admin/*`                     | Same as dashboard, different sidebar               |
 
 ## 2.7 Component architecture
 
@@ -153,16 +153,16 @@ Composites consume primitives. Features consume composites + primitives.
 
 Dual strategy (per README):
 
-| Concern | Tool | Lives in |
-|---|---|---|
-| Server cache | TanStack React Query | `services/*` + `hooks/useXxx.ts` |
-| Client UI state | Zustand | `store/uiStore.ts`, `store/authStore.ts` |
-| Scorer runtime | Zustand (with persist + IDB) | `features/scoring/store/` |
-| Form state | React Hook Form | Forms (`features/*/components/*Form.tsx`) |
-| URL state | React Router `useSearchParams` | Filter / sort / pagination |
-| WebSocket state | Zustand store with event reducer | `features/websocket/store/` |
-| Offline queue | IndexedDB + Web Worker | `workers/sync.worker.ts` |
-| Permissions | React context + selector | `lib/rbac/` |
+| Concern         | Tool                             | Lives in                                  |
+| --------------- | -------------------------------- | ----------------------------------------- |
+| Server cache    | TanStack React Query             | `services/*` + `hooks/useXxx.ts`          |
+| Client UI state | Zustand                          | `store/uiStore.ts`, `store/authStore.ts`  |
+| Scorer runtime  | Zustand (with persist + IDB)     | `features/scoring/store/`                 |
+| Form state      | React Hook Form                  | Forms (`features/*/components/*Form.tsx`) |
+| URL state       | React Router `useSearchParams`   | Filter / sort / pagination                |
+| WebSocket state | Zustand store with event reducer | `features/websocket/store/`               |
+| Offline queue   | IndexedDB + Web Worker           | `workers/sync.worker.ts`                  |
+| Permissions     | React context + selector         | `lib/rbac/`                               |
 
 ## 2.9 Permission architecture
 
@@ -199,64 +199,64 @@ strategies.
 
 These names align with `/api/rbac/permissions` responses.
 
-| Key | Purpose |
-|---|---|
-| `org:read`, `org:write`, `org:delete` | Org settings |
-| `org.member:read`, `org.member:write`, `org.member:remove` | Members |
-| `org.invitation:send`, `org.invitation:accept` | Invitations |
-| `sport:read`, `sport:write`, `sport:delete` | Sports master |
-| `tournament:read`, `tournament:write`, `tournament:delete`, `tournament.status:write` | Tournaments |
-| `tournament.team:read`, `tournament.team:register`, `tournament.team:remove` | Team registration |
-| `tournament.fixture:read`, `tournament.fixture:generate` | Fixtures |
-| `team:read`, `team:write`, `team:delete` | Teams |
-| `player:read`, `player:write`, `player:delete` | Players |
-| `match:read`, `match:write`, `match:delete` | Match CRUD |
-| `match.officials:read`, `match.officials:write` | Officials |
-| `match.lifecycle:write` | Start/end/suspend/resume/postpone/abandon |
-| `match.score:read`, `match.score:write`, `match.score:undo` | Scoring |
-| `scoring.replay:read`, `scoring.replay:write` | Replay & snapshots |
-| `standings:read`, `standings:recalculate`, `standings.snapshot:write` | Standings |
-| `notification:read`, `notification:delete` | Notifications |
-| `overlay:read`, `overlay:write`, `overlay.activate`, `overlay.template:write` | Overlays |
-| `visualization:read`, `visualization:write` | Formations & annotations |
-| `analytics:read`, `analytics.report:create`, `analytics.report:export` | Analytics |
-| `audit:read`, `audit.export` | Audit |
-| `rbac:read`, `rbac.role:write`, `rbac.permission:assign` | RBAC |
-| `billing:read`, `billing:write`, `billing.invoice:read` | Billing |
-| `sync:read`, `sync:write`, `sync.device:manage` | Sync |
-| `public.match:create` | Public free match |
-| `*` | Super-admin |
+| Key                                                                                   | Purpose                                   |
+| ------------------------------------------------------------------------------------- | ----------------------------------------- |
+| `org:read`, `org:write`, `org:delete`                                                 | Org settings                              |
+| `org.member:read`, `org.member:write`, `org.member:remove`                            | Members                                   |
+| `org.invitation:send`, `org.invitation:accept`                                        | Invitations                               |
+| `sport:read`, `sport:write`, `sport:delete`                                           | Sports master                             |
+| `tournament:read`, `tournament:write`, `tournament:delete`, `tournament.status:write` | Tournaments                               |
+| `tournament.team:read`, `tournament.team:register`, `tournament.team:remove`          | Team registration                         |
+| `tournament.fixture:read`, `tournament.fixture:generate`                              | Fixtures                                  |
+| `team:read`, `team:write`, `team:delete`                                              | Teams                                     |
+| `player:read`, `player:write`, `player:delete`                                        | Players                                   |
+| `match:read`, `match:write`, `match:delete`                                           | Match CRUD                                |
+| `match.officials:read`, `match.officials:write`                                       | Officials                                 |
+| `match.lifecycle:write`                                                               | Start/end/suspend/resume/postpone/abandon |
+| `match.score:read`, `match.score:write`, `match.score:undo`                           | Scoring                                   |
+| `scoring.replay:read`, `scoring.replay:write`                                         | Replay & snapshots                        |
+| `standings:read`, `standings:recalculate`, `standings.snapshot:write`                 | Standings                                 |
+| `notification:read`, `notification:delete`                                            | Notifications                             |
+| `overlay:read`, `overlay:write`, `overlay.activate`, `overlay.template:write`         | Overlays                                  |
+| `visualization:read`, `visualization:write`                                           | Formations & annotations                  |
+| `analytics:read`, `analytics.report:create`, `analytics.report:export`                | Analytics                                 |
+| `audit:read`, `audit.export`                                                          | Audit                                     |
+| `rbac:read`, `rbac.role:write`, `rbac.permission:assign`                              | RBAC                                      |
+| `billing:read`, `billing:write`, `billing.invoice:read`                               | Billing                                   |
+| `sync:read`, `sync:write`, `sync.device:manage`                                       | Sync                                      |
+| `public.match:create`                                                                 | Public free match                         |
+| `*`                                                                                   | Super-admin                               |
 
 ## 2.13 Default roles (seeded by backend)
 
-| Role | Key permissions |
-|---|---|
-| Owner | `org:*`, `billing:*`, `rbac:*`, plus all read |
-| Admin | All read + write within org, no billing, no rbac |
+| Role             | Key permissions                                                                     |
+| ---------------- | ----------------------------------------------------------------------------------- |
+| Owner            | `org:*`, `billing:*`, `rbac:*`, plus all read                                       |
+| Admin            | All read + write within org, no billing, no rbac                                    |
 | Tournament Admin | `tournament:*`, `team:*`, `player:*`, `match:*`, `match.officials:*`, `standings:*` |
-| Scorer | `match:read`, `match.score:read`, `match.score:write`, `match.score:undo` |
-| Coach | `team:read`, `player:read`, `match:read`, `analytics:read` |
-| Viewer | `*:read` within org |
-| Public User | `public.match:create` (with quota) |
-| Super Admin | `*` (cross-tenant) |
+| Scorer           | `match:read`, `match.score:read`, `match.score:write`, `match.score:undo`           |
+| Coach            | `team:read`, `player:read`, `match:read`, `analytics:read`                          |
+| Viewer           | `*:read` within org                                                                 |
+| Public User      | `public.match:create` (with quota)                                                  |
+| Super Admin      | `*` (cross-tenant)                                                                  |
 
 ## 2.14 Real-time event catalogue
 
-| Event | Source | Subscribers |
-|---|---|---|
-| `match:score_update` | scoring service | public score page, overlay, dashboard |
-| `match:status_change` | match service | public, dashboard, overlay |
-| `match:event_added` | scoring service | event log, broadcast ticker |
-| `match:event_undone` | scoring service | event log |
-| `match:clock_tick` | scoring service | overlay, scorer (when idle) |
-| `match:period_change` | scoring service | overlay, scorer |
-| `standings:updated` | standings service | standings page, dashboard |
-| `notification:new` | notification service | bell, toast |
-| `overlay:activated` / `deactivated` | overlay service | overlay manager |
-| `sync:status` | sync service | sync panel, banner |
-| `var:status`, `drs:status` | scoring service | VAR/DRS panels |
-| `shot_clock:tick`, `game_clock:tick` | scoring service | scorer, overlay |
-| `presence:join` / `leave` | realtime | scorer presence indicator |
+| Event                                | Source               | Subscribers                           |
+| ------------------------------------ | -------------------- | ------------------------------------- |
+| `match:score_update`                 | scoring service      | public score page, overlay, dashboard |
+| `match:status_change`                | match service        | public, dashboard, overlay            |
+| `match:event_added`                  | scoring service      | event log, broadcast ticker           |
+| `match:event_undone`                 | scoring service      | event log                             |
+| `match:clock_tick`                   | scoring service      | overlay, scorer (when idle)           |
+| `match:period_change`                | scoring service      | overlay, scorer                       |
+| `standings:updated`                  | standings service    | standings page, dashboard             |
+| `notification:new`                   | notification service | bell, toast                           |
+| `overlay:activated` / `deactivated`  | overlay service      | overlay manager                       |
+| `sync:status`                        | sync service         | sync panel, banner                    |
+| `var:status`, `drs:status`           | scoring service      | VAR/DRS panels                        |
+| `shot_clock:tick`, `game_clock:tick` | scoring service      | scorer, overlay                       |
+| `presence:join` / `leave`            | realtime             | scorer presence indicator             |
 
 ## 2.15 Information architecture summary
 

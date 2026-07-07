@@ -22,6 +22,7 @@ khelsetu/
 ## khelsetu-frontend/ (Main Application)
 
 ### Entry Points
+
 ```
 khelsetu-frontend/
 ├── package.json                # Dependencies, scripts, metadata
@@ -37,6 +38,7 @@ khelsetu-frontend/
 ### Source Code (src/)
 
 #### src/app/ - Application Core
+
 **Purpose:** Global setup, routing, providers
 
 ```
@@ -58,6 +60,7 @@ src/app/
 ```
 
 **Key Files:**
+
 - `AppProviders.tsx` - Wraps entire app with Zustand, React Query, Router
 - `ProtectedRoute.tsx` - Checks auth before rendering private pages
 - `routes.ts` - All 36 route definitions in one place
@@ -67,6 +70,7 @@ src/app/
 **Architecture Pattern:** Feature-Sliced Design (FSD)
 
 Each feature is self-contained with:
+
 - Components (UI elements)
 - Hooks (logic)
 - Services (API calls)
@@ -75,6 +79,7 @@ Each feature is self-contained with:
 - Utils (helpers)
 
 **Features List:**
+
 ```
 src/features/
 ├── auth/                        # Authentication
@@ -102,6 +107,7 @@ src/features/
 ```
 
 **Example: auth/ structure**
+
 ```
 src/features/auth/
 ├── components/
@@ -131,6 +137,7 @@ src/features/auth/
 ```
 
 **Adding a New Feature:**
+
 1. Create folder in `src/features/`
 2. Create subdirectories: components, hooks, services, store, types, utils
 3. Add `index.ts` that exports public API
@@ -177,6 +184,7 @@ src/pages/
 ```
 
 **Page Responsibilities:**
+
 - Route-level component (matches URL path)
 - Compose features and shared components
 - Handle route parameters
@@ -246,6 +254,7 @@ src/store/
 ```
 
 **Each Store Pattern:**
+
 ```typescript
 // authStore.ts
 export const useAuthStore = create((set) => ({
@@ -271,6 +280,7 @@ src/lib/
 ```
 
 **Key Responsibilities:**
+
 - `axios.ts` - Auth header injection, error handling
 - `socket.ts` - Connection management, event handlers
 - `env.ts` - Ensure required env vars exist
@@ -288,25 +298,17 @@ src/styles/
 ```
 
 **Design Tokens in CSS Variables:**
+
 ```css
 /* Colors */
---brand-primary: #7F1D1D        /* Maroon */
---brand-secondary: #1F2937      /* Gray */
---color-success: #16A34A        /* Green */
---color-error: #DC2626          /* Red */
---color-warning: #EA8C00        /* Orange */
-
-/* Spacing */
---spacing-xs: 4px
---spacing-sm: 8px
---spacing-md: 16px
---spacing-lg: 24px
-
-/* Typography */
---font-family-sans: system-ui, -apple-system, sans-serif
---font-size-sm: 14px
---font-size-base: 16px
---font-size-lg: 18px
+--brand-primary:
+  #7f1d1d /* Maroon */ --brand-secondary: #1f2937 /* Gray */
+    --color-success: #16a34a /* Green */ --color-error: #dc2626 /* Red */
+    --color-warning: #ea8c00 /* Orange */ /* Spacing */ --spacing-xs: 4px
+    --spacing-sm: 8px --spacing-md: 16px --spacing-lg: 24px /* Typography */
+    --font-family-sans: system-ui,
+  -apple-system,
+  sans-serif --font-size-sm: 14px --font-size-base: 16px --font-size-lg: 18px;
 ```
 
 #### src/tests/ - Test Files
@@ -367,6 +369,7 @@ dist/
 ```
 
 **Characteristics:**
+
 - Minified and gzipped (~150KB total)
 - Code split by route
 - Vendor chunks separated
@@ -437,40 +440,44 @@ docs/
 
 ## Key Statistics
 
-| Metric | Count |
-|--------|-------|
-| React Components | 150+ |
-| Custom Hooks | 30+ |
-| Feature Modules | 26 |
-| Pages/Routes | 36 |
-| Zustand Stores | 4 |
-| TypeScript Files | 427 |
-| Test Files | 24+ |
-| CSS Variables | 50+ |
-| API Endpoints | 30+ |
-| WebSocket Events | 15+ |
+| Metric           | Count |
+| ---------------- | ----- |
+| React Components | 150+  |
+| Custom Hooks     | 30+   |
+| Feature Modules  | 26    |
+| Pages/Routes     | 36    |
+| Zustand Stores   | 4     |
+| TypeScript Files | 427   |
+| Test Files       | 24+   |
+| CSS Variables    | 50+   |
+| API Endpoints    | 30+   |
+| WebSocket Events | 15+   |
 
 ---
 
 ## Quick Navigation
 
 ### For Frontend Developers
+
 - Start: `docs/GETTING_STARTED.md`
 - Architecture: `docs/ARCHITECTURE.md`
 - Components: `src/shared/components/`
 - Styling: `src/styles/`
 
 ### For Backend Developers
+
 - Integration: `docs/API_INTEGRATION_GUIDE.md`
 - Types: `src/shared/types/`
 - API Usage: See feature `services/` folders
 
 ### For Designers
+
 - System: `docs/DESIGN_SYSTEM.md`
 - Components: `npm run storybook`
 - Tokens: `src/styles/variables.css`
 
 ### For DevOps
+
 - Build: `npm run build`
 - Deploy: `docs/DEPLOYMENT.md`
 - Env: `.env.example`

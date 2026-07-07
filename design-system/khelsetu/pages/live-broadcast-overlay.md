@@ -18,6 +18,7 @@
 ## Component Specs
 
 ### Scoreboard Layout (1920×200 typical)
+
 ```
 ┌────────────────────────────────────────────────────────────┐
 │  [Team A Logo] TEAM A NAME   186/4   ●LIVE   TEAM B NAME  [Team B Logo]  142 all out │
@@ -31,12 +32,14 @@
 - LIVE indicator: `text-3xl` with `LivePulse` (red)
 
 ### Lower-Third (Player of the Match)
+
 - Slide-in from left on first display, 400ms spring
 - Width 600px, height 120px
 - Background: gradient `from-blue-900/90 to-transparent`
 - Player photo + name + stat
 
 ### Animated Transitions
+
 - Score change: number flip animation (vertical) 500ms
 - Wicket fall: brief red flash on score (200ms)
 - Boundary (4/6): confetti / sparkle effect (300ms) — skip if reduced motion

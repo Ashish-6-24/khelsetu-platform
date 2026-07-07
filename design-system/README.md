@@ -30,17 +30,22 @@ When you ask the AI to build or modify any UI, it follows this protocol:
 ## How to extend
 
 ### Add a new page override
+
 ```bash
 # Create a new page override file
 touch design-system/khelsetu/pages/[page-name].md
 ```
+
 Follow the structure of existing overrides (Style / Color / Components / Layout / A11y / Performance).
 
 ### Update the Master
+
 Edit `design-system/khelsetu/MASTER.md` directly. The skill's CLI can also be used to regenerate:
+
 ```bash
 python3 .opencode/skills/ui-ux-pro-max/scripts/search.py "your query" --design-system -p "KhelSetu"
 ```
+
 ⚠️ The CLI output is generic — review and customize before committing.
 
 ## Quick searches
@@ -62,6 +67,7 @@ python3 .opencode/skills/ui-ux-pro-max/scripts/search.py "form validation" --sta
 ## Triggers
 
 The skill auto-activates when the AI receives any of these prompts:
+
 - "Build a landing page for..."
 - "Design a dashboard for..."
 - "Create a modal/form/button..."

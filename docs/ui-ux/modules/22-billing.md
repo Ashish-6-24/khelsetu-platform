@@ -3,6 +3,7 @@
 ## Endpoints touched (frontend-facing)
 
 Public:
+
 ```
 GET  /api/public/plans
 GET  /api/public/user/quota
@@ -10,6 +11,7 @@ POST /api/public/matches/create   (quota-enforced)
 ```
 
 Dashboard (treat as required even if some are not yet documented):
+
 ```
 GET    /api/billing/subscription
 POST   /api/billing/subscription                  (create / change plan)
@@ -45,6 +47,7 @@ quota gates organisation-level limits.
 ## Screens
 
 ### 22.1 Pricing page — `/plans` (public)
+
 - **Hero**: "Choose the plan that fits your league."
 - **Tier toggle**: monthly / annual (annual shows savings %).
 - **Plan cards** (3–4): name, price/period, blurb, feature list, CTA
@@ -56,11 +59,13 @@ quota gates organisation-level limits.
 - **Footer CTA**: "Need a custom plan? Contact sales."
 
 ### 22.2 Plan comparison page — `/plans/compare`
+
 - Full-width comparison matrix.
 - Sticky tier headers on horizontal scroll.
 - Tooltip on each feature explaining the limit/behaviour.
 
 ### 22.3 Subscription dashboard — `/o/:orgSlug/billing`
+
 - **Header**: current plan name, status (Active / Trialing / Past due /
   Canceled), renewal date.
 - **KPIs**: matches this period, scorers active, overlays in use,
@@ -70,6 +75,7 @@ quota gates organisation-level limits.
 - **Next invoice preview**: amount, due date, line items.
 
 ### 22.4 Billing history — `/o/:orgSlug/billing/invoices`
+
 - **Table**: invoice #, date, period, amount, status (Paid / Open /
   Past due / Void), download PDF, view detail.
 - **Filters**: status, date range, year.
@@ -77,6 +83,7 @@ quota gates organisation-level limits.
 - **Empty**: "No invoices yet."
 
 ### 22.5 Usage dashboard — `/o/:orgSlug/billing/usage`
+
 - **Per-metric cards** with progress bar and remaining:
   - Matches (current / limit).
   - Scorers (active in period).
@@ -89,6 +96,7 @@ quota gates organisation-level limits.
   used").
 
 ### 22.6 Payment methods manager — `/o/:orgSlug/billing/payment-methods`
+
 - **List**: card brand + last4, expiry, default badge, remove,
   set-default.
 - **"Add payment method"** opens hosted Stripe Elements (preferred) or a
@@ -96,6 +104,7 @@ quota gates organisation-level limits.
 - **Failure state**: declined card with retry CTA.
 
 ### 22.7 Upgrade flow — `/o/:orgSlug/billing/upgrade`
+
 - **Step 1**: compare current vs target plan.
 - **Step 2**: choose period (monthly / annual).
 - **Step 3**: payment method (use existing default or add new).
@@ -104,11 +113,13 @@ quota gates organisation-level limits.
   screen with new plan badge and "What's new" cards.
 
 ### 22.8 Downgrade flow
+
 - Same as upgrade with an extra warning step listing features that will
   be removed at the next renewal.
 - "Schedule downgrade for renewal" or "Downgrade now" with proration.
 
 ### 22.9 Cancellation flow — `/o/:orgSlug/billing/cancel`
+
 - **Step 1**: reason picker (chips + free text).
 - **Step 2**: retention offer (one-time discount or pause).
 - **Step 3**: confirm date (now / end of period) and consequences
@@ -119,6 +130,7 @@ quota gates organisation-level limits.
 ### 22.10 Invoices list (see 22.4)
 
 ### 22.11 Invoice detail — `/o/:orgSlug/billing/invoices/:id`
+
 - **Header**: invoice number, status badge, total, due date.
 - **Bill-to**: org name, address, VAT id.
 - **Line items**: description, qty, unit price, total, discounts, tax.
@@ -126,12 +138,14 @@ quota gates organisation-level limits.
 - **Actions**: Download PDF, Pay now (if open), Email to accountant.
 
 ### 22.12 Free-tier limit indicators
+
 - **Public user**: small banner in the dashboard or on `/matches/create`
   showing "X of Y free matches remaining" with upgrade CTA.
 - **Quota near-limit** (≥80%): amber banner.
 - **Quota exceeded**: red banner blocking creation with "Upgrade" CTA.
 
 ### 22.13 Plan selection during org creation
+
 - After creating an org, an inline wizard offers free / paid plan
   selection; "Start free" defaults to the free plan.
 
@@ -200,7 +214,7 @@ quota gates organisation-level limits.
   provider's hosted fields.
 - All billing endpoints require `https`.
 - Audit every billing mutation (`audit:read` shows under `entity_type =
-  billing`).
+billing`).
 - VAT / tax computed server-side; UI displays the result.
 - Cancellation includes data export reminder to comply with GDPR/CCPA.
 

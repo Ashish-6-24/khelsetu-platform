@@ -9,6 +9,7 @@
 KhelSetu frontend is a static SPA (Single Page Application) that can be deployed to any static file hosting service.
 
 **Characteristics:**
+
 - No server-side rendering required
 - Builds to static HTML, CSS, JS files
 - Can be cached aggressively (content hash in filenames)
@@ -47,6 +48,7 @@ npm run preview
 ## Environment Configuration
 
 ### Development (.env)
+
 ```env
 VITE_API_URL=http://localhost:8080
 VITE_WS_URL=ws://localhost:8080
@@ -55,6 +57,7 @@ VITE_ENABLE_DEBUGGING=true
 ```
 
 ### Production (.env.production)
+
 ```env
 VITE_API_URL=https://api.khelsetu.com
 VITE_WS_URL=wss://api.khelsetu.com
@@ -73,12 +76,14 @@ npm run build
 ```
 
 **Output:**
+
 - `dist/index.html` - Main entry point
 - `dist/assets/` - Minified JS and CSS
 - `dist/sw.js` - Service Worker (PWA support)
 - Total size: ~150KB gzipped
 
 **Optimization Steps:**
+
 1. TypeScript compilation
 2. Tree-shaking (removing unused code)
 3. Minification (removing whitespace)
@@ -92,6 +97,7 @@ npm run build
 ### Option 1: Vercel (Recommended)
 
 **Pros:**
+
 - Zero-config deployment
 - Automatic HTTPS
 - Built-in CDN
@@ -100,28 +106,33 @@ npm run build
 **Steps:**
 
 1. Install Vercel CLI:
+
 ```bash
 npm i -g vercel
 ```
 
 2. Login:
+
 ```bash
 vercel login
 ```
 
 3. Deploy:
+
 ```bash
 cd khelsetu-frontend
 vercel --prod
 ```
 
 4. Configure environment:
+
 ```
 Dashboard → Settings → Environment Variables
 Add: VITE_API_URL, VITE_WS_URL
 ```
 
 **Vercel Config (optional):**
+
 ```json
 {
   "buildCommand": "npm run build",
@@ -138,6 +149,7 @@ Add: VITE_API_URL, VITE_WS_URL
 ### Option 2: Netlify
 
 **Pros:**
+
 - Git integration
 - Automatic builds on push
 - Easy rollback
@@ -154,6 +166,7 @@ Add: VITE_API_URL, VITE_WS_URL
 4. Deploy
 
 **netlify.toml:**
+
 ```toml
 [build]
   command = "npm run build"
@@ -169,6 +182,7 @@ Add: VITE_API_URL, VITE_WS_URL
 ### Option 3: AWS S3 + CloudFront
 
 **Pros:**
+
 - Most control
 - Scalable
 - Cost-effective at scale
@@ -176,11 +190,13 @@ Add: VITE_API_URL, VITE_WS_URL
 **Steps:**
 
 1. Create S3 bucket:
+
 ```bash
 aws s3 mb s3://khelsetu-frontend
 ```
 
 2. Build and upload:
+
 ```bash
 npm run build
 aws s3 sync dist/ s3://khelsetu-frontend --delete
@@ -192,6 +208,7 @@ aws s3 sync dist/ s3://khelsetu-frontend --delete
    - Error pages: 404 → index.html (SPA routing)
 
 4. Set cache headers:
+
 ```bash
 # Cache everything except index.html for 1 year
 aws s3 cp dist/assets/ s3://khelsetu-frontend/assets/ \
@@ -207,6 +224,7 @@ aws s3 cp dist/index.html s3://khelsetu-frontend/index.html \
 ### Option 4: Docker
 
 **Dockerfile:**
+
 ```dockerfile
 # Build stage
 FROM node:18-alpine AS builder
@@ -226,6 +244,7 @@ CMD ["serve", "-s", "dist", "-l", "3000"]
 ```
 
 **Build and run:**
+
 ```bash
 docker build -t khelsetu-frontend .
 docker run -p 3000:3000 khelsetu-frontend
@@ -238,12 +257,15 @@ docker run -p 3000:3000 khelsetu-frontend
 Important: Configure server to serve `index.html` for all routes (not just `/`).
 
 ### Vercel
+
 - Automatically handled (no config needed)
 
 ### Netlify
+
 - Automatically handled (no config needed)
 
 ### Apache (.htaccess)
+
 ```apache
 <IfModule mod_rewrite.c>
   RewriteEngine On
@@ -256,6 +278,7 @@ Important: Configure server to serve `index.html` for all routes (not just `/`).
 ```
 
 ### Nginx
+
 ```nginx
 server {
   location / {
@@ -306,6 +329,7 @@ curl -I https://khelsetu.vercel.app/ | grep -i encoding
 ## Monitoring & Logs
 
 ### Vercel
+
 ```bash
 # View deployments
 vercel ls
@@ -318,10 +342,12 @@ vercel logs
 ```
 
 ### Netlify
+
 - Dashboard → Deploys (view history)
 - Dashboard → Analytics (performance metrics)
 
 ### AWS CloudWatch
+
 ```bash
 aws cloudwatch get-metric-statistics \
   --namespace AWS/CloudFront \
@@ -350,6 +376,7 @@ For SPA routing, server should serve `index.html` so React Router handles the ro
 Typically backend errors (API endpoint down).
 
 Check backend logs:
+
 ```bash
 # If using Node.js backend
 pm2 logs
@@ -363,6 +390,7 @@ docker logs <container-id>
 ## Rollback Strategy
 
 ### Vercel
+
 ```bash
 # View previous deployments
 vercel ls
@@ -372,9 +400,11 @@ vercel rollback
 ```
 
 ### Netlify
+
 - Dashboard → Deploys → Click previous deployment
 
 ### AWS S3
+
 ```bash
 # Sync from previous backup
 aws s3 sync s3://khelsetu-backup/previous/ s3://khelsetu-frontend/
@@ -385,18 +415,22 @@ aws s3 sync s3://khelsetu-backup/previous/ s3://khelsetu-frontend/
 ## SSL/HTTPS
 
 ### Vercel
+
 - Automatic HTTPS certificate
 - Auto-renewal
 
 ### Netlify
+
 - Automatic HTTPS certificate via Let's Encrypt
 - Auto-renewal
 
 ### AWS
+
 - Use ACM (AWS Certificate Manager)
 - Add to CloudFront distribution
 
 ### Self-hosted
+
 - Use Let's Encrypt (certbot)
 - Auto-renewal with cron job
 
@@ -406,14 +440,15 @@ aws s3 sync s3://khelsetu-backup/previous/ s3://khelsetu-frontend/
 
 Target metrics:
 
-| Metric | Target | Tool |
-|--------|--------|------|
-| FCP (First Contentful Paint) | < 1.5s | Lighthouse |
+| Metric                         | Target | Tool       |
+| ------------------------------ | ------ | ---------- |
+| FCP (First Contentful Paint)   | < 1.5s | Lighthouse |
 | LCP (Largest Contentful Paint) | < 2.5s | Lighthouse |
-| CLS (Cumulative Layout Shift) | < 0.1 | Lighthouse |
-| TTI (Time to Interactive) | < 3.5s | Lighthouse |
+| CLS (Cumulative Layout Shift)  | < 0.1  | Lighthouse |
+| TTI (Time to Interactive)      | < 3.5s | Lighthouse |
 
 Check with:
+
 ```bash
 npm run preview
 # Then use Lighthouse in Chrome DevTools

@@ -60,6 +60,7 @@ types: `goal`, `own_goal`, `penalty_goal`, `yellow_card`, `red_card`,
 ## Screens
 
 ### 13.1 Football scoring console — `/o/:orgSlug/scoring/:matchId` (sport=football)
+
 - **Top: Sticky score header**
   - Team A: crest, name, score, possession % (if tracked).
   - Team B: same.
@@ -83,6 +84,7 @@ types: `goal`, `own_goal`, `penalty_goal`, `yellow_card`, `red_card`,
   with quick-sub.
 
 ### 13.2 Lineup builder — `/o/:orgSlug/scoring/:matchId/lineup`
+
 - **Two columns**: Team A, Team B.
 - **Formation selector** (4-4-2, 4-3-3, 3-5-2, 4-2-3-1, custom).
 - **Drag-and-drop** players onto pitch positions; bench underneath.
@@ -94,6 +96,7 @@ types: `goal`, `own_goal`, `penalty_goal`, `yellow_card`, `red_card`,
   tournament rules, no suspended players.
 
 ### 13.3 Substitution panel
+
 - **Modal opened from action grid or lineup**.
 - **Fields**: out player (from on-field), in player (from bench), minute,
   reason (tactical, injury, red-card replacement).
@@ -107,6 +110,7 @@ types: `goal`, `own_goal`, `penalty_goal`, `yellow_card`, `red_card`,
 - **Confirm** → optimistic update → server reconciliation.
 
 ### 13.4 Period timer control
+
 - **Persistent clock widget** in console header.
 - **Start period** button (`POST /football/period/start`): only enabled when
   prior state is `ready` or `period_ended`.
@@ -118,6 +122,7 @@ types: `goal`, `own_goal`, `penalty_goal`, `yellow_card`, `red_card`,
   periods with start/end timestamps and injury added.
 
 ### 13.5 Injury time editor
+
 - **PATCH `/football/period/injury-time`** updates the displayed extra
   minutes for the current period.
 - **UI**: stepper (`+1 / +2 / +3`) or custom input.
@@ -125,6 +130,7 @@ types: `goal`, `own_goal`, `penalty_goal`, `yellow_card`, `red_card`,
 - **Audit**: changes are logged with editor and timestamp.
 
 ### 13.6 Replay verification screen
+
 - **Trigger**: post-match or during a dispute, run
   `/football/verify-replay`.
 - **Output**: deterministic replay of the entire event stream.
@@ -132,6 +138,7 @@ types: `goal`, `own_goal`, `penalty_goal`, `yellow_card`, `red_card`,
 - **Mismatch panel**: lists divergences with "Open event" deep links.
 
 ### 13.7 Event correction screen — `/o/:orgSlug/scoring/:matchId/corrections`
+
 - **List**: all events with `is_correctable` flag.
 - **Inline edit**: modify scorer/assist for a goal, change card type,
   reassign foul to another player.
@@ -142,6 +149,7 @@ types: `goal`, `own_goal`, `penalty_goal`, `yellow_card`, `red_card`,
   outright (vs correct, which mutates).
 
 ### 13.8 Eligibility dashboard — `/o/:orgSlug/scoring/:matchId/eligibility`
+
 - **Initialize**: `POST /football/eligibility/initialize` (once per match).
 - **Per-team table** (`/eligibility/team/{teamId}`): each player with
   status (eligible, suspended, yellow-card-accumulated, injured, ineligible
@@ -153,11 +161,12 @@ types: `goal`, `own_goal`, `penalty_goal`, `yellow_card`, `red_card`,
   blocks ineligible players from the starting XI.
 
 ### 13.9 VAR dashboard — `/o/:orgSlug/scoring/:matchId/var`
+
 - **Header**: VAR connection state, VAR official, current review.
 - **Initiate review** modal: incident type (goal, penalty, red card,
   mistaken identity), event link, on-field decision, location chip.
 - **Status board**: review lifecycle (`pending → in_review → on_field_review
-  → decision`). PATCH status for each transition.
+→ decision`). PATCH status for each transition.
 - **Decision modal**: confirm / overturn / no review possible, final
   decision text, optional clip URL.
 - **VAR stats panel** (`/var/stats`): total reviews, average duration,
@@ -165,6 +174,7 @@ types: `goal`, `own_goal`, `penalty_goal`, `yellow_card`, `red_card`,
 - **VAR list** (`/var`): full review history.
 
 ### 13.10 VAR review queue (broadcast aside)
+
 - A **side drawer** visible on the scoring console while a VAR is active:
   - Pulsing "VAR CHECK" banner.
   - Incident summary.
@@ -173,6 +183,7 @@ types: `goal`, `own_goal`, `penalty_goal`, `yellow_card`, `red_card`,
   - Block scoring inputs that depend on the disputed event until decision.
 
 ### 13.11 Penalty shootout screen — `/o/:orgSlug/scoring/:matchId/penalties`
+
 - **Initialize**: `POST /football/penalties/initialize` (team order, taker
   list per team).
 - **Start**: `POST /football/penalties/start`.
@@ -187,6 +198,7 @@ types: `goal`, `own_goal`, `penalty_goal`, `yellow_card`, `red_card`,
   crowd safety) → confirm modal.
 
 ### 13.12 Match end confirmation
+
 - **CTA**: "End match" (only enabled when current period is full-time or
   shootout decided).
 - **Modal**: final score, period summary, MOTM (optional), any pending
@@ -194,6 +206,7 @@ types: `goal`, `own_goal`, `penalty_goal`, `yellow_card`, `red_card`,
 - **Action**: `POST /football/match/end`.
 
 ### 13.13 Correct scoring event flow
+
 - From **event feed**, swipe / context-menu → "Correct".
 - Modal pre-fills event data; reason required.
 - `POST /football/events/{eventId}/correct` updates and creates a
@@ -264,18 +277,18 @@ types: `goal`, `own_goal`, `penalty_goal`, `yellow_card`, `red_card`,
 
 ## Keyboard shortcuts (tablet scoring)
 
-| Key | Action |
-|---|---|
-| G | Goal modal |
-| Y | Yellow card |
-| R | Red card |
-| S | Substitution modal |
-| F | Foul |
-| C | Corner |
-| O | Offside |
-| V | VAR modal |
-| I | Injury time +1 |
-| U | Undo last event |
-| P | Pause/Resume clock |
-| Enter | Confirm modal |
-| Esc | Close modal |
+| Key   | Action             |
+| ----- | ------------------ |
+| G     | Goal modal         |
+| Y     | Yellow card        |
+| R     | Red card           |
+| S     | Substitution modal |
+| F     | Foul               |
+| C     | Corner             |
+| O     | Offside            |
+| V     | VAR modal          |
+| I     | Injury time +1     |
+| U     | Undo last event    |
+| P     | Pause/Resume clock |
+| Enter | Confirm modal      |
+| Esc   | Close modal        |

@@ -6,31 +6,31 @@ module, which states are mandatory.
 
 ## 32.1 Canonical states
 
-| State | Trigger | Default treatment |
-|---|---|---|
-| **Loading** | initial fetch / refetch | Skeleton matching final layout; never a centred spinner-only screen |
-| **Empty** | endpoint returns no rows | Illustration + headline + helper + primary CTA |
-| **Success** | data rendered | Normal layout |
-| **Error** | request failed (>=500, network) | Inline banner with retry; per-feature error boundary as fallback |
-| **Unauthorized** | 401 | Redirect to `/login?next=...` with toast |
-| **Forbidden** | 403 / missing permission | `<ForbiddenScreen>` with "Request access" CTA |
-| **Offline** | no network | Connection banner + cached read + queued writes |
-| **Pending sync** | item in queue | Tiny "pending" chip on the affected row/event |
-| **Conflict** | sync conflict | Red banner + link to resolver; blocks further edits on the conflicting entity |
-| **Partial data** | some sub-resources failed | Render available; show "Some data unavailable" notice; per-cell `—` |
-| **Live** | live status active | LIVE pulse + sticky header + realtime |
-| **Completed** | terminal status | Read-only summary; trophy/checkmark cue |
-| **Suspended** | match suspended | Amber banner + reason; locked editing |
-| **Abandoned** | match abandoned | Red banner; read-only |
-| **Postponed** | match postponed | Clock icon; new time; reschedule CTA |
-| **Cancelled** | match/tournament cancelled | Greyed; reason tooltip; non-actionable |
-| **Stale** | data older than threshold | Amber "Updated Nm ago" chip + refresh CTA |
-| **Validating** | server-side validation in flight | Spinner inline + disabled submit |
-| **Pending review** | item awaits decision (VAR/DRS) | Pulsing chip + locked input around it |
-| **Recalculating** | standings recompute in progress | Page dimmed + progress bar |
-| **Replaying** | scoring replay in progress | Banner + locked write actions |
-| **Read-only** | permission gated or after termination | Hide write affordances; banner if needed |
-| **Maintenance** | platform maintenance window | Page-level banner with ETA |
+| State              | Trigger                               | Default treatment                                                             |
+| ------------------ | ------------------------------------- | ----------------------------------------------------------------------------- |
+| **Loading**        | initial fetch / refetch               | Skeleton matching final layout; never a centred spinner-only screen           |
+| **Empty**          | endpoint returns no rows              | Illustration + headline + helper + primary CTA                                |
+| **Success**        | data rendered                         | Normal layout                                                                 |
+| **Error**          | request failed (>=500, network)       | Inline banner with retry; per-feature error boundary as fallback              |
+| **Unauthorized**   | 401                                   | Redirect to `/login?next=...` with toast                                      |
+| **Forbidden**      | 403 / missing permission              | `<ForbiddenScreen>` with "Request access" CTA                                 |
+| **Offline**        | no network                            | Connection banner + cached read + queued writes                               |
+| **Pending sync**   | item in queue                         | Tiny "pending" chip on the affected row/event                                 |
+| **Conflict**       | sync conflict                         | Red banner + link to resolver; blocks further edits on the conflicting entity |
+| **Partial data**   | some sub-resources failed             | Render available; show "Some data unavailable" notice; per-cell `—`           |
+| **Live**           | live status active                    | LIVE pulse + sticky header + realtime                                         |
+| **Completed**      | terminal status                       | Read-only summary; trophy/checkmark cue                                       |
+| **Suspended**      | match suspended                       | Amber banner + reason; locked editing                                         |
+| **Abandoned**      | match abandoned                       | Red banner; read-only                                                         |
+| **Postponed**      | match postponed                       | Clock icon; new time; reschedule CTA                                          |
+| **Cancelled**      | match/tournament cancelled            | Greyed; reason tooltip; non-actionable                                        |
+| **Stale**          | data older than threshold             | Amber "Updated Nm ago" chip + refresh CTA                                     |
+| **Validating**     | server-side validation in flight      | Spinner inline + disabled submit                                              |
+| **Pending review** | item awaits decision (VAR/DRS)        | Pulsing chip + locked input around it                                         |
+| **Recalculating**  | standings recompute in progress       | Page dimmed + progress bar                                                    |
+| **Replaying**      | scoring replay in progress            | Banner + locked write actions                                                 |
+| **Read-only**      | permission gated or after termination | Hide write affordances; banner if needed                                      |
+| **Maintenance**    | platform maintenance window           | Page-level banner with ETA                                                    |
 
 ## 32.2 State chips & banners
 
@@ -53,6 +53,7 @@ Helper (1–2 lines, secondary text)
 ```
 
 Examples:
+
 - **Tournaments empty**: "No tournaments yet — Create your first one to
   get started." → `[ + New tournament ]`.
 - **Matches empty**: "No matches scheduled — Create one or generate
@@ -102,17 +103,17 @@ Examples:
 
 ## 32.8 Live / lifecycle states (matches)
 
-| State | Visual |
-|---|---|
-| Scheduled | muted, countdown chip |
-| Pre-match | "Pre-match" amber chip; lineup/toss flow |
-| Live | red LIVE pulse + period + clock |
-| HT / quarter break | grey "HT" chip; actions muted; "Resume" CTA |
-| Suspended | amber banner with reason; lifecycle dropdown highlighted |
-| Postponed | clock icon; new datetime; reschedule CTA |
-| Abandoned | red strikethrough; partial stats; read-only |
-| Cancelled | greyed card; reason tooltip |
-| Completed | green check chip; summary card; "Sign off" CTA before lock |
+| State              | Visual                                                     |
+| ------------------ | ---------------------------------------------------------- |
+| Scheduled          | muted, countdown chip                                      |
+| Pre-match          | "Pre-match" amber chip; lineup/toss flow                   |
+| Live               | red LIVE pulse + period + clock                            |
+| HT / quarter break | grey "HT" chip; actions muted; "Resume" CTA                |
+| Suspended          | amber banner with reason; lifecycle dropdown highlighted   |
+| Postponed          | clock icon; new datetime; reschedule CTA                   |
+| Abandoned          | red strikethrough; partial stats; read-only                |
+| Cancelled          | greyed card; reason tooltip                                |
+| Completed          | green check chip; summary card; "Sign off" CTA before lock |
 
 ## 32.9 Tournament lifecycle states
 
@@ -128,29 +129,29 @@ Examples:
 
 ## 32.11 Per-module mandatory states
 
-| Module | Loading | Empty | Error | Unauthorized | Forbidden | Offline | Pending sync | Conflict | Partial | Live | Completed | Suspended | Abandoned | Postponed | Cancelled |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Auth | ✓ | — | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — |
-| Organizations | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — |
-| Sports | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — |
-| Tournaments | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | ✓ | — | ✓ | — | — | — | ✓ |
-| Teams / Players | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — |
-| Matches | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Scoring (generic) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
-| Scoring (cricket) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
-| Scoring (football) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
-| Scoring (basketball) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
-| Standings | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — |
-| Notifications | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — |
-| Overlays | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | — | ✓ | ✓ | — | — | — | — | — |
-| Visualization | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — |
-| Analytics | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — |
-| Audit | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | ✓ | ✓ | — | — | — | — | — |
-| RBAC | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — | — | — | — | — |
-| Billing | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — |
-| Sync | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | — | — | — |
-| Public portal | ✓ | ✓ | ✓ | — | — | ✓ | — | — | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Admin | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | ✓ | — | — | — | — | — | — |
+| Module               | Loading | Empty | Error | Unauthorized | Forbidden | Offline | Pending sync | Conflict | Partial | Live | Completed | Suspended | Abandoned | Postponed | Cancelled |
+| -------------------- | ------- | ----- | ----- | ------------ | --------- | ------- | ------------ | -------- | ------- | ---- | --------- | --------- | --------- | --------- | --------- |
+| Auth                 | ✓       | —     | ✓     | ✓            | ✓         | ✓       | —            | —        | —       | —    | —         | —         | —         | —         | —         |
+| Organizations        | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | —            | —        | —       | —    | —         | —         | —         | —         | —         |
+| Sports               | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | —            | —        | —       | —    | —         | —         | —         | —         | —         |
+| Tournaments          | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | —            | —        | ✓       | —    | ✓         | —         | —         | —         | ✓         |
+| Teams / Players      | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | —            | —        | ✓       | —    | —         | —         | —         | —         | —         |
+| Matches              | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | —            | —        | ✓       | ✓    | ✓         | ✓         | ✓         | ✓         | ✓         |
+| Scoring (generic)    | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | ✓            | ✓        | ✓       | ✓    | ✓         | ✓         | ✓         | —         | —         |
+| Scoring (cricket)    | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | ✓            | ✓        | ✓       | ✓    | ✓         | ✓         | ✓         | —         | —         |
+| Scoring (football)   | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | ✓            | ✓        | ✓       | ✓    | ✓         | ✓         | ✓         | —         | —         |
+| Scoring (basketball) | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | ✓            | ✓        | ✓       | ✓    | ✓         | ✓         | ✓         | —         | —         |
+| Standings            | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | —            | —        | ✓       | —    | —         | —         | —         | —         | —         |
+| Notifications        | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | —            | —        | —       | —    | —         | —         | —         | —         | —         |
+| Overlays             | ✓       | ✓     | ✓     | ✓            | ✓         | —       | —            | —        | ✓       | ✓    | —         | —         | —         | —         | —         |
+| Visualization        | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | ✓            | ✓        | ✓       | —    | —         | —         | —         | —         | —         |
+| Analytics            | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | —            | —        | ✓       | ✓    | —         | —         | —         | —         | —         |
+| Audit                | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | —            | —        | ✓       | ✓    | —         | —         | —         | —         | —         |
+| RBAC                 | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | —            | —        | —       | —    | —         | —         | —         | —         | —         |
+| Billing              | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | —            | —        | ✓       | —    | —         | —         | —         | —         | —         |
+| Sync                 | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | ✓            | ✓        | ✓       | ✓    | —         | —         | —         | —         | —         |
+| Public portal        | ✓       | ✓     | ✓     | —            | —         | ✓       | —            | —        | ✓       | ✓    | ✓         | ✓         | ✓         | ✓         | ✓         |
+| Admin                | ✓       | ✓     | ✓     | ✓            | ✓         | ✓       | —            | —        | ✓       | —    | —         | —         | —         | —         | —         |
 
 ## 32.12 Recovery patterns
 

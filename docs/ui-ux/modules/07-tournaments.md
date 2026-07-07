@@ -44,12 +44,14 @@ current state are disabled with a tooltip explaining why.
 ## Screens
 
 ### 7.1 Tournament list — `/o/:orgSlug/tournaments`
+
 - **Filters:** sport, status, format, date range, search.
 - **Sort:** recently created, start date, status.
 - **Cards / rows toggle:** cards for marketing, rows for dense browsing.
 - **Bulk actions:** archive, export, clone.
 
 ### 7.2 Tournament create wizard — `/o/:orgSlug/tournaments/new`
+
 - **Steps:**
   1. **Basics** — name, sport (card grid), format (radio: league, knockout,
      group+knockout, round-robin), start/end date.
@@ -66,11 +68,13 @@ current state are disabled with a tooltip explaining why.
 - **Progress bar** at top.
 
 ### 7.3 Tournament edit — `/o/:orgSlug/tournaments/:id/edit`
+
 - Same wizard, pre-filled.
 - Some fields lock once the tournament is `live` (sport, format, leg count).
 - A "Locked fields" panel explains what is and isn't editable at this state.
 
 ### 7.4 Tournament detail / dashboard — `/o/:orgSlug/tournaments/:id`
+
 - **Header:** logo, name, sport icon, status badge, dates, organiser,
   follow/share buttons.
 - **Quick stats:** teams, matches, completed, live.
@@ -90,6 +94,7 @@ current state are disabled with a tooltip explaining why.
   notifications defaults, danger zone (archive, delete).
 
 ### 7.5 Tournament status control
+
 - **Status dropdown** in header.
 - **Transitions:**
   - draft → registration: "Open team registration."
@@ -101,6 +106,7 @@ current state are disabled with a tooltip explaining why.
 - **Confirmations** use destructive dialogs only for cancellations.
 
 ### 7.6 Team registration flow
+
 - **Two paths:**
   - Tournament admin registers teams manually (search org's teams).
   - Captain accepts an open invitation.
@@ -108,6 +114,7 @@ current state are disabled with a tooltip explaining why.
 - **Empty state:** "No teams registered yet — add teams to get started."
 
 ### 7.7 Fixture generator
+
 - **Step:**
   - Show preview: number of matches, total rounds, expected duration.
   - Allow editing: pin a team, set kickoff times, assign venues, exclude
@@ -117,6 +124,7 @@ current state are disabled with a tooltip explaining why.
 - **Result:** "X fixtures generated" toast with "View fixtures" action.
 
 ### 7.8 Fixture viewer
+
 - **League / group+league:** schedule list grouped by round.
 - **Knockout:** bracket visualisation (single-elim, double-elim).
 - **Round-robin:** matrix grid (teams × matchdays) + schedule list.
@@ -124,6 +132,7 @@ current state are disabled with a tooltip explaining why.
 - **Print view** button for printable brackets.
 
 ### 7.9 Tournament progression view
+
 - **Live indicator** on the current match (if any).
 - **"Next up"** card with kickoff time + teams.
 - **"Recently completed"** list.

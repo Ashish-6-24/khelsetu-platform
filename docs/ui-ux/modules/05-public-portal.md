@@ -24,6 +24,7 @@ The public portal is the **growth engine** of KhelSetu. It must be:
 ## Screens
 
 ### 5.1 Public home — `/`
+
 - **Hero:** Bold headline ("Run real sports, in real time."), 2 CTAs
   ("Watch live" / "Create free match"), live match ticker (top 3 LIVE
   matches, horizontal scroll on mobile).
@@ -39,6 +40,7 @@ The public portal is the **growth engine** of KhelSetu. It must be:
 - **Mobile:** sticky bottom CTA "Create free match".
 
 ### 5.2 Tournament listing — `/tournaments`
+
 - **Filters:** sport (chips), status (upcoming, live, completed), country
   (Nepal first), date range, search.
 - **Sort:** relevance, date, popularity, "live first".
@@ -49,6 +51,7 @@ The public portal is the **growth engine** of KhelSetu. It must be:
 - **Loading:** 6 skeleton cards.
 
 ### 5.3 Tournament details — `/tournaments/:id`
+
 - **Header:** logo, name, sport, status, date range, organiser, follow
   button (saves to local list).
 - **Tabs:** Overview, Teams, Fixtures, Standings, Stats.
@@ -61,12 +64,14 @@ The public portal is the **growth engine** of KhelSetu. It must be:
 - **Stats:** top scorers, top wicket-takers, discipline, attendance.
 
 ### 5.4 Live matches listing — `/live`
+
 - All matches currently LIVE, sorted by recency.
 - Card shows team logos, current score, period/over, "LIVE" pulse, "Watch"
   button.
 - Empty state: "No live matches right now. Check the schedule."
 
 ### 5.5 Match details — `/matches/:id`
+
 - **Header:** teams, current score (big), live indicator, share, follow.
 - **Tabs:** Live, Scorecard/Stats, Commentary, Lineups, Timeline.
 - **Live tab:** event feed + clock, "Join conversation" (future).
@@ -78,6 +83,7 @@ The public portal is the **growth engine** of KhelSetu. It must be:
 - **Timeline tab:** all events, filterable by team and type.
 
 ### 5.6 Live score page — `/matches/:id/live`
+
 - **Sticky score header** with team A name + score, team B name + score,
   period/over/clock, LIVE pulse.
 - Below: event log (newest first), with sport-specific formatting.
@@ -86,30 +92,36 @@ The public portal is the **growth engine** of KhelSetu. It must be:
 - **Reconnect indicator:** small dot in header if disconnected.
 
 ### 5.7 Standings — `/tournaments/:id/standings`
+
 - League table (sortable), form icons (W/D/L), tie-break indicator.
 - Snapshot timestamps at bottom.
 - Mobile: sticky first column, horizontal scroll for the rest.
 
 ### 5.8 Fixtures — `/tournaments/:id/fixtures`
+
 - Bracket view (knockout) or schedule (league) with date filters.
 - Click a match → match details page.
 
 ### 5.9 Team page — `/teams/:id`
+
 - Team header (logo, name, sport, city).
 - Tabs: Overview, Roster, Schedule, Stats, History.
 - Follow button.
 
 ### 5.10 Player page — `/players/:id`
+
 - Player header (avatar, name, role, current teams).
 - Career stats by sport.
 - Match log.
 
 ### 5.11 Search results — `/search?q=...`
+
 - Top: search input with type-ahead suggestions.
 - Tabs: All, Tournaments, Teams, Players, Matches.
 - Empty / no results state with popular suggestions.
 
 ### 5.12 Plans / Pricing — `/plans`
+
 - Three pricing cards (Starter, Pro, Enterprise).
 - Feature comparison table.
 - "Most popular" badge on Pro.
@@ -117,6 +129,7 @@ The public portal is the **growth engine** of KhelSetu. It must be:
 - FAQ accordion.
 
 ### 5.13 Free match creation — `/matches/new`
+
 - **Wizards:** Basics → Teams → Sport config → Review.
 - **Quota indicator** at top: "You've used X of N free matches this month."
 - **Sport config:**
@@ -127,6 +140,7 @@ The public portal is the **growth engine** of KhelSetu. It must be:
 - **Success:** match created, "Take me to scoring" or "Share with friends".
 
 ### 5.14 Quota indicator / usage banner
+
 - **Inline banner** on the free-match wizard: progress bar of usage.
 - **Toast** when 80% and 100% thresholds are reached.
 - **Modal** when over quota: upgrade CTA.

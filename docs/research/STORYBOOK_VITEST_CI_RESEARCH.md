@@ -5,6 +5,7 @@
 This document covers how big tech companies (Vercel, Chromatic, Linear, Stripe) run Storybook component tests in CI using `@storybook/addon-vitest` + Vitest. Includes exact configurations, GitHub Actions YAML, and best practices.
 
 **Current KhelSetu Status:**
+
 - ✅ `@storybook/addon-vitest@10.4.0` installed
 - ✅ `vitest@4.1.6` installed
 - ✅ `@vitest/coverage-v8@4.1.6` installed
@@ -85,6 +86,7 @@ test: {
 ### 2.2 Storybook Main Config (checked)
 
 **Current (.storybook/main.ts)**: ✅ CORRECT
+
 - Addon installed: `@storybook/addon-vitest`
 - Stories pattern: `../src/**/*.stories.@(js|jsx|mjs|ts|tsx)`
 - Includes addon-a11y, addon-docs
@@ -92,6 +94,7 @@ test: {
 ### 2.3 Storybook Preview Config (checked)
 
 **Current (.storybook/preview.tsx)**: ✅ MINIMAL but WORKING
+
 - Has a11y parameters
 - Missing: test addon parameters
 
@@ -102,12 +105,14 @@ test: {
 ### 3.1 Update Vitest Config (vitest.config.ts)
 
 **Split into TWO configs:**
+
 - `vitest.config.ts` - Regular unit tests (excludes stories)
 - `vitest.workspace.ts` - Includes story tests
 
 **File Path**: `khelsetu-frontend/vitest.config.ts`
 
 **Changes Required**:
+
 - Keep exclude for regular `vitest test` command
 - Add workspace config for story tests
 
@@ -238,6 +243,7 @@ Status: ✅ Has variants, but missing `play()` hooks for interaction tests
 ```typescript
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within } from '@storybook/test';
+
 import { Button } from './Button';
 
 const meta = {
@@ -261,15 +267,15 @@ export const Primary: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole('button');
-    
+
     // Assert initial state
     expect(button).toBeInTheDocument();
     expect(button).toHaveTextContent('Click me');
     expect(button).not.toBeDisabled();
-    
+
     // Simulate interaction
     await userEvent.click(button);
-    
+
     // Assert after interaction
     expect(button).toHaveAttribute('data-clicked', 'true');
   },
@@ -283,7 +289,7 @@ export const Disabled: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole('button');
-    
+
     expect(button).toBeDisabled();
     expect(button).toHaveAttribute('aria-disabled', 'true');
   },
@@ -297,7 +303,7 @@ export const Loading: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole('button');
-    
+
     expect(button).toBeDisabled();
     expect(button).toHaveClass('animate-pulse');
   },
@@ -308,14 +314,14 @@ export const Loading: Story = {
 
 **Best Practice Matrix** (from Vercel/Chromatic docs):
 
-| Story | Should Test | Example |
-|-------|------------|---------|
-| Variant states | Visual + DOM | `Primary`, `Secondary`, `Loading` |
-| Interactive | Interactions + assertions | `play()` with userEvent |
-| Error states | Error UI + messages | `Error`, `Invalid` variants |
-| Accessibility | a11y attributes | `aria-label`, `role`, `aria-disabled` |
-| Edge cases | Truncation, overflow | Long text, emoji, special chars |
-| Dark mode | Theme variants | Added via decorator |
+| Story          | Should Test               | Example                               |
+| -------------- | ------------------------- | ------------------------------------- |
+| Variant states | Visual + DOM              | `Primary`, `Secondary`, `Loading`     |
+| Interactive    | Interactions + assertions | `play()` with userEvent               |
+| Error states   | Error UI + messages       | `Error`, `Invalid` variants           |
+| Accessibility  | a11y attributes           | `aria-label`, `role`, `aria-disabled` |
+| Edge cases     | Truncation, overflow      | Long text, emoji, special chars       |
+| Dark mode      | Theme variants            | Added via decorator                   |
 
 ---
 
@@ -332,48 +338,48 @@ export const Loading: Story = {
 **Insert after line 72** (after unit test job):
 
 ```yaml
-  storybook-tests:
-    name: Storybook Component Tests
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: khelsetu-frontend/package-lock.json
-      - run: npm ci
-      - run: npm run test:stories
-      - name: Upload Storybook test results
-        if: always()
-        uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a # v4.3.6
-        with:
-          name: storybook-test-results
-          path: khelsetu-frontend/test-results/
-          retention-days: 30
+storybook-tests:
+  name: Storybook Component Tests
+  runs-on: ubuntu-latest
+  permissions:
+    contents: read
+  steps:
+    - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+    - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: khelsetu-frontend/package-lock.json
+    - run: npm ci
+    - run: npm run test:stories
+    - name: Upload Storybook test results
+      if: always()
+      uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a # v4.3.6
+      with:
+        name: storybook-test-results
+        path: khelsetu-frontend/test-results/
+        retention-days: 30
 
-  storybook-coverage:
-    name: Storybook Coverage
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: khelsetu-frontend/package-lock.json
-      - run: npm ci
-      - run: npm run test:stories:coverage
-      - name: Upload coverage reports
-        uses: codecov/codecov-action@5ecb98a3c6b747ed38dc09f064f2b8d3fbb84a16 # v4.3.1
-        with:
-          files: ./khelsetu-frontend/coverage/coverage-final.json
-          flags: storybook
-          name: storybook-coverage
+storybook-coverage:
+  name: Storybook Coverage
+  runs-on: ubuntu-latest
+  permissions:
+    contents: read
+  steps:
+    - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+    - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: khelsetu-frontend/package-lock.json
+    - run: npm ci
+    - run: npm run test:stories:coverage
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@5ecb98a3c6b747ed38dc09f064f2b8d3fbb84a16 # v4.3.1
+      with:
+        files: ./khelsetu-frontend/coverage/coverage-final.json
+        flags: storybook
+        name: storybook-coverage
 ```
 
 ### 5.3 Update CI Gatekeeper (line 156)
@@ -381,8 +387,21 @@ export const Loading: Story = {
 **Current**: `needs: [gitleaks, quality, test, coverage, circular, build, e2e, security]`
 
 **Updated**:
+
 ```yaml
-needs: [gitleaks, quality, test, coverage, circular, build, e2e, security, storybook-tests, storybook-coverage]
+needs:
+  [
+    gitleaks,
+    quality,
+    test,
+    coverage,
+    circular,
+    build,
+    e2e,
+    security,
+    storybook-tests,
+    storybook-coverage,
+  ]
 ```
 
 ---
@@ -429,6 +448,7 @@ needs: [gitleaks, quality, test, coverage, circular, build, e2e, security, story
 ### 6.3 Coverage Reports
 
 **Output locations**:
+
 - Unit tests: `coverage/` (existing)
 - Story tests: `coverage/storybook/` (new)
 - Combined HTML: View both in CI artifacts
@@ -563,24 +583,28 @@ npm run validate  # Already includes all tests
 ## Part 11: Industry Examples
 
 ### Vercel (Next.js)
+
 - Uses stories as component tests
 - Coverage threshold: 80%
 - Shard approach: 4-6 parallel jobs
 - CI time: ~2 min for stories
 
 ### Chromatic (Storybook)
+
 - Dedicated story test job
 - Uses `@storybook/addon-vitest`
 - Combines visual + interaction tests
 - Coverage: separate metric
 
 ### Stripe (React components)
+
 - Play functions test interactions
 - Before/after assertions
 - A11y checks in stories
 - Coverage: 85% target
 
 ### Linear (React)
+
 - Story coverage == acceptance tests
 - Play functions extensive
 - Dark mode tested via decorators

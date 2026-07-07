@@ -17,17 +17,18 @@ Nepal's mobile landscape is dominated by Android at 88-92% market share. iOS acc
 
 ### Recommended Breakpoints
 
-| Breakpoint | Min-width | Tailwind prefix | Nepal device target | Intent |
-|---|---|---|---|---|
-| `xs` | 0 | (default) | Budget phone portrait (360px) | Phone portrait — public portal, scorer mini |
-| `sm` | 640px | `sm:` | Phone landscape / phablet | Public portal expanded |
-| `md` | 768px | `md:` | Small tablet | Scorer console single-pane, dashboard read-only |
-| `lg` | 1024px | `lg:` | Tablet landscape | Scorer dual-pane, dashboard full |
-| `xl` | 1280px | `xl:` | Laptop | Dashboard primary |
-| `2xl` | 1536px | `2xl:` | Desktop | Dashboard wide, overlay editing |
-| `3xl` | 1920px | `3xl:` | Broadcast monitor | Overlay 1080p preview |
+| Breakpoint | Min-width | Tailwind prefix | Nepal device target           | Intent                                          |
+| ---------- | --------- | --------------- | ----------------------------- | ----------------------------------------------- |
+| `xs`       | 0         | (default)       | Budget phone portrait (360px) | Phone portrait — public portal, scorer mini     |
+| `sm`       | 640px     | `sm:`           | Phone landscape / phablet     | Public portal expanded                          |
+| `md`       | 768px     | `md:`           | Small tablet                  | Scorer console single-pane, dashboard read-only |
+| `lg`       | 1024px    | `lg:`           | Tablet landscape              | Scorer dual-pane, dashboard full                |
+| `xl`       | 1280px    | `xl:`           | Laptop                        | Dashboard primary                               |
+| `2xl`      | 1536px    | `2xl:`          | Desktop                       | Dashboard wide, overlay editing                 |
+| `3xl`      | 1920px    | `3xl:`          | Broadcast monitor             | Overlay 1080p preview                           |
 
 **Why these specific values**:
+
 - **360px base**: Nepal's top mobile screen resolutions are 360x800 (most Samsung, Xiaomi budget phones). Starting at 360px captures the majority of Nepali users. The design must be functional at 360px before adding any responsive enhancements.
 - **640px sm**: Standard Tailwind — captures phablets and phones in landscape. No need to deviate.
 - **768px md**: Matches iPad portrait and most tablets. This is where scorer console transitions from single to dual pane.
@@ -55,14 +56,14 @@ Nepal's mobile landscape is dominated by Android at 88-92% market share. iOS acc
 
 Research consensus across WCAG, Material Design, Apple HIG, and NN/g:
 
-| Standard | Minimum size | Spacing | Notes |
-|---|---|---|---|
-| WCAG 2.5.8 (AA legal) | 24x24 CSS px | 24px exclusion zone | Legal floor — never ship at this size |
-| WCAG 2.5.5 (AAA) | 44x44 CSS px | 8px between targets | Comfortable target |
-| Apple HIG | 44x44 pt | Varies | iOS standard since 2007 |
-| Material Design | 48x48 dp | 8dp between targets | Most generous — recommended |
-| NN/g research | 1cm x 1cm physical | 8px minimum | Physical measurement — 45-57 CSS px |
-| BBC guidelines | 7-10mm physical | 1px minimum between | For accessibility |
+| Standard              | Minimum size       | Spacing             | Notes                                 |
+| --------------------- | ------------------ | ------------------- | ------------------------------------- |
+| WCAG 2.5.8 (AA legal) | 24x24 CSS px       | 24px exclusion zone | Legal floor — never ship at this size |
+| WCAG 2.5.5 (AAA)      | 44x44 CSS px       | 8px between targets | Comfortable target                    |
+| Apple HIG             | 44x44 pt           | Varies              | iOS standard since 2007               |
+| Material Design       | 48x48 dp           | 8dp between targets | Most generous — recommended           |
+| NN/g research         | 1cm x 1cm physical | 8px minimum         | Physical measurement — 45-57 CSS px   |
+| BBC guidelines        | 7-10mm physical    | 1px minimum between | For accessibility                     |
 
 **KhelSetu standard**: **48x48px minimum** for all interactive controls, **8px spacing** between adjacent targets. Scorer action buttons: **64x64px** (mobile), **80x80px** (tablet) — these are primary action targets used during live scoring with one hand.
 
@@ -129,12 +130,12 @@ Use `@media (any-pointer: coarse)` to increase touch targets for touchscreen use
 
 ### Research Findings
 
-| Pattern | Engagement impact | Discoverability | Best for |
-|---|---|---|---|
-| Bottom tab bar | +30-40% engagement with secondary sections | High (always visible) | 4-5 primary sections |
-| Hamburger menu | Baseline (hidden = undiscovered) | Low (out of sight, out of mind) | Secondary nav, 6+ items |
-| Horizontal scroll tabs | High for content browsing | Medium (peek at edges) | Match lists, league filters |
-| Edge swipe drawer | Low (hidden gesture) | Very low | Settings, secondary |
+| Pattern                | Engagement impact                          | Discoverability                 | Best for                    |
+| ---------------------- | ------------------------------------------ | ------------------------------- | --------------------------- |
+| Bottom tab bar         | +30-40% engagement with secondary sections | High (always visible)           | 4-5 primary sections        |
+| Hamburger menu         | Baseline (hidden = undiscovered)           | Low (out of sight, out of mind) | Secondary nav, 6+ items     |
+| Horizontal scroll tabs | High for content browsing                  | Medium (peek at edges)          | Match lists, league filters |
+| Edge swipe drawer      | Low (hidden gesture)                       | Very low                        | Settings, secondary         |
 
 **BBC Sport study**: Adding bottom navigation increased content consumption by 7-9% and reduced time-in-app by 4% — users got what they wanted faster.
 
@@ -147,6 +148,7 @@ Use `@media (any-pointer: coarse)` to increase touch targets for touchscreen use
 #### Mobile (< 768px)
 
 **Bottom tab bar** — 5 tabs, always visible:
+
 1. Home (dashboard feed)
 2. Matches (live + upcoming)
 3. Scoring (active match / quick start)
@@ -174,6 +176,7 @@ Use `@media (any-pointer: coarse)` to increase touch targets for touchscreen use
 **Sidebar becomes bottom sheet** — On mobile, the dashboard sidebar opens as a full-height bottom sheet triggered from the "More" tab or a hamburger icon in the topbar.
 
 **Scorer console bottom nav** — Separate 5-tab bar for scoring context:
+
 1. Lineup
 2. Center (live view)
 3. Events (ball-by-ball)
@@ -226,14 +229,14 @@ This pattern is used by ESPN, Cricbuzz, and all major sports apps for match brow
 
 **Key UI elements for live scoring on small screens**:
 
-| Element | Priority | Mobile adaptation |
-|---|---|---|
-| Current score (runs/wickets/overs) | 1 | Sticky header, always visible |
-| Required run rate | 2 | Below score in header |
-| Current batters | 3 | Compact row with names + runs |
-| Ball-by-ball feed | 4 | Scrollable list below |
-| Win probability | 5 | Small gauge in header |
-| Commentary | 6 | Expandable section |
+| Element                            | Priority | Mobile adaptation             |
+| ---------------------------------- | -------- | ----------------------------- |
+| Current score (runs/wickets/overs) | 1        | Sticky header, always visible |
+| Required run rate                  | 2        | Below score in header         |
+| Current batters                    | 3        | Compact row with names + runs |
+| Ball-by-ball feed                  | 4        | Scrollable list below         |
+| Win probability                    | 5        | Small gauge in header         |
+| Commentary                         | 6        | Expandable section            |
 
 ### Mobile Live Score Layout
 
@@ -257,6 +260,7 @@ This pattern is used by ESPN, Cricbuzz, and all major sports apps for match brow
 ```
 
 **Critical patterns**:
+
 - **Sticky score header**: Always visible at top, never scrolls away. Contains score, run rate, current batters.
 - **Last-over summary**: Compact dot-by-dot visualization (○ ○ 4 ○ W ○ 2) immediately below header.
 - **Values update in place**: No layout shift when scores change. Numbers replace in the same row frame with zero height changes.
@@ -288,17 +292,18 @@ This pattern is used by ESPN, Cricbuzz, and all major sports apps for match brow
 
 Swipe gestures are now universal muscle memory. They're intuitive, fast, and require no instruction. Key patterns:
 
-| Gesture | Use case | Accessibility |
-|---|---|---|
-| Horizontal swipe | Navigate between matches, tabs, pages | Must provide tap alternative |
-| Vertical swipe | Scroll content (default) | Native |
-| Swipe to reveal | Show contextual actions (archive, delete) | Provide visible button alternative |
-| Pull to refresh | Refresh live data | Must have manual refresh button too |
-| Edge swipe | Back navigation (iOS), drawer reveal | System gesture — don't override |
+| Gesture          | Use case                                  | Accessibility                       |
+| ---------------- | ----------------------------------------- | ----------------------------------- |
+| Horizontal swipe | Navigate between matches, tabs, pages     | Must provide tap alternative        |
+| Vertical swipe   | Scroll content (default)                  | Native                              |
+| Swipe to reveal  | Show contextual actions (archive, delete) | Provide visible button alternative  |
+| Pull to refresh  | Refresh live data                         | Must have manual refresh button too |
+| Edge swipe       | Back navigation (iOS), drawer reveal      | System gesture — don't override     |
 
 **NN/g warning**: Limit contextual swipe to destructive actions. Burying key actions behind swipe prevents discovery. Keep swipe behavior consistent within the app.
 
 **Sports app patterns**:
+
 - Swipe between matches in live view
 - Swipe between innings (cricket)
 - Swipe between tabs (stats, commentary, scorecard)
@@ -388,6 +393,7 @@ html {
 ```
 
 **Key rules**:
+
 - Use `overscroll-behavior-y: contain` to prevent browser native refresh
 - Threshold: 80px pull distance (not too sensitive, not too hard)
 - Max pull: 120px (rubber-band effect)
@@ -402,33 +408,33 @@ html {
 
 ### Nepal Network Reality (2026)
 
-| Environment | Speed | Latency | Design target |
-|---|---|---|---|
-| Kathmandu fiber/4G | 20-100 Mbps | 50-150ms | Ideal |
-| Kathmandu 4G under load | 1-5 Mbps | 200-500ms | Evening peaks |
-| Tier-2 cities 4G | 5-25 Mbps | 100-300ms | Pokhara, Biratnagar |
-| Rural/hill districts | 0.5-5 Mbps | Variable | Where coverage exists |
+| Environment             | Speed       | Latency   | Design target         |
+| ----------------------- | ----------- | --------- | --------------------- |
+| Kathmandu fiber/4G      | 20-100 Mbps | 50-150ms  | Ideal                 |
+| Kathmandu 4G under load | 1-5 Mbps    | 200-500ms | Evening peaks         |
+| Tier-2 cities 4G        | 5-25 Mbps   | 100-300ms | Pokhara, Biratnagar   |
+| Rural/hill districts    | 0.5-5 Mbps  | Variable  | Where coverage exists |
 
 **Design for the median**: 4G under load, ~3 Mbps, ~200ms latency. A site that works there works everywhere.
 
 ### Core Web Vitals Targets
 
-| Metric | Good | Target for KhelSetu |
-|---|---|---|
-| LCP | ≤ 2.5s | < 2.0s (sports urgency) |
-| INP | ≤ 200ms | < 150ms (live scoring) |
-| CLS | ≤ 0.1 | < 0.05 (no layout shift during live updates) |
-| TBT | ≤ 200ms | < 100ms (scorer console) |
+| Metric | Good    | Target for KhelSetu                          |
+| ------ | ------- | -------------------------------------------- |
+| LCP    | ≤ 2.5s  | < 2.0s (sports urgency)                      |
+| INP    | ≤ 200ms | < 150ms (live scoring)                       |
+| CLS    | ≤ 0.1   | < 0.05 (no layout shift during live updates) |
+| TBT    | ≤ 200ms | < 100ms (scorer console)                     |
 
 ### Performance Budget by Surface
 
-| Surface | TTI (3G) | TTI (4G) | LCP target | Bundle size |
-|---|---|---|---|---|
-| Public landing | < 4s | < 2s | < 2.5s | < 150KB |
-| Public live score | < 3s | < 1.5s | < 2s | < 100KB |
-| Dashboard home | < 4s | < 2s | < 2.5s | < 200KB |
-| Scorer console | < 3s | < 1.5s | < 2s | < 150KB |
-| Overlay | < 2s | < 1s | < 1.5s | < 50KB |
+| Surface           | TTI (3G) | TTI (4G) | LCP target | Bundle size |
+| ----------------- | -------- | -------- | ---------- | ----------- |
+| Public landing    | < 4s     | < 2s     | < 2.5s     | < 150KB     |
+| Public live score | < 3s     | < 1.5s   | < 2s       | < 100KB     |
+| Dashboard home    | < 4s     | < 2s     | < 2.5s     | < 200KB     |
+| Scorer console    | < 3s     | < 1.5s   | < 2s       | < 150KB     |
+| Overlay           | < 2s     | < 1s     | < 1.5s     | < 50KB      |
 
 ### Critical Performance Tactics
 
@@ -443,6 +449,7 @@ html {
 **5. IntersectionObserver**: Replace scroll event listeners with IntersectionObserver for lazy loading, infinite scroll, and scroll-triggered animations.
 
 **6. Image optimization**:
+
 - WebP/AVIF with JPG fallback (25-35% smaller than JPG)
 - `srcset` + `sizes` for responsive images
 - `loading="lazy"` + `decoding="async"` below the fold
@@ -450,18 +457,21 @@ html {
 - Compress at q=75 (40% smaller than q=95, indistinguishable)
 
 **7. Font optimization**:
+
 - Self-host fonts (Barlow Condensed + Barlow)
 - Subset Devanagari + Latin to used characters
 - Preload critical font faces
 - `font-display: swap` to prevent FOIT
 
 **8. Bundle splitting**:
+
 - Route-level code splitting with `React.lazy()`
 - Dynamic imports for heavy components (charts, editors)
 - Tree-shake unused dependencies
 - Audit: single emoji package can add 80KB
 
 **9. Animation budget**:
+
 - Only `transform` and `opacity` for animations (compositor-only)
 - No `top/left/width/height` animations (triggers layout)
 - 200-300ms max duration for UI transitions
@@ -469,6 +479,7 @@ html {
 - Disable animations on `prefers-reduced-motion`
 
 **10. Third-party audit**:
+
 - Facebook Pixel: ~70KB — audit necessity
 - Live chat (Intercom): 200-400KB — defer or remove
 - Analytics: defer with `next/script lazyOnload`
@@ -523,16 +534,16 @@ html {
 
 ### Caching Strategies by Content Type
 
-| Content | Strategy | Rationale |
-|---|---|---|
-| App shell (HTML, CSS, JS) | Cache-first (versioned) | Static, instant load |
-| Images/fonts | Cache-first | Rarely change, large files |
-| Match list | Network-first → stale-while-revalidate | Fresh preferred, show cached as fallback |
-| Live scores | Network-only | Stale data worse than no data |
-| Player/team data | Stale-while-revalidate | Can be slightly stale |
-| User profile | Network-first | Must be current |
-| Tournament brackets | Stale-while-revalidate | Updates are infrequent |
-| Offline fallback | Cache-only | Must always be available |
+| Content                   | Strategy                               | Rationale                                |
+| ------------------------- | -------------------------------------- | ---------------------------------------- |
+| App shell (HTML, CSS, JS) | Cache-first (versioned)                | Static, instant load                     |
+| Images/fonts              | Cache-first                            | Rarely change, large files               |
+| Match list                | Network-first → stale-while-revalidate | Fresh preferred, show cached as fallback |
+| Live scores               | Network-only                           | Stale data worse than no data            |
+| Player/team data          | Stale-while-revalidate                 | Can be slightly stale                    |
+| User profile              | Network-first                          | Must be current                          |
+| Tournament brackets       | Stale-while-revalidate                 | Updates are infrequent                   |
+| Offline fallback          | Cache-only                             | Must always be available                 |
 
 ### Service Worker Setup
 
@@ -540,27 +551,40 @@ html {
 // Workbox-based service worker
 import { precacheAndRoute } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { CacheFirst, NetworkFirst, StaleWhileRevalidate } from 'workbox-strategies';
+import {
+  CacheFirst,
+  NetworkFirst,
+  StaleWhileRevalidate,
+} from 'workbox-strategies';
 
 // Precache app shell
 precacheAndRoute(self.__WB_MANIFEST);
 
 // Cache-first for static assets
 registerRoute(
-  ({ request }) => request.destination === 'image' || request.destination === 'font',
-  new CacheFirst({ cacheName: 'static-assets', plugins: [new ExpirationPlugin({ maxEntries: 200, maxAgeSeconds: 30 * 24 * 60 * 60 })] })
+  ({ request }) =>
+    request.destination === 'image' || request.destination === 'font',
+  new CacheFirst({
+    cacheName: 'static-assets',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 200,
+        maxAgeSeconds: 30 * 24 * 60 * 60,
+      }),
+    ],
+  }),
 );
 
 // Network-first for API with offline fallback
 registerRoute(
   ({ url }) => url.pathname.startsWith('/api/'),
-  new NetworkFirst({ cacheName: 'api-cache', networkTimeoutSeconds: 3 })
+  new NetworkFirst({ cacheName: 'api-cache', networkTimeoutSeconds: 3 }),
 );
 
 // Stale-while-revalidate for match data
 registerRoute(
   ({ url }) => url.pathname.startsWith('/api/matches'),
-  new StaleWhileRevalidate({ cacheName: 'matches-cache' })
+  new StaleWhileRevalidate({ cacheName: 'matches-cache' }),
 );
 ```
 
@@ -581,14 +605,14 @@ registerRoute(
 async function submitMatchResult(result: MatchResult) {
   // Write to local DB immediately
   await localDB.matchResults.add(result);
-  
+
   // Queue for sync
   await syncQueue.add({
     type: 'MATCH_RESULT',
     data: result,
     timestamp: Date.now(),
   });
-  
+
   // Attempt sync if online
   if (navigator.onLine) {
     await syncQueue.processPending();
@@ -612,23 +636,23 @@ Traditional `vh` units on mobile correspond to the **large viewport** (browser t
 
 ### Viewport Unit Types
 
-| Unit | Represents | When to use |
-|---|---|---|
-| `vh` | Large viewport (toolbar hidden) | Legacy fallback only |
-| `svh` | Small viewport (toolbar visible) | Above-the-fold content, hero sections |
-| `lvh` | Large viewport (toolbar hidden) | Immersive full-screen, splash screens |
-| `dvh` | Dynamic viewport (changes with toolbar) | Adaptive layouts, sticky footers |
+| Unit  | Represents                              | When to use                           |
+| ----- | --------------------------------------- | ------------------------------------- |
+| `vh`  | Large viewport (toolbar hidden)         | Legacy fallback only                  |
+| `svh` | Small viewport (toolbar visible)        | Above-the-fold content, hero sections |
+| `lvh` | Large viewport (toolbar hidden)         | Immersive full-screen, splash screens |
+| `dvh` | Dynamic viewport (changes with toolbar) | Adaptive layouts, sticky footers      |
 
 ### Browser Support (2026)
 
-| Browser | svh/lvh/dvh support |
-|---|---|
-| Chrome | 108+ ✅ |
-| Safari | 15.4+ ✅ |
-| Firefox | 101+ ✅ |
-| Edge | 108+ ✅ |
-| Samsung Internet | 21+ ✅ |
-| KaiOS | ❌ not supported |
+| Browser          | svh/lvh/dvh support |
+| ---------------- | ------------------- |
+| Chrome           | 108+ ✅             |
+| Safari           | 15.4+ ✅            |
+| Firefox          | 101+ ✅             |
+| Edge             | 108+ ✅             |
+| Samsung Internet | 21+ ✅              |
+| KaiOS            | ❌ not supported    |
 
 Coverage is ~96% globally. Always include `vh` fallback.
 
@@ -653,6 +677,7 @@ Coverage is ~96% globally. Always include `vh` fallback.
 ```
 
 **Rules**:
+
 1. **Default to `dvh`** for full-height containers — handles toolbar show/hide
 2. **Use `svh`** for hero sections and above-the-fold content — must fit on initial load
 3. **Use `lvh`** for immersive overlays and splash screens — fill maximum space
@@ -670,8 +695,8 @@ For edge-to-edge displays with notches and home indicators:
 }
 
 .fullscreen-content {
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) 
-           env(safe-area-inset-bottom) env(safe-area-inset-left);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 ```
 
@@ -694,20 +719,20 @@ For edge-to-edge displays with notches and home indicators:
 
 ### Testing Matrix
 
-| Device | Browser | Network | Priority |
-|---|---|---|---|
-| Budget Android (Tecno/Realme) | Chrome | 3G | **Critical** |
-| Samsung A-series | Chrome | 4G | **Critical** |
-| iPhone 12/14 | Safari | 4G | High |
-| iPad Air | Safari | WiFi | High |
-| Desktop 1440p | Chrome | WiFi | Medium |
-| 1920p broadcast | Chrome | WiFi | Medium (overlay only) |
+| Device                        | Browser | Network | Priority              |
+| ----------------------------- | ------- | ------- | --------------------- |
+| Budget Android (Tecno/Realme) | Chrome  | 3G      | **Critical**          |
+| Samsung A-series              | Chrome  | 4G      | **Critical**          |
+| iPhone 12/14                  | Safari  | 4G      | High                  |
+| iPad Air                      | Safari  | WiFi    | High                  |
+| Desktop 1440p                 | Chrome  | WiFi    | Medium                |
+| 1920p broadcast               | Chrome  | WiFi    | Medium (overlay only) |
 
 ### Network Testing
 
-| Throttle | Speed | Latency | Use case |
-|---|---|---|---|
-| Regular 3G | 1.5 Mbps | 562ms | Worst-case rural |
-| Slow 4G | 4 Mbps | 200ms | Typical urban evening |
-| Fast 4G | 20 Mbps | 50ms | Ideal mobile |
-| WiFi | 50+ Mbps | 50ms | Home/office |
+| Throttle   | Speed    | Latency | Use case              |
+| ---------- | -------- | ------- | --------------------- |
+| Regular 3G | 1.5 Mbps | 562ms   | Worst-case rural      |
+| Slow 4G    | 4 Mbps   | 200ms   | Typical urban evening |
+| Fast 4G    | 20 Mbps  | 50ms    | Ideal mobile          |
+| WiFi       | 50+ Mbps | 50ms    | Home/office           |

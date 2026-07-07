@@ -29,6 +29,7 @@ distinct but technically unified (single `authStore`).
 ## Screens
 
 ### 4.1 Login — `/login`
+
 - **Layout:** AuthLayout. Centered card, max-w-md.
 - **Fields:** email, password (with show/hide toggle), remember-me (default on).
 - **Affordances:** "Forgot password?", "Create account" (links to
@@ -41,6 +42,7 @@ distinct but technically unified (single `authStore`).
 - **Mobile:** Same layout, just centered.
 
 ### 4.2 Register (dashboard) — `/register`
+
 - **Fields:** full name, email, password, confirm password, organisation
   intent radio (create / join via invite / skip for now).
 - **Validation:** Zod schema — password min 10 chars, mixed case + number;
@@ -52,21 +54,25 @@ distinct but technically unified (single `authStore`).
 - **ToS + privacy** checkbox required, with inline links.
 
 ### 4.3 Register (public) — `/signup`
+
 - **Fields:** full name, email, password, confirm password.
 - **Visual:** marketing-friendly — uses PublicLayout, hero panel on the left
   ("Watch and run sports, free").
 - **Submit:** routes to `/me` profile with welcome modal.
 
 ### 4.4 Forgot password — `/forgot-password`
+
 - Email-only form. "If an account exists, you'll get a reset link." (No
   account enumeration).
 - Success state is identical regardless of whether the email exists.
 
 ### 4.5 Reset password — `/reset-password?token=...`
+
 - New password + confirm. Shows password strength and rules.
 - Auto-logs-in on success, redirects to `/me`.
 
 ### 4.6 Profile — `/me`
+
 - **Header:** avatar, name, role, "Member of N organisations" chip.
 - **Sections:** Profile, Security, Sessions, Notifications, Connected devices.
 - **Profile:** full name, display name, phone, bio, avatar, locale,
@@ -76,14 +82,17 @@ distinct but technically unified (single `authStore`).
   "Sign out all").
 
 ### 4.7 Edit profile — `/me/edit`
+
 - Form pre-filled, save button at sticky bottom on mobile.
 - Avatar cropper with circular preview.
 
 ### 4.8 Change password — `/me/security/password`
+
 - Old + new + confirm. Show strength meter. Re-auth required for some
   privileged changes (billing).
 
 ### 4.9 Logout
+
 - **Trigger:** User menu → "Sign out".
 - **Behaviour:** Clears auth store, revokes refresh, redirects to `/login`.
 - **Confirmation:** No modal — but a toast confirms "Signed out" and any
@@ -91,12 +100,12 @@ distinct but technically unified (single `authStore`).
 
 ## Token lifecycle
 
-| Trigger | Behaviour |
-|---|---|
-| Access token expiry (401) | Silent refresh via `/api/auth/refresh`; retry original request once. |
-| Refresh fails | Force logout with modal: "Session expired. Please sign in again." |
-| 403 (forbidden) | Show "You don't have permission" with a "Request access" link where relevant. |
-| 401 on first load | Redirect to `/login?next=` preserving the URL. |
+| Trigger                   | Behaviour                                                                     |
+| ------------------------- | ----------------------------------------------------------------------------- |
+| Access token expiry (401) | Silent refresh via `/api/auth/refresh`; retry original request once.          |
+| Refresh fails             | Force logout with modal: "Session expired. Please sign in again."             |
+| 403 (forbidden)           | Show "You don't have permission" with a "Request access" link where relevant. |
+| 401 on first load         | Redirect to `/login?next=` preserving the URL.                                |
 
 ## Session context (authStore)
 

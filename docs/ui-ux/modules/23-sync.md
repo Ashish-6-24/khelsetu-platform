@@ -32,6 +32,7 @@ Architecture (see §2.11):
 ## Screens
 
 ### 23.1 Sync queue page — `/o/:orgSlug/sync`
+
 - **Header**: connectivity chip (Online / Offline / Limited), device
   chip (current device name), "Process now" CTA (forces a drain).
 - **Tabs**: Pending, In-progress, Failed, Conflicts, Synced (last 24h).
@@ -44,6 +45,7 @@ Architecture (see §2.11):
 - **Empty (Pending)**: "All caught up." with last-sync timestamp.
 
 ### 23.2 Sync status panel (global)
+
 - Sticky panel in the scorer console + dashboard sidebar:
   - Connectivity indicator (green / amber / red dot).
   - Pending count.
@@ -52,6 +54,7 @@ Architecture (see §2.11):
 - Real-time updates via `sync:status` socket event.
 
 ### 23.3 Conflict resolution page — `/o/:orgSlug/sync/conflicts`
+
 - **List** of conflicts: entity, your version, server version,
   timestamp, scorer.
 - **Detail panel** on selection:
@@ -64,6 +67,7 @@ Architecture (see §2.11):
 - **Audit** entry created for every resolution.
 
 ### 23.4 Device registration
+
 - **Flow**: first time a device connects, prompt "Name this device"
   (auto-suggest: hostname + OS).
 - **Endpoint**: `POST /sync/device/register`.
@@ -71,11 +75,13 @@ Architecture (see §2.11):
   `X-Device-Id`.
 
 ### 23.5 Device info panel — `/o/:orgSlug/sync/devices`
+
 - **List** (`GET /sync/device`): device name, OS, browser, last seen,
   pending queue depth, "Logout this device" (revokes refresh tokens).
 - **Per-device** stats: avg sync latency, conflict count this month.
 
 ### 23.6 Connection state banner (global)
+
 - **Online**: hidden.
 - **Slow connection** (detected via latency >2s): subtle amber pill
   "Slow connection — your work is queued".
@@ -86,6 +92,7 @@ Architecture (see §2.11):
   continue" link.
 
 ### 23.7 Offline-first behaviour for scoring (companion)
+
 - The scorer console writes events to IDB first, optimistically updates
   UI, and queues the network call.
 - Reads (snapshot, history) prefer cache, refresh on focus / reconnect.

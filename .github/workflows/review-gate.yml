@@ -30,13 +30,11 @@ jobs:
             const author = pr.user.login;
             console.log(`PR #${prNumber} author: ${author}`);
 
-            // Owner PRs: always pass
             if (author === 'Ashish-6-24') {
               console.log('Owner PR — gate passed');
               return;
             }
 
-            // Collaborator PRs: check if owner approved
             const { data: reviews } = await github.rest.pulls.listReviews({
               owner: context.repo.owner,
               repo: context.repo.repo,
