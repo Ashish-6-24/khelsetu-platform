@@ -115,7 +115,7 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: ./.github/actions/setup-node
-      - run: npx vitest run --shard=${{ matrix.shard }}/2 --reporter=basic
+      - run: npx vitest run --shard=${{ matrix.shard }}/2
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
