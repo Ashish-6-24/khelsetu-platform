@@ -2,7 +2,8 @@ name: AI QA
 
 on:
   schedule:
-    - cron: '0 20 * * *'
+    # Midnight Kathmandu time (UTC+5:45) = 18:15 UTC
+    - cron: '15 18 * * *'
   workflow_dispatch:
     inputs:
       scenario:
@@ -42,36 +43,28 @@ jobs:
           echo "Qwen3 model available"
 
       - name: Install dependencies
-        working-directory: khelsetu-frontend
         run: |
           npm ci
           npx playwright install chromium --with-deps
-          npm i -D @browserbasehq/stagehand
 
       - name: Build application
-        working-directory: khelsetu-frontend
         run: npm run build
 
       - name: Start application server
-        working-directory: khelsetu-frontend
         run: |
           npm run preview &
           sleep 5
           curl -s http://localhost:3000 > /dev/null && echo "Server is running" || echo "Server failed to start"
 
       - name: Run AI QA with Stagehand
-        working-directory: khelsetu-frontend
         run: |
-          mkdir -p ../reports/ai-qa
-          npx stagehand test --config ai-qa.config.ts 2>&1 | tee ../reports/ai-qa/output.log
-        env:
-          OPENAI_API_KEY: 'http://localhost:11434/v1'
-          STAGEHAND_MODEL: 'qwen3'
+          mkdir -p reports/ai-qa
+          npx stagehand test --config ai-qa.config.ts 2>&1 | tee reports/ai-qa/output.log
 
       - name: Generate summary report
         if: always()
-        working-directory: .
         run: |
+          mkdir -p reports/ai-qa
           cat > reports/ai-qa/REPORT.md << 'REPORT_EOF'
           # AI QA Report
 
