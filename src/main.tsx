@@ -1,3 +1,4 @@
+import { logger } from '@lib/logger';
 import {
   STORAGE_KEYS,
   THEME_VALUES,
@@ -8,7 +9,6 @@ import { createRoot } from 'react-dom/client';
 import { StrictMode } from 'react';
 
 import './index.css';
-import { logger } from './lib/logger';
 import './theme/animations.css';
 import './theme/themes.css';
 

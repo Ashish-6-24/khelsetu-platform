@@ -20,12 +20,12 @@ const src = path.resolve(__dirname, './src');
 
 const aliases = {
   '@': src,
-  '@core': path.resolve(src, './core'),
-  '@routes': path.resolve(src, './routes'),
+  '@app': path.resolve(src, './app'),
+
   '@shared': path.resolve(src, './shared'),
   '@features': path.resolve(src, './features'),
   '@state': path.resolve(src, './state'),
-  '@lib': path.resolve(src, './lib'),
+  '@lib': path.resolve(src, './shared/lib'),
   '@theme': path.resolve(src, './theme'),
   '@assets': path.resolve(src, './assets'),
   '@tests': path.resolve(src, './tests'),

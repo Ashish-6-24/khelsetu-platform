@@ -64,7 +64,9 @@ export const NAV_GROUPS: NavGroup[] = [
         name: 'Tournaments',
         href: ROUTES.TOURNAMENTS,
         icon: Trophy,
-        preload: preloadRoute(() => import('@routes/tournaments/page')),
+        preload: preloadRoute(
+          () => import('@features/tournaments/pages/TournamentsPage'),
+        ),
       },
       {
         name: 'Standings',
@@ -80,7 +82,9 @@ export const NAV_GROUPS: NavGroup[] = [
         name: 'Scoring',
         href: ROUTES.SCORING,
         icon: Zap,
-        preload: preloadRoute(() => import('@routes/scoring/page')),
+        preload: preloadRoute(
+          () => import('@features/scoring/pages/ScoringPage'),
+        ),
       },
       {
         name: 'News',

@@ -1,4 +1,4 @@
-import { RegisterPage } from '@routes/auth/register/page';
+import { RegisterPage } from '@features/auth/pages/RegisterPage';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
