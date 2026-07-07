@@ -12,7 +12,7 @@ non-negotiable a11y / usability baseline.
 - **Section 508**, EN 301 549.
 - **Keyboard-only operability** for every interaction.
 - **Screen reader compatibility**: NVDA + Firefox, JAWS + Chrome, VoiceOver
-  + Safari, TalkBack + Chrome (Android).
+  - Safari, TalkBack + Chrome (Android).
 - **prefers-reduced-motion**, **prefers-contrast**, **prefers-color-scheme**
   honoured.
 - **Touch targets** ≥ 44×44 px (Apple HIG, WCAG 2.5.5).
@@ -40,15 +40,18 @@ non-negotiable a11y / usability baseline.
 - Skip-to-content link visible on focus at the top of every page.
 
 ### Scorer console (sport-specific)
+
 - See §11–14 for full shortcut maps.
 - Universal: `U` undo, `Esc` close modal, `Enter` confirm.
 
 ### Tables
+
 - Arrow keys move between cells (optional, behind feature flag).
 - `Space` toggles selection; `Shift+Space` range select.
 - Sort buttons are real `<button>`s with `aria-sort`.
 
 ### Forms
+
 - `Enter` submits, `Esc` cancels (in modal forms).
 - `Cmd/Ctrl+S` saves where applicable (e.g., template editor).
 - Field-level validation announced via `aria-describedby` to errors.

@@ -21,6 +21,7 @@ logo and home venue, and a season record.
 ## Screens
 
 ### 8.1 Teams list — `/o/:orgSlug/teams`
+
 - **Table / Card toggle** (default: cards).
 - **Card:** logo, name, sport, city, captain, # of players, # of active
   tournaments, win/draw/loss badge.
@@ -30,6 +31,7 @@ logo and home venue, and a season record.
 - **Bulk actions:** export, archive, transfer to another org.
 
 ### 8.2 Team detail — `/o/:orgSlug/teams/:id`
+
 - **Header:** logo, name, sport, captain, city, founded, social links.
 - **Quick stats:** matches played, W/D/L, top scorer, recent form.
 - **Tabs:** Roster, Tournaments, Schedule, Stats, History, Settings.
@@ -42,16 +44,19 @@ logo and home venue, and a season record.
 - **Settings:** edit details, danger zone (archive, delete).
 
 ### 8.3 Create team — `/o/:orgSlug/teams/new`
+
 - **Fields:** name, sport (select), logo, city, home venue (search),
   founded year, captain (select from players, optional), contact email,
   social links.
 - **Submit:** creates team → "Add players next?" inline prompt.
 
 ### 8.4 Edit team — `/o/:orgSlug/teams/:id/edit`
+
 - Same form, pre-filled.
 - "Transfer ownership" action visible only to org owners.
 
 ### 8.5 Delete team confirmation
+
 - **Type:** destructive dialog.
 - **Body:** "Delete {team}? They will be removed from {N} active tournaments
   and {M} scheduled matches. This cannot be undone."
@@ -60,21 +65,25 @@ logo and home venue, and a season record.
   confirm.
 
 ### 8.6 Team roster — `/o/:orgSlug/teams/:id/roster`
+
 - **Table:** avatar, name, role, jersey #, joined, status, actions.
 - **Drag to reorder** for jersey numbers / starting order.
 - **Add player:** chip search (org players), invite external, create new.
 - **Empty:** "No players on this team yet — add players to start scoring."
 
 ### 8.7 Team players (read-only) — `/o/:orgSlug/teams/:id/players`
+
 - Compact list view for quick scanning. Same data as roster, no actions.
 
 ### 8.8 Team analytics summary — `/o/:orgSlug/teams/:id/stats`
+
 - KPI cards: matches, wins, win rate, goals/runs/points scored, conceded,
   clean sheets, etc.
 - Charts: form sparkline, season comparison, opponent history, home vs
   away.
 
 ### 8.9 Team assignment flow (in tournament context)
+
 - **Modal:** "Add team to tournament" with team search + role + group
   assignment.
 - **Bulk:** multi-select teams table with "Add selected" CTA.

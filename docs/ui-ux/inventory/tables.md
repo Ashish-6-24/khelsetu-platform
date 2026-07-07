@@ -10,6 +10,7 @@ unless explicitly noted otherwise.
 ---
 
 ## 30.1 Organizations table
+
 - **Route**: `/organizations`
 - **Columns**: Name (link), slug, role (you), members, plan, created.
 - **Sorting**: name, created.
@@ -22,6 +23,7 @@ unless explicitly noted otherwise.
   retry.
 
 ## 30.2 Members table
+
 - **Route**: `/o/:orgSlug/settings/members`
 - **Columns**: Avatar+name, email, roles (badges), last active, status
   (Active / Pending / Removed).
@@ -33,6 +35,7 @@ unless explicitly noted otherwise.
 - **Bulk**: assign role, remove (typed confirm).
 
 ## 30.3 Invitations table
+
 - **Route**: tab on Members page.
 - **Columns**: email, role, invited by, sent at, expires at, status.
 - **Filters**: status (Pending / Accepted / Expired / Revoked).
@@ -40,6 +43,7 @@ unless explicitly noted otherwise.
 - **Bulk**: revoke, resend.
 
 ## 30.4 Sports table
+
 - **Route**: `/o/:orgSlug/sports`
 - **Columns**: Name, code, sport-icon, default-format, created.
 - **Sorting**: name.
@@ -49,6 +53,7 @@ unless explicitly noted otherwise.
 - **Bulk**: delete.
 
 ## 30.5 Tournaments table
+
 - **Route**: `/o/:orgSlug/tournaments`
 - **Columns**: Name (link), sport, format, status (chip), start, end,
   teams, matches, lead admin.
@@ -61,6 +66,7 @@ unless explicitly noted otherwise.
 - **Bulk**: change status (compatible only), archive.
 
 ## 30.6 Teams table
+
 - **Route**: `/o/:orgSlug/teams`
 - **Columns**: Crest+name, sport, captain, players, founded.
 - **Sorting**: name, founded.
@@ -70,6 +76,7 @@ unless explicitly noted otherwise.
 - **Bulk**: delete.
 
 ## 30.7 Players table
+
 - **Route**: `/o/:orgSlug/players`
 - **Columns**: Avatar+name, primary team, position, dob, nationality,
   matches.
@@ -80,6 +87,7 @@ unless explicitly noted otherwise.
 - **Bulk**: assign to team, delete.
 
 ## 30.8 Matches table
+
 - **Route**: `/o/:orgSlug/matches`
 - **Columns**: Team A vs Team B (with crests), score, status (chip),
   period, scheduled at, venue, officials (avatars).
@@ -93,12 +101,14 @@ unless explicitly noted otherwise.
 - **Note**: live row is sticky with red left border.
 
 ## 30.9 Officials table
+
 - **Surface**: tab on Match detail.
 - **Columns**: Role, user, status (Pending / Confirmed / Declined),
   assigned at.
 - **Row actions**: Remind, Replace, Remove.
 
 ## 30.10 Scoring events table (Event log)
+
 - **Surface**: in Scoring console + Match detail Events tab.
 - **Columns**: Time, period/minute, type (icon + label), team, player,
   value, scorer, status (pending / synced / corrected).
@@ -109,6 +119,7 @@ unless explicitly noted otherwise.
 - **Bulk**: undo multiple (admin only).
 
 ## 30.11 Standings table
+
 - **Route**: `/o/:orgSlug/standings/:tournamentId` and public.
 - **Columns**: # (rank), team (crest+name), P, W, D, L, GF, GA, GD, Pts,
   Form (last 5).
@@ -119,6 +130,7 @@ unless explicitly noted otherwise.
 - **Note**: sticky first column on mobile horizontal scroll.
 
 ## 30.12 Notifications table
+
 - **Route**: `/o/:orgSlug/notifications`
 - **Columns**: Read indicator, icon (category), title, body (truncated),
   time, actions (Open / Mark read / Delete).
@@ -127,6 +139,7 @@ unless explicitly noted otherwise.
 - **Bulk**: mark read, delete.
 
 ## 30.13 Overlay templates table
+
 - **Route**: `/o/:orgSlug/overlays/templates`
 - **Display**: card grid by default; list view toggle.
 - **Columns (list view)**: Name, category, sport, modified, used in N
@@ -134,6 +147,7 @@ unless explicitly noted otherwise.
 - **Row actions**: Preview, Edit, Duplicate, Delete, Use.
 
 ## 30.14 Live overlays table
+
 - **Route**: `/o/:orgSlug/overlays`
 - **Columns**: Name, template, match, position, status (chip), public
   URL.
@@ -143,12 +157,14 @@ unless explicitly noted otherwise.
 - **Bulk**: activate, deactivate.
 
 ## 30.15 Analytics tables
+
 - **Top scorers / assists / etc.**: rank, avatar+name, team, value,
   trend, matches.
 - **Custom report results**: dynamic columns from the builder, export
   CSV/PDF.
 
 ## 30.16 Audit logs table
+
 - **Route**: `/o/:orgSlug/audit`
 - **Columns**: Time (relative), actor (avatar+name+role), action (icon +
   label), entity (type+name link), diff badge, IP, UA.
@@ -160,6 +176,7 @@ unless explicitly noted otherwise.
 - **Bulk**: export selected (CSV / NDJSON).
 
 ## 30.17 Roles table
+
 - **Route**: `/o/:orgSlug/settings/roles`
 - **Columns**: Name, description, type (System / Custom), members,
   permissions count.
@@ -168,22 +185,26 @@ unless explicitly noted otherwise.
   impact preview).
 
 ## 30.18 Permissions table (catalogue)
+
 - **Route**: `/o/:orgSlug/settings/permissions`
 - **Columns**: Key, description, module, used in N roles.
 - **Filters**: module, scope.
 - **Search**: key + description.
 
 ## 30.19 Billing plans table (admin)
+
 - **Route**: `/admin/plans`
 - **Columns**: Name, tier, price (monthly / annual), quota summary,
   active customers.
 - **Row actions**: Edit, Archive.
 
 ## 30.20 Subscriptions table (admin)
+
 - **Route**: `/admin/tenants/:id` (Billing tab)
 - **Columns**: Plan, status, started, current period end, MRR.
 
 ## 30.21 Invoices table
+
 - **Route**: `/o/:orgSlug/billing/invoices`
 - **Columns**: Invoice #, date, period, amount, status (chip),
   download PDF.
@@ -192,11 +213,13 @@ unless explicitly noted otherwise.
 - **Bulk**: export CSV.
 
 ## 30.22 Payment methods table
+
 - **Route**: `/o/:orgSlug/billing/payment-methods`
 - **Columns**: Brand+last4, expiry, default badge, added by, added at.
 - **Row actions**: Set default, Remove (cannot remove last default).
 
 ## 30.23 Sync queue table
+
 - **Route**: `/o/:orgSlug/sync`
 - **Tabs**: Pending / In-progress / Failed / Conflicts / Synced.
 - **Columns**: Created at, entity, op, payload summary, retries, last
@@ -206,12 +229,14 @@ unless explicitly noted otherwise.
 - **Bulk**: retry, discard.
 
 ## 30.24 Devices table
+
 - **Route**: `/o/:orgSlug/sync/devices`
 - **Columns**: Device name, OS, browser, last seen, pending depth,
   conflicts (this month), actions.
 - **Row actions**: Rename, Revoke, View activity.
 
 ## 30.25 Admin tenants table
+
 - **Route**: `/admin/tenants`
 - **Columns**: Org name, owner, plan, status, members, matches, last
   active, region.
@@ -221,6 +246,7 @@ unless explicitly noted otherwise.
   (typed).
 
 ## 30.26 Platform audit table (admin)
+
 - **Route**: `/admin/audit`
 - **Columns**: Time, actor, tenant, action, entity, IP.
 - **Filters**: tenant, actor type, action, severity.

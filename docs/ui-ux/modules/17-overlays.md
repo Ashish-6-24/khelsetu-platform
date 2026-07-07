@@ -32,6 +32,7 @@ nav, no auth, no chrome).
 ## Screens
 
 ### 17.1 Overlay template manager — `/o/:orgSlug/overlays/templates`
+
 - **Header**: "Overlay Templates", "+ New template" CTA.
 - **Grid** of template cards: thumbnail, name, sport(s), category
   (scoreboard / lower-third / formation / sponsor / ticker / BUG),
@@ -41,6 +42,7 @@ nav, no auth, no chrome).
 - **Empty**: "Start from a starter template" with 6 starter cards.
 
 ### 17.2 Template editor — `/o/:orgSlug/overlays/templates/:id`
+
 - **Left**: layer tree (header, score, team A, team B, time, sponsor).
 - **Canvas** (16:9 preview with safe-area guides):
   - Drag-to-reposition layers.
@@ -56,6 +58,7 @@ nav, no auth, no chrome).
 - **Preview mode**: full-bleed preview with simulated match data.
 
 ### 17.3 Live overlay manager — `/o/:orgSlug/overlays`
+
 - **List/grid** of active overlays: name, template, match, status (active /
   inactive), public URL.
 - **Card actions**: Activate / Deactivate, Copy URL, Open Preview, Edit
@@ -64,6 +67,7 @@ nav, no auth, no chrome).
 - **Bulk**: activate all for a match, deactivate all.
 
 ### 17.4 Create overlay (modal/wizard)
+
 - **Step 1**: choose match (live or upcoming).
 - **Step 2**: choose template (filter by sport/category).
 - **Step 3**: configure (position preset: top-left / top-right / lower-third
@@ -71,6 +75,7 @@ nav, no auth, no chrome).
 - **Step 4**: review → "Create & copy URL".
 
 ### 17.5 Overlay preview
+
 - **Modal**: live preview with simulated data + real data toggle.
 - **Resolutions**: 1920×1080 (default), 1280×720, 720×1280 (vertical),
   custom.
@@ -79,6 +84,7 @@ nav, no auth, no chrome).
 - **Refresh** button to pull latest.
 
 ### 17.6 Overlay activation controls
+
 - **Activate**: green button → `POST /overlays/{id}/activate`. Real-time
   event pushed to all consumers of the public URL.
 - **Deactivate**: red button → `POST /overlays/{id}/deactivate`. Overlay
@@ -87,6 +93,7 @@ nav, no auth, no chrome).
 - **Status chip**: Active (green pulse), Inactive (grey), Error (red).
 
 ### 17.7 Broadcast-ready public overlay view — `/overlay/:token`
+
 - **Layout**: `OverlayLayout` (no chrome, transparent background by
   default).
 - **Behaviour**:
@@ -101,6 +108,7 @@ nav, no auth, no chrome).
   transform-based animations.
 
 ### 17.8 Public token access view
+
 - **Token model**: each overlay generates a unique unguessable token; the
   URL is shareable but should be treated as a secret.
 - **Token management UI**: copy, regenerate (invalidates old), revoke.

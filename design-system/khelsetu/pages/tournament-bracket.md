@@ -19,6 +19,7 @@
 ## Component Specs
 
 ### Match Card
+
 ```
 ┌─────────────────┐
 │ Team A   [logo] │
@@ -30,17 +31,20 @@
 │ Status badge    │  ← top-right corner
 └─────────────────┘
 ```
+
 - Width: 240px fixed (bracket alignment)
 - Padding: p-4
 - Hover: scale 1.02 + shadow-md (desktop)
 - Click: navigate to match detail
 
 ### Connector Lines
+
 - SVG paths between match cards (right edge of round N to left edge of round N+1)
 - Stroke: `--border-strong`, 2px
 - Animated draw-in (600ms) on initial load (skipped if reduced motion)
 
 ### Round Headers
+
 - Sticky at top: "Round of 16", "Quarter Final", "Semi Final", "Final"
 - text-sm font-semibold uppercase tracking-wider text-tertiary
 

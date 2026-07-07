@@ -12,6 +12,7 @@
 - **Backend API:** Running at `http://localhost:8080` (configurable)
 
 Check your versions:
+
 ```bash
 node --version    # Should be v18+
 npm --version     # Should be v9+
@@ -23,17 +24,20 @@ git --version     # Should be v2.40+
 ## Installation Steps
 
 ### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/khelsetu/khelsetu.git
 cd khelsetu/khelsetu-frontend
 ```
 
 ### 2. Install Dependencies
+
 ```bash
 npm install
 ```
 
 This installs all packages specified in `package.json`:
+
 - React 19, Vite 8, TypeScript 6
 - Tailwind CSS, React Router, Zustand
 - Testing: Vitest, Playwright
@@ -41,11 +45,13 @@ This installs all packages specified in `package.json`:
 ### 3. Configure Environment Variables
 
 Copy the example environment file:
+
 ```bash
 cp .env.example .env
 ```
 
 Edit `.env` with your local settings:
+
 ```env
 # Backend API
 VITE_API_URL=http://localhost:8080
@@ -63,26 +69,31 @@ VITE_APP_ENV=development
 ## Running Locally
 
 ### Development Server
+
 ```bash
 npm run dev
 ```
 
 This starts Vite dev server at `http://localhost:5173` with:
+
 - Hot Module Replacement (HMR)
 - Real-time validation
 - Console error reporting
 
 ### Production Build
+
 ```bash
 npm run build
 ```
 
 Creates optimized production build in `dist/` folder:
+
 - TypeScript type checking
 - Minification and code splitting
 - Performance optimizations
 
 ### Preview Production Build
+
 ```bash
 npm run preview
 ```
@@ -93,21 +104,21 @@ Serves the production build locally for testing.
 
 ## Common Commands
 
-| Command | Purpose | Usage |
-|---------|---------|-------|
-| `npm run dev` | Start dev server | Daily development |
-| `npm run build` | Production build | Before deployment |
-| `npm run preview` | Test prod build | Verify before deploy |
-| `npm run lint` | ESLint check | Check code quality |
-| `npm run lint:fix` | Fix lint issues | Auto-fix problems |
-| `npm run format` | Prettier format | Code formatting |
-| `npm run typecheck` | TypeScript check | Verify types |
-| `npm run test` | Unit tests (watch) | Run tests during dev |
-| `npm run test:run` | Unit tests once | CI/CD pipelines |
-| `npm run test:coverage` | Tests + coverage | Check test coverage |
-| `npm run test:e2e` | E2E tests | Browser automation |
-| `npm run storybook` | Component library | Design system |
-| `npm run validate` | Full validation | Pre-commit check |
+| Command                 | Purpose            | Usage                |
+| ----------------------- | ------------------ | -------------------- |
+| `npm run dev`           | Start dev server   | Daily development    |
+| `npm run build`         | Production build   | Before deployment    |
+| `npm run preview`       | Test prod build    | Verify before deploy |
+| `npm run lint`          | ESLint check       | Check code quality   |
+| `npm run lint:fix`      | Fix lint issues    | Auto-fix problems    |
+| `npm run format`        | Prettier format    | Code formatting      |
+| `npm run typecheck`     | TypeScript check   | Verify types         |
+| `npm run test`          | Unit tests (watch) | Run tests during dev |
+| `npm run test:run`      | Unit tests once    | CI/CD pipelines      |
+| `npm run test:coverage` | Tests + coverage   | Check test coverage  |
+| `npm run test:e2e`      | E2E tests          | Browser automation   |
+| `npm run storybook`     | Component library  | Design system        |
+| `npm run validate`      | Full validation    | Pre-commit check     |
 
 ---
 
@@ -140,12 +151,14 @@ See `PROJECT_STRUCTURE.md` for detailed breakdown.
 ## Troubleshooting
 
 ### Issue: Port 5173 Already in Use
+
 ```bash
 # Kill existing process and restart
 npm run dev -- --port 5174
 ```
 
 ### Issue: TypeScript Errors After npm install
+
 ```bash
 # Clear cache and reinstall
 rm -rf node_modules package-lock.json
@@ -154,6 +167,7 @@ npm run typecheck
 ```
 
 ### Issue: Dependencies Conflict
+
 ```bash
 # Check for peer dependency issues
 npm audit
@@ -163,6 +177,7 @@ npm audit fix
 ```
 
 ### Issue: Build Fails with "Module not found"
+
 ```bash
 # Ensure all dependencies installed
 npm install
@@ -175,6 +190,7 @@ npm run build
 ```
 
 ### Issue: Tests Failing After Changes
+
 ```bash
 # Run tests in watch mode
 npm run test
@@ -203,6 +219,7 @@ src/features/auth/
 ```
 
 To add a feature:
+
 1. Create new folder in `src/features/`
 2. Follow same structure as existing features
 3. Export components/hooks from `index.ts`
@@ -213,6 +230,7 @@ To add a feature:
 ## Testing
 
 ### Unit Tests
+
 ```bash
 npm run test              # Watch mode
 npm run test:run          # Single run
@@ -222,6 +240,7 @@ npm run test:coverage     # With coverage
 Tests are in `src/tests/unit/` and `src/tests/integration/`.
 
 ### E2E Tests
+
 ```bash
 npm run test:e2e
 ```
@@ -229,6 +248,7 @@ npm run test:e2e
 Tests are in `e2e/` folder using Playwright.
 
 ### Manual Testing Checklist
+
 - [ ] Forms validate correctly
 - [ ] Authentication works
 - [ ] Real-time updates work
@@ -241,12 +261,14 @@ Tests are in `e2e/` folder using Playwright.
 ## Code Quality
 
 ### Linting
+
 ```bash
 npm run lint          # Check issues
 npm run lint:fix      # Auto-fix issues
 ```
 
 ### Type Checking
+
 ```bash
 npm run typecheck
 ```
@@ -254,6 +276,7 @@ npm run typecheck
 Always fix type errors before committing.
 
 ### Formatting
+
 ```bash
 npm run format
 ```
@@ -261,6 +284,7 @@ npm run format
 Uses Prettier for consistent code style.
 
 ### Full Validation (Pre-commit)
+
 ```bash
 npm run validate
 ```
@@ -272,6 +296,7 @@ Runs: lint + format + typecheck + test + build
 ## Git Workflow
 
 ### Before Committing
+
 ```bash
 npm run validate    # Ensure everything passes
 git status          # Check changes
@@ -281,6 +306,7 @@ git commit -m "feat: description of changes"
 ```
 
 ### Pushing Changes
+
 ```bash
 git push origin your-branch-name
 ```
@@ -292,6 +318,7 @@ Then create a Pull Request on GitHub.
 ## Environment-Specific Configuration
 
 ### Development (.env)
+
 ```env
 VITE_API_URL=http://localhost:8080
 VITE_APP_ENV=development
@@ -299,6 +326,7 @@ VITE_ENABLE_DEBUGGING=true
 ```
 
 ### Staging (.env.staging)
+
 ```env
 VITE_API_URL=https://api-staging.khelsetu.com
 VITE_APP_ENV=staging
@@ -306,6 +334,7 @@ VITE_ENABLE_DEBUGGING=false
 ```
 
 ### Production (.env.production)
+
 ```env
 VITE_API_URL=https://api.khelsetu.com
 VITE_APP_ENV=production

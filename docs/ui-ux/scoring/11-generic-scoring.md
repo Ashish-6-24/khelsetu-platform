@@ -32,6 +32,7 @@ The generic layer:
 ## Screens
 
 ### 11.1 Live scoring timeline — `/o/:orgSlug/scoring/:matchId`
+
 - **Sticky score header** (sport-specific) with team A, team B, score,
   period/over/clock, LIVE pulse.
 - **Action panel** (left on desktop, bottom on mobile) with sport-specific
@@ -41,6 +42,7 @@ The generic layer:
 - **Undo bar** (sticky bottom on mobile) with last action + confirm.
 
 ### 11.2 Event entry panel
+
 - **Tap action button** → opens a contextual modal:
   - Cricket: ball-by-ball, asks for runs / extra / wicket.
   - Football: goal (player, assist), card (yellow, red, second-yellow),
@@ -53,6 +55,7 @@ The generic layer:
   reason and "Re-edit" CTA.
 
 ### 11.3 Event history list
+
 - **Virtualised list** (newest first).
 - Each row: timestamp, icon, event type, player, value, "Undo" button.
 - **Filter chips:** team, type, period, scorer.
@@ -60,11 +63,13 @@ The generic layer:
 - **Bulk undo** with confirmation (e.g., undo last 5 events).
 
 ### 11.4 Undo action
+
 - **Single undo:** swipe / button on event row. Confirm modal.
 - **Multi undo:** select multiple events, "Undo selected" CTA.
 - **Audit:** undo events are themselves logged.
 
 ### 11.5 Snapshot browser
+
 - **Modal/page:** list of snapshots with timestamp, scorer, description,
   event count.
 - **Action:** "Preview" (read-only replay), "Restore" (with confirm).
@@ -72,6 +77,7 @@ The generic layer:
   to a known-good snapshot.
 
 ### 11.6 Replay viewer
+
 - **Timeline scrubber** at bottom.
 - **Play / pause / speed** (0.5x, 1x, 2x, 4x).
 - **Step events** (arrow keys).
@@ -79,12 +85,14 @@ The generic layer:
 - **Read-only** — no edits.
 
 ### 11.7 Validation feedback
+
 - **Inline errors** in event entry form (server validation echoed).
 - **Banner** if the scorer attempts a state-violating event (e.g., starting
   a 3rd innings in a 2-innings match).
 - **Pre-flight check** button: "Validate match state" returns OK / issues.
 
 ### 11.8 Analytics panel
+
 - Sport-specific score analytics:
   - Run rate (cricket)
   - xG, possession, shots (football)
@@ -93,18 +101,21 @@ The generic layer:
 - **Compare** to tournament average or to opponent.
 
 ### 11.9 Deterministic replay UX
+
 - **Re-running a snapshot** must produce identical state. The UI shows a
   "Replaying..." banner.
 - **Conflicts** if events are out of order: warning with "Fix" CTA.
 - **Useful for:** post-match verification, dispute resolution.
 
 ### 11.10 Error correction UI
+
 - **Inline correction:** edit an event within a grace period (configurable,
   default 5 min).
 - **Audit log** of every correction with reason.
 - **"Mark as corrected"** flag visible in event log.
 
 ### 11.11 Audit-friendly event logging
+
 - Every event carries: `id`, `matchId`, `scorerId`, `timestamp`, `type`,
   `payload`, `clientEventId` (idempotency).
 - Every undo carries: original event id, scorer, reason.

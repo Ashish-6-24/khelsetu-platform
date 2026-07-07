@@ -33,6 +33,7 @@ area, pie, radar, scatter, heatmap — see Section 24 for chart styles.
 ## Screens
 
 ### 19.1 Analytics dashboard — `/o/:orgSlug/analytics`
+
 - **Header**: org name, date range picker (default: last 30 days),
   refresh, export.
 - **KPI strip** (4–6 cards):
@@ -52,6 +53,7 @@ area, pie, radar, scatter, heatmap — see Section 24 for chart styles.
 - **Quick links** to deep dives.
 
 ### 19.2 Tournament analytics — `/o/:orgSlug/analytics/tournaments/:id`
+
 - **Header**: tournament name, format, status, dates.
 - **KPIs**: matches played / total, goals/runs/points, average attendance
   (if tracked), top scorer, top team.
@@ -63,6 +65,7 @@ area, pie, radar, scatter, heatmap — see Section 24 for chart styles.
 - **Tables**: top scorers, top assists, discipline log, best XI.
 
 ### 19.3 Match analytics — `/o/:orgSlug/analytics/matches/:id`
+
 - **Header**: match summary card.
 - **Sport-specific KPIs**:
   - **Cricket**: run rate (line per innings), wickets fall, partnerships,
@@ -75,6 +78,7 @@ area, pie, radar, scatter, heatmap — see Section 24 for chart styles.
 - **Event timeline** with milestone markers.
 
 ### 19.4 Team analytics — `/o/:orgSlug/analytics/teams/:id`
+
 - **Header**: team card with crest, founded, sport, base.
 - **Filters**: date range, tournament, season, home/away, vs opponent.
 - **KPIs**: matches, win %, GF, GA, GD, points won, longest streak.
@@ -86,6 +90,7 @@ area, pie, radar, scatter, heatmap — see Section 24 for chart styles.
 - **Roster contribution table** (top scorers, top assists from this team).
 
 ### 19.5 Player analytics — `/o/:orgSlug/analytics/players/:id`
+
 - **Header**: player card (avatar, name, position, age, team(s)).
 - **Filters**: date range, tournament, team, opponent.
 - **Career KPIs**: matches, minutes, goals, assists, cards, MoTM count.
@@ -100,6 +105,7 @@ area, pie, radar, scatter, heatmap — see Section 24 for chart styles.
 - **Comparison**: side-by-side with another player.
 
 ### 19.6 Custom report builder — `/o/:orgSlug/analytics/reports/custom`
+
 - **Step 1 — Scope**: sport, tournament(s), team(s), date range, match
   type.
 - **Step 2 — Metrics**: pick from a metric catalogue grouped by entity
@@ -111,6 +117,7 @@ area, pie, radar, scatter, heatmap — see Section 24 for chart styles.
 - **Saved reports** sidebar with run / edit / duplicate / delete.
 
 ### 19.7 Leaderboards page — `/o/:orgSlug/analytics/leaderboards`
+
 - **Tabs**: scope (org / tournament / team).
 - **Categories**: top scorers, top assists, top rebounders (basketball),
   top wicket-takers (cricket), most cards, most MoTMs, most minutes.

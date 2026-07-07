@@ -37,15 +37,16 @@ export const tokens = {
 ### Theme Hook: `src/styles/useTheme.ts`
 
 ```ts
-import { tokens } from './tokens';
 import { useUIStore } from '@store/uiStore';
+
+import { tokens } from './tokens';
 
 export function useTheme() {
   const theme = useUIStore((s) => s.theme);
   const isDark = document.documentElement.classList.contains('dark');
 
   return {
-    theme,            // 'light' | 'dark' | 'system'
+    theme, // 'light' | 'dark' | 'system'
     isDark,
     colors: tokens.color,
     spacing: tokens.spacing,
@@ -105,14 +106,15 @@ style={{ padding: tokens.spacing.md, fontSize: tokens.typography.body }}
 
 ## Files to Create
 
-| File | Purpose |
-|------|---------|
-| `src/styles/tokens.ts` | JS token mirror |
-| `src/styles/useTheme.ts` | Theme hook |
+| File                     | Purpose         |
+| ------------------------ | --------------- |
+| `src/styles/tokens.ts`   | JS token mirror |
+| `src/styles/useTheme.ts` | Theme hook      |
 
 ## Files to Refactor
 
 ### UI Components (remove hardcoded hex)
+
 - `src/components/ui/Button.tsx` — variant styles use hex (`#991B1B`, `#FCA5A5`, `#B8860B`)
 - `src/components/ui/Badge.tsx` — variant styles use hex
 - `src/components/ui/Card.tsx` — some hex references
@@ -121,17 +123,21 @@ style={{ padding: tokens.spacing.md, fontSize: tokens.typography.body }}
 - `src/components/ui/Input.tsx` — any remaining hex
 
 ### Landing Page Components
+
 - `src/components/landing/` — hero gradients, CTA colors
 
 ### CSS Utilities
+
 - `src/index.css` — hardcoded hex in `.cert-paper`, `.skeleton-shimmer`, `.empty-state-title`, `.empty-state-description`, `.live-dot`, `.skeleton-shimmer`
 
 ### Already Fixed (no changes needed)
+
 - 74 components from dark mode audit — already use CSS variables
 
 ## Verification
 
 After implementation:
+
 1. `npm run lint` — no new errors
 2. `npm run typecheck` — no type errors
 3. `npm test -- --run` — all 245 tests pass

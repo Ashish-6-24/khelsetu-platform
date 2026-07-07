@@ -26,6 +26,7 @@ POST   /api/organizations/invitations/{token}/accept
 ## Screens
 
 ### 3.1 Organisation list — `/organizations`
+
 - **Role:** Any authenticated user.
 - **Purpose:** See orgs I belong to + create / join.
 - **Components:** `<OrgCard>` grid, `<OrgSwitcher>`, `<EmptyOrgsState>`,
@@ -35,6 +36,7 @@ POST   /api/organizations/invitations/{token}/accept
 - **Mobile:** Card list collapses to a single column; sticky bottom "Create" CTA.
 
 ### 3.2 Create organisation — `/organizations/new`
+
 - **Stepper (3 steps):** Basics → Branding → Invite teammates.
 - **Fields:** name, slug (auto + editable, with availability check), sport
   focus (multi-select), timezone, logo (upload), color (palette + custom).
@@ -42,6 +44,7 @@ POST   /api/organizations/invitations/{token}/accept
   redirects to `/o/:slug/dashboard` with a success toast.
 
 ### 3.3 Organisation detail / settings — `/o/:orgSlug/settings`
+
 - **Tabs:** General, Branding, Members, Roles, Integrations, Danger zone.
 - **General:** name, slug, timezone, default sport, locale defaults.
 - **Branding:** logo, primary color, accent color, scoreboard background, OBS
@@ -50,6 +53,7 @@ POST   /api/organizations/invitations/{token}/accept
   confirmation: type the org name to confirm).
 
 ### 3.4 Members page — `/o/:orgSlug/settings/members`
+
 - **Table columns:** avatar, name, email, role (badge), status, last active,
   actions.
 - **Filters:** role, status (active, invited, suspended), search by name/email.
@@ -58,6 +62,7 @@ POST   /api/organizations/invitations/{token}/accept
 - **Forbidden state:** "You don't have permission to view members."
 
 ### 3.5 Invite member modal
+
 - **Fields:** email(s) (chip input), role (select), welcome message (textarea,
   optional), expiry (default 7 days).
 - **Behaviour:** Sends invitation, appends to invitations table, shows
@@ -66,6 +71,7 @@ POST   /api/organizations/invitations/{token}/accept
   invited (warn).
 
 ### 3.6 Accept invitation page — `/invitations/:token`
+
 - **Pre-auth:** if not logged in, show "Accept invitation to {org}" with
   "Sign in" and "Create account" buttons (deep-link return).
 - **Post-auth:** Organisation preview (logo, name, role, inviter), "Accept" +
@@ -73,18 +79,21 @@ POST   /api/organizations/invitations/{token}/accept
 - **Errors:** Expired token, already accepted, already a member.
 
 ### 3.7 Remove member confirmation
+
 - **Type:** destructive dialog.
 - **Body:** "Remove {name} from {org}? They will lose access immediately."
 - **Inputs:** optional reason (textarea, sent to backend for audit).
 - **Buttons:** Cancel / Remove (danger).
 
 ### 3.8 Role badges
+
 - Visual style: pill, sport-aware accent, icon + label.
 - Variants: Owner (amber/premium), Admin (primary), Tournament Admin
   (secondary), Scorer (info), Coach (success), Viewer (neutral), Custom (muted).
 - Tooltip lists top 3 permissions of the role.
 
 ### 3.9 Organisation switcher
+
 - **Location:** Top bar, between logo and search.
 - **Behaviour:** Click → dropdown with orgs + "Create or join organisation" +
   "Manage organisations".
@@ -92,12 +101,14 @@ POST   /api/organizations/invitations/{token}/accept
 - **Active state:** shows org logo, name, role badge.
 
 ### 3.10 Access denied state
+
 - Shown when a user hits `/o/:slug/...` without membership.
 - **Copy:** "You don't have access to {org name}."
 - **CTAs:** "Request access" (sends notification to owners/admins) + "Back to
   your organisations".
 
 ### 3.11 Empty organisation state
+
 - Shown when a user is the sole member of a new org.
 - **Copy:** "Welcome to {org}! Let's set up your first tournament."
 - **CTAs:** "Create tournament", "Add a team", "Invite staff".
@@ -106,10 +117,10 @@ POST   /api/organizations/invitations/{token}/accept
 
 ```ts
 interface OrganisationContextValue {
-  org: Organisation | null;          // current org
-  role: RoleKey | null;              // current user's role in this org
-  permissions: Set<PermissionKey>;   // pre-resolved
-  switchOrg(orgSlug: string): void;  // navigates to /o/:slug/...
+  org: Organisation | null; // current org
+  role: RoleKey | null; // current user's role in this org
+  permissions: Set<PermissionKey>; // pre-resolved
+  switchOrg(orgSlug: string): void; // navigates to /o/:slug/...
   isLoading: boolean;
   error: ApiError | null;
 }

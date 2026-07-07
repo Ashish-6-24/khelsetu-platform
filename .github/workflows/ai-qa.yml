@@ -65,8 +65,8 @@ jobs:
           mkdir -p ../reports/ai-qa
           npx stagehand test --config ai-qa.config.ts 2>&1 | tee ../reports/ai-qa/output.log
         env:
-          OPENAI_API_KEY: "http://localhost:11434/v1"
-          STAGEHAND_MODEL: "qwen3"
+          OPENAI_API_KEY: 'http://localhost:11434/v1'
+          STAGEHAND_MODEL: 'qwen3'
 
       - name: Generate summary report
         if: always()

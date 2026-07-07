@@ -37,6 +37,7 @@ roles editor**, and the corresponding effective-permission viewer.
 ## Screens
 
 ### 21.1 Roles page — `/o/:orgSlug/settings/roles`
+
 - **Header**: "Roles", "+ New role" CTA, search.
 - **Table** of roles: name, description, member count, system /
   custom badge, edit, duplicate, delete.
@@ -44,6 +45,7 @@ roles editor**, and the corresponding effective-permission viewer.
 - **Row click**: opens role detail.
 
 ### 21.2 Permissions page — `/o/:orgSlug/settings/permissions`
+
 - **Read-only** catalogue grouped by module (Org, Tournament, Team,
   Player, Match, Scoring, Standings, Notification, Overlay, Visualization,
   Analytics, Audit, RBAC, Billing, Sync, Public).
@@ -53,6 +55,7 @@ roles editor**, and the corresponding effective-permission viewer.
 - **Filter** by module / scope.
 
 ### 21.3 Create role — `/o/:orgSlug/settings/roles/new`
+
 - **Step 1 — Basics**: name, slug (auto), description, copy from
   existing role.
 - **Step 2 — Permissions**: matrix of all permissions grouped by module
@@ -63,6 +66,7 @@ roles editor**, and the corresponding effective-permission viewer.
 - **Save** → toast "Role created".
 
 ### 21.4 Edit role — `/o/:orgSlug/settings/roles/:id`
+
 - Same UI as create with current values pre-filled.
 - **Cannot edit** seeded system roles' permissions (Owner is `*`); UI
   shows them as read-only with a "Duplicate to customise" CTA.
@@ -70,12 +74,14 @@ roles editor**, and the corresponding effective-permission viewer.
   unassign.
 
 ### 21.5 Delete role
+
 - Confirmation modal listing affected users (count + first 5 names) and
   the resulting permission gaps.
 - "I understand X users will lose Y permissions" checkbox required.
 - Endpoint: `DELETE /api/rbac/roles/{id}`.
 
 ### 21.6 Role permissions editor
+
 - **Matrix layout**: permissions on Y axis, single role on X (within
   role detail) or multiple roles (in compare view).
 - **Cell**: check / cross / inherit (if hierarchy).
@@ -85,6 +91,7 @@ roles editor**, and the corresponding effective-permission viewer.
   `DELETE /roles/{id}/permissions/{permId}`.
 
 ### 21.7 User roles view — `/o/:orgSlug/members/:userId/roles`
+
 - **Header**: user card.
 - **Roles list**: assigned roles with assigner, assigned at, "Remove"
   button.
@@ -96,12 +103,14 @@ roles editor**, and the corresponding effective-permission viewer.
   `DELETE /users/{userId}/roles/{roleId}`.
 
 ### 21.8 User permissions view — `/o/:orgSlug/members/:userId/permissions`
+
 - **Search & filter** of all permission keys.
 - **Each row**: permission key, granted (Yes/No), source (role names),
   conflict indicator.
 - **Endpoint**: `GET /users/{userId}/permissions`.
 
 ### 21.9 Staff assignment flow (cross-references match officials)
+
 - From any user card: "Assign as ..." quick-link to:
   - Tournament admin role.
   - Scorer role.
@@ -109,6 +118,7 @@ roles editor**, and the corresponding effective-permission viewer.
   - Custom role.
 
 ### 21.10 Role matrix (compare view)
+
 - **Page**: `/o/:orgSlug/settings/roles/matrix`.
 - **Grid**: rows = permissions, columns = roles.
 - **Cells**: filled / empty.
@@ -118,16 +128,19 @@ roles editor**, and the corresponding effective-permission viewer.
 ### 21.11 Permission matrix (read-only catalogue, see 21.2)
 
 ### 21.12 Screen-level permission behaviour
+
 - Every route declares its required permission(s); the router blocks
   navigation with a friendly "You don't have access" page that offers
   "Request access" (sends an internal notification to org admins).
 
 ### 21.13 Navigation-level access control
+
 - Sidebar items hide when the user lacks the relevant permission (avoid
   showing dead ends).
 - Topbar org switcher only lists orgs where the user is a member.
 
 ### 21.14 Button-level access control
+
 - Buttons / action menus are wrapped in `<Can>` and either hide or
   render disabled with a tooltip ("You need `match.score:write`").
 - Destructive actions always tooltip the permission name to make the
@@ -143,37 +156,37 @@ roles editor**, and the corresponding effective-permission viewer.
 
 ## Role matrix (default seeds, mirrors §2.13)
 
-| Role | `org:*` | `tournament:*` | `team:*` | `player:*` | `match:*` | `match.score:*` | `analytics:read` | `audit:read` | `billing:*` | `rbac:*` |
-|---|---|---|---|---|---|---|---|---|---|---|
-| Owner | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Admin | rw | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — |
-| Tournament Admin | r | ✓ | ✓ | ✓ | ✓ | r | r | r | — | — |
-| Scorer | r | r | r | r | r | ✓ | — | — | — | — |
-| Coach | r | r | r | r | r | — | r | — | — | — |
-| Viewer | r | r | r | r | r | — | r | — | — | — |
+| Role             | `org:*` | `tournament:*` | `team:*` | `player:*` | `match:*` | `match.score:*` | `analytics:read` | `audit:read` | `billing:*` | `rbac:*` |
+| ---------------- | ------- | -------------- | -------- | ---------- | --------- | --------------- | ---------------- | ------------ | ----------- | -------- |
+| Owner            | ✓       | ✓              | ✓        | ✓          | ✓         | ✓               | ✓                | ✓            | ✓           | ✓        |
+| Admin            | rw      | ✓              | ✓        | ✓          | ✓         | ✓               | ✓                | ✓            | —           | —        |
+| Tournament Admin | r       | ✓              | ✓        | ✓          | ✓         | r               | r                | r            | —           | —        |
+| Scorer           | r       | r              | r        | r          | r         | ✓               | —                | —            | —           | —        |
+| Coach            | r       | r              | r        | r          | r         | —               | r                | —            | —           | —        |
+| Viewer           | r       | r              | r        | r          | r         | —               | r                | —            | —           | —        |
 
 (Public User and Super Admin live outside the org-scoped table; see §2.13.)
 
 ## Permission matrix (subset; full list in §2.12)
 
-| Module | Read | Write | Delete | Special |
-|---|---|---|---|---|
-| Organisations | `org:read` | `org:write` | `org:delete` | `org.member:write`, `org.invitation:send` |
-| Tournaments | `tournament:read` | `tournament:write` | `tournament:delete` | `tournament.status:write`, `tournament.fixture:generate` |
-| Teams | `team:read` | `team:write` | `team:delete` | — |
-| Players | `player:read` | `player:write` | `player:delete` | — |
-| Matches | `match:read` | `match:write` | `match:delete` | `match.lifecycle:write`, `match.officials:write` |
-| Scoring | `match.score:read` | `match.score:write` | — | `match.score:undo`, `scoring.replay:read/write` |
-| Standings | `standings:read` | `standings.snapshot:write` | — | `standings:recalculate` |
-| Notifications | `notification:read` | — | `notification:delete` | — |
-| Overlays | `overlay:read` | `overlay:write` | — | `overlay.activate`, `overlay.template:write` |
-| Visualization | `visualization:read` | `visualization:write` | — | — |
-| Analytics | `analytics:read` | `analytics.report:create` | — | `analytics.report:export` |
-| Audit | `audit:read` | — | — | `audit.export` |
-| RBAC | `rbac:read` | `rbac.role:write` | — | `rbac.permission:assign` |
-| Billing | `billing:read` | `billing:write` | — | `billing.invoice:read` |
-| Sync | `sync:read` | `sync:write` | — | `sync.device:manage` |
-| Public | — | `public.match:create` | — | — |
+| Module        | Read                 | Write                      | Delete                | Special                                                  |
+| ------------- | -------------------- | -------------------------- | --------------------- | -------------------------------------------------------- |
+| Organisations | `org:read`           | `org:write`                | `org:delete`          | `org.member:write`, `org.invitation:send`                |
+| Tournaments   | `tournament:read`    | `tournament:write`         | `tournament:delete`   | `tournament.status:write`, `tournament.fixture:generate` |
+| Teams         | `team:read`          | `team:write`               | `team:delete`         | —                                                        |
+| Players       | `player:read`        | `player:write`             | `player:delete`       | —                                                        |
+| Matches       | `match:read`         | `match:write`              | `match:delete`        | `match.lifecycle:write`, `match.officials:write`         |
+| Scoring       | `match.score:read`   | `match.score:write`        | —                     | `match.score:undo`, `scoring.replay:read/write`          |
+| Standings     | `standings:read`     | `standings.snapshot:write` | —                     | `standings:recalculate`                                  |
+| Notifications | `notification:read`  | —                          | `notification:delete` | —                                                        |
+| Overlays      | `overlay:read`       | `overlay:write`            | —                     | `overlay.activate`, `overlay.template:write`             |
+| Visualization | `visualization:read` | `visualization:write`      | —                     | —                                                        |
+| Analytics     | `analytics:read`     | `analytics.report:create`  | —                     | `analytics.report:export`                                |
+| Audit         | `audit:read`         | —                          | —                     | `audit.export`                                           |
+| RBAC          | `rbac:read`          | `rbac.role:write`          | —                     | `rbac.permission:assign`                                 |
+| Billing       | `billing:read`       | `billing:write`            | —                     | `billing.invoice:read`                                   |
+| Sync          | `sync:read`          | `sync:write`               | —                     | `sync.device:manage`                                     |
+| Public        | —                    | `public.match:create`      | —                     | —                                                        |
 
 ## UX requirements
 

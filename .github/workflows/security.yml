@@ -41,7 +41,7 @@ jobs:
       - name: Analyze
         uses: github/codeql-action/analyze@703b9949c65fcfced30e2f9f41569c4adfcb657f
         with:
-          category: "/language:javascript-typescript"
+          category: '/language:javascript-typescript'
 
   dep-review:
     name: Dependency Review

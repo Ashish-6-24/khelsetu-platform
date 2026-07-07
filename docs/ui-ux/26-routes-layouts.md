@@ -158,6 +158,7 @@ src/
 ## 26.2 Route map
 
 ### Public (no auth)
+
 ```
 /                                    Landing
 /tournaments                         Tournament browse
@@ -176,6 +177,7 @@ src/
 ```
 
 ### Auth
+
 ```
 /login
 /register
@@ -186,6 +188,7 @@ src/
 ```
 
 ### Dashboard (auth + org)
+
 ```
 /organizations                       Org list / picker
 /organizations/new                   Create org
@@ -260,11 +263,13 @@ src/
 ```
 
 ### Overlay (token only)
+
 ```
 /overlay/:token                      Public broadcast overlay
 ```
 
 ### Admin (super-admin)
+
 ```
 /admin
 /admin/tenants
@@ -275,16 +280,16 @@ src/
 
 ## 26.3 Layout structure
 
-| Layout | File | Composition | Guards |
-|---|---|---|---|
-| PublicLayout | `app/(public)/layout.tsx` | Top nav, footer, language switcher | none |
-| AuthLayout | `app/(auth)/layout.tsx` | Logo, language switcher, footer | redirect if logged-in |
-| DashboardLayout | `app/(dashboard)/layout.tsx` | Top nav (no sidebar — org picker only) | RequireAuth |
-| OrgScopedLayout | `app/(dashboard)/o/[orgSlug]/layout.tsx` | Sidebar + topbar + breadcrumbs + org switcher + Realtime + Sync banner | RequireAuth + RequireOrgMember |
-| ScorerLayout | `app/(dashboard)/o/[orgSlug]/scoring/[matchId]/layout.tsx` | Full-bleed sticky header + content + bottom action bar | + RequirePermission `match.score:read` |
-| OverlayLayout | `app/overlay/[token]/layout.tsx` | No chrome, transparent body | TokenGuard |
-| AdminLayout | `app/(admin)/admin/layout.tsx` | Admin sidebar + topbar | RequireSuperAdmin |
-| EmbedLayout | `components/embed/EmbedLayout.tsx` | Used by iframes (compact widgets) | TokenGuard |
+| Layout          | File                                                       | Composition                                                            | Guards                                 |
+| --------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------- |
+| PublicLayout    | `app/(public)/layout.tsx`                                  | Top nav, footer, language switcher                                     | none                                   |
+| AuthLayout      | `app/(auth)/layout.tsx`                                    | Logo, language switcher, footer                                        | redirect if logged-in                  |
+| DashboardLayout | `app/(dashboard)/layout.tsx`                               | Top nav (no sidebar — org picker only)                                 | RequireAuth                            |
+| OrgScopedLayout | `app/(dashboard)/o/[orgSlug]/layout.tsx`                   | Sidebar + topbar + breadcrumbs + org switcher + Realtime + Sync banner | RequireAuth + RequireOrgMember         |
+| ScorerLayout    | `app/(dashboard)/o/[orgSlug]/scoring/[matchId]/layout.tsx` | Full-bleed sticky header + content + bottom action bar                 | + RequirePermission `match.score:read` |
+| OverlayLayout   | `app/overlay/[token]/layout.tsx`                           | No chrome, transparent body                                            | TokenGuard                             |
+| AdminLayout     | `app/(admin)/admin/layout.tsx`                             | Admin sidebar + topbar                                                 | RequireSuperAdmin                      |
+| EmbedLayout     | `components/embed/EmbedLayout.tsx`                         | Used by iframes (compact widgets)                                      | TokenGuard                             |
 
 ## 26.4 Feature module structure (recap from §2.3)
 
@@ -309,6 +314,7 @@ Each `services/*.ts`:
 - Never touch React.
 
 `services/apiClient.ts`:
+
 - Axios instance, base URL, JSON, timeout.
 - Interceptors:
   - Attach `Authorization: Bearer …` and `X-Org-Id` (active org).
@@ -330,15 +336,15 @@ Each `services/*.ts`:
 
 ## 26.7 State management
 
-| Concern | Library |
-|---|---|
-| Server cache | TanStack React Query |
-| Client UI | Zustand |
-| Form | React Hook Form + Zod |
-| URL | `useSearchParams` (router) |
-| Realtime | Zustand slice fed by socket |
-| Offline queue | IndexedDB (Dexie) + Web Worker |
-| Auth tokens | HttpOnly cookies (preferred) or localStorage with rotation |
+| Concern       | Library                                                    |
+| ------------- | ---------------------------------------------------------- |
+| Server cache  | TanStack React Query                                       |
+| Client UI     | Zustand                                                    |
+| Form          | React Hook Form + Zod                                      |
+| URL           | `useSearchParams` (router)                                 |
+| Realtime      | Zustand slice fed by socket                                |
+| Offline queue | IndexedDB (Dexie) + Web Worker                             |
+| Auth tokens   | HttpOnly cookies (preferred) or localStorage with rotation |
 
 ## 26.8 Permission utility structure
 
@@ -402,7 +408,7 @@ features/sync/
 ## 26.12 Loading strategy
 
 - **Skeletons** at the component level (not whole-page spinners) when
-  >150ms.
+  > 150ms.
 - **Streamed SSR / suspense** (Next) for above-the-fold content where
   available.
 - **Pre-fetch** on hover for primary nav.

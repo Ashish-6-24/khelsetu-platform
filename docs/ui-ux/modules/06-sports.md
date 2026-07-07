@@ -27,6 +27,7 @@ scoring console, analytics, overlays, and standings all branch on sport.
 ## Screens
 
 ### 6.1 Sports list — `/o/:orgSlug/sports`
+
 - **Cards:** icon, name, type (team / individual — future), # of tournaments
   using it, status (active / archived), default config preview, "Edit" /
   "Delete".
@@ -36,6 +37,7 @@ scoring console, analytics, overlays, and standings all branch on sport.
 - **Loading:** skeleton cards.
 
 ### 6.2 Create sport — `/o/:orgSlug/sports/new`
+
 - **Fields:**
   - name (required, unique within org)
   - icon (Lucide picker, 50+ icons, live preview)
@@ -47,27 +49,32 @@ scoring console, analytics, overlays, and standings all branch on sport.
 - **Submit:** creates and returns to list with toast.
 
 ### 6.3 Edit sport — `/o/:orgSlug/sports/:id`
+
 - Same form, pre-filled.
 - A warning panel if the sport is in use: "Editing this will not affect
   existing tournaments, only new ones."
 
 ### 6.4 Delete sport — confirmation
+
 - **Type:** destructive dialog.
 - **Body:** "Delete {sport}? Tournaments using this sport will keep working
   with their original config."
 - **Input:** type sport name to confirm.
 
 ### 6.5 Sport detail — `/o/:orgSlug/sports/:id`
+
 - Read-only view of the sport config.
 - Tabs: Overview, Tournaments using this sport, Rules reference.
 
 ### 6.6 Sport selector in tournament creation
+
 - **UI:** Card grid of sport icons. Click selects. The selected card lifts
   and gets a primary border.
 - **Below:** shows the default config preview.
 - **In step 2 of tournament wizard.**
 
 ### 6.7 Sport-based experience branching
+
 - After sport is selected, the tournament wizard collapses irrelevant
   fields (e.g. "overs" hidden for football).
 - A persistent breadcrumb chip shows the current sport throughout the

@@ -30,6 +30,7 @@ axis, so the same data renders on any resolution.
 ## Screens
 
 ### 18.1 Formation builder — `/o/:orgSlug/visualization/formations/:matchId/:teamId`
+
 - **Header**: team, match, formation (4-4-2 etc.), save status.
 - **Canvas**: sport-specific field with safe areas:
   - **Football**: 16:9 pitch with goal areas, centre circle.
@@ -44,6 +45,7 @@ axis, so the same data renders on any resolution.
 - **Save**: `POST /visualization/formations` (create) or `PUT /{id}`.
 
 ### 18.2 Tactical board — `/o/:orgSlug/visualization/board/:matchId`
+
 - **Canvas** shared between teams (toggle A / B / Both).
 - **Drawing tools**: arrow, line, freehand, zone (rectangle / circle),
   text label, eraser.
@@ -54,12 +56,14 @@ axis, so the same data renders on any resolution.
 - **Export**: PNG, SVG, JSON (for backups / sharing).
 
 ### 18.3 Match visualization page — `/o/:orgSlug/matches/:id/visualization`
+
 - **Tabs**: Formation (read-only), Tactical board, Heatmap (future), Pass
   network (future).
 - **Read-only** for non-permissioned users — pan/zoom only.
 - **Print-friendly** layout for coach handouts.
 
 ### 18.4 Annotation editor
+
 - **Mode**: when the tactical board is open, annotations are the layered
   content.
 - **Per-annotation metadata**: title, description, related event id
@@ -68,6 +72,7 @@ axis, so the same data renders on any resolution.
   board with that annotation focused.
 
 ### 18.5 Drawing tools
+
 - **Arrow**: click-drag; head/tail style; curve handle.
 - **Line**: click-drag straight; dashed / solid.
 - **Freehand**: pressure-sensitive on tablet; smoothing slider.
@@ -76,6 +81,7 @@ axis, so the same data renders on any resolution.
 - **Eraser**: click annotation to delete, or use lasso to bulk-delete.
 
 ### 18.6 Player positioning editor
+
 - Drag-and-drop player tokens with snap-to-formation-slot.
 - **Heatmap underlay** (future) when match data exists.
 - **Role chips** on each token; right-click for role picker.

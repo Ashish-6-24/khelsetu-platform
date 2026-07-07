@@ -29,6 +29,7 @@ Records are typed: `actor`, `actorType` (user / system / api-key),
 ## Screens
 
 ### 20.1 Audit logs page — `/o/:orgSlug/audit`
+
 - **Header**: "Audit Logs", export CTA (CSV / NDJSON, permission-gated).
 - **Filters bar**:
   - Date range (default last 7 days).
@@ -51,6 +52,7 @@ Records are typed: `actor`, `actorType` (user / system / api-key),
   pauses on scroll up).
 
 ### 20.2 Audit detail drawer
+
 - **Header**: action, actor, entity link, timestamp.
 - **Metadata**: IP, UA, geo, organisation, request id.
 - **Diff viewer**: side-by-side JSON with added (green) / removed (red) /
@@ -60,6 +62,7 @@ Records are typed: `actor`, `actorType` (user / system / api-key),
 - **Open entity**: deep-link to the entity's current state and history.
 
 ### 20.3 Entity history page — `/o/:orgSlug/audit/entity/:type/:id`
+
 - **Header**: entity card (current name, status, primary fields).
 - **Timeline** (vertical) of all audit events for this entity, newest
   first:
@@ -71,6 +74,7 @@ Records are typed: `actor`, `actorType` (user / system / api-key),
   only).
 
 ### 20.4 User activity timeline — `/o/:orgSlug/audit/user/:userId`
+
 - **Header**: user card (avatar, role, joined, last active).
 - **Timeline** of all actions by this user across the org.
 - **Filters**: action type, entity type, date range.
@@ -78,11 +82,13 @@ Records are typed: `actor`, `actorType` (user / system / api-key),
 - **Devices**: distinct IPs / UAs grouped with last-seen.
 
 ### 20.5 Change log viewer
+
 - A re-usable component used on entity detail pages to show "last 5
   changes" inline.
 - Each row links to the audit detail drawer.
 
 ### 20.6 Event history explorer (advanced)
+
 - A power-user search page for super-admins (`/admin/audit`):
   - Tenant filter.
   - Free-text JSONPath into `metadata`.

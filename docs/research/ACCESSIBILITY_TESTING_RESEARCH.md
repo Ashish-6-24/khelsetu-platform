@@ -25,6 +25,7 @@
 ```
 
 **Key Version Notes:**
+
 - `@axe-core/playwright@4.12.1` tracks axe-core versions (4.12.x patch independently)
 - Uses `~4.12.1` for axe-core to allow patch updates without breaking changes
 - `@playwright/test@1.60.0` is current stable (ships with axe compatibility)
@@ -36,10 +37,10 @@
 ```typescript
 // Modern mode (default, requires Playwright 1.40+)
 // Uses axe.runPartial() + axe.finishRun() for cross-frame testing
-new AxeBuilder({ page }).analyze()
+new AxeBuilder({ page }).analyze();
 
 // Legacy mode (fallback for environments where blank pages fail)
-new AxeBuilder({ page }).setLegacyMode().analyze()
+new AxeBuilder({ page }).setLegacyMode().analyze();
 // Falls back to axe.run() with same-origin-only frame testing
 ```
 
@@ -52,8 +53,8 @@ new AxeBuilder({ page }).setLegacyMode().analyze()
 **File:** `tests/a11y/axe.ts`
 
 ```typescript
-import { Page, expect } from '@playwright/test';
 import { AxeBuilder } from '@axe-core/playwright';
+import { Page, expect } from '@playwright/test';
 import type { AxeResults, Result } from 'axe-core';
 
 /**
@@ -76,10 +77,10 @@ export class AccessibilityTester {
     const builder = new AxeBuilder({ page: this.page });
 
     if (options?.include?.length) {
-      options.include.forEach(sel => builder.include(sel));
+      options.include.forEach((sel) => builder.include(sel));
     }
     if (options?.exclude?.length) {
-      options.exclude.forEach(sel => builder.exclude(sel));
+      options.exclude.forEach((sel) => builder.exclude(sel));
     }
 
     if (options?.rules?.length) {
@@ -99,14 +100,13 @@ export class AccessibilityTester {
     include?: string[];
     exclude?: string[];
   }): Promise<AxeResults> {
-    const builder = new AxeBuilder({ page: this.page })
-      .setLegacyMode();
+    const builder = new AxeBuilder({ page: this.page }).setLegacyMode();
 
     if (options?.include?.length) {
-      options.include.forEach(sel => builder.include(sel));
+      options.include.forEach((sel) => builder.include(sel));
     }
     if (options?.exclude?.length) {
-      options.exclude.forEach(sel => builder.exclude(sel));
+      options.exclude.forEach((sel) => builder.exclude(sel));
     }
 
     return builder.analyze();
@@ -124,32 +124,32 @@ export class AccessibilityTester {
 type ViolationLevel = 'critical' | 'serious' | 'moderate' | 'minor';
 
 interface ViolationThreshold {
-  critical: number;  // Must be 0 (immediate failure)
-  serious: number;   // 0 allowed in production
-  moderate: number;  // Max 2 per page
-  minor: number;     // Max 10 per page (informational only)
+  critical: number; // Must be 0 (immediate failure)
+  serious: number; // 0 allowed in production
+  moderate: number; // Max 2 per page
+  minor: number; // Max 10 per page (informational only)
 }
 
 // Production-grade classification mapping
 const VIOLATION_LEVELS: Record<string, ViolationLevel> = {
   // CRITICAL: Complete barriers to access
-  'color-contrast': 'critical',          // WCAG 1.4.3
+  'color-contrast': 'critical', // WCAG 1.4.3
   'form-field-multiple-labels': 'critical',
-  'label': 'critical',                   // WCAG 1.3.1
-  'button-name': 'critical',             // WCAG 2.5.3
-  'image-alt': 'critical',               // WCAG 1.1.1
-  'aria-required-attr': 'critical',      // WCAG 4.1.2
-  'aria-roles': 'critical',              // WCAG 4.1.2
+  label: 'critical', // WCAG 1.3.1
+  'button-name': 'critical', // WCAG 2.5.3
+  'image-alt': 'critical', // WCAG 1.1.1
+  'aria-required-attr': 'critical', // WCAG 4.1.2
+  'aria-roles': 'critical', // WCAG 4.1.2
   'select-name': 'critical',
   'input-image-alt': 'critical',
-  'link-name': 'critical',               // WCAG 2.4.4
+  'link-name': 'critical', // WCAG 2.4.4
   'object-alt': 'critical',
 
   // SERIOUS: Significant barriers
-  'area-alt': 'serious',                 // WCAG 1.1.1
-  'empty-heading': 'serious',            // WCAG 1.3.1
-  'heading-order': 'serious',            // WCAG 1.3.1
-  'html-lang-valid': 'serious',          // WCAG 3.1.1
+  'area-alt': 'serious', // WCAG 1.1.1
+  'empty-heading': 'serious', // WCAG 1.3.1
+  'heading-order': 'serious', // WCAG 1.3.1
+  'html-lang-valid': 'serious', // WCAG 3.1.1
   'landmark-complementary-is-top-level': 'serious',
   'page-has-heading-one': 'serious',
   'aria-allowed-role': 'serious',
@@ -159,20 +159,20 @@ const VIOLATION_LEVELS: Record<string, ViolationLevel> = {
   'color-contrast-enhanced': 'moderate', // WCAG 1.4.11
   'focus-order-semantics': 'moderate',
   'form-field-visible-label': 'moderate',
-  'listitem': 'moderate',
-  'region': 'moderate',
+  listitem: 'moderate',
+  region: 'moderate',
 
   // MINOR: Minor conformance issues
-  'accesskeys': 'minor',                 // WCAG 2.1.1
+  accesskeys: 'minor', // WCAG 2.1.1
   'identical-links-same-purpose': 'minor',
   'meta-refresh': 'minor',
 };
 
 const DEFAULT_THRESHOLDS: ViolationThreshold = {
-  critical: 0,    // Fail immediately
-  serious: 0,     // Fail on serious violations
-  moderate: 2,    // Allow up to 2 moderate violations per page
-  minor: 10,      // Allow informational violations (logging only)
+  critical: 0, // Fail immediately
+  serious: 0, // Fail on serious violations
+  moderate: 2, // Allow up to 2 moderate violations per page
+  minor: 10, // Allow informational violations (logging only)
 };
 ```
 
@@ -183,25 +183,27 @@ const DEFAULT_THRESHOLDS: ViolationThreshold = {
 ### Authentication Flow Testing
 
 ```typescript
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+
 import { AccessibilityTester } from './a11y/axe';
 
 test.describe('Accessibility: Login Flow', () => {
   test('login page passes wcag2aa', async ({ page }) => {
     await page.goto('/login');
-    
+
     const a11y = new AccessibilityTester(page);
     const results = await a11y.analyzeWithFrames({
       tags: ['wcag2aa'],
     });
 
     // Check critical violations
-    const criticalViolations = results.violations.filter(v =>
-      VIOLATION_LEVELS[v.id] === 'critical'
+    const criticalViolations = results.violations.filter(
+      (v) => VIOLATION_LEVELS[v.id] === 'critical',
     );
 
-    expect(criticalViolations).toHaveLength(0,
-      `Critical accessibility violations found:\n${formatViolations(criticalViolations)}`
+    expect(criticalViolations).toHaveLength(
+      0,
+      `Critical accessibility violations found:\n${formatViolations(criticalViolations)}`,
     );
   });
 
@@ -223,7 +225,7 @@ test.describe('Accessibility: Login Flow', () => {
 
     const a11y = new AccessibilityTester(page);
     const results = await a11y.analyzeWithFrames();
-    
+
     assertCompliance(results, DEFAULT_THRESHOLDS);
   });
 
@@ -240,11 +242,11 @@ test.describe('Accessibility: Login Flow', () => {
     // Focus should move to main content or heading
     const mainHeading = page.locator('h1, [role="main"]');
     const focusedElement = page.locator(':focus');
-    
+
     // Verify focus is in main content area
     const mainBoundingBox = await mainHeading.boundingBox();
     const focusBoundingBox = await focusedElement.boundingBox();
-    
+
     expect(focusBoundingBox).toBeDefined();
 
     const a11y = new AccessibilityTester(page);
@@ -289,7 +291,7 @@ test.describe('Accessibility: Dashboard (Teams Tab)', () => {
 
   test('tournament list is keyboard navigable', async ({ page }) => {
     await page.locator('[role="tab"]:has-text("Teams")').click();
-    
+
     const teamList = page.locator('[role="list"]');
     const teamItems = page.locator('[role="listitem"]');
 
@@ -300,7 +302,7 @@ test.describe('Accessibility: Dashboard (Teams Tab)', () => {
     // Keyboard navigation
     const firstItem = teamItems.nth(0);
     await firstItem.focus();
-    
+
     for (let i = 0; i < 3; i++) {
       await page.keyboard.press('ArrowDown');
       await page.waitForTimeout(100);
@@ -334,7 +336,7 @@ interface ComplianceReport {
  */
 function assertCompliance(
   results: AxeResults,
-  thresholds: ViolationThreshold
+  thresholds: ViolationThreshold,
 ): ComplianceReport {
   const report: ComplianceReport = {
     passed: true,
@@ -368,7 +370,7 @@ function assertCompliance(
 
 function formatComplianceFailure(
   report: ComplianceReport,
-  results: AxeResults
+  results: AxeResults,
 ): string {
   const lines = [
     `WCAG 2.1 AA Compliance Failed on ${results.url}`,
@@ -384,7 +386,7 @@ function formatComplianceFailure(
   for (const violation of report.violations) {
     const level = VIOLATION_LEVELS[violation.id] || 'minor';
     lines.push(
-      `\n[${level.toUpperCase()}] ${violation.id} - ${violation.help}`
+      `\n[${level.toUpperCase()}] ${violation.id} - ${violation.help}`,
     );
     lines.push(`Description: ${violation.description}`);
     lines.push(`Affected nodes: ${violation.nodes.length}`);
@@ -460,21 +462,21 @@ jobs:
             const results = JSON.parse(
               fs.readFileSync('test-results/summary.json', 'utf8')
             );
-            
+
             const passed = results.passed ? '✅' : '❌';
             const comment = `
             ## Accessibility Test Results (${results.browser})
-            
+
             ${passed} ${results.passed ? 'PASSED' : 'FAILED'}
-            
+
             - Critical Violations: ${results.byLevel.critical}
             - Serious Violations: ${results.byLevel.serious}
             - Moderate Violations: ${results.byLevel.moderate}
             - Minor Violations: ${results.byLevel.minor}
-            
+
             [View Full Report](${results.reportUrl})
             `;
-            
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
@@ -491,7 +493,7 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests',
   testMatch: '**/*.a11y.spec.ts',
-  
+
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
@@ -567,6 +569,7 @@ export default config;
 ```typescript
 // src/components/Button.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
+
 import { Button } from './Button';
 
 const meta = {
@@ -639,7 +642,6 @@ export const AccessibilityTest: Story = {
   },
 };
 ```
-
 
 ---
 
@@ -723,11 +725,12 @@ export const AccessibilityTest: Story = {
 **File:** `tests/a11y/login.a11y.spec.ts`
 
 ```typescript
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+
 import { AccessibilityTester } from './axe';
 import {
-  VIOLATION_LEVELS,
   DEFAULT_THRESHOLDS,
+  VIOLATION_LEVELS,
   assertCompliance,
   formatComplianceFailure,
 } from './compliance';
@@ -814,21 +817,20 @@ test.describe('Accessibility: Login Page', () => {
 });
 ```
 
-
 ---
 
 ## 10. FRAME TESTING DEEP DIVE (Cross-Origin Challenges)
 
 ### Modern vs Legacy Mode Comparison
 
-| Feature | Modern (runPartial) | Legacy (run) |
-|---------|-------------------|--------------|
-| Cross-origin frames | ✅ Supported | ❌ Skipped |
-| Frame parallelization | ✅ Parallel | ❌ Sequential |
-| Blank page requirement | ✅ Required | ❌ Optional |
-| Performance | ✅ Fast | ⚠️ Slower |
-| Compatibility | ✅ Modern envs | ✅ All envs |
-| Frame-tested reporting | ✅ Yes | ✅ Yes |
+| Feature                | Modern (runPartial) | Legacy (run)  |
+| ---------------------- | ------------------- | ------------- |
+| Cross-origin frames    | ✅ Supported        | ❌ Skipped    |
+| Frame parallelization  | ✅ Parallel         | ❌ Sequential |
+| Blank page requirement | ✅ Required         | ❌ Optional   |
+| Performance            | ✅ Fast             | ⚠️ Slower     |
+| Compatibility          | ✅ Modern envs      | ✅ All envs   |
+| Frame-tested reporting | ✅ Yes              | ✅ Yes        |
 
 ### Frame Injection Pattern
 
@@ -859,13 +861,13 @@ test('reports untested frames', async ({ page }) => {
 
   // Check for frame-tested incomplete violations
   const frameTestedIssues = results.incomplete.filter(
-    issue => issue.id === 'frame-tested'
+    (issue) => issue.id === 'frame-tested',
   );
 
   // Log but don't fail on untested frames
   if (frameTestedIssues.length > 0) {
     console.warn(
-      `${frameTestedIssues.length} frames could not be tested (cross-origin)`
+      `${frameTestedIssues.length} frames could not be tested (cross-origin)`,
     );
   }
 
@@ -874,7 +876,6 @@ test('reports untested frames', async ({ page }) => {
   expect(report.passed).toBe(true);
 });
 ```
-
 
 ---
 
@@ -965,17 +966,20 @@ npx playwright test tests/a11y/login.a11y.spec.ts --project=chromium
 ## 13. INDUSTRY BENCHMARKS
 
 ### Test Execution Time (per page)
+
 - Modern mode with frames: 2-4 seconds
 - Legacy mode (no frames): 1-2 seconds
 - Storybook component: 0.5-1 second
 
 ### Violation Detection Accuracy
+
 - Critical violations: 99%+ detection rate
 - Serious violations: 98%+ detection rate
 - Moderate violations: 95%+ detection rate
 - Minor violations: 85%+ detection rate (many false positives)
 
 ### CI/CD Integration
+
 - Chromium: ~5 minutes for full suite
 - Firefox: ~6 minutes (slower startup)
 - WebKit: ~5 minutes
@@ -986,17 +990,19 @@ npx playwright test tests/a11y/login.a11y.spec.ts --project=chromium
 ## REFERENCES & LINKS
 
 **Official Documentation:**
+
 - Axe-Core Playwright: https://github.com/dequelabs/axe-core-npm/tree/develop/packages/playwright
 - Axe Rule Reference: https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md
 - WCAG 2.1 Quick Reference: https://www.w3.org/WAI/WCAG21/quickref/
 - Playwright Testing: https://playwright.dev/docs/intro
 
 **Industry Standards:**
+
 - WCAG 2.1 Level AA: https://www.w3.org/WAI/WCAG21/Understanding/
 - ARIA Authoring Practices: https://www.w3.org/WAI/ARIA/apg/
 
 **Company Patterns:**
+
 - Deque Labs (axe creators): https://www.deque.com/
 - Vercel accessibility: https://vercel.com/docs/accessibility
 - Google accessibility: https://www.google.com/accessibility/
-

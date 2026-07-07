@@ -240,11 +240,19 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       [
-        lint, format, typecheck,
-        secrets, circular, structure,
+        lint,
+        format,
+        typecheck,
+        secrets,
+        circular,
+        structure,
         build,
-        unit-test, coverage,
-        e2e, smoke, a11y, visual,
+        unit-test,
+        coverage,
+        e2e,
+        smoke,
+        a11y,
+        visual,
         lighthouse,
       ]
     steps:

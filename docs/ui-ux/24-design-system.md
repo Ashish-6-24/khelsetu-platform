@@ -14,38 +14,38 @@ does not address.
 Add these tokens to `src/styles/themes.css` next to the existing brand
 tokens.
 
-| Token | Light | Dark | Use |
-|---|---|---|---|
-| `--score-stat-bg` | `#0F172A` | `#0B1220` | Background for big score numbers (broadcast/console) |
-| `--score-stat-fg` | `#F8FAFC` | `#F8FAFC` | Foreground for big score numbers |
-| `--live-pulse` | `#EF4444` | `#F87171` | LIVE pulse colour (mirrors `--color-accent-live`) |
-| `--possession-a` | `--color-primary` | `--color-primary` | Possession arrow team A |
-| `--possession-b` | `--color-cta` | `--color-cta` | Possession arrow team B |
-| `--shot-clock-warn` | `#F59E0B` | `#FBBF24` | Shot clock 5–10s |
-| `--shot-clock-crit` | `#DC2626` | `#F87171` | Shot clock ≤5s, pulsing |
-| `--field-grass` | `#15803D` | `#166534` | Football pitch base |
-| `--field-line` | `#FFFFFF` | `#F8FAFC` | Pitch / court lines |
-| `--court-hardwood` | `#D97706` | `#B45309` | Basketball court base |
-| `--pitch-oval` | `#65A30D` | `#4D7C0F` | Cricket oval base |
-| `--bracket-line` | `#94A3B8` | `#475569` | Tournament bracket connectors |
+| Token               | Light             | Dark              | Use                                                  |
+| ------------------- | ----------------- | ----------------- | ---------------------------------------------------- |
+| `--score-stat-bg`   | `#0F172A`         | `#0B1220`         | Background for big score numbers (broadcast/console) |
+| `--score-stat-fg`   | `#F8FAFC`         | `#F8FAFC`         | Foreground for big score numbers                     |
+| `--live-pulse`      | `#EF4444`         | `#F87171`         | LIVE pulse colour (mirrors `--color-accent-live`)    |
+| `--possession-a`    | `--color-primary` | `--color-primary` | Possession arrow team A                              |
+| `--possession-b`    | `--color-cta`     | `--color-cta`     | Possession arrow team B                              |
+| `--shot-clock-warn` | `#F59E0B`         | `#FBBF24`         | Shot clock 5–10s                                     |
+| `--shot-clock-crit` | `#DC2626`         | `#F87171`         | Shot clock ≤5s, pulsing                              |
+| `--field-grass`     | `#15803D`         | `#166534`         | Football pitch base                                  |
+| `--field-line`      | `#FFFFFF`         | `#F8FAFC`         | Pitch / court lines                                  |
+| `--court-hardwood`  | `#D97706`         | `#B45309`         | Basketball court base                                |
+| `--pitch-oval`      | `#65A30D`         | `#4D7C0F`         | Cricket oval base                                    |
+| `--bracket-line`    | `#94A3B8`         | `#475569`         | Tournament bracket connectors                        |
 
 ## 24.2 Typography scale (component-level)
 
 `MASTER.md` defines the global type system. Product surfaces use these
 named slots:
 
-| Slot | Family | Weight | Size (desktop / mobile) | Use |
-|---|---|---|---|---|
-| `display-score` | Display sans (e.g., Sora) | 800 | 96 / 64 | Score numbers in overlay & scorer |
-| `display-stat` | Display sans | 700 | 64 / 44 | Big KPI numbers |
-| `headline-1` | Display sans | 700 | 40 / 30 | Page headlines |
-| `headline-2` | Display sans | 700 | 28 / 22 | Section headlines |
-| `headline-3` | Body sans | 600 | 22 / 18 | Card titles |
-| `body-1` | Body sans | 400 | 16 / 16 | Body copy |
-| `body-2` | Body sans | 400 | 14 / 14 | Secondary copy |
-| `caption` | Body sans | 400 | 12 / 12 | Captions, metadata |
-| `mono-clock` | Mono (e.g., JetBrains Mono) | 600 | 48 / 32 | Clocks, timers |
-| `code` | Mono | 400 | 14 / 12 | Code / event log |
+| Slot            | Family                      | Weight | Size (desktop / mobile) | Use                               |
+| --------------- | --------------------------- | ------ | ----------------------- | --------------------------------- |
+| `display-score` | Display sans (e.g., Sora)   | 800    | 96 / 64                 | Score numbers in overlay & scorer |
+| `display-stat`  | Display sans                | 700    | 64 / 44                 | Big KPI numbers                   |
+| `headline-1`    | Display sans                | 700    | 40 / 30                 | Page headlines                    |
+| `headline-2`    | Display sans                | 700    | 28 / 22                 | Section headlines                 |
+| `headline-3`    | Body sans                   | 600    | 22 / 18                 | Card titles                       |
+| `body-1`        | Body sans                   | 400    | 16 / 16                 | Body copy                         |
+| `body-2`        | Body sans                   | 400    | 14 / 14                 | Secondary copy                    |
+| `caption`       | Body sans                   | 400    | 12 / 12                 | Captions, metadata                |
+| `mono-clock`    | Mono (e.g., JetBrains Mono) | 600    | 48 / 32                 | Clocks, timers                    |
+| `code`          | Mono                        | 400    | 14 / 12                 | Code / event log                  |
 
 Tabular numerals (`font-variant-numeric: tabular-nums`) are mandatory on
 all score / clock / KPI surfaces.
@@ -54,19 +54,19 @@ all score / clock / KPI surfaces.
 
 Tailwind v4 default, plus product names:
 
-| Token | Px | Use |
-|---|---|---|
-| `space-x` | 2 | Hairline |
-| `space-1` | 4 | Tight |
-| `space-2` | 8 | Inline |
-| `space-3` | 12 | Form field gap |
-| `space-4` | 16 | Card padding small |
-| `space-5` | 20 | Card padding default |
-| `space-6` | 24 | Section gap |
-| `space-8` | 32 | Page gap |
-| `space-10` | 40 | Wide section |
-| `space-12` | 48 | Hero |
-| `space-16` | 64 | Mega hero |
+| Token      | Px  | Use                  |
+| ---------- | --- | -------------------- |
+| `space-x`  | 2   | Hairline             |
+| `space-1`  | 4   | Tight                |
+| `space-2`  | 8   | Inline               |
+| `space-3`  | 12  | Form field gap       |
+| `space-4`  | 16  | Card padding small   |
+| `space-5`  | 20  | Card padding default |
+| `space-6`  | 24  | Section gap          |
+| `space-8`  | 32  | Page gap             |
+| `space-10` | 40  | Wide section         |
+| `space-12` | 48  | Hero                 |
+| `space-16` | 64  | Mega hero            |
 
 ## 24.4 Icon usage
 
@@ -78,17 +78,17 @@ Tailwind v4 default, plus product names:
 
 ## 24.5 Buttons
 
-| Variant | Use | Visual |
-|---|---|---|
-| Primary | Main CTA | Filled primary, white text, primary gradient on hover |
-| Secondary | Alternative CTA | Outlined primary, primary text |
-| Tertiary | Low-emphasis | Text only, primary text, underline on hover |
-| Danger | Destructive | Filled red, white text |
-| Success | Positive | Filled green, white text |
-| Ghost | Toolbar | Transparent, hover bg-tertiary |
-| Icon | Toolbar | Square 32/40, ghost or filled |
-| Score | Scoring console | Square ≥64×64, bold label, large hit target |
-| Live-action | Console primary action | Same as Score with pulse |
+| Variant     | Use                    | Visual                                                |
+| ----------- | ---------------------- | ----------------------------------------------------- |
+| Primary     | Main CTA               | Filled primary, white text, primary gradient on hover |
+| Secondary   | Alternative CTA        | Outlined primary, primary text                        |
+| Tertiary    | Low-emphasis           | Text only, primary text, underline on hover           |
+| Danger      | Destructive            | Filled red, white text                                |
+| Success     | Positive               | Filled green, white text                              |
+| Ghost       | Toolbar                | Transparent, hover bg-tertiary                        |
+| Icon        | Toolbar                | Square 32/40, ghost or filled                         |
+| Score       | Scoring console        | Square ≥64×64, bold label, large hit target           |
+| Live-action | Console primary action | Same as Score with pulse                              |
 
 States: default, hover, active, focus (2px ring), disabled, loading
 (spinner replaces label, button retains width).
@@ -241,24 +241,24 @@ Each uses the corresponding badge variant + icon.
 
 ## 24.23 Sport-specific visual language
 
-| Sport | Accent | Field | Iconography | Notes |
-|---|---|---|---|---|
-| Cricket | `--sport-cricket` (amber) | Oval | Bat, ball, stumps | Overs, RR are mono |
-| Football | `--sport-football` (green) | Pitch | Boot, card, whistle | Clock + injury time |
-| Basketball | `--sport-basketball` (orange) | Court | Ball, hoop, whistle | Shot + game clocks |
+| Sport      | Accent                        | Field | Iconography         | Notes               |
+| ---------- | ----------------------------- | ----- | ------------------- | ------------------- |
+| Cricket    | `--sport-cricket` (amber)     | Oval  | Bat, ball, stumps   | Overs, RR are mono  |
+| Football   | `--sport-football` (green)    | Pitch | Boot, card, whistle | Clock + injury time |
+| Basketball | `--sport-basketball` (orange) | Court | Ball, hoop, whistle | Shot + game clocks  |
 
 Use sport accent only as **secondary** signal — primary remains brand.
 
 ## 24.24 Surfaces by shell
 
-| Shell | Background | Density | Notes |
-|---|---|---|---|
-| Public | `--bg-primary` | Spacious | Marketing, conversion |
-| Auth | `--bg-secondary` | Minimal | Trust, simple |
-| Dashboard | `--bg-secondary` (sidebar) + `--bg-primary` (content) | Data-dense | KPIs, tables |
-| Scorer | `--bg-tertiary` (sticky areas) + `--bg-primary` (content) | Tactile | Big buttons |
-| Overlay | transparent | Broadcast | No chrome |
-| Admin | `--bg-secondary` | Dense | Cross-tenant |
+| Shell     | Background                                                | Density    | Notes                 |
+| --------- | --------------------------------------------------------- | ---------- | --------------------- |
+| Public    | `--bg-primary`                                            | Spacious   | Marketing, conversion |
+| Auth      | `--bg-secondary`                                          | Minimal    | Trust, simple         |
+| Dashboard | `--bg-secondary` (sidebar) + `--bg-primary` (content)     | Data-dense | KPIs, tables          |
+| Scorer    | `--bg-tertiary` (sticky areas) + `--bg-primary` (content) | Tactile    | Big buttons           |
+| Overlay   | transparent                                               | Broadcast  | No chrome             |
+| Admin     | `--bg-secondary`                                          | Dense      | Cross-tenant          |
 
 ## 24.25 Motion
 
@@ -272,18 +272,18 @@ Use sport accent only as **secondary** signal — primary remains brand.
 
 ## 24.26 Z-index scale
 
-| Layer | Z |
-|---|---|
-| Base | 0 |
-| Sticky header / footer | 10 |
-| Dropdowns | 30 |
-| Popovers | 40 |
-| Modals | 50 |
-| Drawers | 60 |
-| Toasts | 70 |
-| Connection banner | 80 |
-| Tooltips | 90 |
-| Loading overlays | 100 |
+| Layer                  | Z   |
+| ---------------------- | --- |
+| Base                   | 0   |
+| Sticky header / footer | 10  |
+| Dropdowns              | 30  |
+| Popovers               | 40  |
+| Modals                 | 50  |
+| Drawers                | 60  |
+| Toasts                 | 70  |
+| Connection banner      | 80  |
+| Tooltips               | 90  |
+| Loading overlays       | 100 |
 
 ## 24.27 Support for shells
 

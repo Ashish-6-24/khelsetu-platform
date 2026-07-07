@@ -26,27 +26,29 @@ group / colour them consistently.
 
 ## Notification categories (mapped)
 
-| Category | Example | Channel | Default action |
-|---|---|---|---|
-| `match` | "Live: Team A vs Team B started" | Toast + Bell | Open match |
-| `tournament` | "Tournament published" | Bell | Open tournament |
-| `org` | "You were added to Org Alpha" | Bell + Email | Switch org |
-| `invitation` | "Invitation to join Org X" | Bell | Accept / decline |
-| `role` | "You are now a Tournament Admin" | Bell | View role |
-| `billing` | "Invoice due in 3 days" | Bell + Email | View invoice |
-| `quota` | "Free quota: 1 match left" | Bell + Banner | View plan |
-| `sync` | "3 events failed to sync" | Bell + Banner | Open sync queue |
-| `var` / `drs` | "VAR review on Match X" | Bell + Toast | Open review |
-| `system` | "Maintenance window tonight" | Bell + Banner | Acknowledge |
+| Category      | Example                          | Channel       | Default action   |
+| ------------- | -------------------------------- | ------------- | ---------------- |
+| `match`       | "Live: Team A vs Team B started" | Toast + Bell  | Open match       |
+| `tournament`  | "Tournament published"           | Bell          | Open tournament  |
+| `org`         | "You were added to Org Alpha"    | Bell + Email  | Switch org       |
+| `invitation`  | "Invitation to join Org X"       | Bell          | Accept / decline |
+| `role`        | "You are now a Tournament Admin" | Bell          | View role        |
+| `billing`     | "Invoice due in 3 days"          | Bell + Email  | View invoice     |
+| `quota`       | "Free quota: 1 match left"       | Bell + Banner | View plan        |
+| `sync`        | "3 events failed to sync"        | Bell + Banner | Open sync queue  |
+| `var` / `drs` | "VAR review on Match X"          | Bell + Toast  | Open review      |
+| `system`      | "Maintenance window tonight"     | Bell + Banner | Acknowledge      |
 
 ## Screens
 
 ### 16.1 Notification bell (topbar)
+
 - **Icon**: bell + small dot/number for unread.
 - **Click**: opens a 384-px dropdown.
 - **Realtime**: pulses on `notification:new`; never auto-opens.
 
 ### 16.2 Notification dropdown
+
 - **Header**: "Notifications" title, "Mark all as read", "Settings".
 - **List** (max 10): grouped by day ("Today", "Yesterday", "Earlier").
   Each row: icon (category), title, body (truncated), relative time,
@@ -56,6 +58,7 @@ group / colour them consistently.
 - **Footer**: "View all notifications" link.
 
 ### 16.3 Notification center page — `/o/:orgSlug/notifications` (or `/notifications` for personal)
+
 - **Filters**: category (chips), severity (info/warn/error), read state,
   date range, search.
 - **Bulk actions**: mark read, mark unread, delete.
@@ -65,35 +68,41 @@ group / colour them consistently.
   metadata (source, actor, organisation), and deep-link.
 
 ### 16.4 Read/unread states
+
 - **Unread row**: blue left border + subtle background (`bg-primary-soft`).
 - **Read row**: default.
 - **Click** opens detail; mark-read fires automatically.
 - **Manual toggle**: dot button on the row.
 
 ### 16.5 Unread badge
+
 - Bell badge shows count up to **99+**.
 - Updates immediately on real-time event and after `read-all`.
 - **Endpoint**: `GET /notifications/unread-count` polled every 60s as
   fallback when socket is down.
 
 ### 16.6 Bulk mark all as read
+
 - **CTA** in dropdown header and center page.
 - **Endpoint**: `POST /notifications/read-all`.
 - **Toast**: "All notifications marked as read."
 - Optimistically clears badge.
 
 ### 16.7 Delete notification
+
 - **Per-row**: trash icon → confirm.
 - **Bulk**: select multiple → "Delete selected".
 - **Endpoint**: `DELETE /notifications/{id}`.
 - **Undo toast**: "Notification deleted — Undo" (5s).
 
 ### 16.8 Empty state
+
 - Illustration of a checked envelope.
 - "You're all caught up."
 - Subtle CTA: "Manage notification settings".
 
 ### 16.9 Notification settings (sub-page)
+
 - Per-category toggles for: Bell, Email, Push (future), SMS (future).
 - "Quiet hours" time range.
 - "Mute organisation X" toggle.

@@ -4,6 +4,7 @@ Backend Developer Guide (2026-07-01)
 ===========================================
 
 # PURPOSE
+
 This guide clarifies the KhelSetu project structure for backend developers integrating with the frontend. It identifies organizational patterns, duplication issues, and recommended fixes to eliminate confusion.
 
 ---
@@ -116,6 +117,7 @@ src/
 ### 1.2 Feature Modules (28 domains)
 
 **Pattern:** Each feature follows this structure:
+
 ```
 features/[feature-name]/
 ├── components/             [Feature UI components]
@@ -129,48 +131,48 @@ features/[feature-name]/
 
 **28 Features:**
 
-| Feature | Purpose | Has Store? |
-|---------|---------|-----------|
-| accessibility | WCAG compliance, a11y utilities | No |
-| auth | Authentication (login/register) | No |
-| billing | Payments, subscriptions | Yes |
-| bracket-advanced | Tournament bracket logic | No |
-| certificates | Achievement certificates | No |
-| dashboard | Admin/user dashboard | No |
-| formation | Player lineup/formation UI | No |
-| i18n | Internationalization (EN, NP, HI) | No |
-| live-broadcast | Live stream overlays | No |
-| live-events | Real-time event updates | No |
-| live-scoring | Real-time score updates | No |
-| match-reports | Match analysis & reports | No |
-| match-statistics | Stats aggregation | No |
-| media-gallery | Image/video uploads | No |
-| news | News articles/feeds | No |
-| notifications | In-app & push notifications | Yes |
-| offline-sync | Offline-first data sync | No |
-| overlays | Broadcast graphics overlays | No |
-| reports | Analytics reports | No |
-| scoring | Sport-specific scoring | Yes |
-| search | Global search functionality | No |
-| standings | Tournament rankings | Yes |
-| teams | Team management | No |
-| tournaments | Tournament lifecycle | Yes |
-| user-roles | RBAC role management | No |
-| websocket | WebSocket real-time connection | Yes |
-| (2 reserved) | - | - |
+| Feature          | Purpose                           | Has Store? |
+| ---------------- | --------------------------------- | ---------- |
+| accessibility    | WCAG compliance, a11y utilities   | No         |
+| auth             | Authentication (login/register)   | No         |
+| billing          | Payments, subscriptions           | Yes        |
+| bracket-advanced | Tournament bracket logic          | No         |
+| certificates     | Achievement certificates          | No         |
+| dashboard        | Admin/user dashboard              | No         |
+| formation        | Player lineup/formation UI        | No         |
+| i18n             | Internationalization (EN, NP, HI) | No         |
+| live-broadcast   | Live stream overlays              | No         |
+| live-events      | Real-time event updates           | No         |
+| live-scoring     | Real-time score updates           | No         |
+| match-reports    | Match analysis & reports          | No         |
+| match-statistics | Stats aggregation                 | No         |
+| media-gallery    | Image/video uploads               | No         |
+| news             | News articles/feeds               | No         |
+| notifications    | In-app & push notifications       | Yes        |
+| offline-sync     | Offline-first data sync           | No         |
+| overlays         | Broadcast graphics overlays       | No         |
+| reports          | Analytics reports                 | No         |
+| scoring          | Sport-specific scoring            | Yes        |
+| search           | Global search functionality       | No         |
+| standings        | Tournament rankings               | Yes        |
+| teams            | Team management                   | No         |
+| tournaments      | Tournament lifecycle              | Yes        |
+| user-roles       | RBAC role management              | No         |
+| websocket        | WebSocket real-time connection    | Yes        |
+| (2 reserved)     | -                                 | -          |
 
 ### 1.3 Incomplete Features (Pattern Violations)
 
 **These features are missing subdirectories:**
 
-| Feature | Missing |
-|---------|---------|
-| accessibility | services, types |
-| auth | types, utils, hooks |
-| dashboard | hooks, services, types, utils |
-| search | services, utils |
-| teams | hooks, utils |
-| user-roles | services, utils |
+| Feature       | Missing                       |
+| ------------- | ----------------------------- |
+| accessibility | services, types               |
+| auth          | types, utils, hooks           |
+| dashboard     | hooks, services, types, utils |
+| search        | services, utils               |
+| teams         | hooks, utils                  |
+| user-roles    | services, utils               |
 
 **Action Required:** Standardize all features to have all 6 directories.
 
@@ -351,6 +353,7 @@ graphify-out/
 ### Issue 1: Documentation Scattered Across Multiple Locations
 
 **Problem:** Design specifications exist in THREE places:
+
 - `docs/ui-ux/24-design-system.md`
 - `docs/superpowers/specs/2026-06-25-design-token-system.md`
 - `design-system/khelsetu/MASTER.md`
@@ -403,6 +406,7 @@ Feature stores also exist:
 ### Issue 4: Asset Organization Ambiguity
 
 **Problem:** Two icon directories with unclear purpose:
+
 ```
 public/icons/        [PWA icons or component icons?]
 src/assets/icons/    [Component SVA icons or PWA icons?]
@@ -428,17 +432,20 @@ src/assets/icons/    [Component SVA icons or PWA icons?]
 
 ---
 
-
 # SECTION 6: RECOMMENDED FIXES
 
 ## 6.1 Fix #1: Standardize Feature Module Patterns
 
 ### Current State (BROKEN)
+
 6 features missing subdirectories:
+
 - auth, dashboard, accessibility, search, teams, user-roles
 
 ### Target State (FIXED)
+
 All 28 features follow same structure:
+
 ```
 features/[name]/
   ├── components/
@@ -452,6 +459,7 @@ features/[name]/
 ### Implementation Steps
 
 1. Create missing directories:
+
 ```bash
 cd khelsetu-frontend/src/features/auth
 mkdir -p hooks services types utils
@@ -465,16 +473,18 @@ touch hooks/index.ts services/index.ts types/index.ts utils/index.ts
    - Auth hooks → hooks/
 
 3. Create barrel exports in each index.ts:
+
 ```typescript
 // features/auth/index.ts
-export * from './components'
-export * from './hooks'
-export * from './services'
-export * from './types'
-export * from './utils'
+export * from './components';
+export * from './hooks';
+export * from './services';
+export * from './types';
+export * from './utils';
 ```
 
 ### Expected Outcome
+
 ✓ All features consistent
 ✓ Backend developers know where to find/add API integration code
 ✓ Easy to onboard new team members
@@ -488,23 +498,27 @@ export * from './utils'
 Content should clarify:
 
 **Global Store (src/store/)** - App-wide state:
+
 - authStore: User, token, permissions
 - uiStore: Theme, modals, sidebar
 - tournamentStore: Filters, current selection
 - scoringStore: Live scores, real-time state
 
-**Feature Store (src/features/*/store/)** - Domain-specific:
+**Feature Store (src/features/\*/store/)** - Domain-specific:
+
 - billing/store: Subscription plans
 - notifications/store: Notification queue
 - websocket/store: Connection status
 
 **Rule: Global > Feature > React Query > Local**
+
 1. Global store if app-wide needed
 2. Feature store if domain-specific
 3. React Query if async API data
 4. useState if component-only
 
 ### Action
+
 This document prevents confusion about state placement.
 
 ---
@@ -512,6 +526,7 @@ This document prevents confusion about state placement.
 ## 6.3 Fix #3: Consolidate Documentation
 
 ### Current (BROKEN)
+
 ```
 docs/ui-ux/24-design-system.md
 docs/superpowers/specs/2026-06-25-design-token-system.md
@@ -520,6 +535,7 @@ design-system/khelsetu/MASTER.md
 ```
 
 ### Target (FIXED)
+
 ```
 docs/
 ├── design/
@@ -545,12 +561,14 @@ docs/
 ```
 
 ### Steps
+
 1. Create new doc directories
 2. Copy design-system/khelsetu/MASTER.md → docs/design/TOKENS.md
 3. Archive old docs/ui-ux/ and docs/superpowers/
 4. Add redirects to old locations
 
 ### Expected Outcome
+
 ✓ Single source of truth
 ✓ Backend developers know exactly where to find specs
 
@@ -559,6 +577,7 @@ docs/
 ## 6.4 Fix #4: Clarify Asset Organization
 
 ### Target
+
 ```
 public/icons/          [PWA & Favicon ONLY]
   ├── favicon.ico
@@ -573,11 +592,13 @@ src/assets/icons/      [Component SVG icons]
 ```
 
 ### Steps
+
 1. Audit public/icons/ - move component icons to src/assets/icons/
 2. Keep only PWA manifest files in public/
 3. Document in docs/ASSETS.md
 
 ### Expected Outcome
+
 ✓ Clear separation of concerns
 ✓ No duplication
 ✓ Organized imports
@@ -587,9 +608,11 @@ src/assets/icons/      [Component SVG icons]
 ## 6.5 Fix #5: Test Organization Policy
 
 ### Decision
+
 **CENTRALIZED TESTING ONLY** - No co-located tests.
 
 All tests go in: `src/tests/`
+
 ```
 src/tests/
 ├── unit/          [Component & utility tests]
@@ -598,11 +621,13 @@ src/tests/
 ```
 
 ### Action
+
 1. Document in docs/TESTING.md
 2. Add ESLint rule to prevent .test.ts files outside src/tests/
 3. Update contributing guide
 
 ### Expected Outcome
+
 ✓ Consistent test placement
 ✓ Easy to locate tests
 ✓ Reduced maintenance burden
@@ -612,12 +637,15 @@ src/tests/
 ## 6.6 Fix #6: Organize Configuration Files (Optional)
 
 ### Current
+
 8 config files scattered at root.
 
 ### Option A: Keep as-is (Lowest effort)
+
 Keep current structure. Update docs/CONFIGURATION.md to explain each file.
 
 ### Option B: Organize into ./config/ (Better UX)
+
 ```
 config/
 ├── vite.config.ts
@@ -631,6 +659,7 @@ Root references: package.json points to config/*
 ```
 
 ### Recommendation
+
 Keep Option A for now (no refactoring needed). Document in config README.
 
 ---
@@ -680,32 +709,38 @@ Keep Option A for now (no refactoring needed). Document in config README.
 Before backend developers start integration, ensure:
 
 **Folder Structure:**
+
 - [ ] All 28 features follow consistent pattern
 - [ ] All feature directories have: components/, hooks/, services/, types/, utils/
 - [ ] All features have index.ts barrel exports
 
 **State Management:**
+
 - [ ] docs/STATE_MANAGEMENT.md created and reviewed
 - [ ] Team understands global vs feature stores
 - [ ] No state duplication between layers
 
 **Documentation:**
+
 - [ ] Single docs/design/ directory for all design specs
 - [ ] Single docs/api/ directory for all API specs
 - [ ] docs/api/endpoints.md lists all backend endpoints
 - [ ] docs/api/authentication.md documents auth flow
 
 **Assets:**
+
 - [ ] public/icons/ contains only PWA icons
 - [ ] src/assets/icons/ contains all component icons
 - [ ] No duplicate icons across directories
 
 **Testing:**
+
 - [ ] All tests in src/tests/
 - [ ] No .test.ts files outside src/tests/
 - [ ] docs/TESTING.md documents testing strategy
 
 **Configuration:**
+
 - [ ] docs/CONFIGURATION.md explains all root-level configs
 - [ ] No conflicting tsconfig files
 - [ ] All ESLint/Prettier rules documented
@@ -767,4 +802,3 @@ Before backend developers start integration, ensure:
 Generated: 2026-07-01
 Author: Backend Folder Structure Audit
 Purpose: Clear organization for backend developer integration
-

@@ -13,6 +13,7 @@ This document specifies the UX/UI design for the KhelSetu login interface. Imple
 ## Current Implementation Status
 
 ✅ **Completed:**
+
 - Real-time email validation with visual feedback
 - Password strength indicator (4-level visual scale)
 - Success checkmark for valid email
@@ -22,6 +23,7 @@ This document specifies the UX/UI design for the KhelSetu login interface. Imple
 - ARIA labels for accessibility
 
 ⏳ **Recommended (Phase 2):**
+
 - Multi-stage loading states during authentication
 - Mobile touch target optimization (48px minimum)
 - Advanced error recovery flows
@@ -33,6 +35,7 @@ This document specifies the UX/UI design for the KhelSetu login interface. Imple
 ### Layout
 
 **Desktop (1440px+):**
+
 - Center card on page
 - Card width: 400px max
 - Padding: 32px (var(--spacing-8))
@@ -40,6 +43,7 @@ This document specifies the UX/UI design for the KhelSetu login interface. Imple
 - Rounded corners: 12px (var(--radius-lg))
 
 **Mobile (375px):**
+
 - Full screen with safe margins
 - Padding: 16px (var(--spacing-4))
 - Rounded corners: 8px (var(--radius-md))
@@ -48,6 +52,7 @@ This document specifies the UX/UI design for the KhelSetu login interface. Imple
 ### Color Scheme
 
 **Light Mode:**
+
 - Background: #FFFFFF (var(--bg-primary))
 - Text: #0F172A (var(--text-primary))
 - Border: #E2E8F0 (var(--border-subtle))
@@ -56,6 +61,7 @@ This document specifies the UX/UI design for the KhelSetu login interface. Imple
 - Error: #DC2626 (var(--color-error))
 
 **Dark Mode:**
+
 - Background: #1E293B (var(--bg-secondary))
 - Text: #F8FAFC (var(--text-primary))
 - Border: #334155 (var(--border-subtle))
@@ -69,28 +75,33 @@ This document specifies the UX/UI design for the KhelSetu login interface. Imple
 ### Email Field
 
 **State: Idle (default)**
+
 - Border: 1px solid var(--border-subtle)
 - Background: var(--bg-primary)
 - Text color: var(--text-primary)
 - Placeholder: "Email address"
 
 **State: Focused**
+
 - Border: 2px solid var(--brand-primary)
 - Outline: 2px solid var(--brand-primary)
 - Outline-offset: 2px
 - Background: unchanged
 
 **State: Validating (after blur)**
+
 - Border: 2px solid var(--border-subtle)
 - Right icon: spinner (rotating 360° over 1s)
 - Opacity: 0.6
 
 **State: Valid**
+
 - Border: 2px solid var(--color-success)
 - Right icon: checkmark (✓)
 - Animation: scaleIn 200ms ease-out
 
 **State: Invalid (touched + error)**
+
 - Border: 2px solid var(--color-error)
 - Right icon: X mark
 - Error message below field: red text (var(--color-error))
@@ -99,6 +110,7 @@ This document specifies the UX/UI design for the KhelSetu login interface. Imple
 ### Password Field
 
 **Base Styling:**
+
 - Same as email field
 - Icon: eye toggle (show/hide password)
 
@@ -121,6 +133,7 @@ Strong (Green):
 ```
 
 **Criteria Checklist:**
+
 ```
 □ At least 8 characters
 □ Contains uppercase letter (A-Z)
@@ -142,12 +155,14 @@ Updates as user types (real-time).
 ### Submit Button
 
 **State: Disabled (form invalid)**
+
 - Background: #D1D5DB (gray-300)
 - Text: #6B7280 (gray-500)
 - Cursor: not-allowed
 - No hover effect
 
 **State: Enabled (form valid)**
+
 - Background: var(--brand-primary) (#7F1D1D)
 - Text: #FFFFFF
 - Cursor: pointer
@@ -155,6 +170,7 @@ Updates as user types (real-time).
 - Active: background #3D0F0F (even darker)
 
 **State: Loading**
+
 - Background: var(--brand-primary)
 - Show: animated spinner inside button
 - Text: "Signing in..."
@@ -168,6 +184,7 @@ Updates as user types (real-time).
 ### Field Validation
 
 **Fade In (error message):**
+
 ```css
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -178,6 +195,7 @@ Timing: ease-out
 ```
 
 **Scale In (success checkmark):**
+
 ```css
 @keyframes scaleIn {
   from { transform: scale(0.5); opacity: 0; }
@@ -188,6 +206,7 @@ Timing: ease-out
 ```
 
 **Shake (error state):**
+
 ```css
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
@@ -199,6 +218,7 @@ Timing: ease-in-out
 ```
 
 **Spinner (validating):**
+
 ```css
 @keyframes spin {
   from { transform: rotate(0deg); }
@@ -213,7 +233,9 @@ Repeat: infinite
 
 ```css
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
@@ -391,16 +413,28 @@ Minimum 48px × 48px for all interactive elements:
 ```css
 /* Mobile: 14px base */
 @media (max-width: 640px) {
-  body { font-size: 14px; }
-  h1 { font-size: 24px; }
-  label { font-size: 13px; }
+  body {
+    font-size: 14px;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  label {
+    font-size: 13px;
+  }
 }
 
 /* Desktop: 16px base */
 @media (min-width: 641px) {
-  body { font-size: 16px; }
-  h1 { font-size: 32px; }
-  label { font-size: 14px; }
+  body {
+    font-size: 16px;
+  }
+  h1 {
+    font-size: 32px;
+  }
+  label {
+    font-size: 14px;
+  }
 }
 ```
 
@@ -413,7 +447,7 @@ Minimum 48px × 48px for all interactive elements:
 ```tsx
 export function ThemeToggle() {
   const { isDark, toggle } = useDarkMode();
-  
+
   return (
     <button onClick={toggle} aria-label="Toggle dark mode">
       {isDark ? '☀️' : '🌙'}
@@ -426,14 +460,14 @@ export function ThemeToggle() {
 
 ```css
 /* Light mode (default) */
---text-primary: #0F172A;
---bg-primary: #FFFFFF;
---border-subtle: #E2E8F0;
+--text-primary: #0f172a;
+--bg-primary: #ffffff;
+--border-subtle: #e2e8f0;
 
 /* Dark mode (when .dark class active) */
 @media (prefers-color-scheme: dark) {
-  --text-primary: #F8FAFC;
-  --bg-primary: #1E293B;
+  --text-primary: #f8fafc;
+  --bg-primary: #1e293b;
   --border-subtle: #334155;
 }
 ```
@@ -443,6 +477,7 @@ export function ThemeToggle() {
 ## Testing Checklist
 
 ### Visual Testing
+
 - [ ] Form renders at 375px (mobile)
 - [ ] Form renders at 768px (tablet)
 - [ ] Form renders at 1440px (desktop)
@@ -451,6 +486,7 @@ export function ThemeToggle() {
 - [ ] Icons render correctly
 
 ### Functionality
+
 - [ ] Email validation on blur
 - [ ] Password strength updates real-time
 - [ ] Success checkmark shows when valid
@@ -460,6 +496,7 @@ export function ThemeToggle() {
 - [ ] Form submission works
 
 ### Accessibility
+
 - [ ] Tab through form in correct order
 - [ ] Focus visible on all elements
 - [ ] Screen reader announces errors
@@ -468,6 +505,7 @@ export function ThemeToggle() {
 - [ ] Error messages have role="alert"
 
 ### Performance
+
 - [ ] Form interaction < 100ms latency
 - [ ] Animations 60fps (no jank)
 - [ ] No layout shifts (CLS < 0.1)

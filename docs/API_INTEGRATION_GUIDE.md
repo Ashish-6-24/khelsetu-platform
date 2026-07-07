@@ -21,6 +21,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 **Purpose:** User login with email and password
 
 **Request:**
+
 ```json
 {
   "email": "user@example.com",
@@ -29,6 +30,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 ```
 
 **Response (200 OK):**
+
 ```json
 {
   "token": "REPLACE_WITH_ACTUAL_JWT_TOKEN",
@@ -43,6 +45,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 ```
 
 **Errors:**
+
 - `400 Bad Request` - Missing email or password
 - `401 Unauthorized` - Invalid credentials
 - `429 Too Many Requests` - Rate limit exceeded
@@ -54,6 +57,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 **Purpose:** New user registration
 
 **Request:**
+
 ```json
 {
   "email": "newuser@example.com",
@@ -63,6 +67,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 ```
 
 **Response (201 Created):**
+
 ```json
 {
   "token": "REPLACE_WITH_ACTUAL_JWT_TOKEN",
@@ -77,6 +82,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 ```
 
 **Errors:**
+
 - `400 Bad Request` - Invalid email format or weak password
 - `409 Conflict` - Email already registered
 - `422 Unprocessable Entity` - Validation failed
@@ -90,6 +96,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 **Headers:** `Authorization: Bearer <token>`
 
 **Response (200 OK):**
+
 ```json
 {
   "message": "Logged out successfully"
@@ -103,6 +110,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 **Purpose:** Refresh expired token
 
 **Request:**
+
 ```json
 {
   "token": "expired-token"
@@ -110,6 +118,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 ```
 
 **Response (200 OK):**
+
 ```json
 {
   "token": "new-jwt-token"
@@ -117,6 +126,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 ```
 
 **Errors:**
+
 - `401 Unauthorized` - Invalid or non-refreshable token
 
 ---
@@ -128,6 +138,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 **Headers:** `Authorization: Bearer <token>`
 
 **Response (200 OK):**
+
 ```json
 {
   "id": "user-123",
@@ -148,11 +159,13 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 **Purpose:** List all tournaments for organization
 
 **Query Parameters:**
+
 ```
 ?page=1&limit=20&status=active&sport=cricket
 ```
 
 **Response (200 OK):**
+
 ```json
 {
   "tournaments": [
@@ -182,6 +195,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 **Purpose:** Get tournament details
 
 **Response (200 OK):**
+
 ```json
 {
   "id": "tour-123",
@@ -216,6 +230,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 **Purpose:** Create new tournament
 
 **Request:**
+
 ```json
 {
   "name": "Kathmandu Cricket League 2026",
@@ -228,6 +243,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 ```
 
 **Response (201 Created):**
+
 ```json
 {
   "id": "tour-123",
@@ -245,6 +261,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 **Purpose:** Update tournament
 
 **Request:**
+
 ```json
 {
   "name": "Updated Name",
@@ -253,6 +270,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 ```
 
 **Response (200 OK):**
+
 ```json
 {
   "id": "tour-123",
@@ -268,6 +286,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 **Purpose:** Delete tournament
 
 **Response (200 OK):**
+
 ```json
 {
   "message": "Tournament deleted"
@@ -283,11 +302,13 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 **Purpose:** List teams in tournament
 
 **Query:**
+
 ```
 ?tournamentId=tour-123&page=1&limit=20
 ```
 
 **Response (200 OK):**
+
 ```json
 {
   "teams": [
@@ -319,6 +340,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 **Purpose:** Create team
 
 **Request:**
+
 ```json
 {
   "name": "Kathmandu Warriors",
@@ -329,6 +351,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 ```
 
 **Response (201 Created):**
+
 ```json
 {
   "id": "team-1",
@@ -346,6 +369,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 **Purpose:** Get live match scores
 
 **Response (200 OK):**
+
 ```json
 {
   "matchId": "match-1",
@@ -378,6 +402,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 **Purpose:** Update match score
 
 **Request:**
+
 ```json
 {
   "team": 1,
@@ -390,6 +415,7 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 ```
 
 **Response (200 OK):**
+
 ```json
 {
   "matchId": "match-1",
@@ -406,17 +432,20 @@ This guide defines the API contracts between the KhelSetu frontend and backend. 
 ## WebSocket Events
 
 ### Connection
+
 ```javascript
 const socket = io(WS_URL, {
   auth: {
-    token: 'jwt-token'
-  }
+    token: 'jwt-token',
+  },
 });
 ```
 
 ### subscribe:match
+
 **Direction:** Client → Server  
 **Payload:**
+
 ```json
 {
   "matchId": "match-1"
@@ -426,8 +455,10 @@ const socket = io(WS_URL, {
 ---
 
 ### match:score_update
+
 **Direction:** Server → Client  
 **Payload:**
+
 ```json
 {
   "matchId": "match-1",
@@ -440,8 +471,10 @@ const socket = io(WS_URL, {
 ---
 
 ### match:status_change
+
 **Direction:** Server → Client  
 **Payload:**
+
 ```json
 {
   "matchId": "match-1",
@@ -454,8 +487,10 @@ const socket = io(WS_URL, {
 ---
 
 ### notification:new
+
 **Direction:** Server → Client  
 **Payload:**
+
 ```json
 {
   "id": "notif-1",
@@ -483,6 +518,7 @@ All error responses follow this format:
 ```
 
 **Common Error Codes:**
+
 - `AUTH_001` - Invalid credentials
 - `AUTH_002` - Token expired
 - `AUTH_003` - Unauthorized access
@@ -496,10 +532,12 @@ All error responses follow this format:
 ## Rate Limiting
 
 **Limits:**
+
 - 100 requests/minute per IP
 - 1000 requests/minute per authenticated user
 
 **Response Headers:**
+
 ```
 X-RateLimit-Limit: 100
 X-RateLimit-Remaining: 95
@@ -525,6 +563,7 @@ X-RateLimit-Reset: 1656057600
 ## Testing the API
 
 **Using curl:**
+
 ```bash
 # Login
 curl -X POST http://localhost:8080/api/auth/login \

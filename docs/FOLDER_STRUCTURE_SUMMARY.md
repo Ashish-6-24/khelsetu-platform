@@ -17,34 +17,38 @@ A comprehensive 770-line backend developer guide covering:
 ## Key Findings
 
 ### Folder Organization
+
 - **Root level:** khelsetu-frontend, design-system, docs, graphify-out, .opencode, .superpowers
 - **Frontend structure:** src/ with app/, features/, pages/, shared/, lib/, store/, styles/, assets/, tests/
 - **28 Feature modules** - Domain-driven architecture with components, hooks, services, types, utils
 
 ### Critical Issues Identified
 
-| Issue | Severity | Impact |
-|-------|----------|--------|
-| 6 features missing standard subdirectories | HIGH | Backend integration confusion |
-| Documentation scattered in 3+ locations | HIGH | No single source of truth |
-| Store architecture unclear (global vs feature) | HIGH | State conflict risk |
-| Asset organization ambiguous | MEDIUM | File duplication risk |
-| Test placement strategy undocumented | MEDIUM | Inconsistent testing |
-| Root config file sprawl | LOW | Maintenance burden |
+| Issue                                          | Severity | Impact                        |
+| ---------------------------------------------- | -------- | ----------------------------- |
+| 6 features missing standard subdirectories     | HIGH     | Backend integration confusion |
+| Documentation scattered in 3+ locations        | HIGH     | No single source of truth     |
+| Store architecture unclear (global vs feature) | HIGH     | State conflict risk           |
+| Asset organization ambiguous                   | MEDIUM   | File duplication risk         |
+| Test placement strategy undocumented           | MEDIUM   | Inconsistent testing          |
+| Root config file sprawl                        | LOW      | Maintenance burden            |
 
 ### Recommended Priority Fixes
 
 **Priority 1 (This Week):**
+
 1. Standardize all 28 feature modules to consistent structure
 2. Create docs/STATE_MANAGEMENT.md documenting store architecture
 3. Create docs/CONFIGURATION.md explaining all root configs
 
 **Priority 2 (This Sprint):**
+
 1. Consolidate documentation to docs/design/, docs/api/, docs/features/
 2. Clarify asset organization: public/icons/ vs src/assets/icons/
 3. Create docs/TESTING.md documenting centralized test strategy
 
 **Priority 3 (Optional):**
+
 1. Reorganize root config files to ./config/ (for better UX)
 2. Archive outdated documentation
 
@@ -84,6 +88,7 @@ State Management:
 ## Quick Reference
 
 **Finding Code:**
+
 - API calls → src/features/[feature]/services/
 - Component props → src/features/[feature]/types/
 - Hooks → src/features/[feature]/hooks/
@@ -93,6 +98,7 @@ State Management:
 - Feature state → src/features/[feature]/store/
 
 **Finding Docs:**
+
 - Design tokens → docs/design/TOKENS.md
 - API endpoints → docs/api/endpoints.md
 - State management → docs/STATE_MANAGEMENT.md

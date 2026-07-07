@@ -1,4 +1,5 @@
 # KhelSetu: Permanent Duplication Prevention System
+
 **Date:** 2026-07-01  
 **Status:** Implemented & Active  
 **Purpose:** Prevent build artifacts, dependencies, and duplicate folders from being committed or pushed
@@ -19,6 +20,7 @@ This system uses three layers of defense to ensure no duplicate/build files reac
 ## What Gets Blocked
 
 ### Build & Dependency Artifacts (CRITICAL)
+
 ```
 node_modules/          # Dependencies (can be 1GB+)
 dist/                  # Build output
@@ -29,6 +31,7 @@ coverage/              # Test coverage reports
 ```
 
 ### Backup & Duplicate Folders (CRITICAL)
+
 ```
 backup/                # Manual backups
 backups/               # Manual backups
@@ -39,6 +42,7 @@ copy*/                 # Copy* pattern
 ```
 
 ### Secrets & Sensitive Files (SECURITY)
+
 ```
 .env*                  # Environment variables
 *.pem, *.key           # Private keys
@@ -56,11 +60,13 @@ private/               # Private data
 **Location:** `/khelsetu/.gitignore`
 
 The comprehensive `.gitignore` file prevents Git from even tracking these files. It uses:
+
 - **Exact directory names** (e.g., `node_modules/`)
 - **Wildcard patterns** (e.g., `duplicate*/`, `copy*`)
 - **Extension patterns** (e.g., `*.log`, `*.env`)
 
 **Key sections:**
+
 1. Build & dependency artifacts
 2. Generated & temporary files
 3. Development environment & tools
@@ -68,6 +74,7 @@ The comprehensive `.gitignore` file prevents Git from even tracking these files.
 5. Security (secrets, credentials)
 
 **How it works:**
+
 - Git ignores files matching these patterns
 - Untracked files can't be staged
 - Reduces repository bloat
@@ -81,12 +88,14 @@ The comprehensive `.gitignore` file prevents Git from even tracking these files.
 **Action:** Validates staged files BEFORE commit is created
 
 **Protection:**
+
 - Scans all staged files for forbidden directories
 - Checks for dangerous patterns (backup/, copy*, duplicate*)
 - Blocks secrets (.env, .pem, .key, .cert)
 - Warns about large files (>50MB)
 
 **Example output when violated:**
+
 ```
 ❌ COMMIT BLOCKED: Forbidden files/folders detected
 
@@ -112,6 +121,7 @@ Reason: These are build artifacts, dependencies, or duplicates.
 **Action:** Validates all commits to be pushed BEFORE reaching remote
 
 **Protection:**
+
 - Scans each commit for violations
 - Prevents pushing commits with forbidden files
 - Acts as final safety net before remote
@@ -125,6 +135,7 @@ Reason: These are build artifacts, dependencies, or duplicates.
 **Action:** Validates commit message format and content
 
 **Protection:**
+
 - Enforces minimum message length (10 chars)
 - Warns about suspicious keywords (duplicate, copy, backup, revert)
 - Prevents empty or nonsensical commits
@@ -265,12 +276,12 @@ npx husky install
 ❌ Don't commit `coverage/`  
 ❌ Don't create backup folders in the repo  
 ❌ Don't copy code into `duplicate*/` or `copy*/` folders  
-❌ Don't commit `.env` files  
+❌ Don't commit `.env` files
 
 ✅ Use `.gitignore` to exclude build output  
 ✅ Use separate branches for experiments  
 ✅ Delete old code instead of archiving in repo  
-✅ Store secrets in environment variables  
+✅ Store secrets in environment variables
 
 ---
 
@@ -308,13 +319,13 @@ npx husky install
 
 ## Files Modified/Created
 
-| File | Purpose |
-|------|---------|
-| `.gitignore` | Comprehensive ignore patterns (ALL artifacts) |
-| `.git/hooks/pre-commit` | Block staging of forbidden files |
-| `.git/hooks/pre-push` | Block pushing forbidden commits |
-| `.git/hooks/commit-msg` | Validate commit message format |
-| `DUPLICATION_PREVENTION_SYSTEM.md` | This documentation |
+| File                               | Purpose                                       |
+| ---------------------------------- | --------------------------------------------- |
+| `.gitignore`                       | Comprehensive ignore patterns (ALL artifacts) |
+| `.git/hooks/pre-commit`            | Block staging of forbidden files              |
+| `.git/hooks/pre-push`              | Block pushing forbidden commits               |
+| `.git/hooks/commit-msg`            | Validate commit message format                |
+| `DUPLICATION_PREVENTION_SYSTEM.md` | This documentation                            |
 
 ---
 
@@ -325,7 +336,7 @@ npx husky install
 ✅ No `backup*/`, `copy*/`, or `duplicate*/` folders  
 ✅ No `.env` or `.pem` files committed  
 ✅ No commits blocked without reason  
-✅ All team members understand the system  
+✅ All team members understand the system
 
 ---
 
@@ -364,13 +375,13 @@ head -50 .gitignore
 
 ## Implementation Status
 
-| Component | Status | Location |
-|-----------|--------|----------|
-| .gitignore | ✅ Active | `/khelsetu/.gitignore` |
-| Pre-commit hook | ✅ Active | `/khelsetu/.git/hooks/pre-commit` |
-| Pre-push hook | ✅ Active | `/khelsetu/.git/hooks/pre-push` |
-| Commit-msg hook | ✅ Active | `/khelsetu/.git/hooks/commit-msg` |
-| Documentation | ✅ Complete | This file |
+| Component       | Status      | Location                          |
+| --------------- | ----------- | --------------------------------- |
+| .gitignore      | ✅ Active   | `/khelsetu/.gitignore`            |
+| Pre-commit hook | ✅ Active   | `/khelsetu/.git/hooks/pre-commit` |
+| Pre-push hook   | ✅ Active   | `/khelsetu/.git/hooks/pre-push`   |
+| Commit-msg hook | ✅ Active   | `/khelsetu/.git/hooks/commit-msg` |
+| Documentation   | ✅ Complete | This file                         |
 
 ---
 

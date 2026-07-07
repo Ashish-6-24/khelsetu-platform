@@ -46,6 +46,7 @@ The basketball engine event types: `field_goal_attempt`, `field_goal_made`,
 ## Screens
 
 ### 14.1 Basketball scoring console — `/o/:orgSlug/scoring/:matchId` (sport=basketball)
+
 - **Top: Score header**
   - Team A: logo, name, score, fouls (this period), timeouts left.
   - Team B: same.
@@ -70,12 +71,14 @@ The basketball engine event types: `field_goal_attempt`, `field_goal_made`,
   AST, STL, BLK, TO, PF.
 
 ### 14.2 Game state dashboard
+
 - **Read-only summary** for non-scorers: `/basketball/state` returns the
   full state object.
 - **Display**: score, quarter, clocks, possession, last 5 events,
   player-on-floor lineup (if tracked).
 
 ### 14.3 Shot clock control
+
 - **Buttons**: `Reset 24`, `Reset 14`, `Set 8`, custom seconds.
 - **Auto-reset rules**: after FG made (24 for opponent), after defensive
   rebound (24), after offensive rebound (14), after foul on offense (24).
@@ -85,6 +88,7 @@ The basketball engine event types: `field_goal_attempt`, `field_goal_made`,
 - **Endpoint**: `POST /basketball/clock/shot`.
 
 ### 14.4 Game clock control
+
 - **Buttons**: `Start`, `Stop`, `Set`.
 - **Auto-stop**: on whistle (foul, timeout, made FT, last 2:00 of period
   on made FG), per rules.
@@ -92,6 +96,7 @@ The basketball engine event types: `field_goal_attempt`, `field_goal_made`,
 - **Endpoint**: `POST /basketball/clock/game`.
 
 ### 14.5 Foul tracker — `/o/:orgSlug/scoring/:matchId/fouls/:teamId`
+
 - **Per-team panel**: team fouls (this period), bonus state ("In bonus"
   when ≥ 5), penalty state.
 - **Per-player list**: foul count, foul-out warning at 4, foul-out at 5
@@ -99,11 +104,13 @@ The basketball engine event types: `field_goal_attempt`, `field_goal_made`,
 - **Endpoint**: `GET /basketball/fouls/{teamId}`.
 
 ### 14.6 Timeout manager
+
 - **Per-team chip strip**: full timeouts left, short timeouts left.
 - **Call timeout** opens modal: team, type, reason (optional).
 - **Half reset**: timeouts reset per rules.
 
 ### 14.7 Period control
+
 - **Start period** (`POST /basketball/period/start`).
 - **End period** (`POST /basketball/period/end`) — confirm score / fouls
   reset.
@@ -111,12 +118,14 @@ The basketball engine event types: `field_goal_attempt`, `field_goal_made`,
   banner with extended break.
 
 ### 14.8 Overtime flow
+
 - **Trigger**: tied at end of regulation → "Start Overtime" CTA.
 - **Endpoint**: `POST /basketball/overtime/start`.
 - **OT period**: 5-minute clock, foul count resets, timeouts per OT rules.
 - **Repeat** if still tied.
 
 ### 14.9 Stats dashboard — `/o/:orgSlug/scoring/:matchId/stats`
+
 - **Endpoint**: `GET /basketball/stats`.
 - **Team stats**: PTS, FGM/FGA, 3PM/3PA, FTM/FTA, REB (O/D/T), AST, STL,
   BLK, TO, PF, fast-break PTS, paint PTS.
@@ -125,6 +134,7 @@ The basketball engine event types: `field_goal_attempt`, `field_goal_made`,
 - **Compare** to opponent.
 
 ### 14.10 Event entry panel (modals)
+
 - **Field goal modal**: shooter, points (2/3), shot type (jumper, layup,
   dunk), assister, contested flag, location chip.
 - **Free throw modal**: shooter, attempt # (1-of-2), make/miss.
@@ -191,20 +201,20 @@ The basketball engine event types: `field_goal_attempt`, `field_goal_made`,
 
 ## Keyboard shortcuts (tablet scoring)
 
-| Key | Action |
-|---|---|
-| 1 | +1 (free throw) |
-| 2 | +2 (field goal) |
-| 3 | +3 (three-pointer) |
-| R | Rebound modal |
-| A | Assist modal |
-| S | Steal modal |
-| B | Block modal |
-| T | Turnover modal |
-| F | Foul modal |
-| O | Timeout modal |
+| Key   | Action                |
+| ----- | --------------------- |
+| 1     | +1 (free throw)       |
+| 2     | +2 (field goal)       |
+| 3     | +3 (three-pointer)    |
+| R     | Rebound modal         |
+| A     | Assist modal          |
+| S     | Steal modal           |
+| B     | Block modal           |
+| T     | Turnover modal        |
+| F     | Foul modal            |
+| O     | Timeout modal         |
 | Space | Start/Stop game clock |
-| C | Reset shot clock |
-| N | End period |
-| U | Undo |
-| Esc | Close modal |
+| C     | Reset shot clock      |
+| N     | End period            |
+| U     | Undo                  |
+| Esc   | Close modal           |

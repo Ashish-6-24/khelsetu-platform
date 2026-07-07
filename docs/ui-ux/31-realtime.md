@@ -2,38 +2,38 @@
 
 ## 31.1 Where real-time matters
 
-| Area | Updates | Why |
-|---|---|---|
-| Live score updates | every event / clock tick | Public + scorer + overlay parity |
-| Match event updates | per event | Event log freshness |
-| Standings updates | per completed match / recalc | League page accuracy |
-| Notifications | per new event | Inbox + bell + toast |
-| Overlays | per template & data update | Broadcast |
-| Sync status | per queue change | Trust |
-| Scoring replay | per snapshot / replay test | Verification UX |
-| VAR status (football) | per state change | Operator + viewer |
-| DRS status (cricket) | per state change | Operator + viewer |
-| Shot clock (basketball) | per tick | Console + overlay |
-| Game clock (football / basketball) | per tick | Console + overlay |
-| Period changes | per transition | All consumers |
-| Presence (co-scorers) | join / leave | Avoid double-scoring |
-| Conflicts | when raised | Operator awareness |
+| Area                               | Updates                      | Why                              |
+| ---------------------------------- | ---------------------------- | -------------------------------- |
+| Live score updates                 | every event / clock tick     | Public + scorer + overlay parity |
+| Match event updates                | per event                    | Event log freshness              |
+| Standings updates                  | per completed match / recalc | League page accuracy             |
+| Notifications                      | per new event                | Inbox + bell + toast             |
+| Overlays                           | per template & data update   | Broadcast                        |
+| Sync status                        | per queue change             | Trust                            |
+| Scoring replay                     | per snapshot / replay test   | Verification UX                  |
+| VAR status (football)              | per state change             | Operator + viewer                |
+| DRS status (cricket)               | per state change             | Operator + viewer                |
+| Shot clock (basketball)            | per tick                     | Console + overlay                |
+| Game clock (football / basketball) | per tick                     | Console + overlay                |
+| Period changes                     | per transition               | All consumers                    |
+| Presence (co-scorers)              | join / leave                 | Avoid double-scoring             |
+| Conflicts                          | when raised                  | Operator awareness               |
 
 ## 31.2 Strategy per concern
 
-| Concern | Strategy | Rationale |
-|---|---|---|
-| Scoring events, status, periods | **WebSocket (Socket.IO)** | Bidirectional, low latency, push semantics |
-| Clocks (game / shot / match) | **Socket tick @ 1Hz** + client interpolation | Reduce bandwidth; smooth UI |
-| Notifications | **WebSocket push** with **60s polling fallback** | Resilience |
-| Standings | **WebSocket** notification → **React Query invalidate** | Standings recompute is heavier; let client re-fetch the view it needs |
-| Sync queue / status | **Local store** (Zustand + IDB) + **WebSocket** sync feedback | Offline-first; server confirms |
-| VAR / DRS status | **WebSocket** | Few events; instant required |
-| Presence | **Socket.IO rooms** with TTL pings every 30s | Lightweight |
-| Public overlay | **Same socket, read-only token** | One source of truth |
-| Public live page | **Same socket** | Same |
-| Heavy analytics | **Polling 30s** + manual refresh | Server-side aggregation is expensive |
-| Audit live tail | **WebSocket** (admin only) | Forensic immediacy |
+| Concern                         | Strategy                                                      | Rationale                                                             |
+| ------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------- |
+| Scoring events, status, periods | **WebSocket (Socket.IO)**                                     | Bidirectional, low latency, push semantics                            |
+| Clocks (game / shot / match)    | **Socket tick @ 1Hz** + client interpolation                  | Reduce bandwidth; smooth UI                                           |
+| Notifications                   | **WebSocket push** with **60s polling fallback**              | Resilience                                                            |
+| Standings                       | **WebSocket** notification → **React Query invalidate**       | Standings recompute is heavier; let client re-fetch the view it needs |
+| Sync queue / status             | **Local store** (Zustand + IDB) + **WebSocket** sync feedback | Offline-first; server confirms                                        |
+| VAR / DRS status                | **WebSocket**                                                 | Few events; instant required                                          |
+| Presence                        | **Socket.IO rooms** with TTL pings every 30s                  | Lightweight                                                           |
+| Public overlay                  | **Same socket, read-only token**                              | One source of truth                                                   |
+| Public live page                | **Same socket**                                               | Same                                                                  |
+| Heavy analytics                 | **Polling 30s** + manual refresh                              | Server-side aggregation is expensive                                  |
+| Audit live tail                 | **WebSocket** (admin only)                                    | Forensic immediacy                                                    |
 
 > Fallback: if WebSocket cannot connect after retries, fall back to
 > **smart polling**: 5s for live match pages, 30s elsewhere.
@@ -56,36 +56,36 @@ that only receive non-sensitive events.
 
 ## 31.4 Event catalogue (recap + extended)
 
-| Event | Payload | Channel | Subscribers |
-|---|---|---|---|
-| `match:status_change` | `{matchId, prevStatus, status, at}` | `match:{id}` | scorer, public, overlay, dashboard |
-| `match:score_update` | `{matchId, score, period, clock}` | `match:{id}` | scorer, public, overlay |
-| `match:event_added` | `{eventId, type, payload}` | `match:{id}` | event log, ticker, overlay |
-| `match:event_undone` | `{eventId, reason, by}` | `match:{id}` | event log |
-| `match:event_corrected` | `{eventId, before, after, reason, by}` | `match:{id}` | event log, audit |
-| `match:clock_tick` | `{matchId, period, ms}` | `match:{id}` | scorer (when idle), overlay |
-| `match:period_change` | `{matchId, fromPeriod, toPeriod}` | `match:{id}` | overlay, scorer |
-| `standings:updated` | `{tournamentId, version}` | `tournament:{id}` | standings page, dashboard |
-| `notification:new` | `Notification` | `user:{id}`, `org:{id}` | bell, dropdown, toast |
-| `notification:read` / `notification:deleted` | `{id}` | `user:{id}` | sync read state across devices |
-| `overlay:activated` / `overlay:deactivated` | `{overlayId}` | `match:{id}:overlay` | overlay consumers, manager |
-| `sync:status` | `{deviceId, pending, syncing, lastSyncedAt}` | `sync:device:{id}` | sync banner, page |
-| `sync:conflict_added` | `{syncItemId, entity}` | `org:{id}` | sync banner, notif |
-| `sync:item_synced` | `{syncItemId}` | `sync:device:{id}` | queue page |
-| `var:status` | `{reviewId, status}` | `match:{id}` | VAR panels, overlay |
-| `var:decision` | `{reviewId, decision}` | `match:{id}` | VAR panels, overlay |
-| `drs:status` | `{reviewId, status}` | `match:{id}` | DRS panel |
-| `drs:decision` | `{reviewId, decision}` | `match:{id}` | DRS panel, overlay |
-| `pso:kick_added` | `{kick}` | `match:{id}` | shootout board, overlay |
-| `shot_clock:tick` | `{matchId, sec}` | `match:{id}` | scorer, overlay |
-| `game_clock:tick` | `{matchId, ms}` | `match:{id}` | scorer, overlay |
-| `team_fouls:updated` | `{matchId, teamId, fouls}` | `match:{id}` | console, overlay |
-| `timeouts:updated` | `{matchId, teamId, left}` | `match:{id}` | console, overlay |
-| `presence:join` / `presence:leave` | `{matchId, userId, role}` | `match:{id}:presence` | scorer presence avatars |
-| `audit:event_added` | `AuditEvent` | `org:{id}:audit` | audit live tail (admin) |
-| `rbac:role_updated` | `{roleId}` | `org:{id}` | RBAC store re-eval |
-| `rbac:user_roles_updated` | `{userId}` | `org:{id}` | RBAC store for that user |
-| `billing:updated` | `{subscriptionStatus, plan}` | `org:{id}` | billing pages |
+| Event                                        | Payload                                      | Channel                 | Subscribers                        |
+| -------------------------------------------- | -------------------------------------------- | ----------------------- | ---------------------------------- |
+| `match:status_change`                        | `{matchId, prevStatus, status, at}`          | `match:{id}`            | scorer, public, overlay, dashboard |
+| `match:score_update`                         | `{matchId, score, period, clock}`            | `match:{id}`            | scorer, public, overlay            |
+| `match:event_added`                          | `{eventId, type, payload}`                   | `match:{id}`            | event log, ticker, overlay         |
+| `match:event_undone`                         | `{eventId, reason, by}`                      | `match:{id}`            | event log                          |
+| `match:event_corrected`                      | `{eventId, before, after, reason, by}`       | `match:{id}`            | event log, audit                   |
+| `match:clock_tick`                           | `{matchId, period, ms}`                      | `match:{id}`            | scorer (when idle), overlay        |
+| `match:period_change`                        | `{matchId, fromPeriod, toPeriod}`            | `match:{id}`            | overlay, scorer                    |
+| `standings:updated`                          | `{tournamentId, version}`                    | `tournament:{id}`       | standings page, dashboard          |
+| `notification:new`                           | `Notification`                               | `user:{id}`, `org:{id}` | bell, dropdown, toast              |
+| `notification:read` / `notification:deleted` | `{id}`                                       | `user:{id}`             | sync read state across devices     |
+| `overlay:activated` / `overlay:deactivated`  | `{overlayId}`                                | `match:{id}:overlay`    | overlay consumers, manager         |
+| `sync:status`                                | `{deviceId, pending, syncing, lastSyncedAt}` | `sync:device:{id}`      | sync banner, page                  |
+| `sync:conflict_added`                        | `{syncItemId, entity}`                       | `org:{id}`              | sync banner, notif                 |
+| `sync:item_synced`                           | `{syncItemId}`                               | `sync:device:{id}`      | queue page                         |
+| `var:status`                                 | `{reviewId, status}`                         | `match:{id}`            | VAR panels, overlay                |
+| `var:decision`                               | `{reviewId, decision}`                       | `match:{id}`            | VAR panels, overlay                |
+| `drs:status`                                 | `{reviewId, status}`                         | `match:{id}`            | DRS panel                          |
+| `drs:decision`                               | `{reviewId, decision}`                       | `match:{id}`            | DRS panel, overlay                 |
+| `pso:kick_added`                             | `{kick}`                                     | `match:{id}`            | shootout board, overlay            |
+| `shot_clock:tick`                            | `{matchId, sec}`                             | `match:{id}`            | scorer, overlay                    |
+| `game_clock:tick`                            | `{matchId, ms}`                              | `match:{id}`            | scorer, overlay                    |
+| `team_fouls:updated`                         | `{matchId, teamId, fouls}`                   | `match:{id}`            | console, overlay                   |
+| `timeouts:updated`                           | `{matchId, teamId, left}`                    | `match:{id}`            | console, overlay                   |
+| `presence:join` / `presence:leave`           | `{matchId, userId, role}`                    | `match:{id}:presence`   | scorer presence avatars            |
+| `audit:event_added`                          | `AuditEvent`                                 | `org:{id}:audit`        | audit live tail (admin)            |
+| `rbac:role_updated`                          | `{roleId}`                                   | `org:{id}`              | RBAC store re-eval                 |
+| `rbac:user_roles_updated`                    | `{userId}`                                   | `org:{id}`              | RBAC store for that user           |
+| `billing:updated`                            | `{subscriptionStatus, plan}`                 | `org:{id}`              | billing pages                      |
 
 ## 31.5 Optimistic update behaviour
 
@@ -179,6 +179,7 @@ the brief loading state is safer than an optimistic surprise.
 ```ts
 // features/websocket/socketClient.ts
 import { io } from 'socket.io-client';
+
 import { useRealtimeStore } from './store';
 
 export const socket = io(import.meta.env.VITE_WS_URL, {
@@ -202,7 +203,9 @@ export function subscribeMatch(matchId: string) {
 export function useRealtime<T>(event: string, handler: (data: T) => void) {
   useEffect(() => {
     socket.on(event, handler);
-    return () => { socket.off(event, handler); };
+    return () => {
+      socket.off(event, handler);
+    };
   }, [event, handler]);
 }
 ```
@@ -210,9 +213,7 @@ export function useRealtime<T>(event: string, handler: (data: T) => void) {
 ```ts
 // Example: live scoreboard subscribes
 useEffect(() => subscribeMatch(matchId), [matchId]);
-useRealtime<ScoreUpdate>('match:score_update', (u) =>
-  scoreboardStore.apply(u)
-);
+useRealtime<ScoreUpdate>('match:score_update', (u) => scoreboardStore.apply(u));
 useRealtime<MatchEvent>('match:event_added', (e) => eventLog.add(e));
 ```
 

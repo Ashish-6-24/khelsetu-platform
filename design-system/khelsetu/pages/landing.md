@@ -19,26 +19,31 @@
 ## Component Specs
 
 ### Hero
+
 - Headline: `text-4xl sm:text-6xl font-bold tracking-tight` (Space Grotesk)
 - Subhead: `text-lg sm:text-xl text-secondary max-w-2xl mx-auto`
 - CTA row: Primary + ghost, centered, with `gap-x-6`
 - Below: Live demo screenshot or animated GIF (lazy-loaded, `loading="lazy"`)
 
 ### Features Section
+
 - 3-column grid on desktop, 1-column mobile
 - Each feature: Lucide icon (size 32, color primary) + title (text-xl font-semibold) + description (text-secondary)
 - Card padding: p-6, glass background
 
 ### Social Proof
+
 - 4–6 logo placeholders in a row, `opacity-60 grayscale`
 - "Trusted by 500+ organizers across Nepal" + 3 testimonial cards
 
 ### Pricing Teaser
+
 - 3 plans (Starter, Pro, Enterprise)
 - Middle plan highlighted with `border-2 border-primary` + "Most Popular" badge
 - CTA at bottom of each card
 
 ### Final CTA
+
 - Full-width band, primary gradient background
 - White headline + subhead + large CTA button (white background, blue text)
 

@@ -6,30 +6,33 @@
 
 ## 📊 Current vs. Recommended State
 
-| Aspect | Current | Recommended | Impact |
-|--------|---------|-------------|--------|
-| **Form Validation** | Submit-only | Real-time + blur | ⭐⭐⭐ Critical |
-| **Loading Feedback** | Text only | Multi-stage progress | ⭐⭐⭐ Critical |
-| **Password Strength** | None | Visual meter + criteria | ⭐⭐⭐ High |
-| **Micro-interactions** | Minimal | Polish transitions | ⭐⭐ Medium |
-| **Mobile Targets** | Small | 48px minimum | ⭐⭐ Medium |
-| **Accessibility** | Basic | WCAG AA compliant | ⭐⭐⭐ Critical |
-| **Error Recovery** | Generic | Contextual + retry | ⭐⭐ Medium |
+| Aspect                 | Current     | Recommended             | Impact          |
+| ---------------------- | ----------- | ----------------------- | --------------- |
+| **Form Validation**    | Submit-only | Real-time + blur        | ⭐⭐⭐ Critical |
+| **Loading Feedback**   | Text only   | Multi-stage progress    | ⭐⭐⭐ Critical |
+| **Password Strength**  | None        | Visual meter + criteria | ⭐⭐⭐ High     |
+| **Micro-interactions** | Minimal     | Polish transitions      | ⭐⭐ Medium     |
+| **Mobile Targets**     | Small       | 48px minimum            | ⭐⭐ Medium     |
+| **Accessibility**      | Basic       | WCAG AA compliant       | ⭐⭐⭐ Critical |
+| **Error Recovery**     | Generic     | Contextual + retry      | ⭐⭐ Medium     |
 
 ---
 
 ## 🎯 Top 3 Priorities (Start Here)
 
 ### Priority 1: Real-Time Validation with Debouncing
+
 **Effort:** 2-3 hours | **Impact:** ⭐⭐⭐ Critical
 
 **What to do:**
+
 - Validate on blur (not keystroke)
 - Show 3 states: idle → editing → validated
 - Add visual indicators: spinner, checkmark, error
 - Implement 500ms debounce to avoid jank
 
 **Key Code Pattern:**
+
 ```tsx
 // On blur: mark touched + start validation
 handleBlur = (field) => {
@@ -46,16 +49,19 @@ handleBlur = (field) => {
 
 ---
 
-### Priority 2: Password Strength Indicator  
+### Priority 2: Password Strength Indicator
+
 **Effort:** 1-2 hours | **Impact:** ⭐⭐⭐ High
 
 **What to do:**
+
 - Calculate strength from length + character types
 - Show animated progress bar (0-100%)
 - Display criteria checklist below input
 - Update in real-time as user types
 
 **Strength Scale:**
+
 ```
 Score 1: Weak (Red, 0%)
 Score 2: Fair (Orange, 50%)
@@ -68,15 +74,18 @@ Criteria: length(8+), uppercase, lowercase, numbers, symbols
 ---
 
 ### Priority 3: Multi-Stage Loading States
+
 **Effort:** 1-2 hours | **Impact:** ⭐⭐⭐ Critical
 
 **What to do:**
+
 - Replace simple "Signing in..." with progress stages
 - Show stage icons: search → lock → arrow
 - Add animated progress bar above button
 - Prevent double-submit during auth
 
 **Stages:**
+
 ```
 1. Verifying (0-500ms): "Verifying credentials..."
 2. Authenticating (500-1500ms): "Authenticating..."
@@ -89,24 +98,28 @@ Criteria: length(8+), uppercase, lowercase, numbers, symbols
 ## 🛠️ Implementation Checklist - Week 1
 
 ### Day 1: Validation System
+
 - [ ] Add field state tracking (touched, validating, error)
 - [ ] Implement debounced validation on blur
 - [ ] Add visual indicators (spinner, checkmark icons)
 - [ ] Style error messages with color + icon
 
 ### Day 2: Password Strength
+
 - [ ] Create strength calculator function
 - [ ] Add animated progress bar component
 - [ ] Display criteria checklist
 - [ ] Test on various passwords
 
 ### Day 3: Loading States
+
 - [ ] Create loading stages enum
 - [ ] Add progress bar animation
 - [ ] Update button text per stage
 - [ ] Add stage icons
 
 ### Day 4-5: Polish & Testing
+
 - [ ] Add hover/focus transitions
 - [ ] Test on mobile (375px, 768px)
 - [ ] Test accessibility (keyboard, screen reader)
@@ -117,12 +130,21 @@ Criteria: length(8+), uppercase, lowercase, numbers, symbols
 ## 📱 Mobile Optimization (Quick Wins)
 
 **Minimum 48px touch targets:**
+
 ```css
-input, button { min-height: 48px; padding: 12px 16px; }
-checkbox { width: 48px; height: 48px; }
+input,
+button {
+  min-height: 48px;
+  padding: 12px 16px;
+}
+checkbox {
+  width: 48px;
+  height: 48px;
+}
 ```
 
 **Mobile keyboard optimization:**
+
 ```tsx
 <input type="email" inputMode="email" autoComplete="email" />
 <input type="password" autoComplete="current-password" />
@@ -133,6 +155,7 @@ checkbox { width: 48px; height: 48px; }
 ## ♿ Accessibility Compliance (WCAG AA)
 
 **Critical fixes:**
+
 ```tsx
 // Before: No label association
 <input placeholder="Email" />
@@ -144,6 +167,7 @@ checkbox { width: 48px; height: 48px; }
 ```
 
 **Focus indicators:**
+
 ```css
 input:focus-visible {
   outline: 2px solid var(--brand-primary);
@@ -156,15 +180,15 @@ input:focus-visible {
 ## 🎨 Design Tokens Ready to Use
 
 ### Colors (WCAG AAA)
+
 ```css
---brand-primary: #7F1D1D        /* Maroon */
---text-primary: #0F172A          /* Slate-900: 18.5:1 contrast */
---color-success: #16A34A         /* Green */
---color-error: #DC2626           /* Red */
---color-warning: #EA8C00         /* Orange */
+--brand-primary: #7f1d1d /* Maroon */ --text-primary: #0f172a
+  /* Slate-900: 18.5:1 contrast */ --color-success: #16a34a /* Green */
+  --color-error: #dc2626 /* Red */ --color-warning: #ea8c00 /* Orange */;
 ```
 
 ### Animations
+
 ```css
 /* Standard duration */
 transition-duration: 200ms;
@@ -172,7 +196,9 @@ transition-timing-function: ease-out;
 
 /* Respect user preference */
 @media (prefers-reduced-motion: reduce) {
-  * { animation-duration: 0.01ms !important; }
+  * {
+    animation-duration: 0.01ms !important;
+  }
 }
 ```
 
@@ -191,24 +217,28 @@ transition-timing-function: ease-out;
 ## ✅ Testing Before Submission
 
 ### Visual Testing
+
 - [ ] Form renders at 375px (mobile)
 - [ ] Form renders at 1440px (desktop)
 - [ ] Hover states work on desktop
 - [ ] Dark mode contrast verified
 
 ### Functionality
+
 - [ ] Validation triggers on blur
 - [ ] Loading state prevents double-submit
 - [ ] Error messages appear with animation
 - [ ] Password strength updates real-time
 
 ### Accessibility
+
 - [ ] Tab through form (logical order)
 - [ ] Focus visible on all elements
 - [ ] Screen reader announces errors
 - [ ] Keyboard-only navigation works
 
 ### Performance
+
 - [ ] Form interaction < 100ms latency
 - [ ] Animations 60fps
 - [ ] No layout shifts

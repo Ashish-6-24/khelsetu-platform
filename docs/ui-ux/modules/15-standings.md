@@ -28,6 +28,7 @@ shape: `rank`, `team`, `played`, `wins`, `draws`, `losses`, `for`, `against`,
 ## Screens
 
 ### 15.1 League table — `/o/:orgSlug/standings/:tournamentId`
+
 - **Header**: tournament name, format chip (League / Group / Knockout),
   status, last calculated timestamp, **Recalculate** + **Snapshot** CTAs.
 - **Filters**: group (if multi-group), gender, division, season.
@@ -45,11 +46,13 @@ shape: `rank`, `team`, `played`, `wins`, `draws`, `losses`, `for`, `against`,
 - **Error**: inline banner + retry.
 
 ### 15.2 Tournament standings (multi-group view)
+
 - One **TableGroup** per group, each rendered as 15.1.
 - **Cross-group rankings** tab: re-sorts all teams by points / GD /
   qualification probability.
 
 ### 15.3 Snapshot history — `/o/:orgSlug/standings/:tournamentId/snapshots`
+
 - **List**: snapshot id, created by, created at, note, "Open" /
   "Restore" / "Diff" actions.
 - **Open**: read-only standings as they were at snapshot time.
@@ -59,12 +62,14 @@ shape: `rank`, `team`, `played`, `wins`, `draws`, `losses`, `for`, `against`,
   rank changes.
 
 ### 15.4 Recalculate action
+
 - **CTA**: "Recalculate standings" → confirm modal listing what will
   change (e.g., 2 matches edited since last calc).
 - **Endpoint**: `POST /standings/tournament/{tournamentId}/recalculate`.
 - **Toast**: "Standings recalculated. 3 ranks changed."
 
 ### 15.5 Snapshot comparison
+
 - **Choose** snapshot A and snapshot B (or current).
 - **Side-by-side** league tables; cells diffed by colour:
   - Green = rank improved.
@@ -73,10 +78,12 @@ shape: `rank`, `team`, `played`, `wins`, `draws`, `losses`, `for`, `against`,
 - **Export** as CSV / PDF for broadcasters.
 
 ### 15.6 Head-to-head view (optional sub-screen)
+
 - For tied teams, a panel shows head-to-head record, mutual matches, GD
   in mutual matches.
 
 ### 15.7 Ranking and points display (widget)
+
 - Compact widget for dashboard and public pages: top 5 / bottom 5 with
   crest, points, form pills.
 
@@ -128,6 +135,6 @@ shape: `rank`, `team`, `played`, `wins`, `draws`, `losses`, `for`, `against`,
 ## Accessibility
 
 - Table uses `<table>` semantics with `<th scope="col">` and `<th
-  scope="row">`.
+scope="row">`.
 - Form pills include text label (e.g., `aria-label="Lost"`).
 - Rank-change indicators are not colour-only (use arrows ▲ ▼).

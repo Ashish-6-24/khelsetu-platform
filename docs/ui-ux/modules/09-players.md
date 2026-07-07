@@ -29,6 +29,7 @@ must show their full career path with stats per stint.
 ## Screens
 
 ### 9.1 Player list — `/o/:orgSlug/players`
+
 - **Table:** avatar, name, position, current team, age, status, eligibility.
 - **Filters:** sport, position, age range, team, status (active, injured,
   suspended), search.
@@ -36,6 +37,7 @@ must show their full career path with stats per stint.
 - **Empty:** "No players yet — add your first player."
 
 ### 9.2 Player detail — `/o/:orgSlug/players/:id`
+
 - **Header:** avatar, name, position, current team(s), nationality, dob,
   eligibility chips.
 - **Quick stats:** career matches, goals/runs/points, win rate, awards.
@@ -50,6 +52,7 @@ must show their full career path with stats per stint.
 - **History:** transfer / assignment timeline.
 
 ### 9.3 Create player — `/o/:orgSlug/players/new`
+
 - **Fields:** first name, last name, dob, nationality, photo, position,
   jersey #, sport, primary team (optional), contact (org-internal),
   social links.
@@ -57,31 +60,37 @@ must show their full career path with stats per stint.
 - **Submit:** creates player → inline prompt "Assign to a team?"
 
 ### 9.4 Edit player — `/o/:orgSlug/players/:id/edit`
+
 - Same form, pre-filled.
 - "Sensitive fields" (dob, nationality) require re-auth to change.
 
 ### 9.5 Delete player confirmation
+
 - Destructive dialog with type-to-confirm.
 - Lists affected teams and matches.
 
 ### 9.6 Player team assignment
+
 - **Modal:** team search, jersey #, role (captain, vice-captain, player),
   start date, end date.
 - **Conflict warning:** if the player is already on another team in an
   active tournament with overlapping schedule.
 
 ### 9.7 Player team history
+
 - **Timeline view:** vertical list of team stints with start/end dates,
   team logo, role, key stats.
 - "Edit stint" to fix dates or split a stint.
 
 ### 9.8 Player statistics
+
 - **Cards:** by sport — total matches, goals/runs/points, win rate,
   discipline, awards.
 - **Charts:** per-match trend lines, vs-team comparison.
 - **Date range picker** at top.
 
 ### 9.9 Player eligibility views
+
 - **Sport-specific:**
   - Cricket: age, gender category, ICC eligibility.
   - Football: age, contract status, registration status.
