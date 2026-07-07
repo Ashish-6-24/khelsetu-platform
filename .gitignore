@@ -1,146 +1,33 @@
-# ============================================================================
-# BUILD & DEPENDENCY ARTIFACTS (MUST NEVER COMMIT)
-# ============================================================================
-# Node.js
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-package-lock.json.backup
-
-# Build outputs
+public/node_modules/
 dist/
 build/
-.next/
-out/
 coverage/
-.turbo/
-*.tsbuildinfo
+.vscode/
+.env
+.env.*
+*.log
 
-# Test reports (generated)
+*storybook.log
+storybook-static
+
+# Playwright
 test-results/
 playwright-report/
-blob-report/
+playwright/.cache/
 
-# Next.js / Vite specific
-.nuxt/
-.cache/
-.vuepress/dist/
-.serverless/
-.fusebox/
-.dynamodb/
-.tern-port
-
-# ============================================================================
-# GENERATED & TEMPORARY FILES
-# ============================================================================
-# Dependency audit results
-audit-results.json
-security-audit.log
-
-# Temp files
-*.tmp
-*.temp
-*.bak
-*~
-*.swp
-*.swo
-.#*
-
-# OS files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-Desktop.ini
-
-# ============================================================================
-# DEVELOPMENT ENVIRONMENT & TOOLS (LOCAL ONLY)
-# ============================================================================
-# AI/Development tools
+# Tool-specific (not project code - never commit to public repo)
+.cursorrules
+AGENTS.md
+CLAUDE.md
+CLAUDE.local.md
 graphify-out/
 .opencode/
 .cursor/
 .claude/
 .superpowers/
-.ai/
 
-# AI config files (tool-specific)
-.cursorrules
-AGENTS.md
-CLAUDE.md
-CLAUDE.local.md
-GEMINI.md
-GEMINI.local.md
-
-# Environment & secrets
-.env
-.env.local
-.env.*.local
-.env.production.local
-.env.development.local
-.env.test.local
-*.pem
-*.key
-*.cert
-
-# Logs
-*.log
-logs/
-*.log.backup
-
-# IDE & Editor (project-specific)
-.idea/
-.vscode/
-.vscode-settings/
-*.code-workspace
-.history/
-
-# ============================================================================
-# DUPLICATE FOLDERS (CRITICAL - PREVENT RE-ENTRY)
-# ============================================================================
-# Backup/snapshot directories
-backup/
-backups/
-old/
-archive/
-archived/
-duplicate*/
-copy*/
-copy-*
-
-# ============================================================================
-# SECURITY: Prevent accidental commits
-# ============================================================================
-# Private keys, credentials, secrets
-.ssh/
-secrets/
-private/
-credentials/
-
-# Test databases
-test.db
-*.sqlite
-*.sqlite3
-
-# ============================================================================
-# MONOREPO & WORKSPACE (if applicable)
-# ============================================================================
-# Lerna
-.lerna/
-lerna-debug.log
-
-# Workspace
-.pnp
-.pnp.js
-.yarn/install-state.gz
-
-# Local auth scripts (contain credentials)
-puppeteer-auth.js
-auth-state/
-.auth/
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini

@@ -16,11 +16,11 @@ permissions:
 
 env:
   NODE_VERSION: '22'
-  WORKING_DIR: khelsetu-frontend
+  WORKING_DIR: .
 
 defaults:
   run:
-    working-directory: khelsetu-frontend
+    working-directory: .
 
 jobs:
   # ═══════════════════════════════════════════════

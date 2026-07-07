@@ -42,25 +42,25 @@ jobs:
           echo "Qwen3 model available"
 
       - name: Install dependencies
-        working-directory: khelsetu-frontend
+        working-directory: .
         run: |
           npm ci
           npx playwright install chromium --with-deps
           npm i -D @browserbasehq/stagehand
 
       - name: Build application
-        working-directory: khelsetu-frontend
+        working-directory: .
         run: npm run build
 
       - name: Start application server
-        working-directory: khelsetu-frontend
+        working-directory: .
         run: |
           npm run preview &
           sleep 5
           curl -s http://localhost:3000 > /dev/null && echo "Server is running" || echo "Server failed to start"
 
       - name: Run AI QA with Stagehand
-        working-directory: khelsetu-frontend
+        working-directory: .
         run: |
           mkdir -p ../reports/ai-qa
           npx stagehand test --config ai-qa.config.ts 2>&1 | tee ../reports/ai-qa/output.log
