@@ -1,9 +1,9 @@
 import type { OfflineSyncState, SyncEntry } from '@features/offline-sync/types';
+import { secureRandomId } from '@shared/utils/crypto-random';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-const generateId = (): string =>
-  `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+const generateId = (): string => `${Date.now()}-${secureRandomId(9)}`;
 
 export const useOfflineSyncStore = create<OfflineSyncState>()(
   persist(

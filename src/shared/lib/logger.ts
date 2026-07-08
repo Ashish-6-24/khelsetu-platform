@@ -3,8 +3,8 @@ type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 const isProd = import.meta.env.PROD;
 
 class Logger {
-  private level: LogLevel;
-  private prefix: string;
+  private readonly level: LogLevel;
+  private readonly prefix: string;
 
   constructor(
     prefix = 'KhelSetu',
@@ -41,7 +41,7 @@ class Logger {
     console.warn(this.formatMessage('warn', message), ...args);
   }
 
-  error(message: string, error?: Error | unknown, ...args: unknown[]): void {
+  error(message: string, error?: unknown, ...args: unknown[]): void {
     if (!this.shouldLog('error')) return;
     console.error(this.formatMessage('error', message), error, ...args);
   }

@@ -14,7 +14,7 @@ import {
 } from '../utils/newsUtils';
 
 interface NewsCarouselProps {
-  articles: NewsArticle[];
+  readonly articles: NewsArticle[];
 }
 
 export function NewsCarousel({ articles }: NewsCarouselProps) {
@@ -53,8 +53,7 @@ export function NewsCarousel({ articles }: NewsCarouselProps) {
   const article = articles[current]!;
 
   return (
-    <div
-      role="region"
+    <section
       aria-roledescription="carousel"
       aria-label="News articles"
       className="relative overflow-hidden rounded-3xl"
@@ -114,9 +113,9 @@ export function NewsCarousel({ articles }: NewsCarouselProps) {
           </button>
 
           <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
-            {articles.map((_, i) => (
+            {articles.map((a, i) => (
               <button
-                key={i}
+                key={`dot-${a.id}`}
                 onClick={() => setCurrent(i)}
                 className={clsx(
                   'h-2 rounded-full transition-all duration-300',
@@ -130,6 +129,6 @@ export function NewsCarousel({ articles }: NewsCarouselProps) {
           </div>
         </>
       )}
-    </div>
+    </section>
   );
 }

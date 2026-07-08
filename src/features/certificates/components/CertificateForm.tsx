@@ -6,7 +6,7 @@ import type { CertificateType } from '../types';
 import { CERTIFICATE_TEMPLATES } from '../types';
 
 interface CertificateFormProps {
-  onSubmit: (data: {
+  readonly onSubmit: (data: {
     type: CertificateType;
     playerName: string;
     teamName: string;
@@ -14,7 +14,7 @@ interface CertificateFormProps {
     date: string;
     organizer: string;
   }) => void;
-  isGenerating: boolean;
+  readonly isGenerating: boolean;
 }
 
 const certificateTypes = Object.values(CERTIFICATE_TEMPLATES);

@@ -191,42 +191,55 @@ export const DataImportPage = () => {
         </CardHeader>
         <CardBody>
           <div className="space-y-3">
-            {imports.map((job) => (
-              <div
-                key={job.id}
-                className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]"
-              >
-                <div className="flex items-center gap-3">
-                  {job.status === 'completed' ? (
-                    <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
-                  ) : job.status === 'failed' ? (
-                    <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
-                  ) : (
-                    <FileText className="w-5 h-5 text-[var(--text-tertiary)]" />
-                  )}
-                  <div>
-                    <p className="text-sm font-medium text-[var(--text-primary)] dark:text-white">
-                      {job.fileName}
-                    </p>
-                    <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
-                      {job.type} • {job.date}
-                    </p>
+            {imports.map((job) => {
+              const statusStyles: Record<string, string> = {
+                completed:
+                  'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
+                failed:
+                  'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
+              };
+              const statusClass =
+                statusStyles[job.status] ??
+                'bg-gray-100 text-[var(--text-secondary)]';
+              return (
+                <div
+                  key={job.id}
+                  className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]"
+                >
+                  <div className="flex items-center gap-3">
+                    {job.status === 'completed' && (
+                      <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
+                    )}
+                    {job.status === 'failed' && (
+                      <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
+                    )}
+                    {job.status !== 'completed' && job.status !== 'failed' && (
+                      <FileText className="w-5 h-5 text-[var(--text-tertiary)]" />
+                    )}
+                    <div>
+                      <p className="text-sm font-medium text-[var(--text-primary)] dark:text-white">
+                        {job.fileName}
+                      </p>
+                      <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+                        {job.type} • {job.date}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <span
+                      className={`text-xs px-2 py-1 rounded-full capitalize ${statusClass}`}
+                    >
+                      {job.status}
+                    </span>
+                    {job.records > 0 && (
+                      <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-1">
+                        {job.records} records
+                      </p>
+                    )}
                   </div>
                 </div>
-                <div className="text-right">
-                  <span
-                    className={`text-xs px-2 py-1 rounded-full capitalize ${job.status === 'completed' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300' : job.status === 'failed' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300' : 'bg-gray-100 text-[var(--text-secondary)]'}`}
-                  >
-                    {job.status}
-                  </span>
-                  {job.records > 0 && (
-                    <p className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] mt-1">
-                      {job.records} records
-                    </p>
-                  )}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </CardBody>
       </Card>

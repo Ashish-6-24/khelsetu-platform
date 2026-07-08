@@ -3,8 +3,8 @@ import { LivePulse } from '@shared/ui/animations';
 import { motion } from 'framer-motion';
 
 interface EnhancedScoreboardProps {
-  match: Match;
-  variant?: 'full' | 'compact' | 'minimal';
+  readonly match: Match;
+  readonly variant?: 'full' | 'compact' | 'minimal';
 }
 
 export function EnhancedScoreboard({

@@ -124,55 +124,73 @@ export const TournamentStepIndicator = ({
   return (
     <nav aria-label="Tournament setup steps" className="mb-8">
       <ol className="flex items-center justify-between list-none">
-        {TOURNAMENT_STEPS.map((step, index) => (
-          <li
-            key={step.id}
-            className="flex items-center flex-1 last:flex-none"
-            aria-current={currentStep === step.id ? 'step' : undefined}
-          >
-            <div className="flex flex-col items-center">
-              <div
-                className={clsx(
-                  'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300',
-                  completedSteps.includes(step.id)
-                    ? 'bg-[var(--brand-primary)] text-white'
-                    : currentStep === step.id
-                      ? 'bg-blue-600 text-white ring-4 ring-blue-100 dark:ring-blue-900'
-                      : 'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)] text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]',
-                )}
-                aria-label={`Step ${index + 1}: ${step.title}${completedSteps.includes(step.id) ? ', completed' : currentStep === step.id ? ', current' : ''}`}
-              >
-                {completedSteps.includes(step.id) ? (
-                  <Check className="w-5 h-5" aria-hidden="true" />
-                ) : (
-                  <span className="text-sm font-semibold">{step.id}</span>
-                )}
-              </div>
-              <div className="mt-2 text-center">
-                <p
+        {TOURNAMENT_STEPS.map((step, index) => {
+          const isCompleted = completedSteps.includes(step.id);
+          const isCurrent = currentStep === step.id;
+          let stepDotClass: string;
+          if (isCompleted) {
+            stepDotClass = 'bg-[var(--brand-primary)] text-white';
+          } else if (isCurrent) {
+            stepDotClass =
+              'bg-blue-600 text-white ring-4 ring-blue-100 dark:ring-blue-900';
+          } else {
+            stepDotClass =
+              'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)] text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]';
+          }
+          let stepAriaLabel: string;
+          if (isCompleted) {
+            stepAriaLabel = `${step.title}, completed`;
+          } else if (isCurrent) {
+            stepAriaLabel = `${step.title}, current`;
+          } else {
+            stepAriaLabel = step.title;
+          }
+          return (
+            <li
+              key={step.id}
+              className="flex items-center flex-1 last:flex-none"
+              aria-current={isCurrent ? 'step' : undefined}
+            >
+              <div className="flex flex-col items-center">
+                <div
                   className={clsx(
-                    'text-[10px] sm:text-xs font-medium',
-                    currentStep === step.id
-                      ? 'text-blue-600 dark:text-blue-400'
-                      : 'text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]',
+                    'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300',
+                    stepDotClass,
                   )}
+                  aria-label={`Step ${index + 1}: ${stepAriaLabel}`}
                 >
-                  {step.title}
-                </p>
+                  {isCompleted ? (
+                    <Check className="w-5 h-5" aria-hidden="true" />
+                  ) : (
+                    <span className="text-sm font-semibold">{step.id}</span>
+                  )}
+                </div>
+                <div className="mt-2 text-center">
+                  <p
+                    className={clsx(
+                      'text-[10px] sm:text-xs font-medium',
+                      isCurrent
+                        ? 'text-blue-600 dark:text-blue-400'
+                        : 'text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]',
+                    )}
+                  >
+                    {step.title}
+                  </p>
+                </div>
               </div>
-            </div>
-            {index < TOURNAMENT_STEPS.length - 1 && (
-              <div
-                className={clsx(
-                  'flex-1 h-0.5 mx-2 sm:mx-4',
-                  completedSteps.includes(step.id + 1)
-                    ? 'bg-[var(--brand-primary)]'
-                    : 'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)]',
-                )}
-              />
-            )}
-          </li>
-        ))}
+              {index < TOURNAMENT_STEPS.length - 1 && (
+                <div
+                  className={clsx(
+                    'flex-1 h-0.5 mx-2 sm:mx-4',
+                    completedSteps.includes(step.id + 1)
+                      ? 'bg-[var(--brand-primary)]'
+                      : 'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)]',
+                  )}
+                />
+              )}
+            </li>
+          );
+        })}
       </ol>
     </nav>
   );
@@ -285,7 +303,7 @@ export const TournamentFormWizard = ({
               type="number"
               value={formData.maxTeams?.toString() ?? ''}
               onChange={(e) =>
-                onFieldChange('maxTeams', parseInt(e.target.value, 10))
+                onFieldChange('maxTeams', Number.parseInt(e.target.value, 10))
               }
               placeholder="e.g., 16"
               error={errors.maxTeams}
@@ -297,7 +315,10 @@ export const TournamentFormWizard = ({
                 type="number"
                 value={formData.entryFee?.toString() ?? ''}
                 onChange={(e) =>
-                  onFieldChange('entryFee', parseFloat(e.target.value) || 0)
+                  onFieldChange(
+                    'entryFee',
+                    Number.parseFloat(e.target.value) || 0,
+                  )
                 }
                 placeholder="0"
               />
@@ -306,7 +327,10 @@ export const TournamentFormWizard = ({
                 type="number"
                 value={formData.prizePool?.toString() ?? ''}
                 onChange={(e) =>
-                  onFieldChange('prizePool', parseFloat(e.target.value) || 0)
+                  onFieldChange(
+                    'prizePool',
+                    Number.parseFloat(e.target.value) || 0,
+                  )
                 }
                 placeholder="0"
               />

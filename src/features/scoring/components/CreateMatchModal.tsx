@@ -7,15 +7,15 @@ import { CalendarDays, MapPin, Trophy } from 'lucide-react';
 import { useState } from 'react';
 
 interface CreateMatchModalProps {
-  tournamentId?: string;
-  onSubmit: (data: {
+  readonly tournamentId?: string;
+  readonly onSubmit: (data: {
     teamAId: string;
     teamBId: string;
     scheduledAt: string;
     venue: string;
   }) => Promise<void>;
-  onClose: () => void;
-  isLoading?: boolean;
+  readonly onClose: () => void;
+  readonly isLoading?: boolean;
 }
 
 export function CreateMatchModal({

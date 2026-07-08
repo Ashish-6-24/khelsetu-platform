@@ -4,15 +4,22 @@ import { StatComparisonBar } from '@features/statistics/components/StatCompariso
 import type { MatchReport } from '../types';
 
 interface MatchReportProps {
-  report: MatchReport;
-  teamAName: string;
-  teamBName: string;
+  readonly report: MatchReport;
+  readonly teamAName: string;
+  readonly teamBName: string;
 }
 
 function formatMinute(event: LiveMatchEvent): string {
   return event.extraMinute
     ? `${event.minute}+${event.extraMinute}'`
     : `${event.minute}'`;
+}
+
+function getRatingColor(rating: number): string {
+  if (rating >= 8) return 'bg-emerald-500';
+  if (rating >= 6) return 'bg-blue-500';
+  if (rating >= 4) return 'bg-yellow-500';
+  return 'bg-red-500';
 }
 
 export function MatchReport({
@@ -225,9 +232,9 @@ export function MatchReport({
             Highlights
           </h2>
           <ul className="space-y-2">
-            {report.highlights.map((highlight, index) => (
+            {report.highlights.map((highlight) => (
               <li
-                key={index}
+                key={highlight}
                 className="flex items-start gap-2 text-[var(--text-primary)] dark:text-[var(--text-secondary)]"
               >
                 <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-r from-[var(--brand-accent)] to-[var(--brand-accent-hover)]" />
@@ -288,15 +295,7 @@ export function MatchReport({
                     </td>
                     <td className="py-3 text-center">
                       <span
-                        className={`inline-flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold text-white ${
-                          player.rating >= 8
-                            ? 'bg-emerald-500'
-                            : player.rating >= 6
-                              ? 'bg-blue-500'
-                              : player.rating >= 4
-                                ? 'bg-yellow-500'
-                                : 'bg-red-500'
-                        }`}
+                        className={`inline-flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold text-white ${getRatingColor(player.rating)}`}
                       >
                         {player.rating}
                       </span>

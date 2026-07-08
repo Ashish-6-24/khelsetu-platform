@@ -18,6 +18,59 @@ import { memo, useMemo, useState } from 'react';
 type SortKey = 'points' | 'nrr' | 'played' | 'won' | 'lost' | 'drawn';
 type SortDirection = 'asc' | 'desc';
 
+interface SortableHeaderProps {
+  label: string;
+  title: string;
+  sortKey: SortKey;
+  currentSortKey: SortKey;
+  sortDirection: SortDirection;
+  onSort: (key: SortKey) => void;
+}
+
+const SortableHeader = ({
+  label,
+  title,
+  sortKey: key,
+  currentSortKey,
+  sortDirection,
+  onSort,
+}: SortableHeaderProps) => {
+  const isActive = currentSortKey === key;
+  const sortIcon = !isActive ? (
+    <Minus className="w-4 h-4 text-[var(--text-tertiary)]" />
+  ) : sortDirection === 'asc' ? (
+    <ArrowUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+  ) : (
+    <ArrowDown className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+  );
+
+  return (
+    <th
+      className="text-center px-4 py-3 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider cursor-pointer hover:text-[var(--text-primary)] dark:hover:text-[var(--text-secondary)]"
+      onClick={() => onSort(key)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSort(key);
+        }
+      }}
+      role="columnheader"
+      aria-sort={
+        isActive
+          ? sortDirection === 'asc'
+            ? 'ascending'
+            : 'descending'
+          : 'none'
+      }
+      tabIndex={0}
+    >
+      <div className="flex items-center justify-center gap-1">
+        <abbr title={title}>{label}</abbr> {sortIcon}
+      </div>
+    </th>
+  );
+};
+
 interface StandingsTableProps {
   standings: Standing[];
   isLoading?: boolean;
@@ -61,16 +114,6 @@ export const StandingsTable = memo(
       });
       return sortKey === 'points' ? sortStandings(sorted) : sorted;
     }, [standings, sortKey, sortDirection, sortMode]);
-
-    const getSortIcon = (key: SortKey) => {
-      if (sortKey !== key)
-        return <Minus className="w-4 h-4 text-[var(--text-tertiary)]" />;
-      return sortDirection === 'asc' ? (
-        <ArrowUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-      ) : (
-        <ArrowDown className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-      );
-    };
 
     if (isLoading) {
       return (
@@ -133,147 +176,56 @@ export const StandingsTable = memo(
                   <th className="text-left px-4 py-3 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider">
                     Team
                   </th>
-                  <th
-                    className="text-center px-4 py-3 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider cursor-pointer hover:text-[var(--text-primary)] dark:hover:text-[var(--text-secondary)]"
-                    onClick={() => handleSort('played')}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        handleSort('played');
-                      }
-                    }}
-                    role="columnheader"
-                    aria-sort={
-                      sortKey === 'played'
-                        ? sortDirection === 'asc'
-                          ? 'ascending'
-                          : 'descending'
-                        : 'none'
-                    }
-                    tabIndex={0}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      <abbr title="Played">P</abbr> {getSortIcon('played')}
-                    </div>
-                  </th>
-                  <th
-                    className="text-center px-4 py-3 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider cursor-pointer hover:text-[var(--text-primary)] dark:hover:text-[var(--text-secondary)]"
-                    onClick={() => handleSort('won')}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        handleSort('won');
-                      }
-                    }}
-                    role="columnheader"
-                    aria-sort={
-                      sortKey === 'won'
-                        ? sortDirection === 'asc'
-                          ? 'ascending'
-                          : 'descending'
-                        : 'none'
-                    }
-                    tabIndex={0}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      <abbr title="Won">W</abbr> {getSortIcon('won')}
-                    </div>
-                  </th>
-                  <th
-                    className="text-center px-4 py-3 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider cursor-pointer hover:text-[var(--text-primary)] dark:hover:text-[var(--text-secondary)]"
-                    onClick={() => handleSort('lost')}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        handleSort('lost');
-                      }
-                    }}
-                    role="columnheader"
-                    aria-sort={
-                      sortKey === 'lost'
-                        ? sortDirection === 'asc'
-                          ? 'ascending'
-                          : 'descending'
-                        : 'none'
-                    }
-                    tabIndex={0}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      <abbr title="Lost">L</abbr> {getSortIcon('lost')}
-                    </div>
-                  </th>
-                  <th
-                    className="text-center px-4 py-3 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider cursor-pointer hover:text-[var(--text-primary)] dark:hover:text-[var(--text-secondary)]"
-                    onClick={() => handleSort('drawn')}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        handleSort('drawn');
-                      }
-                    }}
-                    role="columnheader"
-                    aria-sort={
-                      sortKey === 'drawn'
-                        ? sortDirection === 'asc'
-                          ? 'ascending'
-                          : 'descending'
-                        : 'none'
-                    }
-                    tabIndex={0}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      <abbr title="Drawn">D</abbr> {getSortIcon('drawn')}
-                    </div>
-                  </th>
+                  <SortableHeader
+                    label="P"
+                    title="Played"
+                    sortKey="played"
+                    currentSortKey={sortKey}
+                    sortDirection={sortDirection}
+                    onSort={handleSort}
+                  />
+                  <SortableHeader
+                    label="W"
+                    title="Won"
+                    sortKey="won"
+                    currentSortKey={sortKey}
+                    sortDirection={sortDirection}
+                    onSort={handleSort}
+                  />
+                  <SortableHeader
+                    label="L"
+                    title="Lost"
+                    sortKey="lost"
+                    currentSortKey={sortKey}
+                    sortDirection={sortDirection}
+                    onSort={handleSort}
+                  />
+                  <SortableHeader
+                    label="D"
+                    title="Drawn"
+                    sortKey="drawn"
+                    currentSortKey={sortKey}
+                    sortDirection={sortDirection}
+                    onSort={handleSort}
+                  />
                   {sport === 'cricket' && (
-                    <th
-                      className="text-center px-4 py-3 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider cursor-pointer hover:text-[var(--text-primary)] dark:hover:text-[var(--text-secondary)]"
-                      onClick={() => handleSort('nrr')}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault();
-                          handleSort('nrr');
-                        }
-                      }}
-                      role="columnheader"
-                      aria-sort={
-                        sortKey === 'nrr'
-                          ? sortDirection === 'asc'
-                            ? 'ascending'
-                            : 'descending'
-                          : 'none'
-                      }
-                      tabIndex={0}
-                    >
-                      <div className="flex items-center justify-center gap-1">
-                        <abbr title="Net Run Rate">NRR</abbr>{' '}
-                        {getSortIcon('nrr')}
-                      </div>
-                    </th>
+                    <SortableHeader
+                      label="NRR"
+                      title="Net Run Rate"
+                      sortKey="nrr"
+                      currentSortKey={sortKey}
+                      sortDirection={sortDirection}
+                      onSort={handleSort}
+                    />
                   )}
-                  <th
-                    className="text-center px-4 py-3 text-xs font-semibold text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] uppercase tracking-wider cursor-pointer hover:text-[var(--text-primary)] dark:hover:text-[var(--text-secondary)]"
-                    onClick={() => handleSort('points')}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        handleSort('points');
-                      }
-                    }}
-                    role="columnheader"
-                    aria-sort={
-                      sortKey === 'points'
-                        ? sortDirection === 'asc'
-                          ? 'ascending'
-                          : 'descending'
-                        : 'none'
-                    }
-                    tabIndex={0}
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      <abbr title="Points">PTS</abbr> {getSortIcon('points')}
-                    </div>
-                  </th>
+                  <SortableHeader
+                    label="PTS"
+                    title="Points"
+                    sortKey="points"
+                    currentSortKey={sortKey}
+                    sortDirection={sortDirection}
+                    onSort={handleSort}
+                  />
                 </tr>
               </thead>
               <tbody>

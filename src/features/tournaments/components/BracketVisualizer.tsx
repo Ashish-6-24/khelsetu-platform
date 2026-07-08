@@ -4,6 +4,12 @@ import { Card, CardBody } from '@shared/ui/Card';
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
 
+function getMatchStatusVariant(status: string): 'live' | 'success' | 'info' {
+  if (status === 'live') return 'live';
+  if (status === 'completed') return 'success';
+  return 'info';
+}
+
 interface BracketMatchProps {
   match: Match;
   isWinner?: (teamId: string) => boolean;
@@ -69,13 +75,7 @@ export const BracketMatch = ({ match, isWinner }: BracketMatchProps) => {
       </div>
       <div className="px-3 py-2 bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)]/30 border-t border-[var(--border-subtle)] dark:border-[var(--border-subtle)] flex items-center justify-between">
         <Badge
-          variant={
-            match.status === 'live'
-              ? 'live'
-              : match.status === 'completed'
-                ? 'success'
-                : 'info'
-          }
+          variant={getMatchStatusVariant(match.status)}
           pulse={match.status === 'live'}
         >
           {match.status}
@@ -100,7 +100,7 @@ export const BracketVisualizer = ({
   if (format === 'knockout') {
     const rounds = matches.reduce<Record<string, Match[]>>((acc, match) => {
       const round = match.round ?? 'Final';
-      if (!acc[round]) acc[round] = [];
+      acc[round] ??= [];
       acc[round].push(match);
       return acc;
     }, {});
@@ -130,7 +130,7 @@ export const BracketVisualizer = ({
   const matchesByRound = matches.reduce<Record<string, Match[]>>(
     (acc, match) => {
       const round = String(match.round ?? 1);
-      if (!acc[round]) acc[round] = [];
+      acc[round] ??= [];
       acc[round].push(match);
       return acc;
     },
@@ -215,13 +215,7 @@ export const FixtureTable = ({ matches }: FixtureTableProps) => {
                   </td>
                   <td className="px-4 py-3">
                     <Badge
-                      variant={
-                        match.status === 'live'
-                          ? 'live'
-                          : match.status === 'completed'
-                            ? 'success'
-                            : 'info'
-                      }
+                      variant={getMatchStatusVariant(match.status)}
                       pulse={match.status === 'live'}
                     >
                       {match.status}

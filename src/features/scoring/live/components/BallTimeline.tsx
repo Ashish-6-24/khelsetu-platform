@@ -52,9 +52,10 @@ export const BallTimeline = ({
   );
 
   return (
-    <div
-      className={twMerge(clsx('flex items-center gap-1 flex-wrap', className))}
-      role="list"
+    <ol
+      className={twMerge(
+        clsx('flex items-center gap-1 flex-wrap list-none', className),
+      )}
       aria-label="Ball-by-ball timeline"
     >
       {visibleEvents.length === 0 && (
@@ -68,7 +69,7 @@ export const BallTimeline = ({
         const label = ballLabel(event);
 
         return (
-          <div
+          <li
             key={`${event.over}-${event.ball}-${i}`}
             className={twMerge(
               clsx(
@@ -80,7 +81,6 @@ export const BallTimeline = ({
               ),
             )}
             style={{ animationDelay: `${i * 30}ms` }}
-            role="listitem"
             title={`Over ${event.over + 1}, Ball ${event.ball + 1}: ${label}`}
           >
             {label}
@@ -97,10 +97,10 @@ export const BallTimeline = ({
             >
               {`Ov ${event.over + 1}.${event.ball + 1} — ${label}`}
             </div>
-          </div>
+          </li>
         );
       })}
-    </div>
+    </ol>
   );
 };
 

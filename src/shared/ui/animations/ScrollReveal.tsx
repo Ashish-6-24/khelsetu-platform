@@ -5,6 +5,12 @@ import { useEffect, useRef, useState } from 'react';
 
 type Intensity = 'bold' | 'moderate' | 'subtle';
 
+function getIntensityClass(intensity: Intensity): string {
+  if (intensity === 'bold') return 'scroll-reveal-bold';
+  if (intensity === 'subtle') return 'scroll-reveal-subtle';
+  return 'scroll-reveal';
+}
+
 interface ScrollRevealProps {
   children: React.ReactNode;
   intensity?: Intensity;
@@ -54,12 +60,7 @@ export const ScrollReveal = ({
     return () => clearTimeout(timer);
   }, [isInView]);
 
-  const cssClass =
-    intensity === 'bold'
-      ? 'scroll-reveal-bold'
-      : intensity === 'subtle'
-        ? 'scroll-reveal-subtle'
-        : 'scroll-reveal';
+  const cssClass = getIntensityClass(intensity);
 
   const shouldShow = isInView || fallbackVisible;
 
@@ -144,12 +145,7 @@ export const Reveal = ({
     return () => clearTimeout(timer);
   }, [isInView]);
 
-  const cssClass =
-    intensity === 'bold'
-      ? 'scroll-reveal-bold'
-      : intensity === 'subtle'
-        ? 'scroll-reveal-subtle'
-        : 'scroll-reveal';
+  const cssClass = getIntensityClass(intensity);
 
   const shouldShow = isInView || fallbackVisible;
 
@@ -212,7 +208,7 @@ export const StaggerReveal = ({
     >
       {Array.isArray(children)
         ? children.map((child, i) => (
-            <motion.div key={i} variants={item}>
+            <motion.div key={`stagger-${i}`} variants={item}>
               {child}
             </motion.div>
           ))

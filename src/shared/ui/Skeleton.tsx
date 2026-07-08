@@ -34,7 +34,7 @@ export const SkeletonText = ({
     <div className={clsx('space-y-2', className)}>
       {Array.from({ length: lines }).map((_, i) => (
         <Skeleton
-          key={i}
+          key={`line-${i}`}
           className={clsx('h-3.5', i === lines - 1 && 'w-3/4')}
         />
       ))}

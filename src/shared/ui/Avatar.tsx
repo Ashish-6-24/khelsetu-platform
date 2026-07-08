@@ -50,8 +50,8 @@ const hashName = (name?: string) => {
   if (!name) return 0;
   let h = 0;
   for (let i = 0; i < name.length; i++) {
-    h = (h << 5) - h + name.charCodeAt(i);
-    h |= 0;
+    h = (h << 5) - h + name.codePointAt(i)!;
+    h = Math.trunc(h);
   }
   return Math.abs(h);
 };

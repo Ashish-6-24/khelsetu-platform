@@ -59,24 +59,25 @@ export const LiveBroadcastPage = () => {
                     </div>
                     {overlays
                       .filter((o) => o.visible)
-                      .map((overlay) => (
-                        <div
-                          key={overlay.id}
-                          className={`absolute bg-black/70 text-white px-3 py-1 rounded text-sm ${
-                            overlay.position === 'top'
-                              ? 'top-12 left-1/2 -translate-x-1/2'
-                              : overlay.position === 'bottom'
-                                ? 'bottom-4 left-4'
-                                : overlay.position === 'left'
-                                  ? 'left-4 top-1/2 -translate-y-1/2'
-                                  : overlay.position === 'right'
-                                    ? 'right-4 top-1/2 -translate-y-1/2'
-                                    : 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
-                          }`}
-                        >
-                          {overlay.type}
-                        </div>
-                      ))}
+                      .map((overlay) => {
+                        const positionMap: Record<string, string> = {
+                          top: 'top-12 left-1/2 -translate-x-1/2',
+                          bottom: 'bottom-4 left-4',
+                          left: 'left-4 top-1/2 -translate-y-1/2',
+                          right: 'right-4 top-1/2 -translate-y-1/2',
+                        };
+                        const positionClass =
+                          positionMap[overlay.position] ??
+                          'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2';
+                        return (
+                          <div
+                            key={overlay.id}
+                            className={`absolute bg-black/70 text-white px-3 py-1 rounded text-sm ${positionClass}`}
+                          >
+                            {overlay.type}
+                          </div>
+                        );
+                      })}
                     <p className="text-[var(--text-muted)]">Stream Preview</p>
                   </>
                 ) : (

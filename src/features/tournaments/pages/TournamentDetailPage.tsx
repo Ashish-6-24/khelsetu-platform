@@ -16,6 +16,12 @@ import { useState } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
+function getMatchStatusVariant(status: string): 'live' | 'success' | 'info' {
+  if (status === 'live') return 'live';
+  if (status === 'completed') return 'success';
+  return 'info';
+}
+
 const TABS = [
   { id: 'matches', label: 'Matches' },
   { id: 'teams', label: 'Teams' },
@@ -174,19 +180,28 @@ export const TournamentDetailPage = () => {
       {activeTab === 'matches' && (
         <Card>
           <CardBody>
-            {loadingMatches ? (
+            {loadingMatches && (
               <div className="space-y-3">
                 {[1, 2, 3].map((i) => (
                   <Skeleton key={i} className="h-16" />
                 ))}
               </div>
-            ) : matches && matches.length > 0 ? (
+            )}
+            {!loadingMatches && matches && matches.length > 0 && (
               <div className="space-y-3">
                 {matches.map((match) => (
                   <div
                     key={match.id}
+                    role="button"
+                    tabIndex={0}
                     className="flex items-center justify-between p-3 bg-[var(--bg-surface)] rounded-lg cursor-pointer hover:bg-[var(--bg-surface-raised)] transition-colors"
                     onClick={() => navigate(`/scoring/${match.id}`)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        navigate(`/scoring/${match.id}`);
+                      }
+                    }}
                   >
                     <div>
                       <p className="font-medium text-[var(--text-primary)]">
@@ -197,13 +212,7 @@ export const TournamentDetailPage = () => {
                       </p>
                     </div>
                     <Badge
-                      variant={
-                        match.status === 'live'
-                          ? 'live'
-                          : match.status === 'completed'
-                            ? 'success'
-                            : 'info'
-                      }
+                      variant={getMatchStatusVariant(match.status)}
                       pulse={match.status === 'live'}
                     >
                       {match.status}
@@ -211,7 +220,8 @@ export const TournamentDetailPage = () => {
                   </div>
                 ))}
               </div>
-            ) : (
+            )}
+            {!loadingMatches && (!matches || matches.length === 0) && (
               <p className="text-[var(--text-tertiary)] text-center py-8">
                 No matches scheduled yet. Add matches to get the tournament
                 rolling.
@@ -235,8 +245,16 @@ export const TournamentDetailPage = () => {
                 {teams.map((team) => (
                   <div
                     key={team.id}
+                    role="button"
+                    tabIndex={0}
                     className="p-3 bg-[var(--bg-surface)] rounded-lg cursor-pointer hover:bg-[var(--bg-surface-raised)] transition-colors"
                     onClick={() => navigate(`/teams/${team.id}`)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        navigate(`/teams/${team.id}`);
+                      }
+                    }}
                   >
                     <p className="font-medium text-[var(--text-primary)]">
                       {team.name}

@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AlertTriangle, CheckCircle2, Info, X, XCircle } from 'lucide-react';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import type { ToastType } from './ToastType';
 import { type Toast, ToastContext } from './toast-context';
@@ -45,9 +45,9 @@ function ProgressBar({
   onExpire,
   paused,
 }: {
-  duration: number;
-  onExpire: () => void;
-  paused: boolean;
+  readonly duration: number;
+  readonly onExpire: () => void;
+  readonly paused: boolean;
 }) {
   const [width, setWidth] = useState(100);
   useEffect(() => {
@@ -85,8 +85,8 @@ function ToastItem({
   toast,
   onDismiss,
 }: {
-  toast: Toast;
-  onDismiss: (id: string) => void;
+  readonly toast: Toast;
+  readonly onDismiss: (id: string) => void;
 }) {
   const cfg = typeStyles[toast.type];
   const Icon = cfg.Icon;
@@ -171,8 +171,8 @@ function ToastContainer({
   toasts,
   removeToast,
 }: {
-  toasts: Toast[];
-  removeToast: (id: string) => void;
+  readonly toasts: Toast[];
+  readonly removeToast: (id: string) => void;
 }) {
   const visible = toasts.slice(-MAX_VISIBLE);
   const overflow = toasts.length - visible.length;
@@ -218,10 +218,7 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
 
   const addToast = useCallback(
     (toast: Omit<Toast, 'id'>) => {
-      const id =
-        typeof crypto !== 'undefined' && 'randomUUID' in crypto
-          ? crypto.randomUUID()
-          : `${Date.now()}-${Math.random()}`;
+      const id = crypto.randomUUID();
       setToasts((prev) => [...prev, { ...toast, id }]);
       if (toast.duration !== 0) {
         const ms = toast.duration ?? 5000;
@@ -235,8 +232,13 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
     [removeToast],
   );
 
+  const contextValue = useMemo(
+    () => ({ toasts, addToast, removeToast }),
+    [toasts, addToast, removeToast],
+  );
+
   return (
-    <ToastContext.Provider value={{ toasts, addToast, removeToast }}>
+    <ToastContext.Provider value={contextValue}>
       {children}
       <ToastContainer toasts={toasts} removeToast={removeToast} />
     </ToastContext.Provider>

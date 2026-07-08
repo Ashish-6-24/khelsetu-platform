@@ -97,6 +97,14 @@ export const NotificationsPage = () => {
     );
   }
 
+  let unreadText: string;
+  if (unreadCount > 0) {
+    const plural = unreadCount > 1 ? 's' : '';
+    unreadText = `${unreadCount} unread notification${plural}`;
+  } else {
+    unreadText = 'All caught up';
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -105,9 +113,7 @@ export const NotificationsPage = () => {
             Notifications
           </h1>
           <p className="mt-1 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
-            {unreadCount > 0
-              ? `${unreadCount} unread notification${unreadCount > 1 ? 's' : ''}`
-              : 'All caught up'}
+            {unreadText}
           </p>
         </div>
         <div className="flex gap-2">

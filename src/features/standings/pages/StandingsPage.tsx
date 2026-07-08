@@ -15,6 +15,14 @@ import { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
+function getTournamentStatusVariant(
+  status: string,
+): 'live' | 'success' | 'info' {
+  if (status === 'live') return 'live';
+  if (status === 'completed') return 'success';
+  return 'info';
+}
+
 const SPORT_FILTERS = [
   { id: 'all', label: 'All Sports' },
   { id: 'cricket', label: 'Cricket' },
@@ -86,13 +94,14 @@ export const StandingsPage = () => {
                   <h3 className="text-sm font-semibold text-[var(--text-secondary)] mb-3">
                     Select Tournament
                   </h3>
-                  {loadingTournaments ? (
+                  {loadingTournaments && (
                     <div className="space-y-2">
                       {[1, 2, 3].map((i) => (
                         <Skeleton key={i} className="h-10" />
                       ))}
                     </div>
-                  ) : filteredTournaments.length > 0 ? (
+                  )}
+                  {!loadingTournaments && filteredTournaments.length > 0 && (
                     <div className="space-y-2">
                       {filteredTournaments.map((tournament) => (
                         <button
@@ -109,13 +118,9 @@ export const StandingsPage = () => {
                           </p>
                           <div className="flex items-center gap-2 mt-1">
                             <Badge
-                              variant={
-                                tournament.status === 'live'
-                                  ? 'live'
-                                  : tournament.status === 'completed'
-                                    ? 'success'
-                                    : 'info'
-                              }
+                              variant={getTournamentStatusVariant(
+                                tournament.status,
+                              )}
                               className="text-xs"
                             >
                               {tournament.status}
@@ -127,7 +132,8 @@ export const StandingsPage = () => {
                         </button>
                       ))}
                     </div>
-                  ) : (
+                  )}
+                  {!loadingTournaments && filteredTournaments.length === 0 && (
                     <p className="text-sm text-[var(--text-tertiary)] text-center py-4">
                       No tournaments yet. Create one to see standings.
                     </p>

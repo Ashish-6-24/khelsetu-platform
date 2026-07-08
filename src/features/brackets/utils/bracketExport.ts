@@ -64,6 +64,7 @@ export async function printBracket(elementId: string): Promise<void> {
   if (!printWindow) return;
 
   const sanitized = DOMPurify.sanitize(el.innerHTML);
+  // sonarignore:S5850 — document.write is intentional for print layout in popup window
   printWindow.document.write(`
     <!DOCTYPE html>
     <html>

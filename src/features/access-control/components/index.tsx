@@ -48,9 +48,9 @@ export const RoleCard = ({ role, onSelect, isSelected }: RoleCardProps) => {
             <span>{role.userCount} users</span>
           </div>
           <div className="space-y-1">
-            {role.permissions.slice(0, 3).map((perm, i) => (
+            {role.permissions.slice(0, 3).map((perm) => (
               <div
-                key={i}
+                key={perm.resource}
                 className="text-xs text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]"
               >
                 <strong>{perm.resource}:</strong> {perm.actions.join(', ')}

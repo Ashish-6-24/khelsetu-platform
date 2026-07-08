@@ -5,8 +5,8 @@ import { motion } from 'framer-motion';
 import { Calendar, Clock, Play, Zap } from 'lucide-react';
 
 interface MatchSelectorProps {
-  matches: Match[];
-  onSelect: (matchId: string) => void;
+  readonly matches: Match[];
+  readonly onSelect: (matchId: string) => void;
 }
 
 export function MatchSelector({ matches, onSelect }: MatchSelectorProps) {

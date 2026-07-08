@@ -31,6 +31,12 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     ref,
   ) => {
     const selectId = id || label?.toLowerCase().replace(/\s+/g, '-');
+    let describedBy: string | undefined;
+    if (error) {
+      describedBy = `${selectId}-error`;
+    } else if (helperText) {
+      describedBy = `${selectId}-help`;
+    }
 
     return (
       <div className="w-full">
@@ -48,13 +54,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             id={selectId}
             onChange={(e) => onChange?.(e.target.value)}
             aria-invalid={error ? 'true' : 'false'}
-            aria-describedby={
-              error
-                ? `${selectId}-error`
-                : helperText
-                  ? `${selectId}-help`
-                  : undefined
-            }
+            aria-describedby={describedBy}
             className={clsx(
               'block h-11 w-full appearance-none rounded-xl border bg-[var(--bg-surface)] pl-3.5 pr-10 text-sm text-[var(--text-primary)]',
               'border-[var(--border-subtle)] transition-all duration-200',
@@ -83,21 +83,22 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             aria-hidden="true"
           />
         </div>
-        {error ? (
+        {error && (
           <p
             id={`${selectId}-error`}
             className="mt-1.5 text-sm text-[var(--color-danger)]"
           >
             {error}
           </p>
-        ) : helperText ? (
+        )}
+        {!error && helperText && (
           <p
             id={`${selectId}-help`}
             className="mt-1.5 text-sm text-[var(--text-tertiary)]"
           >
             {helperText}
           </p>
-        ) : null}
+        )}
       </div>
     );
   },

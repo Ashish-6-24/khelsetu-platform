@@ -145,6 +145,20 @@ const SaveButton = ({
     prevLoading.current = isLoading;
   }, [isLoading, onSuccess]);
 
+  let buttonContent;
+  if (showSuccess) {
+    buttonContent = (
+      <>
+        <Check className="h-4 w-4 mr-2" />
+        Saved!
+      </>
+    );
+  } else if (isLoading) {
+    buttonContent = 'Saving...';
+  } else {
+    buttonContent = label;
+  }
+
   return (
     <Button
       type="submit"
@@ -161,16 +175,7 @@ const SaveButton = ({
           '!bg-gradient-to-r !from-green-500 !to-green-600 !shadow-green-500/30',
       )}
     >
-      {showSuccess ? (
-        <>
-          <Check className="h-4 w-4 mr-2" />
-          Saved!
-        </>
-      ) : isLoading ? (
-        'Saving...'
-      ) : (
-        label
-      )}
+      {buttonContent}
     </Button>
   );
 };

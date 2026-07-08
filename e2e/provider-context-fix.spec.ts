@@ -55,7 +55,7 @@ test.describe('Provider Context Fix - QA Testing', () => {
     await page.click('button:has-text("Send message")');
 
     // Wait for toast notification (form has 600ms mock delay + render time)
-    await page.waitForTimeout(2000);
+    await page.waitForSelector('text=Message sent!');
 
     // Verify toast appears (contains success message)
     const toastVisible = await page
@@ -72,7 +72,7 @@ test.describe('Provider Context Fix - QA Testing', () => {
     // Skip if no auth token available
     const cookies = await context.cookies();
     if (!cookies.length) {
-      test.skip();
+      test.skip(true, 'No auth cookies available');
     }
 
     // Navigate to dashboard
@@ -190,7 +190,7 @@ test.describe('Provider Context Fix - QA Testing', () => {
 
     // Try to open command palette (typically Cmd+K or Ctrl+K)
     await page.keyboard.press('Control+K');
-    await page.waitForTimeout(500);
+    await page.waitForLoadState('networkidle');
 
     // Verify page still responds without errors
     await expect(page).toHaveURL('/');

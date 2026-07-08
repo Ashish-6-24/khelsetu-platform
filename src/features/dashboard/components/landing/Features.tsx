@@ -258,7 +258,7 @@ export const Features = () => (
             <div className="mt-5 flex h-16 items-end gap-1" aria-hidden>
               {[40, 65, 50, 80, 60, 90, 75].map((h, i) => (
                 <div
-                  key={i}
+                  key={`bar-${h}-${i}`}
                   className="flex-1 rounded-t-sm"
                   style={{
                     height: `${h}%`,

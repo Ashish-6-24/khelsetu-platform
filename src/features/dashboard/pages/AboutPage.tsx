@@ -344,7 +344,9 @@ const FooterCta = () => (
       </div>
       <div className="mt-10 flex items-center justify-center gap-3 text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
         <a
-          href="#"
+          href="https://x.com/khelsetu"
+          target="_blank"
+          rel="noreferrer"
           aria-label="X (Twitter)"
           className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-subtle)] transition-all hover:-translate-y-0.5 hover:border-[var(--brand-primary)]/30 hover:bg-white hover:text-[var(--brand-primary)] dark:border-[var(--border-strong)] dark:hover:border-[var(--brand-primary)]/30 dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-[var(--brand-primary)]"
         >
@@ -353,7 +355,9 @@ const FooterCta = () => (
           </svg>
         </a>
         <a
-          href="#"
+          href="https://linkedin.com/company/khelsetu"
+          target="_blank"
+          rel="noreferrer"
           aria-label="LinkedIn"
           className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-subtle)] transition-all hover:-translate-y-0.5 hover:border-[var(--brand-primary)]/30 hover:bg-white hover:text-[var(--brand-primary)] dark:border-[var(--border-strong)] dark:hover:border-[var(--brand-primary)]/30 dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-[var(--brand-primary)]"
         >
@@ -362,7 +366,9 @@ const FooterCta = () => (
           </svg>
         </a>
         <a
-          href="#"
+          href="https://github.com/khelsetu"
+          target="_blank"
+          rel="noreferrer"
           aria-label="GitHub"
           className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-subtle)] transition-all hover:-translate-y-0.5 hover:border-[var(--brand-primary)]/30 hover:bg-white hover:text-[var(--brand-primary)] dark:border-[var(--border-strong)] dark:hover:border-[var(--brand-primary)]/30 dark:hover:bg-[var(--bg-surface-raised)] dark:hover:text-[var(--brand-primary)]"
         >

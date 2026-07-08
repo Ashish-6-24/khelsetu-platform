@@ -4,15 +4,15 @@ import type { MatchReport as MatchReportData } from '../types';
 import { MatchReport as MatchReportView } from './MatchReport';
 
 interface ReportEditorProps {
-  report: MatchReportData;
-  teamAName: string;
-  teamBName: string;
-  onSave: (
+  readonly report: MatchReportData;
+  readonly teamAName: string;
+  readonly teamBName: string;
+  readonly onSave: (
     updates: Partial<Pick<MatchReportData, 'title' | 'summary' | 'highlights'>>,
   ) => void;
-  onPublish: () => void;
-  isSaving: boolean;
-  isPublishing: boolean;
+  readonly onPublish: () => void;
+  readonly isSaving: boolean;
+  readonly isPublishing: boolean;
 }
 
 export function ReportEditor({
@@ -93,10 +93,14 @@ export function ReportEditor({
         <div className="space-y-6">
           {/* Title Field */}
           <div className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 p-6 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80">
-            <label className="mb-2 block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
+            <label
+              htmlFor="report-title"
+              className="mb-2 block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)]"
+            >
               Report Title
             </label>
             <input
+              id="report-title"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -106,10 +110,14 @@ export function ReportEditor({
 
           {/* Summary Field */}
           <div className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 p-6 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80">
-            <label className="mb-2 block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
+            <label
+              htmlFor="report-summary"
+              className="mb-2 block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)]"
+            >
               Match Summary
             </label>
             <textarea
+              id="report-summary"
               value={summary}
               onChange={(e) => setSummary(e.target.value)}
               rows={5}
@@ -119,12 +127,18 @@ export function ReportEditor({
 
           {/* Highlights Editor */}
           <div className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 p-6 shadow-[var(--shadow-sm)] backdrop-blur-xl dark:border-[var(--border-subtle)] dark:bg-[var(--bg-surface)]/80">
-            <label className="mb-2 block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
+            <label
+              htmlFor="report-highlights"
+              className="mb-2 block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)]"
+            >
               Highlights
             </label>
             <div className="space-y-2">
               {highlights.map((highlight, index) => (
-                <div key={index} className="flex items-center gap-2">
+                <div
+                  key={`hl-${highlight}-${index}`}
+                  className="flex items-center gap-2"
+                >
                   <span className="flex-1 rounded-lg bg-[var(--bg-surface-sunken)] px-3 py-2 text-sm text-[var(--text-primary)] dark:bg-[var(--bg-surface-raised)]/50 dark:text-[var(--text-secondary)]">
                     {highlight}
                   </span>

@@ -4,7 +4,7 @@ import { getFormattedDate } from '../utils/certificateRenderer';
 import { CertificateQR } from './CertificateQR';
 
 interface CertificatePreviewProps {
-  data: CertificateData;
+  readonly data: CertificateData;
 }
 
 export function CertificatePreview({ data }: CertificatePreviewProps) {

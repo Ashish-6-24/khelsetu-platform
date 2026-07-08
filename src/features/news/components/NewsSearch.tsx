@@ -3,9 +3,9 @@ import { Search, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 interface NewsSearchProps {
-  value: string;
-  onChange: (value: string) => void;
-  resultCount?: number;
+  readonly value: string;
+  readonly onChange: (value: string) => void;
+  readonly resultCount?: number;
 }
 
 export function NewsSearch({ value, onChange, resultCount }: NewsSearchProps) {

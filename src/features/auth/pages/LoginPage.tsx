@@ -114,18 +114,25 @@ export const LoginPage = () => {
   };
 
   // Determine validation state for email field
-  const emailValidationState = validatingEmail
-    ? 'validating'
-    : validation.email?.touched && !validation.email?.error
-      ? 'valid'
-      : undefined;
-
-  // Determine validation state for password field
-  const passwordValidationState = validatingPassword
-    ? 'validating'
-    : validation.password?.touched && !validation.password?.error
-      ? 'valid'
-      : undefined;
+  const getValidationState = (
+    validating: boolean,
+    touched?: boolean,
+    error?: string | null,
+  ) => {
+    if (validating) return 'validating';
+    if (touched && !error) return 'valid';
+    return undefined;
+  };
+  const emailValidationState = getValidationState(
+    validatingEmail,
+    validation.email?.touched,
+    validation.email?.error,
+  );
+  const passwordValidationState = getValidationState(
+    validatingPassword,
+    validation.password?.touched,
+    validation.password?.error,
+  );
 
   return (
     <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-7 shadow-[var(--shadow-xl)] sm:p-9">

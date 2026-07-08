@@ -45,7 +45,7 @@ export const reportsService = {
     a.download = `report-${reportId}.${format}`;
     document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
+    a.remove();
     URL.revokeObjectURL(url);
   },
 };

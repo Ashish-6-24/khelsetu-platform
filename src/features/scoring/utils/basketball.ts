@@ -2,6 +2,7 @@ import type {
   BasketballEvent,
   BasketballEventType,
 } from '@shared/types/scoring';
+import { secureRandomId } from '@shared/utils/crypto-random';
 
 export const createBasketballEvent = (
   matchId: string,
@@ -16,7 +17,7 @@ export const createBasketballEvent = (
   points?: number,
   description?: string,
 ): BasketballEvent => ({
-  id: `event-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+  id: `event-${Date.now()}-${secureRandomId(7)}`,
   matchId,
   quarter,
   minute,

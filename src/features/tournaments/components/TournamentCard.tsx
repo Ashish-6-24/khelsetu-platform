@@ -64,21 +64,12 @@ export const TournamentCard = memo(
               </span>
             </div>
             <div className="mt-3">
-              <div
-                className="w-full bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)] rounded-full h-2"
-                role="progressbar"
-                aria-valuenow={tournament.currentTeams}
-                aria-valuemin={0}
-                aria-valuemax={tournament.maxTeams}
+              <progress
+                className="w-full h-2 rounded-full [&::-webkit-progress-bar]:rounded-full [&::-webkit-progress-bar]:bg-[var(--bg-surface-sunken)] dark:[&::-webkit-progress-bar]:bg-[var(--bg-surface-raised)] [&::-webkit-progress-value]:rounded-full [&::-webkit-progress-value]:bg-blue-600 [&::-moz-progress-bar]:rounded-full [&::-moz-progress-bar]:bg-blue-600"
+                value={tournament.currentTeams}
+                max={tournament.maxTeams}
                 aria-label={`${tournament.currentTeams} of ${tournament.maxTeams} teams registered`}
-              >
-                <div
-                  className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-                  style={{
-                    width: `${(tournament.currentTeams / tournament.maxTeams) * 100}%`,
-                  }}
-                />
-              </div>
+              />
             </div>
           </CardBody>
         </Card>

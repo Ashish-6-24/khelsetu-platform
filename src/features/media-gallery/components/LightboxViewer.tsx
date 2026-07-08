@@ -15,13 +15,13 @@ import { MediaItem } from '../types';
 import { formatDuration } from '../utils/galleryUtils';
 
 interface LightboxViewerProps {
-  item: MediaItem;
-  currentIndex: number;
-  total: number;
-  isOpen: boolean;
-  onClose: () => void;
-  onNext: () => void;
-  onPrevious: () => void;
+  readonly item: MediaItem;
+  readonly currentIndex: number;
+  readonly total: number;
+  readonly isOpen: boolean;
+  readonly onClose: () => void;
+  readonly onNext: () => void;
+  readonly onPrevious: () => void;
 }
 
 export function LightboxViewer({
@@ -142,7 +142,9 @@ export function LightboxViewer({
             controls
             aria-label={item.title}
             className="max-h-[70vh] max-w-full rounded-lg"
-          />
+          >
+            <track kind="captions" src="" label="Captions" />
+          </video>
         ) : (
           <img
             src={item.url}

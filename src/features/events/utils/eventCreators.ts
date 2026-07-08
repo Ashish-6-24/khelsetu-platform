@@ -1,3 +1,5 @@
+import { secureRandomId } from '@shared/utils/crypto-random';
+
 import type {
   LiveEventConfig,
   LiveEventType,
@@ -102,7 +104,7 @@ export const createLiveMatchEvent = (
     description?: string;
   },
 ): LiveMatchEvent => ({
-  id: `live-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+  id: `live-${Date.now()}-${secureRandomId(7)}`,
   matchId,
   minute,
   extraMinute: extras?.extraMinute,

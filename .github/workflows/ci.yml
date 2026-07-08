@@ -11,9 +11,6 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
-permissions:
-  contents: read
-
 env:
   NODE_VERSION: '22'
   WORKING_DIR: .
@@ -29,6 +26,8 @@ jobs:
   lint:
     name: 'Quality · Lint'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - uses: ./.github/actions/setup-node
@@ -37,6 +36,8 @@ jobs:
   format:
     name: 'Quality · Format'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - uses: ./.github/actions/setup-node
@@ -45,6 +46,8 @@ jobs:
   typecheck:
     name: 'Quality · Type Check'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - uses: ./.github/actions/setup-node
@@ -69,6 +72,8 @@ jobs:
   circular:
     name: 'Security · Circular Deps'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - uses: ./.github/actions/setup-node
@@ -77,6 +82,8 @@ jobs:
   structure:
     name: 'Security · Structure'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - name: Check for duplicate/stale directories
@@ -88,6 +95,8 @@ jobs:
   build:
     name: 'Build'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [lint, format, typecheck, secrets, circular, structure]
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
@@ -107,6 +116,8 @@ jobs:
   unit-test:
     name: 'Unit · Shard ${{ matrix.shard }}/2'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [build]
     strategy:
       fail-fast: false
@@ -128,6 +139,8 @@ jobs:
   coverage:
     name: 'Unit · Coverage'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [build]
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
@@ -140,6 +153,8 @@ jobs:
   e2e:
     name: 'E2E · Shard ${{ matrix.shard }}/2'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [unit-test]
     strategy:
       fail-fast: false
@@ -163,6 +178,8 @@ jobs:
   smoke:
     name: 'E2E · Smoke'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [unit-test]
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
@@ -174,6 +191,8 @@ jobs:
   a11y:
     name: 'E2E · Accessibility'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [unit-test]
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
@@ -193,6 +212,8 @@ jobs:
   visual:
     name: 'E2E · Visual Regression'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [unit-test]
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
@@ -217,6 +238,8 @@ jobs:
   lighthouse:
     name: 'Performance · Lighthouse'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [build]
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
@@ -242,6 +265,8 @@ jobs:
     name: 'CI Status'
     if: always()
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs:
       [
         lint,

@@ -35,8 +35,8 @@ export const PlanCard = ({
           </div>
 
           <ul className="space-y-2">
-            {plan.features.map((feature, index) => (
-              <li key={index} className="flex items-start gap-2 text-sm">
+            {plan.features.map((feature) => (
+              <li key={feature} className="flex items-start gap-2 text-sm">
                 <Check className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
                 <span className="text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
                   {feature}

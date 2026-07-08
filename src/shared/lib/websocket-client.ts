@@ -6,9 +6,11 @@ import { Socket, io } from 'socket.io-client';
 class WebSocketService {
   private socket: Socket | null = null;
   private reconnectAttempts = 0;
-  private maxReconnectAttempts = 5;
-  private listeners: Map<WebSocketEvent, Set<(data: unknown) => void>> =
-    new Map();
+  private readonly maxReconnectAttempts = 5;
+  private readonly listeners: Map<
+    WebSocketEvent,
+    Set<(data: unknown) => void>
+  > = new Map();
 
   connect(accessToken?: string): Promise<void> {
     return new Promise((resolve, reject) => {

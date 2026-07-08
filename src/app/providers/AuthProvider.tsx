@@ -2,7 +2,7 @@ import { logger } from '@lib/logger';
 import { wsService } from '@lib/websocket-client';
 import { useAuthStore } from '@state/authStore';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { AuthContext } from './AuthContext';
 
@@ -29,9 +29,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     };
   }, [isAuthenticated, accessToken]);
 
+  const contextValue = useMemo(
+    () => ({ isAuthenticated, isLoading }),
+    [isAuthenticated, isLoading],
+  );
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isLoading }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };

@@ -20,6 +20,42 @@ interface FormErrors {
   maxTeams?: string;
 }
 
+function validateStep1(data: TournamentFormData): FormErrors {
+  const errors: FormErrors = {};
+  if (!data.name || data.name.trim() === '')
+    errors.name = 'Tournament name is required';
+  if (!data.sport || data.sport.trim() === '')
+    errors.sport = 'Sport is required';
+  if (!data.venue || data.venue.trim() === '')
+    errors.venue = 'Venue is required';
+  return errors;
+}
+
+function validateStep2(data: TournamentFormData): FormErrors {
+  const errors: FormErrors = {};
+  if (!data.format || data.format.trim() === '')
+    errors.format = 'Format is required';
+  if (!data.maxTeams || data.maxTeams < 2)
+    errors.maxTeams = 'Minimum 2 teams required';
+  return errors;
+}
+
+function validateStep3(data: TournamentFormData): FormErrors {
+  const errors: FormErrors = {};
+  if (!data.startDate || data.startDate.trim() === '')
+    errors.startDate = 'Start date is required';
+  if (!data.endDate || data.endDate.trim() === '')
+    errors.endDate = 'End date is required';
+  if (
+    data.startDate &&
+    data.endDate &&
+    new Date(data.endDate) < new Date(data.startDate)
+  ) {
+    errors.endDate = 'End date must be after start date';
+  }
+  return errors;
+}
+
 export const TournamentCreatePage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -61,45 +97,8 @@ export const TournamentCreatePage = () => {
   });
 
   const validateStep = (step: number): boolean => {
-    const newErrors: FormErrors = {};
-
-    switch (step) {
-      case 1:
-        if (!formData.name || formData.name.trim() === '') {
-          newErrors.name = 'Tournament name is required';
-        }
-        if (!formData.sport || formData.sport.trim() === '') {
-          newErrors.sport = 'Sport is required';
-        }
-        if (!formData.venue || formData.venue.trim() === '') {
-          newErrors.venue = 'Venue is required';
-        }
-        break;
-      case 2:
-        if (!formData.format || formData.format.trim() === '') {
-          newErrors.format = 'Format is required';
-        }
-        if (!formData.maxTeams || formData.maxTeams < 2) {
-          newErrors.maxTeams = 'Minimum 2 teams required';
-        }
-        break;
-      case 3:
-        if (!formData.startDate || formData.startDate.trim() === '') {
-          newErrors.startDate = 'Start date is required';
-        }
-        if (!formData.endDate || formData.endDate.trim() === '') {
-          newErrors.endDate = 'End date is required';
-        }
-        if (
-          formData.startDate &&
-          formData.endDate &&
-          new Date(formData.endDate) < new Date(formData.startDate)
-        ) {
-          newErrors.endDate = 'End date must be after start date';
-        }
-        break;
-    }
-
+    const validators = [validateStep1, validateStep2, validateStep3];
+    const newErrors = validators[step - 1]?.(formData) ?? {};
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };

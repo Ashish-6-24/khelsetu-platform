@@ -241,9 +241,9 @@ describe('getTeamForm', () => {
     };
     const form = getTeamForm(standing, 5);
     expect(form.length).toBeLessThanOrEqual(5);
-    expect(form.filter((f) => f === 'W').length).toBe(3);
-    expect(form.filter((f) => f === 'L').length).toBe(1);
-    expect(form.filter((f) => f === 'D').length).toBe(1);
+    expect(form.filter((f) => f === 'W')).toHaveLength(3);
+    expect(form.filter((f) => f === 'L')).toHaveLength(1);
+    expect(form.filter((f) => f === 'D')).toHaveLength(1);
   });
 
   it('should limit form to last N matches', () => {
@@ -259,6 +259,6 @@ describe('getTeamForm', () => {
       position: 1,
     };
     const form = getTeamForm(standing, 3);
-    expect(form.length).toBe(3);
+    expect(form).toHaveLength(3);
   });
 });

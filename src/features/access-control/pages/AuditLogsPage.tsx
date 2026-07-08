@@ -121,11 +121,9 @@ export const AuditLogPage = () => {
                     <td className="py-2 px-3">
                       <Badge
                         variant={
-                          log.severity === 'error'
-                            ? 'error'
-                            : log.severity === 'warning'
-                              ? 'warning'
-                              : 'default'
+                          log.severity === 'error' || log.severity === 'warning'
+                            ? log.severity
+                            : 'default'
                         }
                       >
                         {log.severity}

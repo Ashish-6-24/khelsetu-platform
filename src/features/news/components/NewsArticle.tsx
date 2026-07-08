@@ -15,8 +15,8 @@ import {
 } from '../utils/newsUtils';
 
 interface NewsArticleProps {
-  article: NewsArticleType;
-  relatedArticles?: NewsArticleType[];
+  readonly article: NewsArticleType;
+  readonly relatedArticles?: NewsArticleType[];
 }
 
 export function NewsArticle({
@@ -163,7 +163,7 @@ export function NewsArticle({
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
             {article.gallery.map((img, i) => (
               <button
-                key={i}
+                key={img}
                 onClick={() => setLightboxImage(img)}
                 aria-label={`View gallery image ${i + 1}`}
                 className="group overflow-hidden rounded-xl"
@@ -223,6 +223,9 @@ export function NewsArticle({
           tabIndex={-1}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
           onClick={() => setLightboxImage(null)}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') setLightboxImage(null);
+          }}
         >
           <img
             src={lightboxImage}

@@ -1,5 +1,4 @@
 import { Button } from '@shared/ui/Button';
-import { clsx } from 'clsx';
 
 import { useEffect, useState } from 'react';
 
@@ -49,12 +48,7 @@ export const MatchTimer = ({
       <Button
         variant={isRunning ? 'outline' : 'primary'}
         onClick={onToggle}
-        className={clsx(
-          'h-10',
-          isRunning
-            ? 'bg-red-50 text-red-800 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-300'
-            : 'bg-red-50 text-red-800 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-300',
-        )}
+        className="h-10 bg-red-50 text-red-800 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-300"
       >
         {isRunning ? 'Pause' : 'Start'}
       </Button>

@@ -4,6 +4,7 @@ import type {
   OverlayType,
 } from '@features/broadcast/types';
 import { OVERLAY_PRESETS } from '@features/broadcast/types';
+import { secureRandomId } from '@shared/utils/crypto-random';
 import { create } from 'zustand';
 
 interface BroadcastState {
@@ -35,8 +36,8 @@ export const useBroadcastStore = create<BroadcastState>((set) => ({
         id: `stream-${Date.now()}`,
         matchId,
         status: 'live',
-        streamKey: `sk_${Math.random().toString(36).slice(2, 10)}`,
-        rtmpUrl: 'rtmp://live.khelsetu.com/live/',
+        streamKey: `sk_${secureRandomId(10)}`,
+        rtmpUrl: 'rtmps://live.khelsetu.com/live/',
         viewers: 0,
         startedAt: new Date().toISOString(),
         duration: 0,

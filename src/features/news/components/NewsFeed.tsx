@@ -5,8 +5,8 @@ import type { NewsArticle } from '../types';
 import { NewsCard } from './NewsCard';
 
 interface NewsFeedProps {
-  articles: NewsArticle[];
-  isLoading?: boolean;
+  readonly articles: NewsArticle[];
+  readonly isLoading?: boolean;
 }
 
 export function NewsFeed({ articles, isLoading }: NewsFeedProps) {
@@ -15,7 +15,7 @@ export function NewsFeed({ articles, isLoading }: NewsFeedProps) {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {Array.from({ length: 6 }).map((_, i) => (
           <div
-            key={i}
+            key={`skeleton-${i}`}
             className="overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-white dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface)]"
           >
             <Skeleton className="aspect-[16/10]" />

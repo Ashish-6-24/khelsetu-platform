@@ -7,6 +7,7 @@ import type {
 import { Button } from '@shared/ui/Button';
 import { Card, CardBody } from '@shared/ui/Card';
 import { Tabs } from '@shared/ui/Tabs';
+import { secureRandomId } from '@shared/utils/crypto-random';
 
 import { useState } from 'react';
 
@@ -83,7 +84,7 @@ export const CricketScoringPanel = ({
     extras?: { type: CricketExtraType; extraRuns: number },
     wicket?: { type: CricketWicketType; dismissedPlayerId: string },
   ): CricketBall => ({
-    id: `ball-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+    id: `ball-${Date.now()}-${secureRandomId(7)}`,
     matchId: '',
     innings: innings.inningsNumber,
     over: innings.overs,

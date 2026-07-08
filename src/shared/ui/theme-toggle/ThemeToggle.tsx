@@ -20,6 +20,49 @@ const THEMES: {
   { value: 'system', icon: Monitor, label: 'System' },
 ];
 
+function getActiveThemeIcon(value: Theme): React.ReactNode {
+  if (value === 'light') {
+    return (
+      <motion.span
+        key="sun"
+        initial={{ rotate: -90, scale: 0 }}
+        animate={{ rotate: 0, scale: 1 }}
+        exit={{ rotate: 90, scale: 0 }}
+        transition={{ duration: 0.2 }}
+        className="text-[var(--text-primary)]"
+      >
+        <Sun className="h-3.5 w-3.5" />
+      </motion.span>
+    );
+  }
+  if (value === 'dark') {
+    return (
+      <motion.span
+        key="moon"
+        initial={{ rotate: 90, scale: 0 }}
+        animate={{ rotate: 0, scale: 1 }}
+        exit={{ rotate: -90, scale: 0 }}
+        transition={{ duration: 0.2 }}
+        className="text-[var(--text-primary)]"
+      >
+        <Moon className="h-3.5 w-3.5" />
+      </motion.span>
+    );
+  }
+  return (
+    <motion.span
+      key="system"
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      exit={{ scale: 0 }}
+      transition={{ duration: 0.2 }}
+      className="text-[var(--text-primary)]"
+    >
+      <Monitor className="h-3.5 w-3.5" />
+    </motion.span>
+  );
+}
+
 export const ThemeToggle = ({ className }: ThemeToggleProps) => {
   const theme = useUIStore((s) => s.theme);
   const setTheme = useUIStore((s) => s.setTheme);
@@ -46,6 +89,7 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
       className={`relative flex rounded-full p-0.5 ${className ?? ''}`}
       style={{ backgroundColor: 'var(--bg-surface-sunken)' }}
       role="radiogroup"
+      tabIndex={0}
       aria-label="Theme selection"
       onKeyDown={handleKeyDown}
     >
@@ -66,40 +110,7 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
         >
           <AnimatePresence mode="wait">
             {currentTheme === value ? (
-              value === 'light' ? (
-                <motion.span
-                  key="sun"
-                  initial={{ rotate: -90, scale: 0 }}
-                  animate={{ rotate: 0, scale: 1 }}
-                  exit={{ rotate: 90, scale: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="text-[var(--text-primary)]"
-                >
-                  <Sun className="h-3.5 w-3.5" />
-                </motion.span>
-              ) : value === 'dark' ? (
-                <motion.span
-                  key="moon"
-                  initial={{ rotate: 90, scale: 0 }}
-                  animate={{ rotate: 0, scale: 1 }}
-                  exit={{ rotate: -90, scale: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="text-[var(--text-primary)]"
-                >
-                  <Moon className="h-3.5 w-3.5" />
-                </motion.span>
-              ) : (
-                <motion.span
-                  key="system"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="text-[var(--text-primary)]"
-                >
-                  <Monitor className="h-3.5 w-3.5" />
-                </motion.span>
-              )
+              getActiveThemeIcon(value)
             ) : (
               <Icon className="h-3.5 w-3.5 text-[var(--text-tertiary)] transition-colors duration-200 hover:text-[var(--text-primary)]" />
             )}

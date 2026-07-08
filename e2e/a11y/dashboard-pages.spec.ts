@@ -13,5 +13,6 @@ for (const { name, path } of DASHBOARD_ROUTES) {
     await page.goto(path);
     await page.waitForLoadState('networkidle');
     await expectNoCriticalA11yViolations(makeAxeBuilder(), name);
+    await expect(page).toHaveURL(new RegExp(path));
   });
 }

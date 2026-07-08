@@ -125,10 +125,14 @@ export const CardButtons = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label
+              htmlFor="card-player-select"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            >
               Player *
             </label>
             <select
+              id="card-player-select"
               value={playerId}
               onChange={(e) => setPlayerId(e.target.value)}
               className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
