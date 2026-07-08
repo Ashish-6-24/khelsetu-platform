@@ -44,3 +44,4 @@ export const test = {
   name: 'test',
   value: 42,
 };
+const x =   1;
