@@ -23,5 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_BASE_URL: https://integrate.api.nvidia.com/v1
           OPENAI_API_KEY: ${{ secrets.NVIDIA_NIM_API_KEY }}
+          OPENAI_KEY: ${{ secrets.NVIDIA_NIM_API_KEY }}
           CONFIG.MODEL: glm-5.2
           GITHUB_ACTION_CONFIG.AUTO_IMPROVE: "false"
+          GITHUB_ACTION_CONFIG.PR_REVIEWER_RUN_ON_Synchronize: "true"
