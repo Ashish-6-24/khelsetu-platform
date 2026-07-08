@@ -1,0 +1,26 @@
+name: PR Agent Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  pr-agent:
+    name: AI Code Review
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login != 'dependabot[bot]' && github.event.pull_request.user.login != 'renovate[bot]'
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+
+      - name: The PR Agent
+        uses: The-PR-Agent/pr-agent@8e4d32e5497defd43c023a404f73560c62728961
+        env:
+          OPENAI_BASE_URL: https://integrate.api.nvidia.com/v1
+          OPENAI_API_KEY: ${{ secrets.NVIDIA_NIM_API_KEY }}
+          CONFIG.MODEL: glm-5.2
+          GITHUB_ACTION_CONFIG.AUTO_IMPROVE: "false"
