@@ -1,4 +1,4 @@
-import { test } from '../helpers/a11y-fixture';
+import { expect, test } from '../helpers/a11y-fixture';
 import { expectNoCriticalA11yViolations } from '../helpers/a11y-utils';
 
 const DASHBOARD_ROUTES = [

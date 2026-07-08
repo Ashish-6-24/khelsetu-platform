@@ -146,11 +146,11 @@ export const SocialProof = () => {
           >
             Trusted by federations, clubs &amp; organizers across Nepal
           </p>
-          <ol
+          <ul
             className="marquee mt-6 list-none"
             aria-label="Partner organizations"
           >
-            <div className="marquee-track">
+            <div className="marquee-track [&]:contents">
               {row.map((p, i) => (
                 <li
                   key={`${p.code}-${i}`}
@@ -168,7 +168,7 @@ export const SocialProof = () => {
                 </li>
               ))}
             </div>
-          </ol>
+          </ul>
         </div>
       </section>
     </Reveal>
