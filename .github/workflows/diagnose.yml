@@ -9,6 +9,7 @@ permissions:
   contents: read
   pull-requests: write
   checks: read
+  actions: read
 
 jobs:
   diagnose:
@@ -18,12 +19,13 @@ jobs:
       github.event.workflow_run.conclusion == 'failure' &&
       github.event.workflow_run.event == 'pull_request'
     steps:
+      # ── 1. Find PR ──────────────────────────────────────────────
       - name: Find PR
         id: find-pr
         run: |
           PR_JSON=$(gh pr list --repo "$REPO" \
             --head "$BRANCH" \
-            --json number,author,state \
+            --json number,author,state,labels \
             --jq '.[0]')
           PR_NUMBER=$(echo "$PR_JSON" | jq -r '.number')
           PR_AUTHOR=$(echo "$PR_JSON" | jq -r '.author.login')
@@ -34,6 +36,7 @@ jobs:
           REPO: ${{ github.repository }}
           BRANCH: ${{ github.event.workflow_run.head_branch }}
 
+      # ── 2. Collect failure data ──────────────────────────────────
       - name: Collect failure data
         id: data
         run: |
@@ -44,6 +47,7 @@ jobs:
           FAILED_JOBS=$(gh api "repos/$REPO/actions/runs/$RUN_ID/jobs" \
             --jq '[.jobs[] | select(.conclusion == "failure") | {
               name: .name,
+              id: .id,
               steps: [.steps[] | select(.conclusion == "failure") | .name]
             }]')
 
@@ -51,18 +55,46 @@ jobs:
           echo "$FAILED_JOBS" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
-          # Get failed log lines (last 100 lines of each failed job)
-          FAILED_LOGS=$(gh run view "$RUN_ID" --repo "$REPO" --log-failed 2>&1 | tail -100)
+          # Get failed log lines (last 200 lines for deeper analysis)
+          FAILED_LOGS=$(gh run view "$RUN_ID" --repo "$REPO" --log-failed 2>&1 | tail -200)
           echo "logs<<EOF" >> "$GITHUB_OUTPUT"
           echo "$FAILED_LOGS" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
-          # Get head SHA for annotations
+          # Get head SHA for annotations and summaries
           HEAD_SHA=$(gh api "repos/$REPO/actions/runs/$RUN_ID" --jq '.head_sha')
           echo "sha=$HEAD_SHA" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # ── 3. Fetch job summaries ───────────────────────────────────
+      - name: Fetch job summaries
+        id: summaries
+        run: |
+          RUN_ID="${{ github.event.workflow_run.id }}"
+          REPO="${{ github.repository }}"
+
+          # Get all failed job IDs
+          JOB_IDS=$(gh api "repos/$REPO/actions/runs/$RUN_ID/jobs" \
+            --jq '.jobs[] | select(.conclusion == "failure") | .id')
+
+          SUMMARIES=""
+          for JOB_ID in $JOB_IDS; do
+            JOB_NAME=$(gh api "repos/$REPO/actions/runs/$RUN_ID/jobs" \
+              --jq ".jobs[] | select(.id == $JOB_ID) | .name")
+            # Job summary is in the output of gh run view --job
+            JOB_LOG=$(gh run view --job="$JOB_ID" --repo "$REPO" 2>&1 | tail -20)
+            SUMMARIES+="=== $JOB_NAME ==="$'\n'
+            SUMMARIES+="$JOB_LOG"$'\n\n'
+          done
+
+          echo "summaries<<EOF" >> "$GITHUB_OUTPUT"
+          echo "${SUMMARIES:0:4000}" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── 4. Fetch annotations ─────────────────────────────────────
       - name: Fetch annotations
         id: annotations
         run: |
@@ -89,9 +121,38 @@ jobs:
 
           COUNT=$(echo "$FILTERED" | jq 'length')
           echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+
+          # Build annotation summary lines for comment
+          ANN_LINES=$(echo "$FILTERED" | jq -r '.[:5][] | "- `\(.path):\(.start_line)`: \(.message)"' 2>/dev/null || echo "")
+          echo "lines<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$ANN_LINES" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # ── 5. Check for flaky tests ─────────────────────────────────
+      - name: Detect flaky tests
+        id: flaky
+        run: |
+          LOGS="${{ steps.data.outputs.logs }}"
+
+          # Common flaky indicators in test output
+          FLAKY_PATTERNS="ECONNREFUSED|ETIMEDOUT|race condition|flaky|retry|intermittent|timing|socket hang up|heap out of memory"
+
+          FLAKY_HITS=$(echo "$LOGS" | grep -ciE "$FLAKY_PATTERNS" | cat)
+
+          # Check if same test failed in both shards (consistent) vs one shard (flaky)
+          SHARD_FAILS=$(echo "$LOGS" | grep -cE "shard.*fail|Unit.*1/2.*fail|Unit.*2/2.*fail" | cat)
+
+          IS_FLAKY="false"
+          if [ "$FLAKY_HITS" -gt 0 ] && [ "$SHARD_FAILS" -lt 2 ]; then
+            IS_FLAKY="true"
+          fi
+
+          echo "is_flaky=$IS_FLAKY" >> "$GITHUB_OUTPUT"
+          echo "flaky_hits=$FLAKY_HITS" >> "$GITHUB_OUTPUT"
+
+      # ── 6. Classify issues ───────────────────────────────────────
       - name: Classify issues
         id: classify
         run: |
@@ -103,11 +164,12 @@ jobs:
           TEST=$(echo "$LOGS" | grep -ciE "vitest|test.*fail|expect.*received" | cat)
           BUILD=$(echo "$LOGS" | grep -ciE "build|bundle|rollup|vite.*error" | cat)
           DEP=$(echo "$LOGS" | grep -ciE "npm.*ERR|dependency|module.*not.*found" | cat)
+          SNAPSHOT=$(echo "$LOGS" | grep -ciE "snapshot|visual.*diff|screenshot|mismatch" | cat)
 
           # Determine primary issue type
           PRIMARY="unknown"
           MAX=0
-          for pair in "lint:$LINT" "type:$TYPE" "test:$TEST" "build:$BUILD" "dependency:$DEP"; do
+          for pair in "lint:$LINT" "type:$TYPE" "test:$TEST" "build:$BUILD" "dependency:$DEP" "snapshot:$SNAPSHOT"; do
             KEY="${pair%%:*}"
             VAL="${pair##*:}"
             if [ "$VAL" -gt "$MAX" ]; then
@@ -116,6 +178,11 @@ jobs:
             fi
           done
           if [ "$LINT" -gt 0 ] && [ "$PRIMARY" = "unknown" ]; then PRIMARY="lint"; fi
+
+          # Override: if flaky detected and primary is test, mark as flaky
+          if [ "${{ steps.flaky.outputs.is_flaky }}" = "true" ] && [ "$PRIMARY" = "test" ]; then
+            PRIMARY="flaky"
+          fi
 
           # Auto-fixable only if purely lint/format
           AUTO_FIXABLE="false"
@@ -130,10 +197,34 @@ jobs:
           echo "test=$TEST" >> "$GITHUB_OUTPUT"
           echo "build=$BUILD" >> "$GITHUB_OUTPUT"
           echo "dep=$DEP" >> "$GITHUB_OUTPUT"
+          echo "snapshot=$SNAPSHOT" >> "$GITHUB_OUTPUT"
 
+      # ── 7. Check retry limit ─────────────────────────────────────
+      - name: Check retry limit
+        id: retry
+        run: |
+          REPO="${{ github.repository }}"
+          PR="${{ steps.find-pr.outputs.number }}"
+          BRANCH="${{ github.event.workflow_run.head_branch }}"
+
+          # Count recent diagnose comments on this PR (max 2 auto-fixes)
+          DIAGNOSE_COMMENTS=$(gh api "repos/$REPO/issues/$PR/comments" \
+            --jq '[.[] | select(.body | contains("CI Diagnosis")) | select(.user.login == "github-actions[bot]")] | length')
+
+          REACHED_LIMIT="false"
+          if [ "$DIAGNOSE_COMMENTS" -ge 3 ]; then
+            REACHED_LIMIT="true"
+          fi
+
+          echo "reached_limit=$REACHED_LIMIT" >> "$GITHUB_OUTPUT"
+          echo "comment_count=$DIAGNOSE_COMMENTS" >> "$GITHUB_OUTPUT"
+
+      # ── 8. Auto-fix lint issues (with retry limit) ───────────────
       - name: Auto-fix lint issues
         id: auto-fix
-        if: steps.classify.outputs.auto_fixable == 'true'
+        if: >-
+          steps.classify.outputs.auto_fixable == 'true' &&
+          steps.retry.outputs.reached_limit == 'false'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -156,6 +247,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: ${{ github.event.workflow_run.head_branch }}
 
+      # ── 9. Post diagnosis comment ────────────────────────────────
       - name: Post diagnosis comment
         if: steps.find-pr.outputs.number != '' && steps.find-pr.outputs.number != 'null'
         run: |
@@ -166,10 +258,20 @@ jobs:
           TEST="${{ steps.classify.outputs.test }}"
           BUILD="${{ steps.classify.outputs.build }}"
           DEP="${{ steps.classify.outputs.dep }}"
+          SNAP="${{ steps.classify.outputs.snapshot }}"
           ANNS="${{ steps.annotations.outputs.count }}"
           FIXED="${{ steps.auto-fix.outputs.fixed }}"
+          IS_FLAKY="${{ steps.flaky.outputs.is_flaky }}"
+          REACHED="${{ steps.retry.outputs.reached_limit }}"
+          COUNT="${{ steps.retry.outputs.comment_count }}"
 
-          BODY="## 🤖 CI Diagnosis — \`$PRIMARY\` issues
+          # Severity badge
+          BADGE="⚠️"
+          if [ "$PRIMARY" = "lint" ] || [ "$PRIMARY" = "snapshot" ]; then BADGE="🔧"; fi
+          if [ "$IS_FLAKY" = "true" ]; then BADGE="🔄"; fi
+          if [ "$PRIMARY" = "type" ] || [ "$PRIMARY" = "build" ] || [ "$PRIMARY" = "test" ]; then BADGE="⛔"; fi
+
+          BODY="## $BADGE CI Diagnosis — \`$PRIMARY\` issues
 
           | Category | Hits |
           |----------|------|
@@ -178,17 +280,31 @@ jobs:
           | Test Failures | $TEST |
           | Build Errors | $BUILD |
           | Dependencies | $DEP |
+          | Snapshot/Visual | $SNAP |
           | Annotations | $ANNS |
           "
 
-          if [ "$FIXED" = "true" ]; then
+          # Diagnosis guidance
+          if [ "$IS_FLAKY" = "true" ]; then
+            BODY="$BODY
+
+          🔄 **Flaky test detected** — re-run the failed job. If it persists, the test needs investigation."
+          elif [ "$FIXED" = "true" ]; then
             BODY="$BODY
 
           ✅ **Auto-fixed**: Formatting issues pushed. CI will re-run."
-          elif [ "${{ steps.classify.outputs.auto_fixable }}" = "true" ]; then
+          elif [ "${{ steps.classify.outputs.auto_fixable }}" = "true" ] && [ "$REACHED" = "false" ]; then
             BODY="$BODY
 
           🔧 **Auto-fixable locally**: Run \`npm run format\` and push."
+          elif [ "$REACHED" = "true" ]; then
+            BODY="$BODY
+
+          ⏳ **Auto-fix limit reached** ($COUNT attempts). Manual fix required."
+          elif [ "$PRIMARY" = "snapshot" ]; then
+            BODY="$BODY
+
+          📸 **Snapshot/visual diff** — update snapshots with \`npm test -- --update\` or review visual changes."
           elif [ "$PRIMARY" = "type" ] || [ "$PRIMARY" = "build" ] || [ "$PRIMARY" = "test" ]; then
             BODY="$BODY
 
@@ -199,12 +315,24 @@ jobs:
           ⚠️ **Review needed** — check the failing CI jobs for details."
           fi
 
-          # Add top annotations
-          if [ "$ANNS" -gt 0 ]; then
+          # Add top annotations (fixed: proper echo before jq pipe)
+          ANN_LINES="${{ steps.annotations.outputs.lines }}"
+          if [ -n "$ANN_LINES" ]; then
             BODY="$BODY
 
           **Top annotations:**
-          ${{ steps.annotations.outputs.annotations }}" | jq -r '.[:5][] | "- `\(.path):\(.start_line)`: \(.message)"' 2>/dev/null >> /dev/null || true
+          $ANN_LINES"
+          fi
+
+          # Add failed job details from summaries
+          SUMMARIES="${{ steps.summaries.outputs.summaries }}"
+          if [ -n "$SUMMARIES" ]; then
+            BODY="$BODY
+
+          **Failed jobs:**
+          \`\`\`
+          $(echo "$SUMMARIES" | tail -30)
+          \`\`\`"
           fi
 
           BODY="$BODY
