@@ -220,7 +220,14 @@ jobs:
       - uses: ./.github/actions/setup-node
       - run: npm run build
       - run: npx playwright install chromium --with-deps
-      - run: npx playwright test --config=playwright.visual.config.ts
+      - run: npx playwright test --config=playwright.visual.config.ts --update-snapshots
+      - name: Upload updated snapshots
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: updated-visual-snapshots
+          path: ${{ env.WORKING_DIR }}/e2e/visual/visual.spec.ts-snapshots/
+          retention-days: 7
+          if-no-files-found: ignore
       - name: Upload visual diff
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a

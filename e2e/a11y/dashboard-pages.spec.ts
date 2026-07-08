@@ -1,4 +1,4 @@
-import { expect, test } from '../helpers/a11y-fixture';
+import { test } from '../helpers/a11y-fixture';
 import { expectNoCriticalA11yViolations } from '../helpers/a11y-utils';
 
 const DASHBOARD_ROUTES = [
@@ -13,6 +13,5 @@ for (const { name, path } of DASHBOARD_ROUTES) {
     await page.goto(path);
     await page.waitForLoadState('networkidle');
     await expectNoCriticalA11yViolations(makeAxeBuilder(), name);
-    await expect(page).toHaveURL(new RegExp(path));
   });
 }

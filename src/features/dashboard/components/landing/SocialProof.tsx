@@ -150,7 +150,7 @@ export const SocialProof = () => {
             className="marquee mt-6 list-none"
             aria-label="Partner organizations"
           >
-            <div className="marquee-track [&]:contents">
+            <div className="marquee-track" style={{ display: 'contents' }}>
               {row.map((p, i) => (
                 <li
                   key={`${p.code}-${i}`}
