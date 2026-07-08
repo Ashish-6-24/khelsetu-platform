@@ -1,0 +1,145 @@
+name: Auto-Fix CI Failures
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-fix:
+    name: AI Auto-Fix
+    runs-on: ubuntu-latest
+    if: >-
+      github.event.workflow_run.conclusion == 'failure' &&
+      github.event.workflow_run.event == 'pull_request'
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+          fetch-depth: 0
+
+      - name: Get PR details
+        id: pr
+        run: |
+          PR_NUMBER=$(gh pr list --repo ${{ github.repository }} --head ${{ github.event.workflow_run.head_branch }} --json number --jq '.[0].number')
+          echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "branch=${{ github.event.workflow_run.head_branch }}" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get failing job logs
+        id: logs
+        run: |
+          RUN_ID=${{ github.event.workflow_run.id }}
+          LOGS=$(gh run view $RUN_ID --repo ${{ github.repository }} --log-failed 2>&1 | head -500)
+          echo "logs<<EOF" >> $GITHUB_OUTPUT
+          echo "$LOGS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get PR diff
+        id: diff
+        run: |
+          DIFF=$(git diff origin/${{ github.event.workflow_run.base_branch }}...${{ github.event.workflow_run.head_branch }} 2>&1 | head -2000)
+          echo "diff<<EOF" >> $GITHUB_OUTPUT
+          echo "$DIFF" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Fix with AI
+        id: fix
+        run: |
+          # Read repo rules
+          RULES=""
+          if [ -f "AGENTS.md" ]; then RULES=$(cat AGENTS.md | head -100); fi
+
+          # Create fix prompt
+          cat > /tmp/fix-prompt.md << 'PROMPT_EOF'
+          You are a CI auto-fixer for a React/TypeScript project.
+
+          ## Failing CI Logs
+          ${{ steps.logs.outputs.logs }}
+
+          ## Current Diff
+          ${{ steps.diff.outputs.diff }}
+
+          ## Repo Rules
+          ${{ env.RULES }}
+
+          ## Task
+          Analyze the failing CI logs and fix the issues. Common fixes:
+          - Lint errors: Fix code style issues
+          - Type errors: Fix TypeScript type issues
+          - Test failures: Fix test assertions or mocks
+          - Build errors: Fix import paths or missing dependencies
+
+          ## Output
+          Output ONLY the file changes in this format:
+          FILE: <path>
+          CONTENT:
+          <new file content>
+          END
+
+          Multiple files can be output. Be minimal - fix only what's broken.
+          PROMPT_EOF
+
+          # Use NVIDIA NIM API to get fix
+          RESPONSE=$(curl -s https://integrate.api.nvidia.com/v1/chat/completions \
+            -H "Authorization: Bearer ${{ secrets.NVIDIA_NIM_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "model": "glm-5.2",
+              "messages": [{"role": "user", "content": "'"$(cat /tmp/fix-prompt.md | jq -Rs .)"'"}],
+              "max_tokens": 4096
+            }' | jq -r '.choices[0].message.content')
+
+          echo "response<<EOF" >> $GITHUB_OUTPUT
+          echo "$RESPONSE" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Apply fixes
+        run: |
+          RESPONSE="${{ steps.fix.outputs.response }}"
+
+          # Parse FILE: ... CONTENT: ... END blocks
+          echo "$RESPONSE" | grep -A 1000 "^FILE:" | while read -r line; do
+            if [[ "$line" == FILE:* ]]; then
+              FILE_PATH=$(echo "$line" | sed 's/^FILE: //')
+              mkdir -p "$(dirname "$FILE_PATH")"
+              CONTENT=""
+              READING=false
+            elif [[ "$line" == "CONTENT:" ]]; then
+              READING=true
+            elif [[ "$line" == "END" ]]; then
+              READING=false
+              echo "$CONTENT" > "$FILE_PATH"
+            elif [[ "$READING" == "true" ]]; then
+              CONTENT+="$line"$'\n'
+            fi
+          done
+
+          # Commit and push
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "fix: Auto-fix CI failures [skip ci]"
+            git push origin ${{ github.event.workflow_run.head_branch }}
+          fi
+
+      - name: Comment on PR
+        if: always()
+        run: |
+          PR_NUMBER=${{ steps.pr.outputs.number }}
+          if [ -n "$PR_NUMBER" ]; then
+            gh pr comment $PR_NUMBER --repo ${{ github.repository }} \
+              --body "🤖 **Auto-Fix Applied**\n\nI've analyzed the CI failure and pushed a fix. CI will re-run automatically.\n\nIf the fix doesn't resolve the issue, please fix manually and push."
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
