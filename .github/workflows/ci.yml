@@ -13,21 +13,35 @@ concurrency:
 
 env:
   NODE_VERSION: '22'
-  WORKING_DIR: .
-  # Heavy tier runs on pushes to protected branches, or on PRs explicitly
-  # labeled for it. This is what keeps every WIP commit fast.
-  RUN_HEAVY_TIER: ${{ github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'run-full-suite') }}
+  RUN_HEAVY: >-
+    ${{
+      github.event_name == 'push' ||
+      contains(github.event.pull_request.labels.*.name, 'run-full-suite')
+    }}
 
-defaults:
-  run:
-    working-directory: .
+# ─────────────────────────────────────────────────────────────────
+#  Pipeline Architecture
+#
+#  Stage 1 ─ Lint & Format     (parallel, ~30s)
+#  Stage 2 ─ Type Check        (parallel, ~30s)
+#  Stage 3 ─ Build             (after stages 1-2, ~60s)
+#  Stage 4 ─ Unit Tests        (after stage 3, parallel shards, ~60s)
+#  Stage 5 ─ Integration Tests (after stage 4, heavy tier only)
+#       ├─ E2E (chromium, 2 shards)
+#       ├─ Smoke Tests
+#       ├─ Accessibility Audit
+#       └─ Lighthouse Performance
+#  Final  ─ Pipeline Gate      (evaluates all stages)
+# ─────────────────────────────────────────────────────────────────
 
 jobs:
-  # ═══════════════════════════════════════════════
-  #  FAST TIER — every push, every PR. Target: <3 min.
-  # ═══════════════════════════════════════════════
+  # ╔══════════════════════════════════════════════════════════════╗
+  # ║  STAGE 1 — Lint & Format                                   ║
+  # ║  Fast feedback on code style. Runs in parallel.             ║
+  # ╚══════════════════════════════════════════════════════════════╝
+
   lint:
-    name: 'Quality · Lint'
+    name: '1 · Lint'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -37,7 +51,7 @@ jobs:
       - run: npm run lint
 
   format:
-    name: 'Quality · Format'
+    name: '1 · Format'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -46,8 +60,13 @@ jobs:
       - uses: ./.github/actions/setup-node
       - run: npm run format:check
 
+  # ╔══════════════════════════════════════════════════════════════╗
+  # ║  STAGE 2 — Type Check & Architecture                       ║
+  # ║  Static analysis, runs in parallel.                         ║
+  # ╚══════════════════════════════════════════════════════════════╝
+
   typecheck:
-    name: 'Quality · Type Check'
+    name: '2 · Type Check'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -57,7 +76,7 @@ jobs:
       - run: npm run typecheck
 
   circular:
-    name: 'Quality · Circular Deps'
+    name: '2 · Circular Deps'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -67,21 +86,21 @@ jobs:
       - run: npm run circular
 
   structure:
-    name: 'Quality · Structure'
+    name: '2 · Structure'
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
-      - name: Check for duplicate/stale directories
-        run: bash scripts/check-duplicates.sh
+      - run: bash scripts/check-duplicates.sh
 
-  # Note: secret scanning (formerly gitleaks here) is now native GitHub
-  # secret scanning + push protection — a repo setting, not a job.
-  # See BRANCH_PROTECTION.md / MIGRATION_GUIDE.md Step 4.
+  # ╔══════════════════════════════════════════════════════════════╗
+  # ║  STAGE 3 — Build                                            ║
+  # ║  Compiles, bundles, checks sizes. Runs after lint/type.     ║
+  # ╚══════════════════════════════════════════════════════════════╝
 
   build:
-    name: 'Build'
+    name: '3 · Build'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -91,15 +110,19 @@ jobs:
       - uses: ./.github/actions/setup-node
       - run: npm run build
       - run: npx size-limit
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: build-output
-          path: ${{ env.WORKING_DIR }}/dist/
+          path: dist/
           retention-days: 3
 
-  unit-test:
-    name: 'Unit · Shard ${{ matrix.shard }}/2'
+  # ╔══════════════════════════════════════════════════════════════╗
+  # ║  STAGE 4 — Unit Tests                                       ║
+  # ║  Parallel shards + coverage. Depends on build.              ║
+  # ╚══════════════════════════════════════════════════════════════╝
+
+  unit:
+    name: '4 · Unit ${{ matrix.shard }}/2'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -112,17 +135,16 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - uses: ./.github/actions/setup-node
       - run: npx vitest run --shard=${{ matrix.shard }}/2
-      - name: Upload test results
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: unit-results-shard-${{ matrix.shard }}
-          path: ${{ env.WORKING_DIR }}/test-results/
+          name: unit-results-${{ matrix.shard }}
+          path: test-results/
           retention-days: 3
           if-no-files-found: ignore
 
   coverage:
-    name: 'Unit · Coverage'
+    name: '4 · Coverage'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -132,17 +154,19 @@ jobs:
       - uses: ./.github/actions/setup-node
       - run: npm run test:coverage
 
-  # ═══════════════════════════════════════════════
-  #  HEAVY TIER — only on push to protected branches,
-  #  or PRs labeled "run-full-suite". Not on every commit.
-  # ═══════════════════════════════════════════════
+  # ╔══════════════════════════════════════════════════════════════╗
+  # ║  STAGE 5 — Integration Tests                                ║
+  # ║  Heavy tier. Only on merge or "run-full-suite" label.       ║
+  # ║  All jobs run in parallel after unit tests pass.            ║
+  # ╚══════════════════════════════════════════════════════════════╝
+
   e2e:
-    name: 'E2E · Shard ${{ matrix.shard }}/2'
+    name: '5 · E2E ${{ matrix.shard }}/2'
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    needs: [unit-test]
-    if: env.RUN_HEAVY_TIER == 'true'
+    needs: [unit]
+    if: env.RUN_HEAVY == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -153,22 +177,21 @@ jobs:
       - run: npm run build
       - run: npx playwright install chromium --with-deps
       - run: npx playwright test --project=chromium --shard=${{ matrix.shard }}/2
-      - name: Upload E2E report
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: e2e-report-shard-${{ matrix.shard }}
-          path: ${{ env.WORKING_DIR }}/playwright-report/
+          name: e2e-report-${{ matrix.shard }}
+          path: playwright-report/
           retention-days: 14
           if-no-files-found: ignore
 
   smoke:
-    name: 'E2E · Smoke'
+    name: '5 · Smoke'
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    needs: [unit-test]
-    if: env.RUN_HEAVY_TIER == 'true'
+    needs: [unit]
+    if: env.RUN_HEAVY == 'true'
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - uses: ./.github/actions/setup-node
@@ -177,40 +200,33 @@ jobs:
       - run: npx playwright test --project=smoke
 
   a11y:
-    name: 'E2E · Accessibility'
+    name: '5 · Accessibility'
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    needs: [unit-test]
-    if: env.RUN_HEAVY_TIER == 'true'
+    needs: [unit]
+    if: env.RUN_HEAVY == 'true'
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - uses: ./.github/actions/setup-node
       - run: npm run build
       - run: npx playwright install chromium --with-deps
       - run: npx playwright test --project=a11y-public
-      - name: Upload a11y report
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: a11y-report
-          path: ${{ env.WORKING_DIR }}/playwright-report/
+          path: playwright-report/
           retention-days: 14
           if-no-files-found: ignore
 
-  # visual regression — intentionally disabled.
-  # The previous job ran with --update-snapshots on every CI invocation,
-  # which regenerates the baseline every run and can never fail. Re-enable
-  # only with committed baseline snapshots (no --update-snapshots flag).
-  # See AUDIT_REPORT.md §2.3 and MIGRATION_GUIDE.md Step 7.
-
   lighthouse:
-    name: 'Performance · Lighthouse'
+    name: '5 · Lighthouse'
     runs-on: ubuntu-latest
     permissions:
       contents: read
     needs: [build]
-    if: env.RUN_HEAVY_TIER == 'true'
+    if: env.RUN_HEAVY == 'true'
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
@@ -219,23 +235,22 @@ jobs:
       - run: npm run build
       - run: npx @lhci/cli autorun --config=lighthouserc.json
       - run: npx @lhci/cli autorun --config=lighthouserc.desktop.json
-      - name: Upload Lighthouse report
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: lighthouse-report
-          path: ${{ env.WORKING_DIR }}/.lighthouseci/
+          path: .lighthouseci/
           retention-days: 14
           if-no-files-found: ignore
 
-  # ═══════════════════════════════════════════════
-  #  STATUS GATE — needs ALL jobs that ran this time.
-  #  Heavy-tier jobs are skipped (not failed) when
-  #  RUN_HEAVY_TIER is false, so this still passes on
-  #  ordinary commits without waiting on them.
-  # ═══════════════════════════════════════════════
+  # ╔══════════════════════════════════════════════════════════════╗
+  # ║  PIPELINE GATE                                              ║
+  # ║  Single status check for branch protection.                 ║
+  # ║  Skipped jobs (heavy tier off) don't block.                 ║
+  # ╚══════════════════════════════════════════════════════════════╝
+
   ci-status:
-    name: 'CI Status'
+    name: 'Pipeline Gate'
     if: always()
     runs-on: ubuntu-latest
     permissions:
@@ -248,7 +263,7 @@ jobs:
         circular,
         structure,
         build,
-        unit-test,
+        unit,
         coverage,
         e2e,
         smoke,
@@ -256,34 +271,48 @@ jobs:
         lighthouse,
       ]
     steps:
-      - name: Evaluate pipeline status
+      - name: Evaluate pipeline
         run: |
-          echo "Pipeline results:"
-          echo "  lint:        ${{ needs.lint.result }}"
-          echo "  format:      ${{ needs.format.result }}"
-          echo "  typecheck:   ${{ needs.typecheck.result }}"
-          echo "  circular:    ${{ needs.circular.result }}"
-          echo "  structure:   ${{ needs.structure.result }}"
-          echo "  build:       ${{ needs.build.result }}"
-          echo "  unit-test:   ${{ needs.unit-test.result }}"
-          echo "  coverage:    ${{ needs.coverage.result }}"
-          echo "  e2e:         ${{ needs.e2e.result }} (skipped = fast-tier commit, not a failure)"
-          echo "  smoke:       ${{ needs.smoke.result }}"
-          echo "  a11y:        ${{ needs.a11y.result }}"
-          echo "  lighthouse:  ${{ needs.lighthouse.result }}"
+          echo "────────────────────────────────────────"
+          echo "  Pipeline Results"
+          echo "────────────────────────────────────────"
+          echo "  Stage 1  Lint:         ${{ needs.lint.result }}"
+          echo "  Stage 1  Format:       ${{ needs.format.result }}"
+          echo "  Stage 2  TypeCheck:    ${{ needs.typecheck.result }}"
+          echo "  Stage 2  Circular:     ${{ needs.circular.result }}"
+          echo "  Stage 2  Structure:    ${{ needs.structure.result }}"
+          echo "  Stage 3  Build:        ${{ needs.build.result }}"
+          echo "  Stage 4  Unit:         ${{ needs.unit.result }}"
+          echo "  Stage 4  Coverage:     ${{ needs.coverage.result }}"
+          echo "  Stage 5  E2E:          ${{ needs.e2e.result }}"
+          echo "  Stage 5  Smoke:        ${{ needs.smoke.result }}"
+          echo "  Stage 5  A11y:         ${{ needs.a11y.result }}"
+          echo "  Stage 5  Lighthouse:   ${{ needs.lighthouse.result }}"
+          echo "────────────────────────────────────────"
 
-          if [[ "${{ needs.lint.result }}" == "failure" ]] || \
-             [[ "${{ needs.format.result }}" == "failure" ]] || \
-             [[ "${{ needs.typecheck.result }}" == "failure" ]] || \
-             [[ "${{ needs.circular.result }}" == "failure" ]] || \
-             [[ "${{ needs.structure.result }}" == "failure" ]] || \
-             [[ "${{ needs.build.result }}" == "failure" ]] || \
-             [[ "${{ needs.unit-test.result }}" == "failure" ]] || \
-             [[ "${{ needs.e2e.result }}" == "failure" ]] || \
-             [[ "${{ needs.smoke.result }}" == "failure" ]] || \
-             [[ "${{ needs.a11y.result }}" == "failure" ]]; then
-            echo "CI pipeline FAILED"
+          FAILED=false
+          for job in lint format typecheck circular structure build unit; do
+            result="${{ needs[job].result }}"
+            if [[ "$result" == "failure" ]]; then
+              echo "FAIL: $job"
+              FAILED=true
+            fi
+          done
+
+          # Heavy tier only blocks if it actually ran
+          for job in e2e smoke a11y; do
+            result="${{ needs[job].result }}"
+            if [[ "$result" == "failure" ]]; then
+              echo "FAIL: $job"
+              FAILED=true
+            fi
+          done
+
+          if [[ "$FAILED" == "true" ]]; then
+            echo ""
+            echo "Pipeline FAILED"
             exit 1
           fi
 
-          echo "CI pipeline PASSED"
+          echo ""
+          echo "Pipeline PASSED"
