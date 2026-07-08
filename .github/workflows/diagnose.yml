@@ -25,12 +25,21 @@ jobs:
         run: |
           PR_JSON=$(gh pr list --repo "$REPO" \
             --head "$BRANCH" \
-            --json number,author,state,labels \
+            --json number,author,state,labels,headRepository \
             --jq '.[0]')
           PR_NUMBER=$(echo "$PR_JSON" | jq -r '.number')
           PR_AUTHOR=$(echo "$PR_JSON" | jq -r '.author.login')
+          HEAD_REPO=$(echo "$PR_JSON" | jq -r '.headRepository.fullName // empty')
           echo "number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
           echo "author=$PR_AUTHOR" >> "$GITHUB_OUTPUT"
+          echo "head_repo=$HEAD_REPO" >> "$GITHUB_OUTPUT"
+
+          # Fork safety: skip auto-fix for fork PRs
+          IS_FORK="false"
+          if [ -n "$HEAD_REPO" ] && [ "$HEAD_REPO" != "$REPO" ]; then
+            IS_FORK="true"
+          fi
+          echo "is_fork=$IS_FORK" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
@@ -50,7 +59,6 @@ jobs:
               id: .id,
               steps: [.steps[] | select(.conclusion == "failure") | .name]
             }]')
-
           echo "jobs<<EOF" >> "$GITHUB_OUTPUT"
           echo "$FAILED_JOBS" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
@@ -74,7 +82,6 @@ jobs:
           RUN_ID="${{ github.event.workflow_run.id }}"
           REPO="${{ github.repository }}"
 
-          # Get all failed job IDs
           JOB_IDS=$(gh api "repos/$REPO/actions/runs/$RUN_ID/jobs" \
             --jq '.jobs[] | select(.conclusion == "failure") | .id')
 
@@ -82,7 +89,6 @@ jobs:
           for JOB_ID in $JOB_IDS; do
             JOB_NAME=$(gh api "repos/$REPO/actions/runs/$RUN_ID/jobs" \
               --jq ".jobs[] | select(.id == $JOB_ID) | .name")
-            # Job summary is in the output of gh run view --job
             JOB_LOG=$(gh run view --job="$JOB_ID" --repo "$REPO" 2>&1 | tail -20)
             SUMMARIES+="=== $JOB_NAME ==="$'\n'
             SUMMARIES+="$JOB_LOG"$'\n\n'
@@ -122,7 +128,6 @@ jobs:
           COUNT=$(echo "$FILTERED" | jq 'length')
           echo "count=$COUNT" >> "$GITHUB_OUTPUT"
 
-          # Build annotation summary lines for comment
           ANN_LINES=$(echo "$FILTERED" | jq -r '.[:5][] | "- `\(.path):\(.start_line)`: \(.message)"' 2>/dev/null || echo "")
           echo "lines<<EOF" >> "$GITHUB_OUTPUT"
           echo "$ANN_LINES" >> "$GITHUB_OUTPUT"
@@ -130,18 +135,66 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # ── 5. Check for flaky tests ─────────────────────────────────
+      # ── 5. Fetch SonarCloud findings ─────────────────────────────
+      - name: Fetch SonarCloud findings
+        id: sonar
+        run: |
+          REPO="${{ github.repository }}"
+          HEAD_SHA="${{ steps.data.outputs.sha }}"
+          PROJECT_KEY=$(echo "$REPO" | tr '/' '_' | tr '[:upper:]' '[:lower:]')
+
+          # Try SonarCloud API for recent issues
+          SONAR_ISSUES="[]"
+          if [ -n "${{ secrets.SONARQUBECLOUD }}" ]; then
+            SONAR_ISSUES=$(curl -s \
+              -u "${{ secrets.SONARQUBECLOUD }}:" \
+              "https://sonarcloud.io/api/issues/search?componentKeys=$PROJECT_KEY&statuses=OPEN&ps=10" \
+              --connect-timeout 5 --max-time 10 2>/dev/null | \
+              jq '[.issues[] | {key: .key, message: .message, component: .component, line: .line, severity: .severity}]' 2>/dev/null || echo "[]")
+          fi
+
+          echo "issues<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$SONAR_ISSUES" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+          COUNT=$(echo "$SONAR_ISSUES" | jq 'length')
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── 6. Collect coverage output ───────────────────────────────
+      - name: Collect coverage data
+        id: coverage
+        run: |
+          REPO="${{ github.repository }}"
+          RUN_ID="${{ github.event.workflow_run.id }}"
+
+          # Download coverage artifact if available
+          COVERAGE_PCT="N/A"
+          if gh api "repos/$REPO/actions/runs/$RUN_ID/artifacts" --jq '.artifacts[] | select(.name == "coverage") | .id' 2>/dev/null | read -r ARTIFACT_ID; then
+            gh api "repos/$REPO/actions/runs/$RUN_ID/artifacts/$ARTIFACT_ID/zip" > /tmp/coverage.zip 2>/dev/null
+            if [ -f /tmp/coverage.zip ]; then
+              unzip -q -o /tmp/coverage.zip -d /tmp/coverage 2>/dev/null || true
+              # Try to extract coverage percentage from common formats
+              if [ -f /tmp/coverage/coverage-summary.json ]; then
+                COVERAGE_PCT=$(jq '.total.lines.pct' /tmp/coverage/coverage-summary.json 2>/dev/null || echo "N/A")
+              elif [ -f /tmp/coverage/lcov.info ]; then
+                COVERAGE_PCT=$(grep -m1 "LF:" /tmp/coverage/lcov.info 2>/dev/null | cut -d: -f2 || echo "N/A")
+              fi
+            fi
+          fi
+
+          echo "percentage=$COVERAGE_PCT" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── 7. Check for flaky tests ─────────────────────────────────
       - name: Detect flaky tests
         id: flaky
         run: |
           LOGS="${{ steps.data.outputs.logs }}"
-
-          # Common flaky indicators in test output
           FLAKY_PATTERNS="ECONNREFUSED|ETIMEDOUT|race condition|flaky|retry|intermittent|timing|socket hang up|heap out of memory"
-
           FLAKY_HITS=$(echo "$LOGS" | grep -ciE "$FLAKY_PATTERNS" | cat)
-
-          # Check if same test failed in both shards (consistent) vs one shard (flaky)
           SHARD_FAILS=$(echo "$LOGS" | grep -cE "shard.*fail|Unit.*1/2.*fail|Unit.*2/2.*fail" | cat)
 
           IS_FLAKY="false"
@@ -152,13 +205,11 @@ jobs:
           echo "is_flaky=$IS_FLAKY" >> "$GITHUB_OUTPUT"
           echo "flaky_hits=$FLAKY_HITS" >> "$GITHUB_OUTPUT"
 
-      # ── 6. Classify issues ───────────────────────────────────────
+      # ── 8. Classify issues ───────────────────────────────────────
       - name: Classify issues
         id: classify
         run: |
           LOGS="${{ steps.data.outputs.logs }}"
-
-          # Count occurrences — pipe through cat so grep always exits 0
           LINT=$(echo "$LOGS" | grep -ciE "eslint|prettier|format" | cat)
           TYPE=$(echo "$LOGS" | grep -ciE "typescript|TS[0-9]+" | cat)
           TEST=$(echo "$LOGS" | grep -ciE "vitest|test.*fail|expect.*received" | cat)
@@ -166,7 +217,6 @@ jobs:
           DEP=$(echo "$LOGS" | grep -ciE "npm.*ERR|dependency|module.*not.*found" | cat)
           SNAPSHOT=$(echo "$LOGS" | grep -ciE "snapshot|visual.*diff|screenshot|mismatch" | cat)
 
-          # Determine primary issue type
           PRIMARY="unknown"
           MAX=0
           for pair in "lint:$LINT" "type:$TYPE" "test:$TEST" "build:$BUILD" "dependency:$DEP" "snapshot:$SNAPSHOT"; do
@@ -179,14 +229,14 @@ jobs:
           done
           if [ "$LINT" -gt 0 ] && [ "$PRIMARY" = "unknown" ]; then PRIMARY="lint"; fi
 
-          # Override: if flaky detected and primary is test, mark as flaky
           if [ "${{ steps.flaky.outputs.is_flaky }}" = "true" ] && [ "$PRIMARY" = "test" ]; then
             PRIMARY="flaky"
           fi
 
-          # Auto-fixable only if purely lint/format
+          # Auto-fixable only if purely lint/format AND not a fork
           AUTO_FIXABLE="false"
-          if [ "$PRIMARY" = "lint" ] && [ "$TYPE" -eq 0 ] && [ "$TEST" -eq 0 ] && [ "$BUILD" -eq 0 ]; then
+          IS_FORK="${{ steps.find-pr.outputs.is_fork }}"
+          if [ "$PRIMARY" = "lint" ] && [ "$TYPE" -eq 0 ] && [ "$TEST" -eq 0 ] && [ "$BUILD" -eq 0 ] && [ "$IS_FORK" = "false" ]; then
             AUTO_FIXABLE="true"
           fi
 
@@ -199,14 +249,13 @@ jobs:
           echo "dep=$DEP" >> "$GITHUB_OUTPUT"
           echo "snapshot=$SNAPSHOT" >> "$GITHUB_OUTPUT"
 
-      # ── 7. Check retry limit ─────────────────────────────────────
+      # ── 9. Check retry limit ─────────────────────────────────────
       - name: Check retry limit
         id: retry
         run: |
           REPO="${{ github.repository }}"
           PR="${{ steps.find-pr.outputs.number }}"
 
-          # Count recent diagnose comments on this PR (max 2 auto-fixes)
           DIAGNOSE_COMMENTS=$(gh api "repos/$REPO/issues/$PR/comments" \
             --jq '[.[] | select(.body | contains("CI Diagnosis")) | select(.user.login == "github-actions[bot]")] | length')
 
@@ -220,19 +269,81 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # ── 8. Auto-fix lint issues (with retry limit) ───────────────
+      # ── 10. Write structured JSON diagnosis ──────────────────────
+      - name: Write diagnosis JSON
+        run: |
+          DIAGNOSIS=$(jq -n \
+            --arg workflow "${{ github.event.workflow_run.name }}" \
+            --arg conclusion "${{ github.event.workflow_run.conclusion }}" \
+            --arg branch "${{ github.event.workflow_run.head_branch }}" \
+            --arg sha "${{ steps.data.outputs.sha }}" \
+            --arg primary "${{ steps.classify.outputs.primary }}" \
+            --arg auto_fixable "${{ steps.classify.outputs.auto_fixable }}" \
+            --argjson failed_jobs '${{ steps.data.outputs.jobs }}' \
+            --argjson annotations '${{ steps.annotations.outputs.annotations }}' \
+            --argjson sonar_issues '${{ steps.sonar.outputs.issues }}' \
+            --arg coverage "${{ steps.coverage.outputs.percentage }}" \
+            --arg is_flaky "${{ steps.flaky.outputs.is_flaky }}" \
+            --arg is_fork "${{ steps.find-pr.outputs.is_fork }}" \
+            --arg pr_number "${{ steps.find-pr.outputs.number }}" \
+            --arg retry_reached "${{ steps.retry.outputs.reached_limit }}" \
+            '{
+              timestamp: (now | todate),
+              workflow: $workflow,
+              conclusion: $conclusion,
+              branch: $branch,
+              sha: $sha,
+              pr_number: ($pr_number | tonumber),
+              is_fork: ($is_fork == "true"),
+              primary_issue: $primary,
+              auto_fixable: ($auto_fixable == "true"),
+              retry_reached: ($retry_reached == "true"),
+              counts: {
+                lint: ($lint // 0),
+                type: ($type // 0),
+                test: ($test // 0),
+                build: ($build // 0),
+                dependency: ($dep // 0),
+                snapshot: ($snapshot // 0)
+              },
+              failed_jobs: $failed_jobs,
+              annotations: $annotations,
+              sonar_findings: $sonar_issues,
+              coverage: $coverage,
+              is_flaky: ($is_flaky == "true")
+            }')
+
+          echo "$DIAGNOSIS" > /tmp/diagnosis.json
+          echo "diagnosis<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$DIAGNOSIS" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+          # Upload as artifact for auto-fix and verify workflows
+          cat > /tmp/diagnosis-upload.sh << 'UPLOAD_EOF'
+          #!/bin/bash
+          echo '${{ steps.data.outputs.jobs }}' > /tmp/jobs.json
+          UPLOAD_EOF
+
+      - name: Upload diagnosis artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: diagnosis-${{ github.event.workflow_run.id }}
+          path: /tmp/diagnosis.json
+          retention-days: 1
+
+      # ── 11. Auto-fix lint issues (skip for forks) ────────────────
       - name: Auto-fix lint issues
         id: auto-fix
         if: >-
           steps.classify.outputs.auto_fixable == 'true' &&
-          steps.retry.outputs.reached_limit == 'false'
+          steps.retry.outputs.reached_limit == 'false' &&
+          steps.find-pr.outputs.is_fork == 'false'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           git checkout -b "$BRANCH" 2>/dev/null || git checkout "$BRANCH"
 
-          # Install deps and run formatter
           npm ci --ignore-scripts 2>/dev/null
           npx prettier --write . 2>/dev/null || npm run format 2>/dev/null || true
 
@@ -248,7 +359,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: ${{ github.event.workflow_run.head_branch }}
 
-      # ── 9. Post diagnosis comment ────────────────────────────────
+      # ── 12. Post diagnosis comment ───────────────────────────────
       - name: Post diagnosis comment
         if: steps.find-pr.outputs.number != '' && steps.find-pr.outputs.number != 'null'
         run: |
@@ -261,12 +372,14 @@ jobs:
           DEP="${{ steps.classify.outputs.dep }}"
           SNAP="${{ steps.classify.outputs.snapshot }}"
           ANNS="${{ steps.annotations.outputs.count }}"
+          SONAR="${{ steps.sonar.outputs.count }}"
+          COV="${{ steps.coverage.outputs.percentage }}"
           FIXED="${{ steps.auto-fix.outputs.fixed }}"
           IS_FLAKY="${{ steps.flaky.outputs.is_flaky }}"
           REACHED="${{ steps.retry.outputs.reached_limit }}"
           COUNT="${{ steps.retry.outputs.comment_count }}"
+          IS_FORK="${{ steps.find-pr.outputs.is_fork }}"
 
-          # Severity badge
           BADGE="⚠️"
           if [ "$PRIMARY" = "lint" ] || [ "$PRIMARY" = "snapshot" ]; then BADGE="🔧"; fi
           if [ "$IS_FLAKY" = "true" ]; then BADGE="🔄"; fi
@@ -283,9 +396,11 @@ jobs:
           | Dependencies | $DEP |
           | Snapshot/Visual | $SNAP |
           | Annotations | $ANNS |
+          | Sonar Findings | $SONAR |
+          | Coverage | ${COV}% |
+
           "
 
-          # Diagnosis guidance
           if [ "$IS_FLAKY" = "true" ]; then
             BODY="$BODY
 
@@ -294,6 +409,10 @@ jobs:
             BODY="$BODY
 
           ✅ **Auto-fixed**: Formatting issues pushed. CI will re-run."
+          elif [ "$IS_FORK" = "true" ]; then
+            BODY="$BODY
+
+          🔒 **Fork PR** — auto-fix disabled for security. Please fix locally and push."
           elif [ "${{ steps.classify.outputs.auto_fixable }}" = "true" ] && [ "$REACHED" = "false" ]; then
             BODY="$BODY
 
@@ -316,7 +435,6 @@ jobs:
           ⚠️ **Review needed** — check the failing CI jobs for details."
           fi
 
-          # Add top annotations (fixed: proper echo before jq pipe)
           ANN_LINES="${{ steps.annotations.outputs.lines }}"
           if [ -n "$ANN_LINES" ]; then
             BODY="$BODY
@@ -325,7 +443,6 @@ jobs:
           $ANN_LINES"
           fi
 
-          # Add failed job details from summaries
           SUMMARIES="${{ steps.summaries.outputs.summaries }}"
           if [ -n "$SUMMARIES" ]; then
             BODY="$BODY

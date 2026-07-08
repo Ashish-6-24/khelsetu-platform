@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "retry_limits": {
+    "lint": { "max_attempts": 3, "action": "auto_fix" },
+    "format": { "max_attempts": 3, "action": "auto_fix" },
+    "type": { "max_attempts": 0, "action": "manual" },
+    "test": { "max_attempts": 1, "action": "rerun" },
+    "build": { "max_attempts": 0, "action": "manual" },
+    "dependency": { "max_attempts": 1, "action": "rerun" },
+    "snapshot": { "max_attempts": 1, "action": "rerun" },
+    "flaky": { "max_attempts": 2, "action": "rerun" },
+    "unknown": { "max_attempts": 0, "action": "manual" }
+  },
+  "global_limits": {
+    "max_total_fixes_per_pr": 3,
+    "cooldown_between_fixes_seconds": 60,
+    "stop_after_consecutive_failures": 2
+  },
+  "safe_categories": ["lint", "format"],
+  "unsafe_categories": [
+    "auth",
+    "payments",
+    "persistence",
+    "migrations",
+    "permissions",
+    "security-sensitive"
+  ]
+}

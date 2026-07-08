@@ -1,0 +1,58 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-07-08",
+  "provider": "nvidia-nim",
+  "base_url": "https://integrate.api.nvidia.com/v1",
+  "active_model": "glm-5.2",
+  "fallback_chain": [
+    "glm-5.2",
+    "minimax-m3",
+    "step-3.7-flash",
+    "kimi-k2.6",
+    "mistral-medium-3.5-128b",
+    "deepseek-v4-flash",
+    "deepseek-v4-pro"
+  ],
+  "selection_policy": {
+    "primary": "glm-5.2",
+    "fallback_trigger": "429|500|502|503|504|timeout",
+    "cooldown_seconds": 300,
+    "max_retries_per_model": 2
+  },
+  "refresh_schedule": {
+    "catalog_check": "daily",
+    "endpoint": "/v1/models",
+    "ranking_review": "monthly",
+    "telemetry_signals": [
+      "patch_cleanliness",
+      "verification_pass_rate",
+      "latency_p95_ms",
+      "retry_frequency"
+    ]
+  },
+  "models": {
+    "glm-5.2": { "tier": 1, "context_window": 128000, "status": "active" },
+    "minimax-m3": { "tier": 1, "context_window": 128000, "status": "active" },
+    "step-3.7-flash": {
+      "tier": 2,
+      "context_window": 64000,
+      "status": "active"
+    },
+    "kimi-k2.6": { "tier": 2, "context_window": 128000, "status": "active" },
+    "mistral-medium-3.5-128b": {
+      "tier": 2,
+      "context_window": 128000,
+      "status": "active"
+    },
+    "deepseek-v4-flash": {
+      "tier": 3,
+      "context_window": 64000,
+      "status": "active"
+    },
+    "deepseek-v4-pro": {
+      "tier": 3,
+      "context_window": 128000,
+      "status": "active"
+    }
+  }
+}

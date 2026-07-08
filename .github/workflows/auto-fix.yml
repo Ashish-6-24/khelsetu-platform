@@ -1,0 +1,181 @@
+name: Auto-Fix CI Issues
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to fix'
+        required: true
+      diagnosis_run_id:
+        description: 'Run ID of the diagnosis that produced the JSON artifact'
+        required: true
+  workflow_run:
+    workflows: ['Diagnose CI Failures']
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-fix:
+    name: Auto-Fix Safe Issues
+    runs-on: ubuntu-latest
+    if: >-
+      (github.event_name == 'workflow_dispatch') ||
+      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request')
+    steps:
+      # ── 1. Determine PR and diagnosis source ─────────────────────
+      - name: Determine context
+        id: context
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "pr_number=${{ inputs.pr_number }}" >> "$GITHUB_OUTPUT"
+            echo "run_id=${{ inputs.diagnosis_run_id }}" >> "$GITHUB_OUTPUT"
+          else
+            # Find the PR from the diagnosis workflow run
+            RUN_ID="${{ github.event.workflow_run.id }}"
+            ARTIFACT_NAME=$(gh api "repos/$REPO/actions/runs/$RUN_ID/artifacts" \
+              --jq '.artifacts[] | select(.name | startswith("diagnosis-")) | .name' 2>/dev/null || echo "")
+            PR_NUM=$(echo "$ARTIFACT_NAME" | grep -oP 'diagnosis-\K[0-9]+' || echo "")
+            echo "pr_number=$PR_NUM" >> "$GITHUB_OUTPUT"
+            echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+
+      # ── 2. Checkout PR branch ────────────────────────────────────
+      - name: Checkout PR branch
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          fetch-depth: 0
+
+      - name: Get PR branch
+        id: pr-branch
+        run: |
+          PR="${{ steps.context.outputs.pr_number }}"
+          BRANCH=$(gh pr view "$PR" --repo "$REPO" --json headRefName --jq '.headRefName')
+          HEAD_REPO=$(gh pr view "$PR" --repo "$REPO" --json headRepository --jq '.headRepository.fullName // empty')
+
+          # Fork safety: skip fix for fork PRs
+          IS_FORK="false"
+          if [ -n "$HEAD_REPO" ] && [ "$HEAD_REPO" != "$REPO" ]; then
+            IS_FORK="true"
+          fi
+
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+          echo "is_fork=$IS_FORK" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+
+      - name: Checkout PR branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin "${{ steps.pr-branch.outputs.branch }}"
+          git checkout "${{ steps.pr-branch.outputs.branch }}"
+
+      # ── 3. Download diagnosis artifact ───────────────────────────
+      - name: Download diagnosis
+        uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e
+        with:
+          name: diagnosis-${{ steps.context.outputs.run_id }}
+          path: /tmp
+
+      # ── 4. Validate fix eligibility ──────────────────────────────
+      - name: Validate fix eligibility
+        id: validate
+        run: |
+          # Fork safety
+          if [ "${{ steps.pr-branch.outputs.is_fork }}" = "true" ]; then
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            echo "reason=Fork PR — auto-fix disabled for security" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Check retry limit
+          RETRY_REACHED=$(jq -r '.retry_reached // false' /tmp/diagnosis.json)
+          if [ "$RETRY_REACHED" = "true" ]; then
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            echo "reason=Retry limit reached" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Check if auto-fixable
+          AUTO_FIXABLE=$(jq -r '.auto_fixable // false' /tmp/diagnosis.json)
+          if [ "$AUTO_FIXABLE" != "true" ]; then
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            echo "reason=Issue not auto-fixable (primary: $(jq -r '.primary_issue' /tmp/diagnosis.json))" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Check if fixer workflow is allowed for this branch
+          BRANCH="${{ steps.pr-branch.outputs.branch }}"
+          ALLOWED=$(jq -r --arg b "$BRANCH" '.branch_restrictions.auto_fix_branches[] | select(. == $b)' config/workflow-policy.json 2>/dev/null || echo "master")
+          if [ -z "$ALLOWED" ]; then
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            echo "reason=Branch '$BRANCH' not in allowed fix branches" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "eligible=true" >> "$GITHUB_OUTPUT"
+          echo "reason=Eligible" >> "$GITHUB_OUTPUT"
+
+      # ── 5. Apply safe fixes ──────────────────────────────────────
+      - name: Apply safe fixes
+        id: fix
+        if: steps.validate.outputs.eligible == 'true'
+        run: |
+          npm ci --ignore-scripts 2>/dev/null
+
+          # Run prettier for formatting fixes
+          npx prettier --write . 2>/dev/null || npm run format 2>/dev/null || true
+
+          # Run eslint --fix for lint fixes (safe auto-fixes only)
+          npx eslint --fix . 2>/dev/null || true
+
+          if ! git diff --quiet; then
+            git add -A
+            git commit -m "fix: auto-fix formatting and lint issues [skip ci]"
+            git push origin HEAD
+            echo "fixed=true" >> "$GITHUB_OUTPUT"
+            echo "files_changed=$(git diff --stat HEAD~1 --name-only | wc -l)" >> "$GITHUB_OUTPUT"
+          else
+            echo "fixed=false" >> "$GITHUB_OUTPUT"
+            echo "files_changed=0" >> "$GITHUB_OUTPUT"
+          fi
+
+      # ── 6. Post fix comment ──────────────────────────────────────
+      - name: Post fix comment
+        if: steps.context.outputs.pr_number != ''
+        run: |
+          PR="${{ steps.context.outputs.pr_number }}"
+          FIXED="${{ steps.fix.outputs.fixed }}"
+          FILES="${{ steps.fix.outputs.files_changed }}"
+          ELIGIBLE="${{ steps.validate.outputs.eligible }}"
+          REASON="${{ steps.validate.outputs.reason }}"
+
+          if [ "$ELIGIBLE" = "false" ]; then
+            BODY="🔒 **Auto-fix skipped**: $REASON"
+          elif [ "$FIXED" = "true" ]; then
+            BODY="✅ **Auto-fix applied**: $FILES file(s) updated. CI will re-run."
+          else
+            BODY="ℹ️ **Auto-fix**: No formatting/lint changes needed."
+          fi
+
+          gh pr comment "$PR" --repo "${{ github.repository }}" --body "$BODY"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── 7. Upload fix results for verify ─────────────────────────
+      - name: Upload fix results
+        if: steps.validate.outputs.eligible == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: fix-results-${{ steps.context.outputs.pr_number }}
+          path: |
+            /tmp/diagnosis.json
+            /tmp/fix-results.json
+          retention-days: 1

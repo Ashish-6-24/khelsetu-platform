@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "fork_pr_rules": {
+    "read_workflows": ["ci.yml", "pr-review.yml", "security.yml"],
+    "write_workflows": ["auto-fix.yml", "verify.yml", "merge.yml"],
+    "restrict_write_to_forks": true,
+    "restrict_nim_key_to_forks": true,
+    "allowed_fork_actors": ["dependabot[bot]", "renovate[bot]"]
+  },
+  "secret_exposure": {
+    "never_expose": ["NVIDIA_NIM_API_KEY", "SONARQUBECLOUD", "DEPS_BOT_TOKEN"],
+    "allowed_in_forks": ["GITHUB_TOKEN"],
+    "mask_in_logs": true
+  },
+  "branch_restrictions": {
+    "auto_fix_branches": ["master", "main", "develop"],
+    "merge_branches": ["master", "main"],
+    "force_merge_allowed": false
+  },
+  "commit_signing": {
+    "require_signed_commits": false,
+    "bot_identity": "github-actions[bot]"
+  }
+}
