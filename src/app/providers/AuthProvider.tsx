@@ -40,3 +40,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 };
 // triggered
 // test
+export const test = {
+  name: 'test',
+  value: 42,
+};
