@@ -14,6 +14,9 @@ concurrency:
 env:
   NODE_VERSION: '22'
   WORKING_DIR: .
+  # Heavy tier runs on pushes to protected branches, or on PRs explicitly
+  # labeled for it. This is what keeps every WIP commit fast.
+  RUN_HEAVY_TIER: ${{ github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'run-full-suite') }}
 
 defaults:
   run:
@@ -21,7 +24,7 @@ defaults:
 
 jobs:
   # ═══════════════════════════════════════════════
-  #  STAGE 1 — Code Quality (parallel, no deps)
+  #  FAST TIER — every push, every PR. Target: <3 min.
   # ═══════════════════════════════════════════════
   lint:
     name: 'Quality · Lint'
@@ -53,24 +56,8 @@ jobs:
       - uses: ./.github/actions/setup-node
       - run: npm run typecheck
 
-  # ═══════════════════════════════════════════════
-  #  STAGE 2 — Security & Structure (parallel, no deps)
-  # ═══════════════════════════════════════════════
-  secrets:
-    name: 'Security · Secrets'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
-        with:
-          fetch-depth: 0
-      - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   circular:
-    name: 'Security · Circular Deps'
+    name: 'Quality · Circular Deps'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -80,7 +67,7 @@ jobs:
       - run: npm run circular
 
   structure:
-    name: 'Security · Structure'
+    name: 'Quality · Structure'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -89,15 +76,16 @@ jobs:
       - name: Check for duplicate/stale directories
         run: bash scripts/check-duplicates.sh
 
-  # ═══════════════════════════════════════════════
-  #  STAGE 3 — Build (needs: quality + security)
-  # ═══════════════════════════════════════════════
+  # Note: secret scanning (formerly gitleaks here) is now native GitHub
+  # secret scanning + push protection — a repo setting, not a job.
+  # See BRANCH_PROTECTION.md / MIGRATION_GUIDE.md Step 4.
+
   build:
     name: 'Build'
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    needs: [lint, format, typecheck, secrets, circular, structure]
+    needs: [lint, format, typecheck, circular, structure]
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - uses: ./.github/actions/setup-node
@@ -110,9 +98,6 @@ jobs:
           path: ${{ env.WORKING_DIR }}/dist/
           retention-days: 3
 
-  # ═══════════════════════════════════════════════
-  #  STAGE 4 — Unit Tests (needs: build)
-  # ═══════════════════════════════════════════════
   unit-test:
     name: 'Unit · Shard ${{ matrix.shard }}/2'
     runs-on: ubuntu-latest
@@ -148,7 +133,8 @@ jobs:
       - run: npm run test:coverage
 
   # ═══════════════════════════════════════════════
-  #  STAGE 5 — Integration Tests (needs: unit)
+  #  HEAVY TIER — only on push to protected branches,
+  #  or PRs labeled "run-full-suite". Not on every commit.
   # ═══════════════════════════════════════════════
   e2e:
     name: 'E2E · Shard ${{ matrix.shard }}/2'
@@ -156,6 +142,7 @@ jobs:
     permissions:
       contents: read
     needs: [unit-test]
+    if: env.RUN_HEAVY_TIER == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -181,6 +168,7 @@ jobs:
     permissions:
       contents: read
     needs: [unit-test]
+    if: env.RUN_HEAVY_TIER == 'true'
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - uses: ./.github/actions/setup-node
@@ -194,6 +182,7 @@ jobs:
     permissions:
       contents: read
     needs: [unit-test]
+    if: env.RUN_HEAVY_TIER == 'true'
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - uses: ./.github/actions/setup-node
@@ -209,45 +198,19 @@ jobs:
           retention-days: 14
           if-no-files-found: ignore
 
-  visual:
-    name: 'E2E · Visual Regression'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    needs: [unit-test]
-    steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
-      - uses: ./.github/actions/setup-node
-      - run: npm run build
-      - run: npx playwright install chromium --with-deps
-      - run: npx playwright test --config=playwright.visual.config.ts --update-snapshots
-      - name: Upload updated snapshots
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: updated-visual-snapshots
-          path: ${{ env.WORKING_DIR }}/e2e/visual/visual.spec.ts-snapshots/
-          retention-days: 7
-          if-no-files-found: ignore
-      - name: Upload visual diff
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: visual-regression-report
-          path: |
-            ${{ env.WORKING_DIR }}/test-results/
-            ${{ env.WORKING_DIR }}/e2e/visual/snapshots/
-          retention-days: 14
-          if-no-files-found: ignore
+  # visual regression — intentionally disabled.
+  # The previous job ran with --update-snapshots on every CI invocation,
+  # which regenerates the baseline every run and can never fail. Re-enable
+  # only with committed baseline snapshots (no --update-snapshots flag).
+  # See AUDIT_REPORT.md §2.3 and MIGRATION_GUIDE.md Step 7.
 
-  # ═══════════════════════════════════════════════
-  #  STAGE 6 — Performance (needs: build)
-  # ═══════════════════════════════════════════════
   lighthouse:
     name: 'Performance · Lighthouse'
     runs-on: ubuntu-latest
     permissions:
       contents: read
     needs: [build]
+    if: env.RUN_HEAVY_TIER == 'true'
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
@@ -266,7 +229,10 @@ jobs:
           if-no-files-found: ignore
 
   # ═══════════════════════════════════════════════
-  #  STAGE 7 — CI Status Gate (needs: ALL)
+  #  STATUS GATE — needs ALL jobs that ran this time.
+  #  Heavy-tier jobs are skipped (not failed) when
+  #  RUN_HEAVY_TIER is false, so this still passes on
+  #  ordinary commits without waiting on them.
   # ═══════════════════════════════════════════════
   ci-status:
     name: 'CI Status'
@@ -279,7 +245,6 @@ jobs:
         lint,
         format,
         typecheck,
-        secrets,
         circular,
         structure,
         build,
@@ -288,7 +253,6 @@ jobs:
         e2e,
         smoke,
         a11y,
-        visual,
         lighthouse,
       ]
     steps:
@@ -298,29 +262,28 @@ jobs:
           echo "  lint:        ${{ needs.lint.result }}"
           echo "  format:      ${{ needs.format.result }}"
           echo "  typecheck:   ${{ needs.typecheck.result }}"
-          echo "  secrets:     ${{ needs.secrets.result }}"
           echo "  circular:    ${{ needs.circular.result }}"
           echo "  structure:   ${{ needs.structure.result }}"
           echo "  build:       ${{ needs.build.result }}"
           echo "  unit-test:   ${{ needs.unit-test.result }}"
           echo "  coverage:    ${{ needs.coverage.result }}"
-          echo "  e2e:         ${{ needs.e2e.result }}"
+          echo "  e2e:         ${{ needs.e2e.result }} (skipped = fast-tier commit, not a failure)"
           echo "  smoke:       ${{ needs.smoke.result }}"
           echo "  a11y:        ${{ needs.a11y.result }}"
-          echo "  visual:      ${{ needs.visual.result }}"
           echo "  lighthouse:  ${{ needs.lighthouse.result }}"
 
-          # Fail if any critical job failed (e2e/smoke/a11y/visual need dev server, non-blocking until CI backend is added)
           if [[ "${{ needs.lint.result }}" == "failure" ]] || \
              [[ "${{ needs.format.result }}" == "failure" ]] || \
              [[ "${{ needs.typecheck.result }}" == "failure" ]] || \
-             [[ "${{ needs.secrets.result }}" == "failure" ]] || \
              [[ "${{ needs.circular.result }}" == "failure" ]] || \
              [[ "${{ needs.structure.result }}" == "failure" ]] || \
              [[ "${{ needs.build.result }}" == "failure" ]] || \
-             [[ "${{ needs.unit-test.result }}" == "failure" ]]; then
-            echo "❌ CI pipeline FAILED"
+             [[ "${{ needs.unit-test.result }}" == "failure" ]] || \
+             [[ "${{ needs.e2e.result }}" == "failure" ]] || \
+             [[ "${{ needs.smoke.result }}" == "failure" ]] || \
+             [[ "${{ needs.a11y.result }}" == "failure" ]]; then
+            echo "CI pipeline FAILED"
             exit 1
           fi
 
-          echo "✅ CI pipeline PASSED"
+          echo "CI pipeline PASSED"
