@@ -16,14 +16,10 @@ jobs:
       github.event.pull_request.user.login == 'renovate[bot]'
     runs-on: ubuntu-latest
     steps:
-      - name: Approve PR
-        run: gh pr review --approve "$PR_URL"
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Merge PR instantly
-        run: gh pr merge --squash --admin "$PR_URL"
+      - name: Approve and merge PR
+        run: |
+          gh pr review --approve "$PR_URL"
+          gh pr merge --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.DEPS_BOT_TOKEN }}
