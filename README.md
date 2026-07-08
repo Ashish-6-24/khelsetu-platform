@@ -1,5 +1,9 @@
 # KhelSetu
 
+![CI](https://github.com/Ashish-6-24/khelsetu-platform/actions/workflows/ci.yml/badge.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6.svg)
+
 A production-grade sports tournament management platform built with React, TypeScript, and Vite.
 
 ## Features
@@ -47,6 +51,7 @@ npm run build
 ```
 src/
 ├── app/                  # Layouts, providers, router
+├── assets/               # Static images, icons, illustrations, videos
 ├── features/             # 26 feature modules (self-contained)
 │   ├── auth/             # Authentication, login, register
 │   ├── billing/          # Payment, subscriptions
@@ -72,6 +77,7 @@ src/
 │   ├── tournaments/      # Tournament CRUD
 │   ├── venues/           # Venue management
 │   └── websocket/        # Real-time connection
+├── mocks/                # MSW handlers, factories, browser/server setup
 ├── shared/               # Generic UI, hooks, utils, types
 │   ├── ui/               # Button, Modal, Input, Card, etc.
 │   ├── hooks/            # useDebounce, useMediaQuery, etc.
@@ -109,4 +115,4 @@ src/
 
 ## License
 
-Private
+MIT

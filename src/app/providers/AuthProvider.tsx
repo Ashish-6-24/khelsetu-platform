@@ -38,9 +38,3 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
-// triggered
-// test
-export const test = {
-  name: 'test',
-  value: 42,
-};

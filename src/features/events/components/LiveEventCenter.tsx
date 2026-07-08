@@ -50,14 +50,7 @@ export const LiveEventCenter = ({
       );
       setEvents((prev) => [...prev, newEvent]);
     },
-    [
-      matchId,
-      sport,
-      timer.currentMinute,
-      timer.currentSecond,
-      timer.phase,
-      selectedTeam,
-    ],
+    [matchId, sport, timer.currentMinute, timer.phase, selectedTeam],
   );
 
   const isMatchActive =
