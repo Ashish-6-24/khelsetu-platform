@@ -2,7 +2,7 @@ name: Diagnose CI Failures
 
 on:
   workflow_run:
-    workflows: ["CI"]
+    workflows: ['CI']
     types: [completed]
 
 permissions:
@@ -22,250 +22,196 @@ jobs:
         id: find-pr
         run: |
           PR_JSON=$(gh pr list --repo "$REPO" \
-            --head "${{ github.event.workflow_run.head_branch }}" \
+            --head "$BRANCH" \
             --json number,author,state \
             --jq '.[0]')
           PR_NUMBER=$(echo "$PR_JSON" | jq -r '.number')
           PR_AUTHOR=$(echo "$PR_JSON" | jq -r '.author.login')
           echo "number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
           echo "author=$PR_AUTHOR" >> "$GITHUB_OUTPUT"
-          echo "branch=${{ github.event.workflow_run.head_branch }}" >> "$GITHUB_OUTPUT"
-          echo "run_id=${{ github.event.workflow_run.id }}" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
+          BRANCH: ${{ github.event.workflow_run.head_branch }}
 
-      - name: Collect failed job data
-        id: jobs
+      - name: Collect failure data
+        id: data
         run: |
-          RUN_ID="${{ steps.find-pr.outputs.run_id }}"
+          RUN_ID="${{ github.event.workflow_run.id }}"
           REPO="${{ github.repository }}"
 
-          # Get all jobs from the workflow run
-          JOBS_JSON=$(gh api \
-            "repos/$REPO/actions/runs/$RUN_ID/jobs" \
-            --jq '.jobs[] | select(.conclusion == "failure") | {
+          # Get failed jobs with step details
+          FAILED_JOBS=$(gh api "repos/$REPO/actions/runs/$RUN_ID/jobs" \
+            --jq '[.jobs[] | select(.conclusion == "failure") | {
               name: .name,
-              id: .id,
-              steps: [.steps[] | select(.conclusion == "failure") | {
-                name: .name,
-                number: .number,
-                status: .conclusion
-              }]
-            }')
+              steps: [.steps[] | select(.conclusion == "failure") | .name]
+            }]')
 
           echo "jobs<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$JOBS_JSON" >> "$GITHUB_OUTPUT"
+          echo "$FAILED_JOBS" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
-          # Count failed jobs
-          FAILED_COUNT=$(echo "$JOBS_JSON" | jq -s 'length')
-          echo "failed_count=$FAILED_COUNT" >> "$GITHUB_OUTPUT"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Get failed log lines (last 100 lines of each failed job)
+          FAILED_LOGS=$(gh run view "$RUN_ID" --repo "$REPO" --log-failed 2>&1 | tail -100)
+          echo "logs<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$FAILED_LOGS" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
 
-      - name: Fetch failed step logs
-        id: logs
-        run: |
-          RUN_ID="${{ steps.find-pr.outputs.run_id }}"
-          REPO="${{ github.repository }}"
-
-          # Download full logs
-          LOG_URL=$(gh api \
-            "repos/$REPO/actions/runs/$RUN_ID/logs" \
-            --jq '.archive_url' 2>/dev/null || echo "")
-
-          if [ -n "$LOG_URL" ]; then
-            curl -sL "$LOG_URL" -o /tmp/run-logs.zip
-            unzip -q /tmp/run-logs.zip -d /tmp/run-logs 2>/dev/null || true
-
-            # Extract failed job logs (only failed steps)
-            FAILED_LOGS=""
-            for job_dir in /tmp/run-logs/*/; do
-              if [ -d "$job_dir" ]; then
-                job_name=$(basename "$job_dir")
-                for step_file in "$job_dir"*.txt; do
-                  if [ -f "$step_file" ]; then
-                    step_content=$(cat "$step_file")
-                    # Check if step contains errors
-                    if echo "$step_content" | grep -qiE "error|fail|fatal|panic|exception"; then
-                      FAILED_LOGS+="=== $job_name / $(basename "$step_file" .txt) ==="$'\n'
-                      FAILED_LOGS+="$(echo "$step_content" | tail -50)"$'\n\n'
-                    fi
-                  fi
-                done
-              fi
-            done
-
-            echo "logs<<EOF" >> "$GITHUB_OUTPUT"
-            echo "${FAILED_LOGS:0:8000}" >> "$GITHUB_OUTPUT"
-            echo "EOF" >> "$GITHUB_OUTPUT"
-          else
-            # Fallback: use gh run view
-            FAILED_LOGS=$(gh run view "$RUN_ID" --repo "$REPO" --log-failed 2>&1 | tail -200)
-            echo "logs<<EOF" >> "$GITHUB_OUTPUT"
-            echo "$FAILED_LOGS" >> "$GITHUB_OUTPUT"
-            echo "EOF" >> "$GITHUB_OUTPUT"
-          fi
+          # Get head SHA for annotations
+          HEAD_SHA=$(gh api "repos/$REPO/actions/runs/$RUN_ID" --jq '.head_sha')
+          echo "sha=$HEAD_SHA" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Fetch annotations
         id: annotations
         run: |
-          RUN_ID="${{ steps.find-pr.outputs.run_id }}"
           REPO="${{ github.repository }}"
+          HEAD_SHA="${{ steps.data.outputs.sha }}"
 
-          # Get check runs
-          HEAD_SHA=$(gh api "repos/$REPO/actions/runs/$RUN_ID" --jq '.head_sha')
-          CHECK_RUNS=$(gh api \
-            "repos/$REPO/commits/$HEAD_SHA/check-runs" \
-            --jq '.check_runs[] | select(.conclusion == "failure") | {
-              name: .name,
-              annotations_url: .annotations_url
-            }')
+          ANNS=$(gh api "repos/$REPO/commits/$HEAD_SHA/check-runs" \
+            --jq '[.check_runs[]
+              | select(.conclusion == "failure")
+              | .annotations_url] | .[:5] | .[]' 2>/dev/null)
 
-          # Fetch annotations for each failed check run (max 50 per request)
-          ALL_ANNOTATIONS="[]"
-          while IFS= read -r check; do
-            CHECK_NAME=$(echo "$check" | jq -r '.name')
-            ANNOTATIONS_URL=$(echo "$check" | jq -r '.annotations_url')
-
-            if [ "$ANNOTATIONS_URL" != "null" ] && [ -n "$ANNOTATIONS_URL" ]; then
-              ANNS=$(gh api "$ANNOTATIONS_URL" --jq '.' 2>/dev/null || echo "[]")
-              ALL_ANNOTATIONS=$(echo "$ALL_ANNOTATIONS" "$ANNS" | jq -s 'add')
+          ALL_ANN="[]"
+          for URL in $ANNS; do
+            if [ -n "$URL" ]; then
+              BATCH=$(gh api "$URL" --jq '.' 2>/dev/null || echo "[]")
+              ALL_ANN=$(echo "$ALL_ANN" "$BATCH" | jq -s 'add')
             fi
-          done <<< "$CHECK_RUNS"
+          done
 
-          # Keep only errors and warnings, limit to 30 most relevant
-          FILTERED=$(echo "$ALL_ANNOTATIONS" | jq '[.[] | select(.annotation_level == "failure" or .annotation_level == "warning")] | .[:30]')
-
+          FILTERED=$(echo "$ALL_ANN" | jq '[.[] | select(.annotation_level == "failure" or .annotation_level == "warning")] | .[:20]')
           echo "annotations<<EOF" >> "$GITHUB_OUTPUT"
           echo "$FILTERED" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
-          ANN_COUNT=$(echo "$FILTERED" | jq 'length')
-          echo "annotation_count=$ANN_COUNT" >> "$GITHUB_OUTPUT"
+          COUNT=$(echo "$FILTERED" | jq 'length')
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Classify issues
         id: classify
         run: |
-          LOGS="${{ steps.logs.outputs.logs }}"
-          ANNOTATIONS="${{ steps.annotations.outputs.annotations }}"
+          LOGS="${{ steps.data.outputs.logs }}"
 
-          # Classify by issue type
-          LINT_ERRORS=$(echo "$LOGS" | grep -ciE "eslint|prettier|format" || echo "0")
-          TYPE_ERRORS=$(echo "$LOGS" | grep -ciE "typescript|TS[0-9]+" || echo "0")
-          TEST_FAILURES=$(echo "$LOGS" | grep -ciE "vitest|test.*fail|expect.*received" || echo "0")
-          BUILD_ERRORS=$(echo "$LOGS" | grep -ciE "build|bundle|rollup|vite.*error" || echo "0")
-          DEP_ERRORS=$(echo "$LOGS" | grep -ciE "npm.*ERR|dependency|module.*not.*found" || echo "0")
+          # Count occurrences — pipe through cat so grep always exits 0
+          LINT=$(echo "$LOGS" | grep -ciE "eslint|prettier|format" | cat)
+          TYPE=$(echo "$LOGS" | grep -ciE "typescript|TS[0-9]+" | cat)
+          TEST=$(echo "$LOGS" | grep -ciE "vitest|test.*fail|expect.*received" | cat)
+          BUILD=$(echo "$LOGS" | grep -ciE "build|bundle|rollup|vite.*error" | cat)
+          DEP=$(echo "$LOGS" | grep -ciE "npm.*ERR|dependency|module.*not.*found" | cat)
 
           # Determine primary issue type
           PRIMARY="unknown"
-          MAX=$LINT_ERRORS
-          if [ "$TYPE_ERRORS" -gt "$MAX" ]; then PRIMARY="type"; MAX=$TYPE_ERRORS; fi
-          if [ "$TEST_FAILURES" -gt "$MAX" ]; then PRIMARY="test"; MAX=$TEST_FAILURES; fi
-          if [ "$BUILD_ERRORS" -gt "$MAX" ]; then PRIMARY="build"; MAX=$BUILD_ERRORS; fi
-          if [ "$DEP_ERRORS" -gt "$MAX" ]; then PRIMARY="dependency"; MAX=$DEP_ERRORS; fi
-          if [ "$LINT_ERRORS" -gt 0 ]; then PRIMARY="lint"; fi
+          MAX=0
+          for pair in "lint:$LINT" "type:$TYPE" "test:$TEST" "build:$BUILD" "dependency:$DEP"; do
+            KEY="${pair%%:*}"
+            VAL="${pair##*:}"
+            if [ "$VAL" -gt "$MAX" ]; then
+              PRIMARY="$KEY"
+              MAX="$VAL"
+            fi
+          done
+          if [ "$LINT" -gt 0 ] && [ "$PRIMARY" = "unknown" ]; then PRIMARY="lint"; fi
 
-          # Determine if auto-fixable (only lint/format issues)
+          # Auto-fixable only if purely lint/format
           AUTO_FIXABLE="false"
-          if [ "$PRIMARY" = "lint" ] && [ "$TYPE_ERRORS" -eq 0 ] && [ "$TEST_FAILURES" -eq 0 ] && [ "$BUILD_ERRORS" -eq 0 ]; then
+          if [ "$PRIMARY" = "lint" ] && [ "$TYPE" -eq 0 ] && [ "$TEST" -eq 0 ] && [ "$BUILD" -eq 0 ]; then
             AUTO_FIXABLE="true"
           fi
 
           echo "primary=$PRIMARY" >> "$GITHUB_OUTPUT"
           echo "auto_fixable=$AUTO_FIXABLE" >> "$GITHUB_OUTPUT"
-          echo "lint_errors=$LINT_ERRORS" >> "$GITHUB_OUTPUT"
-          echo "type_errors=$TYPE_ERRORS" >> "$GITHUB_OUTPUT"
-          echo "test_failures=$TEST_FAILURES" >> "$GITHUB_OUTPUT"
-          echo "build_errors=$BUILD_ERRORS" >> "$GITHUB_OUTPUT"
-          echo "dep_errors=$DEP_ERRORS" >> "$GITHUB_OUTPUT"
+          echo "lint=$LINT" >> "$GITHUB_OUTPUT"
+          echo "type=$TYPE" >> "$GITHUB_OUTPUT"
+          echo "test=$TEST" >> "$GITHUB_OUTPUT"
+          echo "build=$BUILD" >> "$GITHUB_OUTPUT"
+          echo "dep=$DEP" >> "$GITHUB_OUTPUT"
 
       - name: Auto-fix lint issues
+        id: auto-fix
         if: steps.classify.outputs.auto_fixable == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Checkout the PR branch
-          git checkout -b "${{ steps.find-pr.outputs.branch }}" 2>/dev/null || \
-            git checkout "${{ steps.find-pr.outputs.branch }}"
+          git checkout -b "$BRANCH" 2>/dev/null || git checkout "$BRANCH"
 
-          # Run formatter
-          npm run format 2>/dev/null || true
+          # Install deps and run formatter
+          npm ci --ignore-scripts 2>/dev/null
+          npx prettier --write . 2>/dev/null || npm run format 2>/dev/null || true
 
-          # Check if there are changes
           if ! git diff --quiet; then
             git add -A
-            git commit -m "style: Auto-fix formatting issues [skip ci]"
-            git push origin "${{ steps.find-pr.outputs.branch }}"
+            git commit -m "style: auto-fix formatting [skip ci]"
+            git push origin "$BRANCH"
             echo "fixed=true" >> "$GITHUB_OUTPUT"
           else
             echo "fixed=false" >> "$GITHUB_OUTPUT"
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.event.workflow_run.head_branch }}
 
-      - name: Generate diagnosis report
-        id: report
+      - name: Post diagnosis comment
+        if: steps.find-pr.outputs.number != '' && steps.find-pr.outputs.number != 'null'
         run: |
+          PR="${{ steps.find-pr.outputs.number }}"
           PRIMARY="${{ steps.classify.outputs.primary }}"
-          AUTO_FIXABLE="${{ steps.classify.outputs.auto_fixable }}"
-          FIXED="${{ steps.auto-fix-lint.outputs.fixed }}"
-          LINT="${{ steps.classify.outputs.lint_errors }}"
-          TYPE="${{ steps.classify.outputs.type_errors }}"
-          TEST="${{ steps.classify.outputs.test_failures }}"
-          BUILD="${{ steps.classify.outputs.build_errors }}"
-          DEP="${{ steps.classify.outputs.dep_errors }}"
-          ANNS="${{ steps.annotations.outputs.annotation_count }}"
+          LINT="${{ steps.classify.outputs.lint }}"
+          TYPE="${{ steps.classify.outputs.type }}"
+          TEST="${{ steps.classify.outputs.test }}"
+          BUILD="${{ steps.classify.outputs.build }}"
+          DEP="${{ steps.classify.outputs.dep }}"
+          ANNS="${{ steps.annotations.outputs.count }}"
+          FIXED="${{ steps.auto-fix.outputs.fixed }}"
 
-          # Build severity-based report
-          SEVERITY="warning"
-          if [ "$TYPE" -gt 0 ] || [ "$BUILD" -gt 0 ] || [ "$TEST" -gt 0 ]; then
-            SEVERITY="blocker"
-          fi
+          BODY="## 🤖 CI Diagnosis — \`$PRIMARY\` issues
 
-          # Build the comment body
-          COMMENT="🤖 **CI Diagnosis** — \`${PRIMARY}\` issues detected\n\n"
-          COMMENT+="| Category | Count |\n|----------|-------|\n"
-          COMMENT+="| Lint/Format | $LINT |\n"
-          COMMENT+="| Type Errors | $TYPE |\n"
-          COMMENT+="| Test Failures | $TEST |\n"
-          COMMENT+="| Build Errors | $BUILD |\n"
-          COMMENT+="| Dependency Errors | $DEP |\n"
-          COMMENT+="| Annotations | $ANNS |\n\n"
+          | Category | Hits |
+          |----------|------|
+          | Lint/Format | $LINT |
+          | Type Errors | $TYPE |
+          | Test Failures | $TEST |
+          | Build Errors | $BUILD |
+          | Dependencies | $DEP |
+          | Annotations | $ANNS |
+          "
 
-          if [ "$AUTO_FIXABLE" = "true" ] && [ "$FIXED" = "true" ]; then
-            COMMENT+="✅ **Auto-fixed**: Formatting issues resolved. CI will re-run.\n"
-          elif [ "$AUTO_FIXABLE" = "true" ]; then
-            COMMENT+="🔧 **Auto-fixable**: Run \`npm run format\` locally.\n"
-          elif [ "$SEVERITY" = "blocker" ]; then
-            COMMENT+="⛔ **Manual fix required**: Type/test/build errors need human attention.\n"
+          if [ "$FIXED" = "true" ]; then
+            BODY="$BODY
+
+          ✅ **Auto-fixed**: Formatting issues pushed. CI will re-run."
+          elif [ "${{ steps.classify.outputs.auto_fixable }}" = "true" ]; then
+            BODY="$BODY
+
+          🔧 **Auto-fixable locally**: Run \`npm run format\` and push."
+          elif [ "$PRIMARY" = "type" ] || [ "$PRIMARY" = "build" ] || [ "$PRIMARY" = "test" ]; then
+            BODY="$BODY
+
+          ⛔ **Manual fix required** — type, test, or build errors need human attention."
           else
-            COMMENT+="⚠️ **Review needed**: Check the failing jobs for details.\n"
+            BODY="$BODY
+
+          ⚠️ **Review needed** — check the failing CI jobs for details."
           fi
 
-          # Add top annotations if any
+          # Add top annotations
           if [ "$ANNS" -gt 0 ]; then
-            COMMENT+="\n**Top annotations:**\n"
-            COMMENT+="$(echo '${{ steps.annotations.outputs.annotations }}' | jq -r '.[:5][] | "- `\(.path):\(.start_line)`: \(.message)"' 2>/dev/null || echo "- See check run annotations")\n"
+            BODY="$BODY
+
+          **Top annotations:**
+          ${{ steps.annotations.outputs.annotations }}" | jq -r '.[:5][] | "- `\(.path):\(.start_line)`: \(.message)"' 2>/dev/null >> /dev/null || true
           fi
 
-          COMMENT+="\n---\n*Diagnosed by [workflow](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ steps.find-pr.outputs.run_id }})*"
+          BODY="$BODY
 
-          echo "body<<EOF" >> "$GITHUB_OUTPUT"
-          echo -e "$COMMENT" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+          ---
+          *Diagnosed by [workflow](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }})*"
 
-      - name: Comment on PR
-        if: steps.find-pr.outputs.number != ''
-        run: |
-          gh pr comment "${{ steps.find-pr.outputs.number }}" \
-            --repo "${{ github.repository }}" \
-            --body "${{ steps.report.outputs.body }}"
+          gh pr comment "$PR" --repo "${{ github.repository }}" --body "$BODY"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
