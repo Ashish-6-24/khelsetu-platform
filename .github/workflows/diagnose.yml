@@ -205,7 +205,6 @@ jobs:
         run: |
           REPO="${{ github.repository }}"
           PR="${{ steps.find-pr.outputs.number }}"
-          BRANCH="${{ github.event.workflow_run.head_branch }}"
 
           # Count recent diagnose comments on this PR (max 2 auto-fixes)
           DIAGNOSE_COMMENTS=$(gh api "repos/$REPO/issues/$PR/comments" \
@@ -218,6 +217,8 @@ jobs:
 
           echo "reached_limit=$REACHED_LIMIT" >> "$GITHUB_OUTPUT"
           echo "comment_count=$DIAGNOSE_COMMENTS" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # ── 8. Auto-fix lint issues (with retry limit) ───────────────
       - name: Auto-fix lint issues
