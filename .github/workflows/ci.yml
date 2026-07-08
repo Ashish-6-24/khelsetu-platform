@@ -13,11 +13,6 @@ concurrency:
 
 env:
   NODE_VERSION: '22'
-  RUN_HEAVY: >-
-    ${{
-      github.event_name == 'push' ||
-      contains(github.event.pull_request.labels.*.name, 'run-full-suite')
-    }}
 
 # ─────────────────────────────────────────────────────────────────
 #  Pipeline Architecture
@@ -166,7 +161,7 @@ jobs:
     permissions:
       contents: read
     needs: [unit]
-    if: env.RUN_HEAVY == 'true'
+    if: github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'run-full-suite')
     strategy:
       fail-fast: false
       matrix:
@@ -191,7 +186,7 @@ jobs:
     permissions:
       contents: read
     needs: [unit]
-    if: env.RUN_HEAVY == 'true'
+    if: github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'run-full-suite')
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - uses: ./.github/actions/setup-node
@@ -205,7 +200,7 @@ jobs:
     permissions:
       contents: read
     needs: [unit]
-    if: env.RUN_HEAVY == 'true'
+    if: github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'run-full-suite')
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - uses: ./.github/actions/setup-node
@@ -226,7 +221,7 @@ jobs:
     permissions:
       contents: read
     needs: [build]
-    if: env.RUN_HEAVY == 'true'
+    if: github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'run-full-suite')
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
