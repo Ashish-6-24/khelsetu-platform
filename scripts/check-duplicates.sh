@@ -32,7 +32,7 @@ BLOCKED_FILES=(
 echo "=== Duplicate/Stale Directory Check ==="
 
 for dir in "${STALE_DIRS[@]}"; do
-  if [ -d "$SRC_DIR/$dir" ]; then
+  if [[ -d "$SRC_DIR/$dir" ]]; then
     echo "  FAIL: $SRC_DIR/$dir exists — this directory was moved during the folder restructure."
     echo "        Expected locations:"
     case "$dir" in
@@ -42,6 +42,7 @@ for dir in "${STALE_DIRS[@]}"; do
       types-domain) echo "        → src/shared/types/ or src/features/*/types/" ;;
       utils)      echo "          → src/shared/utils/ or src/features/*/utils/" ;;
       stories)    echo "          → colocated *.stories.tsx next to components" ;;
+      *)          echo "          → check project structure" ;;
     esac
     ERRORS=$((ERRORS + 1))
   else
@@ -52,7 +53,7 @@ done
 echo ""
 echo "=== Checking for stray component files in wrong locations ==="
 STRAY=$(find "$SRC_DIR" -maxdepth 1 \( -name "*.tsx" -o -name "*.ts" \) 2>/dev/null | grep -v "App.tsx\|main.tsx\|index.css\|vite-env.d.ts" || true)
-if [ -n "$STRAY" ]; then
+if [[ -n "$STRAY" ]]; then
   echo "  WARN: Stray files in src/ root (should be in app/, pages/, features/, or shared/):"
   echo "$STRAY" | while read f; do echo "    $f"; done
 fi
@@ -61,7 +62,7 @@ echo ""
 echo "=== Checking for blocked files ==="
 for pattern in "${BLOCKED_FILES[@]}"; do
   FOUND=$(find $ROOT_DIR -name "$pattern" -not -path "*/node_modules/*" -not -path "*/.git/*" 2>/dev/null || true)
-  if [ -n "$FOUND" ]; then
+  if [[ -n "$FOUND" ]]; then
     echo "  FAIL: Blocked file found: $pattern"
     echo "$FOUND" | while read f; do echo "    $f"; done
     ERRORS=$((ERRORS + 1))
@@ -69,7 +70,7 @@ for pattern in "${BLOCKED_FILES[@]}"; do
 done
 
 echo ""
-if [ $ERRORS -gt 0 ]; then
+if [[ $ERRORS -gt 0 ]]; then
   echo "FAILED: $ERRORS issue(s) found. Fix before committing."
   exit 1
 else

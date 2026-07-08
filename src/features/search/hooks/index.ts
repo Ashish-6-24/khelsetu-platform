@@ -120,9 +120,7 @@ export const useSearch = () => {
     const groups: Record<string, SearchResult[]> = {};
     results.forEach((result) => {
       const type = result.type;
-      if (!groups[type]) {
-        groups[type] = [];
-      }
+      groups[type] ??= [];
       groups[type].push(result);
     });
     return groups;

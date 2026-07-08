@@ -20,28 +20,16 @@ const getDateRange = (filter: string): { start: Date; end: Date } => {
 };
 
 describe('Analytics Date Range', () => {
-  it('should return 7 day range', () => {
-    const range = getDateRange('7d');
+  it.each([
+    ['7d', 7],
+    ['30d', 30],
+    ['90d', 90],
+  ] as const)('should return %s range (%i days)', (filter, expectedDays) => {
+    const range = getDateRange(filter);
     const diffDays = Math.round(
       (range.end.getTime() - range.start.getTime()) / (1000 * 60 * 60 * 24),
     );
-    expect(diffDays).toBe(7);
-  });
-
-  it('should return 30 day range', () => {
-    const range = getDateRange('30d');
-    const diffDays = Math.round(
-      (range.end.getTime() - range.start.getTime()) / (1000 * 60 * 60 * 24),
-    );
-    expect(diffDays).toBe(30);
-  });
-
-  it('should return 90 day range', () => {
-    const range = getDateRange('90d');
-    const diffDays = Math.round(
-      (range.end.getTime() - range.start.getTime()) / (1000 * 60 * 60 * 24),
-    );
-    expect(diffDays).toBe(90);
+    expect(diffDays).toBe(expectedDays);
   });
 
   it('should return all-time range for unknown filter', () => {

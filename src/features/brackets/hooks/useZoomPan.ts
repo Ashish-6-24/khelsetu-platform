@@ -88,7 +88,7 @@ export function useZoomPan(options?: UseZoomPanOptions): UseZoomPanReturn {
     const t1 = touches[1]!;
     const dx = t0.clientX - t1.clientX;
     const dy = t0.clientY - t1.clientY;
-    return Math.sqrt(dx * dx + dy * dy);
+    return Math.hypot(dx, dy);
   }, []);
 
   const onTouchStart = useCallback(

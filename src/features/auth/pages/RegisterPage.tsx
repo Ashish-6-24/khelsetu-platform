@@ -120,14 +120,14 @@ export const RegisterPage = () => {
             I agree to the{' '}
             <a
               className="font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400"
-              href="#"
+              href="/terms"
             >
               Terms
             </a>{' '}
             and{' '}
             <a
               className="font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400"
-              href="#"
+              href="/privacy"
             >
               Privacy Policy
             </a>

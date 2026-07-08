@@ -1,3 +1,4 @@
+import { secureRandom, secureRandomFloat } from '@shared/utils/crypto-random';
 import { incrementScore } from '@shared/utils/score-helpers';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -114,10 +115,9 @@ export const ScoreTicker = ({
           .filter((i) => i !== -1);
         if (liveIndices.length === 0) return prev;
 
-        const idx =
-          liveIndices[Math.floor(Math.random() * liveIndices.length)]!;
+        const idx = liveIndices[secureRandom(liveIndices.length)]!;
         const item = prev[idx]!;
-        const side: 'A' | 'B' = Math.random() < 0.5 ? 'A' : 'B';
+        const side: 'A' | 'B' = secureRandom(2) === 0 ? 'A' : 'B';
         const oldScore = side === 'A' ? item.scoreA : item.scoreB;
         const newScore = incrementScore(oldScore);
 
@@ -141,7 +141,7 @@ export const ScoreTicker = ({
 
     // Random interval between 4-8 seconds using setTimeout chain
     const scheduleNext = () => {
-      const delay = 4000 + Math.random() * 4000;
+      const delay = 4000 + secureRandomFloat() * 4000;
       intervalRef.current = setTimeout(() => {
         tick();
         scheduleNext();
@@ -166,7 +166,6 @@ export const ScoreTicker = ({
           className,
         ),
       )}
-      role="region"
       aria-live="off"
       aria-label="Live scores"
     >

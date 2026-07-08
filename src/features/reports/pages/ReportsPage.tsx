@@ -39,19 +39,21 @@ export const ReportsPage = () => {
         isGenerating={isGenerating}
       />
 
-      {isLoading ? (
+      {isLoading && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[1, 2].map((i) => (
             <Skeleton key={i} className="h-48 rounded-2xl" />
           ))}
         </div>
-      ) : reports.length === 0 ? (
+      )}
+      {!isLoading && reports.length === 0 && (
         <div className="text-center py-12">
           <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
             No reports generated yet. Click a report type above to generate one.
           </p>
         </div>
-      ) : (
+      )}
+      {!isLoading && reports.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {reports.map((report) => (
             <ReportCard
@@ -69,27 +71,32 @@ export const ReportsPage = () => {
           <h2 className="text-lg font-semibold text-[var(--text-primary)] dark:text-white">
             Export Jobs
           </h2>
-          {exportJobs.map((job) => (
-            <div
-              key={job.id}
-              className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]"
-            >
-              <span className="text-sm text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
-                {job.format.toUpperCase()} export
-              </span>
-              <span
-                className={`text-xs px-2 py-1 rounded-full ${
-                  job.status === 'completed'
-                    ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'
-                    : job.status === 'processing'
-                      ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
-                      : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300'
-                }`}
+          {exportJobs.map((job) => {
+            const statusStyles: Record<string, string> = {
+              completed:
+                'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
+              processing:
+                'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
+            };
+            const statusClass =
+              statusStyles[job.status] ??
+              'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300';
+            return (
+              <div
+                key={job.id}
+                className="flex items-center justify-between p-3 rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]"
               >
-                {job.status}
-              </span>
-            </div>
-          ))}
+                <span className="text-sm text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
+                  {job.format.toUpperCase()} export
+                </span>
+                <span
+                  className={`text-xs px-2 py-1 rounded-full ${statusClass}`}
+                >
+                  {job.status}
+                </span>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

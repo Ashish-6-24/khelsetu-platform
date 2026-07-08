@@ -6,14 +6,14 @@ import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
 
 interface StatsCardProps {
-  title: string;
-  value: string | number;
-  change?: { value: number; isPositive: boolean };
-  icon?: React.ReactNode;
-  iconBg?: string;
-  iconColor?: string;
-  accent?: 'blue' | 'green' | 'amber' | 'red' | 'violet' | 'rose';
-  delay?: number;
+  readonly title: string;
+  readonly value: string | number;
+  readonly change?: { value: number; isPositive: boolean };
+  readonly icon?: React.ReactNode;
+  readonly iconBg?: string;
+  readonly iconColor?: string;
+  readonly accent?: 'blue' | 'green' | 'amber' | 'red' | 'violet' | 'rose';
+  readonly delay?: number;
 }
 
 const accentMap: Record<NonNullable<StatsCardProps['accent']>, string> = {
@@ -36,8 +36,8 @@ function AnimatedNumber({
   value: number | string;
   reducedMotion: boolean;
 }) {
-  const isNumeric = typeof value === 'number' || !isNaN(Number(value));
-  const n = typeof value === 'number' ? value : parseFloat(value) || 0;
+  const isNumeric = typeof value === 'number' || !Number.isNaN(Number(value));
+  const n = typeof value === 'number' ? value : Number.parseFloat(value) || 0;
   const [display, setDisplay] = useState(reducedMotion ? n : 0);
   const ref = useRef<number | null>(null);
 

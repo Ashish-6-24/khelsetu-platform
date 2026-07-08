@@ -42,7 +42,7 @@ describe('notificationUtils', () => {
     it('should group notifications by date', () => {
       const grouped = notificationUtils.groupByDate(mockNotifications);
       const keys = Object.keys(grouped);
-      expect(keys.length).toBe(3);
+      expect(keys).toHaveLength(3);
     });
 
     it('should put today notifications in one group', () => {
@@ -50,7 +50,7 @@ describe('notificationUtils', () => {
       const today = new Date().toLocaleDateString();
       const todayGroup = grouped[today];
       expect(todayGroup).toBeDefined();
-      expect(todayGroup!.length).toBe(1);
+      expect(todayGroup!).toHaveLength(1);
     });
 
     it('should put yesterday notifications in one group', () => {
@@ -58,19 +58,19 @@ describe('notificationUtils', () => {
       const yesterday = new Date(Date.now() - 86400000).toLocaleDateString();
       const yesterdayGroup = grouped[yesterday];
       expect(yesterdayGroup).toBeDefined();
-      expect(yesterdayGroup!.length).toBe(2);
+      expect(yesterdayGroup!).toHaveLength(2);
     });
 
     it('should handle empty array', () => {
       const grouped = notificationUtils.groupByDate([]);
-      expect(Object.keys(grouped).length).toBe(0);
+      expect(Object.keys(grouped)).toHaveLength(0);
     });
 
     it('should handle single notification', () => {
       const single: Notification[] = [mockNotifications[0]!];
       const grouped = notificationUtils.groupByDate(single);
-      expect(Object.keys(grouped).length).toBe(1);
-      expect(Object.values(grouped)[0]!.length).toBe(1);
+      expect(Object.keys(grouped)).toHaveLength(1);
+      expect(Object.values(grouped)[0]!).toHaveLength(1);
     });
   });
 });

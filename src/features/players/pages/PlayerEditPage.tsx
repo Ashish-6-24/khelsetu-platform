@@ -73,7 +73,7 @@ export const PlayerEditPage = () => {
       playerService.update(id!, {
         name: data.name,
         jerseyNumber: data.jerseyNumber
-          ? parseInt(data.jerseyNumber, 10)
+          ? Number.parseInt(data.jerseyNumber, 10)
           : undefined,
         position: data.position || undefined,
       }),

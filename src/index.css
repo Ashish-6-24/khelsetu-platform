@@ -353,7 +353,8 @@
   width: max-content;
   animation: marquee-scroll 40s linear infinite;
 }
-.marquee:hover .marquee-track {
+.marquee:hover .marquee-track,
+.marquee.marquee-track:hover {
   animation-play-state: paused;
 }
 @keyframes marquee-scroll {
@@ -636,10 +637,6 @@
   100% {
     box-shadow: 0 0 0 0 rgba(127, 29, 29, 0);
   }
-}
-
-.score-flash {
-  animation: score-flash 0.6s ease-out;
 }
 
 /* Score bounce — scale spring on value change */
@@ -1090,10 +1087,6 @@
   100% {
     background-position: 200% center;
   }
-}
-
-.live-card {
-  animation: live-card-glow 3s ease-in-out infinite;
 }
 
 .live-card:hover {

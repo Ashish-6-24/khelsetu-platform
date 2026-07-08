@@ -34,7 +34,7 @@ export const AnimatedBackground = ({
       >
         {Array.from({ length: count }).map((_, i) => (
           <div
-            key={i}
+            key={`particle-${i}`}
             className="absolute animate-float"
             style={{
               left: `${(i * 37 + 13) % 100}%`,

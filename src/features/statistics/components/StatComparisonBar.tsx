@@ -55,9 +55,8 @@ export const StatComparisonBar = memo(
             {unit}
           </span>
         </div>
-        <div
-          className="flex h-2.5 w-full overflow-hidden rounded-full bg-[var(--bg-surface-sunken)] dark:bg-gray-700"
-          role="group"
+        <fieldset
+          className="flex h-2.5 w-full overflow-hidden rounded-full bg-[var(--bg-surface-sunken)] dark:bg-gray-700 border-0 p-0 m-0"
           aria-label={`${label} comparison: Team A ${teamAValue}${unit}, Team B ${teamBValue}${unit}`}
         >
           <div
@@ -78,7 +77,7 @@ export const StatComparisonBar = memo(
             className="transition-all duration-700 ease-out rounded-r-full bg-gradient-to-r from-red-500 to-red-600"
             style={{ width: `${teamBPercent}%` }}
           />
-        </div>
+        </fieldset>
       </div>
     );
   },

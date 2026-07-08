@@ -63,7 +63,8 @@ test.describe('Smoke Tests', () => {
     });
     await page.goto('/');
     await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(2000);
+    // Wait for any delayed async errors to surface
+    await page.waitForLoadState('networkidle');
 
     const criticalErrors = errors.filter(
       (e) => !e.includes('favicon') && !e.includes('manifest'),

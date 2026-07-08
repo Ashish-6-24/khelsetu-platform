@@ -8,10 +8,10 @@ import { useState } from 'react';
 import type { CreateVenueInput, Venue } from '../types';
 
 interface VenueFormProps {
-  venue?: Venue;
-  onSubmit: (data: CreateVenueInput) => Promise<void>;
-  onCancel: () => void;
-  isLoading?: boolean;
+  readonly venue?: Venue;
+  readonly onSubmit: (data: CreateVenueInput) => Promise<void>;
+  readonly onCancel: () => void;
+  readonly isLoading?: boolean;
 }
 
 const FACILITY_OPTIONS = [
@@ -42,6 +42,15 @@ export function VenueForm({
   });
 
   const [error, setError] = useState<string | null>(null);
+
+  let submitLabel: string;
+  if (isLoading) {
+    submitLabel = 'Saving...';
+  } else if (venue) {
+    submitLabel = 'Update Venue';
+  } else {
+    submitLabel = 'Add Venue';
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -136,9 +145,9 @@ export function VenueForm({
           />
 
           <div>
-            <label className="block text-sm font-medium text-[var(--text-primary)] mb-2">
+            <span className="block text-sm font-medium text-[var(--text-primary)] mb-2">
               Facilities
-            </label>
+            </span>
             <div className="flex flex-wrap gap-2">
               {FACILITY_OPTIONS.map((facility) => (
                 <button
@@ -169,7 +178,7 @@ export function VenueForm({
 
           <div className="flex gap-3 pt-4">
             <Button type="submit" variant="create" disabled={isLoading}>
-              {isLoading ? 'Saving...' : venue ? 'Update Venue' : 'Add Venue'}
+              {submitLabel}
             </Button>
             <Button type="button" variant="secondary" onClick={onCancel}>
               Cancel

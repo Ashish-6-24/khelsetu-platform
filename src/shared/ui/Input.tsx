@@ -65,6 +65,60 @@ const PasswordStrength = ({ level }: { level: 0 | 1 | 2 | 3 | 4 }) => {
   );
 };
 
+function RightIcon({
+  isPassword,
+  showPassword,
+  setShowPassword,
+  validationState,
+  rightIcon,
+}: {
+  isPassword: boolean;
+  showPassword: boolean;
+  setShowPassword: (v: boolean | ((s: boolean) => boolean)) => void;
+  validationState?: 'validating' | 'valid';
+  rightIcon?: React.ReactNode;
+}) {
+  if (isPassword) {
+    return (
+      <button
+        type="button"
+        onClick={() => setShowPassword((s) => !s)}
+        aria-label={showPassword ? 'Hide password' : 'Show password'}
+        aria-pressed={showPassword}
+        className="absolute inset-y-0 right-0 flex min-h-11 min-w-11 items-center justify-center pr-3 text-[var(--text-tertiary)] transition-colors hover:text-[var(--text-secondary)] focus-visible:rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]"
+      >
+        {showPassword ? (
+          <EyeOff className="h-4 w-4" />
+        ) : (
+          <Eye className="h-4 w-4" />
+        )}
+      </button>
+    );
+  }
+  if (validationState === 'validating') {
+    return (
+      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+        <Loader2 className="h-4 w-4 animate-spin text-blue-500" />
+      </div>
+    );
+  }
+  if (validationState === 'valid') {
+    return (
+      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+        <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+      </div>
+    );
+  }
+  if (rightIcon) {
+    return (
+      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-[var(--text-tertiary)]">
+        {rightIcon}
+      </div>
+    );
+  }
+  return null;
+}
+
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
@@ -138,35 +192,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             }
             {...props}
           />
-          {isPassword ? (
-            <button
-              type="button"
-              onClick={() => setShowPassword((s) => !s)}
-              aria-label={showPassword ? 'Hide password' : 'Show password'}
-              aria-pressed={showPassword}
-              className="absolute inset-y-0 right-0 flex min-h-11 min-w-11 items-center justify-center pr-3 text-[var(--text-tertiary)] transition-colors hover:text-[var(--text-secondary)] focus-visible:rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]"
-            >
-              {showPassword ? (
-                <EyeOff className="h-4 w-4" />
-              ) : (
-                <Eye className="h-4 w-4" />
-              )}
-            </button>
-          ) : validationState === 'validating' ? (
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-              <Loader2 className="h-4 w-4 animate-spin text-blue-500" />
-            </div>
-          ) : validationState === 'valid' ? (
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-              <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-            </div>
-          ) : (
-            rightIcon && (
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-[var(--text-tertiary)]">
-                {rightIcon}
-              </div>
-            )
-          )}
+          <RightIcon
+            isPassword={isPassword}
+            showPassword={showPassword}
+            setShowPassword={setShowPassword}
+            validationState={validationState}
+            rightIcon={rightIcon}
+          />
         </div>
         {strength !== undefined && isPassword && (
           <PasswordStrength level={strength} />

@@ -118,10 +118,7 @@ export const useUIStore = create<UIState & UIActions>()(
             ...state.notifications,
             {
               ...notification,
-              id:
-                typeof crypto !== 'undefined' && 'randomUUID' in crypto
-                  ? crypto.randomUUID()
-                  : `${Date.now()}-${Math.random()}`,
+              id: crypto.randomUUID(),
             },
           ],
         })),

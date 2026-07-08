@@ -30,11 +30,9 @@ export const useFocusTrap = <T extends HTMLElement = HTMLDivElement>(
           e.preventDefault();
           lastElement?.focus();
         }
-      } else {
-        if (document.activeElement === lastElement) {
-          e.preventDefault();
-          firstElement?.focus();
-        }
+      } else if (document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement?.focus();
       }
     };
 

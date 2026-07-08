@@ -87,7 +87,7 @@ export const TeamDetailPage = () => {
       addPlayer.mutate({
         name: newPlayerName.trim(),
         jerseyNumber: newPlayerJersey
-          ? parseInt(newPlayerJersey, 10)
+          ? Number.parseInt(newPlayerJersey, 10)
           : undefined,
         position: newPlayerPosition || undefined,
       });
@@ -169,13 +169,14 @@ export const TeamDetailPage = () => {
 
       {activeTab === 'roster' && (
         <div>
-          {loadingPlayers ? (
+          {loadingPlayers && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <Skeleton key={i} className="h-32" />
               ))}
             </div>
-          ) : roster.length > 0 ? (
+          )}
+          {!loadingPlayers && roster.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {roster.map((player) => (
                 <div key={player.id} className="relative group">
@@ -190,7 +191,8 @@ export const TeamDetailPage = () => {
                 </div>
               ))}
             </div>
-          ) : (
+          )}
+          {!loadingPlayers && roster.length === 0 && (
             <div className="text-center py-12">
               <p className="text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
                 No players on the roster yet. Add some to build your squad.

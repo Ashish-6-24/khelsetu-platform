@@ -1,3 +1,5 @@
+import { secureRandomId } from '@shared/utils/crypto-random';
+
 import type {
   BracketData,
   BracketMatch,
@@ -6,13 +8,47 @@ import type {
 } from '../types';
 
 function generateId(): string {
-  return `match-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+  return `match-${Date.now()}-${secureRandomId(9)}`;
 }
 
 function nextPow2(n: number): number {
   let p = 1;
   while (p < n) p *= 2;
   return p;
+}
+
+function getRoundName(r: number, totalRounds: number): string {
+  if (r === totalRounds - 1) return 'Final';
+  if (r === totalRounds - 2) return 'Semi-Final';
+  if (r === totalRounds - 3) return 'Quarter-Final';
+  return `Round ${r + 1}`;
+}
+
+function resolveTeams(
+  r: number,
+  m: number,
+  seeded: (BracketTeam | null)[],
+  prevRoundMatches: BracketMatch[],
+): { teamA: BracketTeam | null; teamB: BracketTeam | null } {
+  if (r === 0) {
+    return { teamA: seeded[m * 2] ?? null, teamB: seeded[m * 2 + 1] ?? null };
+  }
+  const prevA = prevRoundMatches[m * 2];
+  const prevB = prevRoundMatches[m * 2 + 1];
+  return {
+    teamA: prevA?.winner === 'teamA' ? prevA.teamA : (prevA?.teamB ?? null),
+    teamB: prevB?.winner === 'teamA' ? prevB.teamA : (prevB?.teamB ?? null),
+  };
+}
+
+function getMatchStatus(
+  teamA: BracketTeam | null,
+  teamB: BracketTeam | null,
+): BracketMatch['status'] {
+  if (!teamA && teamB) return 'walkover';
+  if (teamA && !teamB) return 'walkover';
+  if (!teamA && !teamB) return 'bye';
+  return 'pending';
 }
 
 export function generateSingleElimination(teams: BracketTeam[]): BracketData {
@@ -29,51 +65,14 @@ export function generateSingleElimination(teams: BracketTeam[]): BracketData {
 
   for (let r = 0; r < totalRounds; r++) {
     const matchCount = totalSlots / Math.pow(2, r + 1);
-    const roundName =
-      r === totalRounds - 1
-        ? 'Final'
-        : r === totalRounds - 2
-          ? 'Semi-Final'
-          : r === totalRounds - 3
-            ? 'Quarter-Final'
-            : `Round ${r + 1}`;
-
+    const roundName = getRoundName(r, totalRounds);
     const matches: BracketMatch[] = [];
 
     for (let m = 0; m < matchCount; m++) {
-      let teamA: BracketTeam | null;
-      let teamB: BracketTeam | null;
-      let status: BracketMatch['status'];
+      const { teamA, teamB } = resolveTeams(r, m, seeded, prevRoundMatches);
+      const status = getMatchStatus(teamA, teamB);
 
-      if (r === 0) {
-        teamA = seeded[m * 2] ?? null;
-        teamB = seeded[m * 2 + 1] ?? null;
-      } else {
-        const prevA = prevRoundMatches[m * 2];
-        const prevB = prevRoundMatches[m * 2 + 1];
-        teamA =
-          prevA?.winner === 'teamA' ? prevA.teamA : (prevA?.teamB ?? null);
-        teamB =
-          prevB?.winner === 'teamA' ? prevB.teamA : (prevB?.teamB ?? null);
-      }
-
-      if (!teamA && teamB) {
-        status = 'walkover';
-      } else if (teamA && !teamB) {
-        status = 'walkover';
-      } else if (!teamA && !teamB) {
-        status = 'bye';
-      } else {
-        status =
-          teamA && teamB
-            ? r === 0 &&
-              (m >= teams.length / 2 || teams.length <= totalSlots / 2)
-              ? 'pending'
-              : 'pending'
-            : 'pending';
-      }
-
-      const match: BracketMatch = {
+      matches.push({
         id: generateId(),
         round: r + 1,
         position: m,
@@ -87,8 +86,7 @@ export function generateSingleElimination(teams: BracketTeam[]): BracketData {
         scheduledAt: undefined,
         nextMatchId: undefined,
         nextSlot: m % 2 === 0 ? 'teamA' : 'teamB',
-      };
-      matches.push(match);
+      });
     }
 
     // Wire next match pointers
@@ -250,6 +248,31 @@ export function generateRoundRobin(teams: BracketTeam[]): BracketData {
   };
 }
 
+function propagateWinner(
+  rounds: BracketRound[],
+  matchNextMatchId: string | undefined,
+  winnerTeam: BracketTeam | null | undefined,
+  nextSlot: 'teamA' | 'teamB' | undefined,
+) {
+  if (!matchNextMatchId || !winnerTeam || !nextSlot) return;
+  for (const r of rounds) {
+    for (const m of r.matches) {
+      if (m.id === matchNextMatchId) {
+        if (nextSlot === 'teamA') m.teamA = winnerTeam;
+        else m.teamB = winnerTeam;
+      }
+    }
+  }
+}
+
+function getChampion(rounds: BracketRound[]): BracketTeam | null {
+  const lastRound = rounds[rounds.length - 1];
+  const finalMatch = lastRound?.matches[0];
+  if (finalMatch?.winner === 'teamA') return finalMatch.teamA;
+  if (finalMatch?.winner === 'teamB') return finalMatch.teamB;
+  return null;
+}
+
 export function advanceWinner(
   bracket: BracketData,
   matchId: string,
@@ -273,30 +296,17 @@ export function advanceWinner(
     for (const match of round.matches) {
       if (match.nextMatchId && match.winner) {
         const winnerTeam = match.winner === 'teamA' ? match.teamA : match.teamB;
-        for (const r2 of newRounds) {
-          for (const m2 of r2.matches) {
-            if (m2.id === match.nextMatchId) {
-              if (match.nextSlot === 'teamA') {
-                m2.teamA = winnerTeam;
-              } else {
-                m2.teamB = winnerTeam;
-              }
-            }
-          }
-        }
+        propagateWinner(
+          newRounds,
+          match.nextMatchId,
+          winnerTeam,
+          match.nextSlot,
+        );
       }
     }
   }
 
-  // Determine champion
-  const lastRound = newRounds[newRounds.length - 1];
-  const finalMatch = lastRound?.matches[0];
-  const champion =
-    finalMatch?.winner === 'teamA'
-      ? finalMatch.teamA
-      : finalMatch?.winner === 'teamB'
-        ? finalMatch.teamB
-        : null;
+  const champion = getChampion(newRounds);
 
   return {
     ...bracket,

@@ -116,6 +116,12 @@ export const DashboardPage = () => {
     [matches],
   );
 
+  const matchSuffix = liveMatches === 1 ? '' : 'es';
+  const liveMatchText =
+    liveMatches > 0
+      ? `${liveMatches} live match${matchSuffix} right now`
+      : 'All systems operational';
+
   if (isLoading) {
     return (
       <div className="space-y-6">
@@ -173,9 +179,7 @@ export const DashboardPage = () => {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
               </span>
-              {liveMatches > 0
-                ? `${liveMatches} live match${liveMatches === 1 ? '' : 'es'} right now`
-                : 'All systems operational'}
+              {liveMatchText}
             </div>
             <h1 className="mt-4 font-display text-2xl font-bold -tracking-[0.01em] text-white sm:text-3xl lg:text-4xl">
               {getGreeting()}, {user?.name?.split(' ')[0] || 'champion'}.

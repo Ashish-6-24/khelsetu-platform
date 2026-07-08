@@ -112,7 +112,7 @@ export const Hero = () => (
               aria-hidden="true"
             >
               {Array.from({ length: 5 }).map((_, i) => (
-                <span key={i} className="text-base leading-none">
+                <span key={`star-${i}`} className="text-base leading-none">
                   ★
                 </span>
               ))}
@@ -174,9 +174,9 @@ export const Hero = () => (
                   { icon: BarChart3, label: 'Analytics' },
                   { icon: Radio, label: 'Live Console' },
                   { icon: Tv, label: 'OBS Overlays' },
-                ].map((item, i) => (
+                ].map((item) => (
                   <div
-                    key={i}
+                    key={item.label}
                     className={`flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-semibold cursor-pointer transition-colors ${
                       item.active
                         ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] dark:bg-[var(--brand-primary)]/20 dark:text-red-400'

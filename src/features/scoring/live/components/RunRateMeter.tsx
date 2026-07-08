@@ -11,6 +11,15 @@ export const RunRateMeter = ({
   requiredRunRate,
   maxRate = 15,
 }: RunRateMeterProps) => {
+  let variant: 'success' | 'default' | 'warning';
+  if (currentRunRate > 10) {
+    variant = 'success';
+  } else if (currentRunRate > 6) {
+    variant = 'default';
+  } else {
+    variant = 'warning';
+  }
+
   return (
     <div className="bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] rounded-xl p-4 border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]">
       <div className="flex items-center justify-between mb-2">
@@ -25,13 +34,7 @@ export const RunRateMeter = ({
         value={currentRunRate}
         max={maxRate}
         size="lg"
-        variant={
-          currentRunRate > 10
-            ? 'success'
-            : currentRunRate > 6
-              ? 'default'
-              : 'warning'
-        }
+        variant={variant}
       />
       {requiredRunRate !== undefined && (
         <div className="mt-2 flex items-center justify-between text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">

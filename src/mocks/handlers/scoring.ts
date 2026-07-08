@@ -235,8 +235,7 @@ export const scoringHandlers = [
 
   http.post('/matches/:matchId/score', async ({ params, request }) => {
     const body = (await request.json()) as Record<string, unknown>;
-    const match = matches.find((m) => m.id === params.matchId);
-    if (!match) {
+    if (!matches.some((m) => m.id === params.matchId)) {
       return HttpResponse.json(
         { error: { message: 'Match not found' } },
         { status: 404 },

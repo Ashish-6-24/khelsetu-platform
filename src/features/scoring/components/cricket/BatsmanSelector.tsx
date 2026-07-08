@@ -20,10 +20,14 @@ export const BatsmanSelector = ({
   return (
     <div className="space-y-3">
       <div>
-        <label className="block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-1">
+        <label
+          htmlFor="striker-select"
+          className="block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-1"
+        >
           Striker
         </label>
         <select
+          id="striker-select"
           value={strikerId}
           onChange={(e) => onSelectStriker(e.target.value)}
           className="w-full rounded-xl border border-[var(--border-strong)] bg-[var(--bg-surface)] px-3 py-2 text-sm dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface)] dark:text-white"
@@ -36,10 +40,14 @@ export const BatsmanSelector = ({
         </select>
       </div>
       <div>
-        <label className="block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-1">
+        <label
+          htmlFor="non-striker-select"
+          className="block text-sm font-medium text-[var(--text-primary)] dark:text-[var(--text-secondary)] mb-1"
+        >
           Non-Striker
         </label>
         <select
+          id="non-striker-select"
           value={nonStrikerId}
           onChange={(e) => onSelectNonStriker(e.target.value)}
           className="w-full rounded-xl border border-[var(--border-strong)] bg-[var(--bg-surface)] px-3 py-2 text-sm dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface)] dark:text-white"

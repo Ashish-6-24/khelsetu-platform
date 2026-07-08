@@ -65,9 +65,8 @@ export const Accordion = ({
               />
             </button>
             {/* CSS Grid animation: 0fr → 1fr for butter-smooth height transition */}
-            <div
+            <section
               id={`accordion-panel-${item.id}`}
-              role="region"
               aria-labelledby={`accordion-trigger-${item.id}`}
               className="grid transition-[grid-template-rows] duration-250 ease-out"
               style={{
@@ -80,7 +79,7 @@ export const Accordion = ({
                   {item.content}
                 </div>
               </div>
-            </div>
+            </section>
           </div>
         );
       })}

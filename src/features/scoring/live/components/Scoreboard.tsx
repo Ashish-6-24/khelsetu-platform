@@ -19,6 +19,13 @@ export const Scoreboard = ({ score }: ScoreboardProps) => {
 
   const oversDisplay = `${currentInnings.overs}.${currentInnings.balls.length % 6}`;
 
+  const getBallColor = (ball: CricketScore['lastBalls'][number]) => {
+    if (ball.isWicket) return 'bg-red-500';
+    if (ball.runs === 6) return 'bg-green-500';
+    if (ball.runs === 4) return 'bg-blue-500';
+    return 'bg-[var(--bg-surface-raised)]';
+  };
+
   return (
     <div className="bg-[var(--bg-canvas)] text-white rounded-xl p-6">
       <div className="flex items-center justify-between">
@@ -41,16 +48,8 @@ export const Scoreboard = ({ score }: ScoreboardProps) => {
           <div className="flex gap-2">
             {score.lastBalls.slice(-6).map((ball, idx) => (
               <div
-                key={idx}
-                className={`w-10 h-10 flex items-center justify-center rounded-full text-sm font-bold ${
-                  ball.isWicket
-                    ? 'bg-red-500'
-                    : ball.runs === 6
-                      ? 'bg-green-500'
-                      : ball.runs === 4
-                        ? 'bg-blue-500'
-                        : 'bg-[var(--bg-surface-raised)]'
-                }`}
+                key={`ball-${idx}-${ball.runs}-${ball.isWicket ? 'w' : ''}`}
+                className={`w-10 h-10 flex items-center justify-center rounded-full text-sm font-bold ${getBallColor(ball)}`}
               >
                 {ball.isWicket ? 'W' : ball.runs}
               </div>

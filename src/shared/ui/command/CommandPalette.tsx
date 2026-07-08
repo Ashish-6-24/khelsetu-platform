@@ -97,7 +97,12 @@ const buildItems = (navigate: (to: string) => void): PaletteItem[] => {
       description: 'Guides, API reference and tutorials',
       icon: FileText,
       group: 'Help',
-      perform: () => window.open('https://docs.khelsetu.app', '_blank'),
+      perform: () =>
+        window.open(
+          'https://docs.khelsetu.app',
+          '_blank',
+          'noopener,noreferrer',
+        ),
     },
   ];
 

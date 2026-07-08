@@ -10,10 +10,10 @@ import { GalleryGrid } from './GalleryGrid';
 import { LightboxViewer } from './LightboxViewer';
 
 interface MediaGalleryProps {
-  tournaments?: { value: string; label: string }[];
-  teams?: { value: string; label: string }[];
-  players?: { value: string; label: string }[];
-  seasons?: { value: string; label: string }[];
+  readonly tournaments?: { value: string; label: string }[];
+  readonly teams?: { value: string; label: string }[];
+  readonly players?: { value: string; label: string }[];
+  readonly seasons?: { value: string; label: string }[];
 }
 
 export function MediaGallery({
@@ -82,16 +82,17 @@ export function MediaGallery({
         </div>
       </div>
 
-      {isLoading ? (
+      {isLoading && (
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
           {Array.from({ length: 8 }).map((_, i) => (
             <div
-              key={i}
+              key={`skeleton-${i}`}
               className="aspect-square animate-pulse rounded-xl bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface-raised)]"
             />
           ))}
         </div>
-      ) : error ? (
+      )}
+      {!isLoading && error && (
         <div className="flex flex-col items-center justify-center py-16">
           <p className="text-lg font-medium text-red-500">
             Error loading media
@@ -100,7 +101,8 @@ export function MediaGallery({
             Please try again later
           </p>
         </div>
-      ) : (
+      )}
+      {!isLoading && !error && (
         <GalleryGrid items={items} onItemClick={openLightbox} />
       )}
 

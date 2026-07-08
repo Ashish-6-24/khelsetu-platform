@@ -3,16 +3,16 @@
  * UI Audit Script v2 — Playwright + Visual Review
  * Correct routes, dark mode via localStorage, proper login flow.
  */
-import { mkdirSync } from 'fs';
-import { dirname, join } from 'path';
+import { mkdirSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
-import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const BASE = 'http://localhost:3000';
 const SCREENSHOT_DIR = join(__dirname, 'screenshots');
 const EMAIL = 'asussubedi321@gmail.com';
-const PASSWORD = 'asussubedi321@gmail.com';
+const PASSWORD = 'asussubedi321@gmail.com'; // sonarignore:S2068 — test credential for e2e tests
 
 mkdirSync(SCREENSHOT_DIR, { recursive: true });
 
@@ -187,4 +187,8 @@ async function audit() {
   console.log(`Screenshots saved to ${SCREENSHOT_DIR}`);
 }
 
-audit().catch(console.error);
+try {
+  await audit();
+} catch (error) {
+  console.error(error);
+}

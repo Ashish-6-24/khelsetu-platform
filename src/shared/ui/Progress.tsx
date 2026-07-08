@@ -52,25 +52,16 @@ export const Progress = ({
           )}
         </div>
       )}
-      <div
-        role="progressbar"
-        aria-valuenow={Math.round(percentage)}
-        aria-valuemin={0}
-        aria-valuemax={100}
+      <progress
+        value={Math.round(percentage)}
+        max={100}
         aria-label={label || `Progress: ${Math.round(percentage)}%`}
         className={clsx(
-          'w-full overflow-hidden rounded-full bg-[var(--bg-surface-sunken)]',
+          'w-full overflow-hidden rounded-full [&::-webkit-progress-bar]:rounded-full [&::-webkit-progress-bar]:bg-[var(--bg-surface-sunken)] [&::-webkit-progress-value]:rounded-full [&::-webkit-progress-value]:transition-all [&::-webkit-progress-value]:duration-700 [&::-webkit-progress-value]:ease-out [&::-moz-progress-bar]:rounded-full [&::-moz-progress-bar]:transition-all [&::-moz-progress-bar]:duration-700 [&::-moz-progress-bar]:ease-out',
           sizeStyles[size],
+          variantStyles[variant],
         )}
-      >
-        <div
-          className={clsx(
-            'h-full rounded-full transition-all duration-700 ease-out',
-            variantStyles[variant],
-          )}
-          style={{ width: `${percentage}%` }}
-        />
-      </div>
+      />
     </div>
   );
 };

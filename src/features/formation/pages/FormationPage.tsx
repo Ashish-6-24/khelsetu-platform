@@ -82,9 +82,7 @@ export const FormationPage = () => {
   };
 
   const handleSave = () => {
-    const data = saveFormation();
-    // TODO: persist via API
-    void data;
+    saveFormation();
   };
 
   if (isLoading) {

@@ -1,7 +1,6 @@
 import { useReducedMotion } from '@features/accessibility';
 import { Card, CardBody, CardHeader } from '@shared/ui/Card';
-import { STORAGE_KEYS } from '@shared/utils/constants';
-import { ROUTES } from '@shared/utils/constants';
+import { ROUTES, STORAGE_KEYS } from '@shared/utils/constants';
 import { clsx } from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import {

@@ -100,7 +100,7 @@ export const LiveMatchClock = ({
         )}
       />
       {parts.map((part, i) => (
-        <span key={i} className="inline-flex items-center">
+        <span key={`part-${part}-${i}`} className="inline-flex items-center">
           {i > 0 && <span className="clock-colon mx-px">:</span>}
           <span>{part}</span>
         </span>

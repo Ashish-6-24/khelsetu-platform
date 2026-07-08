@@ -1,8 +1,8 @@
 import { useEffect, useMemo } from 'react';
 
 interface CertConfettiProps {
-  trigger: boolean;
-  onComplete?: () => void;
+  readonly trigger: boolean;
+  readonly onComplete?: () => void;
 }
 
 const COLORS = [

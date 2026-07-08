@@ -2,11 +2,11 @@ import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 interface FloatingOrbProps {
-  className?: string;
-  color?: string;
-  size?: number;
-  delay?: number;
-  duration?: number;
+  readonly className?: string;
+  readonly color?: string;
+  readonly size?: number;
+  readonly delay?: number;
+  readonly duration?: number;
 }
 
 export const FloatingOrb = ({
@@ -63,7 +63,7 @@ export const ConnectedDots = ({
           const next = positions[(i + 1) % positions.length]!;
           return (
             <line
-              key={`line-${i}`}
+              key={`line-${pos.x}-${pos.y}`}
               x1={pos.x}
               y1={pos.y}
               x2={next.x}
@@ -76,7 +76,7 @@ export const ConnectedDots = ({
         })}
         {positions.map((pos, i) => (
           <circle
-            key={`dot-${i}`}
+            key={`dot-${pos.x}-${pos.y}`}
             cx={pos.x}
             cy={pos.y}
             r="3"
@@ -110,7 +110,6 @@ interface AnimatedNumberProps {
   suffix?: string;
   prefix?: string;
   className?: string;
-  duration?: number;
 }
 
 export const AnimatedNumber = ({
@@ -118,7 +117,6 @@ export const AnimatedNumber = ({
   suffix = '',
   prefix = '',
   className,
-  duration = 2000,
 }: AnimatedNumberProps) => {
   return (
     <span
@@ -134,14 +132,14 @@ export const AnimatedNumber = ({
       }}
     >
       {prefix}
-      <CountUpAnimated target={value} duration={duration} />
+      <CountUpAnimated target={value} />
       {suffix}
     </span>
   );
 };
 
 /** Simple count-up animation using requestAnimationFrame */
-function CountUpAnimated({ target }: { target: number; duration?: number }) {
+function CountUpAnimated({ target }: { target: number }) {
   // This is a placeholder - in production, use a hook like useCountUp
   // For now, just render the target value
   return <>{target.toLocaleString()}</>;

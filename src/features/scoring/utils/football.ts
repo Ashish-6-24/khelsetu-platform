@@ -1,4 +1,5 @@
 import type { FootballEvent, FootballPeriod } from '@shared/types/scoring';
+import { secureRandomId } from '@shared/utils/crypto-random';
 
 export const createFootballEvent = (
   matchId: string,
@@ -19,7 +20,7 @@ export const createFootballEvent = (
     description?: string;
   },
 ): FootballEvent => ({
-  id: `event-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+  id: `event-${Date.now()}-${secureRandomId(7)}`,
   matchId,
   minute,
   extraMinute: minute > 90 ? minute - 90 : undefined,

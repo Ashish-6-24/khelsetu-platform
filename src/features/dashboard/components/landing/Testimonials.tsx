@@ -22,7 +22,7 @@ export const Testimonials = () => (
                 aria-hidden
               >
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <span key={i} className="text-lg leading-none">
+                  <span key={`star-top-${i}`} className="text-lg leading-none">
                     ★
                   </span>
                 ))}
@@ -73,7 +73,7 @@ export const Testimonials = () => (
                 aria-hidden
               >
                 {Array.from({ length: 5 }).map((_, j) => (
-                  <span key={j} className="text-sm leading-none">
+                  <span key={`star-card-${j}`} className="text-sm leading-none">
                     ★
                   </span>
                 ))}

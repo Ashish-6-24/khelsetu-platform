@@ -4,8 +4,8 @@ import { MediaItem } from '../types';
 import { formatDuration } from '../utils/galleryUtils';
 
 interface GalleryGridProps {
-  items: MediaItem[];
-  onItemClick: (index: number) => void;
+  readonly items: MediaItem[];
+  readonly onItemClick: (index: number) => void;
 }
 
 const typeBadgeColors = {

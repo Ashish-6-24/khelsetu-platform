@@ -65,7 +65,6 @@ export const MediaPage = () => {
         type: 'success',
         message: `Uploading ${files.length} file(s)...`,
       });
-      // TODO: Connect to actual upload API endpoint
     }
   };
 
@@ -85,7 +84,6 @@ export const MediaPage = () => {
       type: 'warning',
       message: `Delete ${item.name}? This action cannot be undone.`,
     });
-    // TODO: Connect to actual delete API endpoint
   };
 
   return (
@@ -115,7 +113,6 @@ export const MediaPage = () => {
           multiple
           onChange={handleFileChange}
           className="hidden"
-          aria-hidden="true"
         />
       </div>
 

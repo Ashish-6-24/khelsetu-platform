@@ -18,16 +18,21 @@ export const Card = ({
   elevated = false,
   as: Tag = 'div',
 }: CardProps) => {
+  let variantClass: string;
+  if (glass) {
+    variantClass = 'glass';
+  } else if (elevated) {
+    variantClass = 'surface shadow-[var(--shadow-md)]';
+  } else {
+    variantClass = 'surface';
+  }
+
   return (
     <Tag
       className={twMerge(
         clsx(
           'rounded-2xl transition-all duration-300',
-          glass
-            ? 'glass'
-            : elevated
-              ? 'surface shadow-[var(--shadow-md)]'
-              : 'surface',
+          variantClass,
           hover &&
             'cursor-pointer hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)] hover:border-[var(--border-strong)]',
           className,

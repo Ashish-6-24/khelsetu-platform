@@ -18,7 +18,7 @@ export const calculateNRR = (
   if (oversFor === 0 || oversAgainst === 0) return 0;
   const runRateFor = runsFor / oversFor;
   const runRateAgainst = runsAgainst / oversAgainst;
-  return parseFloat((runRateFor - runRateAgainst).toFixed(3));
+  return Number.parseFloat((runRateFor - runRateAgainst).toFixed(3));
 };
 
 export const getQualificationZone = (

@@ -64,12 +64,12 @@ function generateSummary(
   goals: LiveMatchEvent[],
   cards: LiveMatchEvent[],
 ): string {
-  const winner =
-    teamAGoals > teamBGoals
-      ? teamAName
-      : teamBGoals > teamAGoals
-        ? teamBName
-        : null;
+  let winner: string | null = null;
+  if (teamAGoals > teamBGoals) {
+    winner = teamAName;
+  } else if (teamBGoals > teamAGoals) {
+    winner = teamBName;
+  }
 
   let summary = `In an exciting match, ${teamAName} faced off against ${teamBName}. `;
 
@@ -132,8 +132,8 @@ function generateHighlights(
   }
 
   return highlights.sort((a, b) => {
-    const minuteA = parseInt(a.split("'")[0] ?? '0');
-    const minuteB = parseInt(b.split("'")[0] ?? '0');
+    const minuteA = Number.parseInt(a.split("'")[0] ?? '0');
+    const minuteB = Number.parseInt(b.split("'")[0] ?? '0');
     return minuteA - minuteB;
   });
 }

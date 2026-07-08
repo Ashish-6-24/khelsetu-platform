@@ -1,15 +1,14 @@
 import { Filter, X } from 'lucide-react';
 
-import { GalleryFilters as GalleryFiltersType } from '../types';
-import { MediaType } from '../types';
+import { GalleryFilters as GalleryFiltersType, MediaType } from '../types';
 
 interface GalleryFiltersProps {
-  filters: GalleryFiltersType;
-  onChange: (filters: GalleryFiltersType) => void;
-  tournaments?: { value: string; label: string }[];
-  teams?: { value: string; label: string }[];
-  players?: { value: string; label: string }[];
-  seasons?: { value: string; label: string }[];
+  readonly filters: GalleryFiltersType;
+  readonly onChange: (filters: GalleryFiltersType) => void;
+  readonly tournaments?: { value: string; label: string }[];
+  readonly teams?: { value: string; label: string }[];
+  readonly players?: { value: string; label: string }[];
+  readonly seasons?: { value: string; label: string }[];
 }
 
 const mediaTypes: { value: MediaType | undefined; label: string }[] = [

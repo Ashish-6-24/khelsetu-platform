@@ -65,24 +65,33 @@ export const CommunicationPage = () => {
             </CardHeader>
             <CardBody>
               <div className="space-y-4 max-h-96 overflow-y-auto">
-                {messages.map((msg) => (
-                  <div
-                    key={msg.id}
-                    className={`p-3 rounded-lg ${msg.type === 'announcement' ? 'bg-blue-50 dark:bg-blue-900/20' : msg.type === 'system' ? 'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface)]' : 'bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]'}`}
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-medium text-sm text-[var(--text-primary)] dark:text-white">
-                        {msg.sender}
-                      </span>
-                      <span className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
-                        {msg.timestamp}
-                      </span>
+                {messages.map((msg) => {
+                  const typeClasses = {
+                    announcement: 'bg-blue-50 dark:bg-blue-900/20',
+                    system:
+                      'bg-[var(--bg-surface-sunken)] dark:bg-[var(--bg-surface)]',
+                  } as const;
+                  const defaultClass =
+                    'bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]';
+                  return (
+                    <div
+                      key={msg.id}
+                      className={`p-3 rounded-lg ${typeClasses[msg.type as keyof typeof typeClasses] ?? defaultClass}`}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-medium text-sm text-[var(--text-primary)] dark:text-white">
+                          {msg.sender}
+                        </span>
+                        <span className="text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+                          {msg.timestamp}
+                        </span>
+                      </div>
+                      <p className="text-sm text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
+                        {msg.content}
+                      </p>
                     </div>
-                    <p className="text-sm text-[var(--text-primary)] dark:text-[var(--text-secondary)]">
-                      {msg.content}
-                    </p>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
               <div className="flex gap-2 mt-4">
                 <Input

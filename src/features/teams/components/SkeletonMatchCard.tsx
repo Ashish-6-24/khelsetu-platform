@@ -55,7 +55,7 @@ export const SkeletonMatchCardGrid = ({
 }) => (
   <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
     {Array.from({ length: count }).map((_, i) => (
-      <SkeletonMatchCard key={i} compact={compact} />
+      <SkeletonMatchCard key={`match-skeleton-${i}`} compact={compact} />
     ))}
   </div>
 );

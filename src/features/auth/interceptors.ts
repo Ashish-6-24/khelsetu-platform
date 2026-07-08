@@ -38,7 +38,9 @@ export const setupAuthInterceptors = () => {
               }
               return axiosInstance(originalRequest);
             })
-            .catch((err) => Promise.reject(err));
+            .catch((err) => {
+              throw err;
+            });
         }
 
         originalRequest._retry = true;
@@ -60,13 +62,13 @@ export const setupAuthInterceptors = () => {
           setAccessToken(null);
           useAuthStore.getState().logout();
           window.location.href = '/auth/login';
-          return Promise.reject(refreshError);
+          throw refreshError;
         } finally {
           isRefreshing = false;
         }
       }
 
-      return Promise.reject(error);
+      throw error;
     },
   );
 };

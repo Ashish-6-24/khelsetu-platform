@@ -44,7 +44,7 @@ export const LiveEventCenter = ({
         selectedTeam.id,
         selectedTeam.name,
         {
-          extraMinute: timer.currentSecond > 0 ? undefined : undefined,
+          extraMinute: undefined,
           period: timer.phase,
         },
       );

@@ -14,7 +14,7 @@ export const BarChart = ({ data, height = 200, className }: BarChartProps) => {
     <div className={clsx('flex items-end gap-2', className)} style={{ height }}>
       {data.map((item, idx) => (
         <motion.div
-          key={idx}
+          key={item.label}
           className="flex-1 flex flex-col items-center gap-1"
           initial={{ scaleY: 0 }}
           animate={{ scaleY: 1 }}
@@ -73,7 +73,7 @@ export const LineChart = ({
         />
         {points.map((p, idx) => (
           <circle
-            key={idx}
+            key={`pt-${idx}`}
             cx={p.x}
             cy={p.y}
             r="1.5"
@@ -82,8 +82,8 @@ export const LineChart = ({
         ))}
       </svg>
       <div className="absolute bottom-0 left-0 right-0 flex justify-between">
-        {data.map((d, idx) => (
-          <span key={idx} className="text-xs text-[var(--text-tertiary)]">
+        {data.map((d) => (
+          <span key={d.label} className="text-xs text-[var(--text-tertiary)]">
             {d.label}
           </span>
         ))}
@@ -121,7 +121,7 @@ export const DonutChart = ({
       <svg viewBox="0 0 36 36" className="w-full h-full">
         {segments.map((s, idx) => (
           <circle
-            key={idx}
+            key={`seg-${idx}`}
             cx="18"
             cy="18"
             r="15.915"

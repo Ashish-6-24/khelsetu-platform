@@ -1,7 +1,6 @@
 import { Button } from '@shared/ui/Button';
 import { Input } from '@shared/ui/Input';
 import { useToast } from '@shared/ui/toast-context';
-import { APP_NAME } from '@shared/utils/constants';
 import { clsx } from 'clsx';
 import { type Variants, motion } from 'framer-motion';
 import {
@@ -268,6 +267,7 @@ const ContactForm = ({
       </legend>
       <div
         role="radiogroup"
+        tabIndex={0}
         aria-label="Preferred language"
         onKeyDown={(e) => {
           const idx = LANGUAGES.indexOf(form.language);
@@ -476,4 +476,3 @@ const FaqStrip = () => {
 };
 
 ContactPage.displayName = 'ContactPage';
-void APP_NAME;

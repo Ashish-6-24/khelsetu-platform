@@ -52,20 +52,32 @@ export function CertificateGenerator() {
 
               <div className="space-y-3">
                 <div>
-                  <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                  <label
+                    htmlFor="cert-id"
+                    className="text-xs font-medium text-gray-500 dark:text-gray-400"
+                  >
                     Certificate ID
                   </label>
-                  <p className="font-mono text-sm text-gray-900 dark:text-white">
+                  <p
+                    id="cert-id"
+                    className="font-mono text-sm text-gray-900 dark:text-white"
+                  >
                     {certificateData.certificateId}
                   </p>
                 </div>
 
                 <div>
-                  <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                  <label
+                    htmlFor="cert-verify-url"
+                    className="text-xs font-medium text-gray-500 dark:text-gray-400"
+                  >
                     Verification URL
                   </label>
                   <div className="flex items-center gap-2">
-                    <code className="flex-1 truncate rounded bg-gray-100 px-2 py-1 text-xs dark:bg-gray-700">
+                    <code
+                      id="cert-verify-url"
+                      className="flex-1 truncate rounded bg-gray-100 px-2 py-1 text-xs dark:bg-gray-700"
+                    >
                       {certificateData.verificationUrl}
                     </code>
                     <button

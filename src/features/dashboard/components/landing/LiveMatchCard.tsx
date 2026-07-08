@@ -1,4 +1,5 @@
 import { GlowPulse } from '@shared/ui/GlowPulse';
+import { secureRandom, secureRandomFloat } from '@shared/utils/crypto-random';
 import { incrementScore } from '@shared/utils/score-helpers';
 import { clsx } from 'clsx';
 
@@ -14,8 +15,8 @@ interface TeamScore {
 const incrementOvers = (s: string): string => {
   const match = s.match(/(\d+)\.(\d+)/);
   if (!match || !match[1] || !match[2]) return s;
-  let overs = parseInt(match[1]);
-  let balls = parseInt(match[2]);
+  let overs = Number.parseInt(match[1]!);
+  let balls = Number.parseInt(match[2]!);
   balls += 1;
   if (balls >= 6) {
     overs += 1;
@@ -34,7 +35,7 @@ export const LiveMatchCard = () => {
 
   useEffect(() => {
     const tick = () => {
-      const idx = Math.random() < 0.5 ? 0 : 1;
+      const idx = secureRandom(2) === 0 ? 0 : 1;
       setTeams((prev) => {
         const t = prev[idx]!;
         const newScore = incrementScore(t.score);
@@ -55,7 +56,7 @@ export const LiveMatchCard = () => {
       });
     };
 
-    const interval = setInterval(tick, 4000 + Math.random() * 3000);
+    const interval = setInterval(tick, 4000 + secureRandomFloat() * 3000);
     return () => {
       clearInterval(interval);
       clearTimeout(flashTimer.current);

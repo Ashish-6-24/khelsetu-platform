@@ -1,3 +1,5 @@
+import { secureRandomId } from '@shared/utils/crypto-random';
+
 import { useCallback, useState } from 'react';
 
 import type {
@@ -9,7 +11,7 @@ import type {
 } from '../types/index';
 import { FORMATION_TEMPLATES } from '../utils/formations';
 
-const generateId = () => Math.random().toString(36).substring(2, 10);
+const generateId = () => secureRandomId(8);
 
 export function useFormation(initialMatchId?: string) {
   const [formationType, setFormationType] = useState<FormationType>('4-3-3');

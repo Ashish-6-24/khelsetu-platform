@@ -5,8 +5,7 @@ import { Skeleton } from '@shared/ui/Skeleton';
 import { ROUTES } from '@shared/utils/constants';
 import { AlertCircle } from 'lucide-react';
 
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 export function NewsDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -25,7 +24,7 @@ export function NewsDetailPage() {
         </div>
         <div className="space-y-2">
           {Array.from({ length: 8 }).map((_, i) => (
-            <Skeleton key={i} className="h-4 w-full" />
+            <Skeleton key={`line-${i}`} className="h-4 w-full" />
           ))}
         </div>
       </div>

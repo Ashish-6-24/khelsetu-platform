@@ -9,6 +9,32 @@ export interface GeneratedFixture {
   scheduledAt: string;
 }
 
+function createFixture(
+  round: number,
+  matchNumber: number,
+  teamA: Team,
+  teamB: Team,
+  startDate: string,
+  venue: string,
+  matchesPerDay: number,
+  currentCount: number,
+): GeneratedFixture {
+  const date = new Date(startDate);
+  date.setDate(date.getDate() + Math.floor(currentCount / matchesPerDay));
+  return {
+    round,
+    matchNumber,
+    teamA,
+    teamB,
+    venue,
+    scheduledAt: date.toISOString(),
+  };
+}
+
+function isValidMatch(a: Team, b: Team): boolean {
+  return a.id !== 'bye' && b.id !== 'bye';
+}
+
 export const generateLeagueFixtures = (
   teams: Team[],
   startDate: string,
@@ -40,40 +66,22 @@ export const generateLeagueFixtures = (
       const teamAIndex = (round + match) % (teamCount - 1);
       const teamBIndex = teamCount - 1 - ((round + match) % (teamCount - 1));
 
-      if (match === 0) {
-        const teamA = teamsList[teamCount - 1];
-        const teamB = teamsList[teamAIndex];
-        if (teamA && teamB && teamA.id !== 'bye' && teamB.id !== 'bye') {
-          const date = new Date(startDate);
-          date.setDate(
-            date.getDate() + Math.floor(fixtures.length / matchesPerDay),
-          );
-          fixtures.push({
-            round: round + 1,
-            matchNumber: fixtures.length + 1,
-            teamA: teamA,
-            teamB: teamB,
+      const teamA =
+        match === 0 ? teamsList[teamCount - 1] : teamsList[teamAIndex];
+      const teamB = match === 0 ? teamsList[teamAIndex] : teamsList[teamBIndex];
+      if (teamA && teamB && isValidMatch(teamA, teamB)) {
+        fixtures.push(
+          createFixture(
+            round + 1,
+            fixtures.length + 1,
+            teamA,
+            teamB,
+            startDate,
             venue,
-            scheduledAt: date.toISOString(),
-          });
-        }
-      } else {
-        const teamA = teamsList[teamAIndex];
-        const teamB = teamsList[teamBIndex];
-        if (teamA && teamB && teamA.id !== 'bye' && teamB.id !== 'bye') {
-          const date = new Date(startDate);
-          date.setDate(
-            date.getDate() + Math.floor(fixtures.length / matchesPerDay),
-          );
-          fixtures.push({
-            round: round + 1,
-            matchNumber: fixtures.length + 1,
-            teamA: teamA,
-            teamB: teamB,
-            venue,
-            scheduledAt: date.toISOString(),
-          });
-        }
+            matchesPerDay,
+            fixtures.length,
+          ),
+        );
       }
     }
   }

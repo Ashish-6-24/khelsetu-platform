@@ -3,7 +3,7 @@ import type { Match } from '@shared/types/tournament';
 import { motion } from 'framer-motion';
 
 interface MatchStatsOverlayProps {
-  match: Match;
+  readonly match: Match;
 }
 
 export function MatchStatsOverlay({ match }: MatchStatsOverlayProps) {

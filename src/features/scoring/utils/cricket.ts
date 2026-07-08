@@ -7,6 +7,7 @@ import type {
   CricketPartnership,
   CricketWicketType,
 } from '@shared/types/scoring';
+import { secureRandomId } from '@shared/utils/crypto-random';
 
 export const createCricketBall = (
   matchId: string,
@@ -19,7 +20,7 @@ export const createCricketBall = (
   extras?: { type: CricketExtraType; extraRuns: number },
   wicket?: { type: CricketWicketType; dismissedPlayerId: string },
 ): CricketBall => ({
-  id: `ball-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+  id: `ball-${Date.now()}-${secureRandomId(7)}`,
   matchId,
   innings,
   over,
@@ -52,22 +53,20 @@ export const calculateBatsmanStats = (
   if (ball.batsmanId !== batsman.playerId) return batsman;
 
   const isWide = ball.extraType === 'wide';
-  const runsOffBat = isWide ? 0 : ball.runs - (ball.extraType ? 1 : 0);
+  const extraRuns = ball.extraType ? 1 : 0;
+  const runsOffBat = isWide ? 0 : ball.runs - extraRuns;
+  const totalBalls = batsman.balls + (isWide ? 0 : 1);
 
   return {
     ...batsman,
     runs: batsman.runs + runsOffBat,
-    balls: batsman.balls + (isWide ? 0 : 1),
+    balls: totalBalls,
     fours: batsman.fours + (runsOffBat === 4 && !ball.isWicket ? 1 : 0),
     sixes: batsman.sixes + (runsOffBat === 6 && !ball.isWicket ? 1 : 0),
     strikeRate:
-      batsman.balls + (isWide ? 0 : 1) > 0
-        ? parseFloat(
-            (
-              ((batsman.runs + runsOffBat) /
-                (batsman.balls + (isWide ? 0 : 1))) *
-              100
-            ).toFixed(2),
+      totalBalls > 0
+        ? Number.parseFloat(
+            (((batsman.runs + runsOffBat) / totalBalls) * 100).toFixed(2),
           )
         : 0,
     isOut:
@@ -87,25 +86,19 @@ export const calculateBowlerStats = (
   const legalDelivery = !isWide && !isNoBall;
 
   const runsConceded = ball.runs;
+  const totalOvers = bowler.overs + (legalDelivery ? (ball.ball + 1) / 6 : 0);
 
   return {
     ...bowler,
-    overs: parseFloat(
-      (bowler.overs + (legalDelivery ? ball.ball + 1 : 0) / 6).toFixed(1),
-    ),
+    overs: Number.parseFloat(totalOvers.toFixed(1)),
     maidens:
       bowler.maidens +
       (runsConceded === 0 && legalDelivery && ball.ball === 5 ? 1 : 0),
     runs: bowler.runs + runsConceded,
     wickets: bowler.wickets + (ball.isWicket ? 1 : 0),
     economy:
-      bowler.overs + (legalDelivery ? ball.ball + 1 : 0) / 6 > 0
-        ? parseFloat(
-            (
-              bowler.runs /
-              (bowler.overs + (legalDelivery ? ball.ball + 1 : 0) / 6)
-            ).toFixed(2),
-          )
+      totalOvers > 0
+        ? Number.parseFloat((bowler.runs / totalOvers).toFixed(2))
         : 0,
   };
 };

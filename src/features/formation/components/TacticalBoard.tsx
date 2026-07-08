@@ -32,6 +32,12 @@ export const TacticalBoard = ({
     Array<{ x: number; y: number }>
   >([]);
 
+  const getDashArray = (type: TacticalDrawing['type']) => {
+    if (type === 'passing') return '6 4';
+    if (type === 'defensive') return '4 4';
+    return 'none';
+  };
+
   const handlePointerDown = (e: React.PointerEvent<SVGSVGElement>) => {
     if (!isDrawing) return;
     const svg = e.currentTarget;
@@ -175,13 +181,7 @@ export const TacticalBoard = ({
               fill="none"
               stroke={drawing.color}
               strokeWidth="2"
-              strokeDasharray={
-                drawing.type === 'passing'
-                  ? '6 4'
-                  : drawing.type === 'defensive'
-                    ? '4 4'
-                    : 'none'
-              }
+              strokeDasharray={getDashArray(drawing.type)}
               strokeLinecap="round"
               strokeLinejoin="round"
               opacity="0.8"
@@ -194,13 +194,7 @@ export const TacticalBoard = ({
               fill="none"
               stroke={activeColor}
               strokeWidth="2"
-              strokeDasharray={
-                activeTool === 'passing'
-                  ? '6 4'
-                  : activeTool === 'defensive'
-                    ? '4 4'
-                    : 'none'
-              }
+              strokeDasharray={getDashArray(activeTool)}
               strokeLinecap="round"
               strokeLinejoin="round"
               opacity="0.5"

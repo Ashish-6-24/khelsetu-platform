@@ -46,7 +46,8 @@ test('visual: landing (dark mode)', async ({ page }) => {
   await page.evaluate(() => {
     document.documentElement.classList.add('dark');
   });
-  await page.waitForTimeout(500);
+  // Wait for CSS transitions to complete before screenshot
+  await page.waitForLoadState('networkidle');
 
   await expect(page).toHaveScreenshot('landing-dark-desktop.png', {
     fullPage: true,
@@ -62,7 +63,8 @@ test('visual: login (dark mode)', async ({ page }) => {
   await page.evaluate(() => {
     document.documentElement.classList.add('dark');
   });
-  await page.waitForTimeout(500);
+  // Wait for CSS transitions to complete before screenshot
+  await page.waitForLoadState('networkidle');
 
   await expect(page).toHaveScreenshot('login-dark-desktop.png', {
     fullPage: true,

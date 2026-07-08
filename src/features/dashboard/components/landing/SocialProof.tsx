@@ -146,31 +146,27 @@ export const SocialProof = () => {
           >
             Trusted by federations, clubs &amp; organizers across Nepal
           </p>
-          <div
-            className="marquee mt-6"
-            role="list"
+          <ul
+            className="marquee marquee-track mt-6 list-none"
             aria-label="Partner organizations"
           >
-            <div className="marquee-track">
-              {row.map((p, i) => (
-                <div
-                  role="listitem"
-                  key={`${p.code}-${i}`}
-                  className="group flex h-11 shrink-0 items-center gap-2.5 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-4 transition-colors hover:border-[var(--brand-primary)]/30 hover:bg-white dark:border-[var(--border-strong)] dark:bg-[var(--bg-canvas)] dark:hover:border-[var(--brand-primary)]/30 dark:hover:bg-[var(--bg-surface-raised)]"
-                >
-                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] dark:bg-red-950/40 dark:text-red-400">
-                    <PartnerLogo code={p.code} />
-                  </span>
-                  <span className="text-sm font-bold tracking-wider text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)] dark:text-[var(--text-tertiary)] dark:group-hover:text-white">
-                    {p.code}
-                  </span>
-                  <span className="hidden text-xs text-[var(--text-tertiary)] dark:text-[var(--text-secondary)] sm:inline">
-                    · {p.name}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+            {row.map((p, i) => (
+              <li
+                key={`${p.code}-${i}`}
+                className="group flex h-11 shrink-0 items-center gap-2.5 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-4 transition-colors hover:border-[var(--brand-primary)]/30 hover:bg-white dark:border-[var(--border-strong)] dark:bg-[var(--bg-canvas)] dark:hover:border-[var(--brand-primary)]/30 dark:hover:bg-[var(--bg-surface-raised)]"
+              >
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] dark:bg-red-950/40 dark:text-red-400">
+                  <PartnerLogo code={p.code} />
+                </span>
+                <span className="text-sm font-bold tracking-wider text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)] dark:text-[var(--text-tertiary)] dark:group-hover:text-white">
+                  {p.code}
+                </span>
+                <span className="hidden text-xs text-[var(--text-tertiary)] dark:text-[var(--text-secondary)] sm:inline">
+                  · {p.name}
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     </Reveal>

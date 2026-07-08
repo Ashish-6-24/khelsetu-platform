@@ -1,7 +1,6 @@
 import { SkipLink } from '@features/accessibility';
 import { Logo } from '@shared/ui/Logo';
-import { APP_NAME } from '@shared/utils/constants';
-import { ROUTES } from '@shared/utils/constants';
+import { APP_NAME, ROUTES } from '@shared/utils/constants';
 import { useUIStore } from '@state/uiStore';
 import { BarChart3, Radio, Sparkles, Trophy, Users } from 'lucide-react';
 

@@ -1,14 +1,13 @@
 import { logger } from '@lib/logger';
-import { useOffline } from '@shared/hooks/useOffline';
 
 import { useCallback, useState } from 'react';
 
-export const useNetworkStatus = useOffline;
+export { useOffline as useNetworkStatus } from '@shared/hooks/useOffline';
 
 export const useErrorHandler = () => {
   const [error, setError] = useState<Error | null>(null);
 
-  const handleError = useCallback((error: Error | unknown) => {
+  const handleError = useCallback((error: unknown) => {
     const err = error instanceof Error ? error : new Error(String(error));
     setError(err);
     logger.error('Error handled:', err);

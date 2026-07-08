@@ -1,3 +1,5 @@
+import { secureRandom } from '@shared/utils/crypto-random';
+
 self.addEventListener('message', async (event) => {
   if (!event.origin || event.origin !== self.location.origin) {
     return;
@@ -45,7 +47,7 @@ function calculateStandings(matches: unknown[]): unknown[] {
   return matches.map((_, idx) => ({
     rank: idx + 1,
     team: `Team ${idx + 1}`,
-    points: Math.floor(Math.random() * 20),
+    points: secureRandom(20),
   }));
 }
 

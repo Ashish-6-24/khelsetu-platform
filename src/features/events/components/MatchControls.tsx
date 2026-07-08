@@ -54,23 +54,30 @@ export const MatchControls = ({ timer }: MatchControlsProps) => {
               {timer.displayTime}
             </p>
             <div className="mt-1.5">
-              {timer.phase === 'not_started' ? (
+              {timer.phase === 'not_started' && (
                 <Badge variant="outline" size="sm">
                   {phaseLabel}
                 </Badge>
-              ) : timer.phase === 'completed' ? (
+              )}
+              {timer.phase === 'completed' && (
                 <Badge variant="success" size="sm">
                   {phaseLabel}
                 </Badge>
-              ) : timer.isRunning ? (
-                <Badge variant="live" size="sm">
-                  {phaseLabel}
-                </Badge>
-              ) : (
-                <Badge variant="warning" size="sm">
-                  {phaseLabel}
-                </Badge>
               )}
+              {timer.phase !== 'not_started' &&
+                timer.phase !== 'completed' &&
+                timer.isRunning && (
+                  <Badge variant="live" size="sm">
+                    {phaseLabel}
+                  </Badge>
+                )}
+              {timer.phase !== 'not_started' &&
+                timer.phase !== 'completed' &&
+                !timer.isRunning && (
+                  <Badge variant="warning" size="sm">
+                    {phaseLabel}
+                  </Badge>
+                )}
             </div>
           </div>
 

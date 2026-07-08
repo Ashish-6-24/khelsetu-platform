@@ -15,6 +15,19 @@ import { useState } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
+type BracketFormat =
+  | 'single-elimination'
+  | 'double-elimination'
+  | 'knockout'
+  | 'round-robin'
+  | 'group-to-knockout';
+
+function getBracketFormat(format: string): BracketFormat {
+  if (format === 'league') return 'round-robin';
+  if (format === 'knockout') return 'single-elimination';
+  return format as BracketFormat;
+}
+
 const TABS = [
   { id: 'bracket', label: 'Bracket' },
   { id: 'fixtures', label: 'Fixtures' },
@@ -116,25 +129,14 @@ export const TournamentBracketPage = () => {
       {activeTab === 'bracket' && (
         <AdvancedBracketView
           matches={matches ?? []}
-          format={
-            tournament.format === 'league'
-              ? 'round-robin'
-              : tournament.format === 'knockout'
-                ? 'single-elimination'
-                : (tournament.format as
-                    | 'single-elimination'
-                    | 'double-elimination'
-                    | 'knockout'
-                    | 'round-robin'
-                    | 'group-to-knockout')
-          }
+          format={getBracketFormat(tournament.format)}
           tournamentName={tournament.name}
         />
       )}
 
       {activeTab === 'fixtures' && <FixtureTable matches={matches ?? []} />}
 
-      {matches && matches.length === 0 && (
+      {matches?.length === 0 && (
         <Card>
           <CardBody>
             <div className="text-center py-12">

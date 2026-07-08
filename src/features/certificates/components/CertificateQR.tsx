@@ -3,8 +3,8 @@ import QRCode from 'qrcode';
 import { useEffect, useState } from 'react';
 
 interface CertificateQRProps {
-  value: string;
-  size?: number;
+  readonly value: string;
+  readonly size?: number;
 }
 
 export function CertificateQR({ value, size = 56 }: CertificateQRProps) {

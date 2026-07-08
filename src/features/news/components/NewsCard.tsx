@@ -12,7 +12,7 @@ import {
 } from '../utils/newsUtils';
 
 interface NewsCardProps {
-  article: NewsArticle;
+  readonly article: NewsArticle;
 }
 
 export function NewsCard({ article }: NewsCardProps) {

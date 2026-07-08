@@ -17,8 +17,8 @@ const CATEGORIES: NewsCategory[] = [
 ];
 
 interface NewsFiltersProps {
-  activeCategory?: NewsCategory;
-  onChange: (category: NewsCategory | undefined) => void;
+  readonly activeCategory?: NewsCategory;
+  readonly onChange: (category: NewsCategory | undefined) => void;
 }
 
 export function NewsFilters({ activeCategory, onChange }: NewsFiltersProps) {

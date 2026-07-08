@@ -1,5 +1,6 @@
 import { useBroadcastStore } from '@features/broadcast/store';
 import type { Overlay, OverlayType } from '@features/broadcast/types';
+import { secureRandom } from '@shared/utils/crypto-random';
 
 import { useCallback, useEffect, useRef } from 'react';
 
@@ -24,7 +25,7 @@ export const useBroadcast = () => {
   useEffect(() => {
     if (isLive) {
       intervalRef.current = setInterval(() => {
-        const newViewers = Math.floor(Math.random() * 50) + viewers;
+        const newViewers = secureRandom(50) + viewers;
         setViewers(newViewers);
       }, 5000);
     }

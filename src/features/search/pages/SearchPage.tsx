@@ -60,9 +60,9 @@ export const SearchPage = () => {
             </p>
           ) : (
             <div className="flex flex-wrap gap-2">
-              {recentSearches.map((search, index) => (
+              {recentSearches.map((search) => (
                 <button
-                  key={index}
+                  key={search}
                   onClick={() => handleSearch(search)}
                   className="px-3 py-1.5 text-sm rounded-lg border border-[var(--border-subtle)] dark:border-[var(--border-subtle)] bg-[var(--bg-surface)] dark:bg-[var(--bg-surface)] text-[var(--text-primary)] dark:text-[var(--text-secondary)] hover:bg-[var(--bg-surface-sunken)] dark:hover:bg-[var(--bg-surface-raised)]"
                 >
@@ -84,16 +84,16 @@ export const SearchPage = () => {
         <div className="space-y-6">
           {isLoading ? (
             <div className="space-y-3">
-              {[1, 2, 3].map((i) => (
+              {[1, 2, 3].map((n) => (
                 <div
-                  key={i}
+                  key={`skeleton-${n}`}
                   className="animate-pulse h-16 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded-lg"
                 />
               ))}
             </div>
           ) : results.length === 0 && query ? (
             <p className="text-center text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)] py-8">
-              No results found for "{query}"
+              No results found for &quot;{query}&quot;
             </p>
           ) : (
             Object.entries(groupedResults).map(([type, items]) => (

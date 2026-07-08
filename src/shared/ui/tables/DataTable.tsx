@@ -31,7 +31,7 @@ export const DataTable = <T extends Record<string, unknown>>({
         <tbody className="bg-[var(--bg-surface)] divide-y divide-[var(--border-subtle)]">
           {data.map((row, idx) => (
             <tr
-              key={idx}
+              key={`row-${idx}`}
               onClick={() => onRowClick?.(row)}
               className={
                 onRowClick

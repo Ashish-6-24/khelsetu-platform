@@ -12,6 +12,34 @@ interface TabsProps {
   fullWidth?: boolean;
 }
 
+function getTabClasses(
+  variant: string,
+  isActive: boolean,
+  fullWidth: boolean,
+): string {
+  const base =
+    'relative inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]';
+  const sizing = variant === 'underline' ? 'h-10 px-3' : 'h-9 px-3.5';
+  const width = fullWidth ? 'flex-1' : '';
+
+  let color: string;
+  if (variant === 'pills') {
+    color = isActive
+      ? 'text-[var(--text-primary)]'
+      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]';
+  } else if (variant === 'underline') {
+    color = isActive
+      ? 'text-[var(--brand-primary)]'
+      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]';
+  } else {
+    color = isActive
+      ? 'text-[var(--brand-primary)]'
+      : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-sunken)]/60';
+  }
+
+  return `${base} ${sizing} ${width} ${color}`;
+}
+
 export const Tabs = ({
   tabs,
   activeTab,
@@ -58,6 +86,7 @@ export const Tabs = ({
   return (
     <div
       role="tablist"
+      tabIndex={0}
       onKeyDown={handleKeyDown}
       className={clsx(
         'inline-flex',
@@ -80,25 +109,7 @@ export const Tabs = ({
             aria-selected={isActive}
             tabIndex={isActive ? 0 : -1}
             onClick={() => onChange(tab.id)}
-            className={clsx(
-              'relative inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-colors duration-200',
-              'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]',
-              fullWidth && 'flex-1',
-              variant === 'pills' && 'h-9 px-3.5',
-              variant === 'default' && 'h-9 px-3.5',
-              variant === 'underline' && 'h-10 px-3',
-              variant === 'pills' && isActive
-                ? 'text-[var(--text-primary)]'
-                : variant === 'pills'
-                  ? 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-                  : variant === 'underline'
-                    ? isActive
-                      ? 'text-[var(--brand-primary)]'
-                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-                    : isActive
-                      ? 'text-[var(--brand-primary)]'
-                      : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-sunken)]/60',
-            )}
+            className={getTabClasses(variant, isActive, fullWidth)}
           >
             {tab.icon}
             <span>{tab.label}</span>

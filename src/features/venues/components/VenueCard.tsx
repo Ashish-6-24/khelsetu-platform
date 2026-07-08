@@ -6,8 +6,8 @@ import { MapPin, Users, Wrench } from 'lucide-react';
 import type { Venue } from '../types';
 
 interface VenueCardProps {
-  venue: Venue;
-  onClick?: () => void;
+  readonly venue: Venue;
+  readonly onClick?: () => void;
 }
 
 const statusConfig = {

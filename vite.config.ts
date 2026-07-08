@@ -1,6 +1,6 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
+import path from 'node:path';
 import { type Plugin, defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
@@ -31,6 +31,44 @@ const aliases = {
   '@tests': path.resolve(src, './tests'),
   '@workers': path.resolve(src, './workers'),
 };
+
+function getVendorChunk(id: string): string | undefined {
+  if (!id.includes('node_modules')) {
+    if (id.includes('/features/scoring/')) return 'features-scoring';
+    if (id.includes('/features/billing/')) return 'features-billing';
+    return undefined;
+  }
+  if (
+    /\breact-dom\b/.test(id) ||
+    /\breact-router\b/.test(id) ||
+    /\breact-router-dom\b/.test(id) ||
+    /\bcmdk\b/.test(id) ||
+    /\b@radix-ui\b/.test(id) ||
+    /\breact-remove-scroll\b/.test(id) ||
+    /\breact-is\b/.test(id)
+  )
+    return 'vendor-react';
+  if (/\/react\//.test(id) || /\/react@/.test(id)) return 'vendor-react';
+  if (id.includes('@tanstack/react-query')) return 'vendor-query';
+  if (id.includes('framer-motion') || id.includes('motion'))
+    return 'vendor-motion';
+  if (
+    id.includes('react-hook-form') ||
+    id.includes('@hookform/resolvers') ||
+    id.includes('zod')
+  )
+    return 'vendor-forms';
+  if (id.includes('recharts')) return 'vendor-charts';
+  if (id.includes('html2canvas') || id.includes('jspdf')) return 'vendor-pdf';
+  if (id.includes('lucide-react')) return 'vendor-icons';
+  if (
+    id.includes('clsx') ||
+    id.includes('tailwind-merge') ||
+    id.includes('zustand')
+  )
+    return 'vendor-utils';
+  return undefined;
+}
 
 export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
@@ -76,45 +114,7 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks(id) {
-            if (id.includes('node_modules')) {
-              // React core + router + UI libs that depend on React internals
-              if (
-                /\breact-dom\b/.test(id) ||
-                /\breact-router\b/.test(id) ||
-                /\breact-router-dom\b/.test(id) ||
-                /\bcmdk\b/.test(id) ||
-                /\b@radix-ui\b/.test(id) ||
-                /\breact-remove-scroll\b/.test(id) ||
-                /\breact-is\b/.test(id)
-              ) {
-                return 'vendor-react';
-              }
-              if (/\/react\//.test(id) || /\/react@/.test(id))
-                return 'vendor-react';
-              if (id.includes('@tanstack/react-query')) return 'vendor-query';
-              if (id.includes('framer-motion') || id.includes('motion'))
-                return 'vendor-motion';
-              if (
-                id.includes('react-hook-form') ||
-                id.includes('@hookform/resolvers') ||
-                id.includes('zod')
-              ) {
-                return 'vendor-forms';
-              }
-              if (id.includes('recharts')) return 'vendor-charts';
-              if (id.includes('html2canvas') || id.includes('jspdf'))
-                return 'vendor-pdf';
-              if (id.includes('lucide-react')) return 'vendor-icons';
-              if (
-                id.includes('clsx') ||
-                id.includes('tailwind-merge') ||
-                id.includes('zustand')
-              ) {
-                return 'vendor-utils';
-              }
-            }
-            if (id.includes('/features/scoring/')) return 'features-scoring';
-            if (id.includes('/features/billing/')) return 'features-billing';
+            return getVendorChunk(id);
           },
         },
       },
