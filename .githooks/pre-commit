@@ -1,0 +1,18 @@
+#!/bin/bash
+# Block accidental commits of:
+# 1. Duplicate-download files like "file(1).ext"
+# 2. Large binary files (>500KB)
+
+duplicate=$(git diff --cached --name-only --diff-filter=AC | grep -E '\([0-9]+\)\.' || true)
+if [ -n "$duplicate" ]; then
+  echo "ERROR: Staged files contain duplicate-download pattern (e.g. file(1).ext):"
+  echo "$duplicate"
+  echo "These are likely accidental. Remove them or rename."
+  exit 1
+fi
+
+large=$(git diff --cached --numstat --diff-filter=A | awk '$1 > 50000 {print $3}' || true)
+if [ -n "$large" ]; then
+  echo "WARNING: Large file(s) being added (check if intentional):"
+  echo "$large"
+fi
