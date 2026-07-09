@@ -75,6 +75,13 @@ class WebSocketService {
     return (knownEvents as string[]).includes(event);
   }
 
+  getReconnectState(): { attempts: number; maxAttempts: number } {
+    return {
+      attempts: this.reconnectAttempts,
+      maxAttempts: this.maxReconnectAttempts,
+    };
+  }
+
   disconnect(): void {
     if (this.socket) {
       this.socket.disconnect();

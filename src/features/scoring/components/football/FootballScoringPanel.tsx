@@ -17,6 +17,8 @@ interface FootballScoringPanelProps {
   onMinuteUpdate: (minute: number) => void;
   onToggleTimer: () => void;
   onUndo: () => void;
+  teamAPlayers?: { id: string; name: string }[];
+  teamBPlayers?: { id: string; name: string }[];
 }
 
 const TABS = [
@@ -30,19 +32,10 @@ export const FootballScoringPanel = ({
   onMinuteUpdate,
   onToggleTimer,
   onUndo,
+  teamAPlayers = [],
+  teamBPlayers = [],
 }: FootballScoringPanelProps) => {
   const [activeTab, setActiveTab] = useState('events');
-
-  const teamAPlayers = [
-    { id: 'p1', name: 'Player 1' },
-    { id: 'p2', name: 'Player 2' },
-    { id: 'p3', name: 'Player 3' },
-  ];
-  const teamBPlayers = [
-    { id: 'p4', name: 'Player 4' },
-    { id: 'p5', name: 'Player 5' },
-    { id: 'p6', name: 'Player 6' },
-  ];
 
   return (
     <div className="space-y-4">

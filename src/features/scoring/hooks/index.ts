@@ -5,3 +5,5 @@ export const useScoring = () => {
     error: null,
   };
 };
+
+export { useScoringWebSocket } from './useScoringWebSocket';

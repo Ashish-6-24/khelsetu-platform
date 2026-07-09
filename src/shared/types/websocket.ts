@@ -36,6 +36,23 @@ export interface ScoreUpdatePayload {
   runRate: number;
 }
 
+export interface LiveScoreUpdatePayload {
+  matchId: string;
+  sport: import('./scoring').SportType;
+  score: import('./scoring').MatchScore;
+}
+
+export interface MatchStartPayload {
+  matchId: string;
+  startedAt: string;
+}
+
+export interface MatchEndPayload {
+  matchId: string;
+  endedAt: string;
+  result?: Record<string, unknown>;
+}
+
 export interface MatchStatusPayload {
   matchId: string;
   status: 'scheduled' | 'live' | 'completed' | 'cancelled';

@@ -4,19 +4,26 @@ import { useScoringStore } from '@state/scoringStore';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+export type ConnectionStatus = 'connected' | 'reconnecting' | 'disconnected';
+
 export const useSocket = (events: WebSocketEvent[] = []) => {
   const setScoring = useScoringStore((state) => state.setScoring);
   const [isConnected, setIsConnected] = useState(false);
+  const [reconnectState, setReconnectState] = useState(
+    wsService.getReconnectState(),
+  );
   const isConnectedRef = useRef(false);
 
   useEffect(() => {
     const handleConnect = () => {
       isConnectedRef.current = true;
       setIsConnected(true);
+      setReconnectState(wsService.getReconnectState());
     };
     const handleDisconnect = () => {
       isConnectedRef.current = false;
       setIsConnected(false);
+      setReconnectState(wsService.getReconnectState());
     };
 
     wsService.on('connect', handleConnect);
@@ -67,8 +74,17 @@ export const useSocket = (events: WebSocketEvent[] = []) => {
     setIsConnected(false);
   }, []);
 
+  const connectionStatus: ConnectionStatus = isConnected
+    ? 'connected'
+    : reconnectState.attempts < reconnectState.maxAttempts
+      ? 'reconnecting'
+      : 'disconnected';
+
   return {
     isConnected,
+    connectionStatus,
+    reconnectAttempts: reconnectState.attempts,
+    maxReconnectAttempts: reconnectState.maxAttempts,
     connect,
     disconnect,
     send: wsService.send.bind(wsService),
