@@ -75,7 +75,7 @@ export const FootballScoringPanel = ({
       <Card>
         <CardBody>
           <div className="space-y-3">
-            <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+            <h3 className="text-sm font-semibold text-[var(--text-secondary)]">
               Quick Actions
             </h3>
             <GoalButton

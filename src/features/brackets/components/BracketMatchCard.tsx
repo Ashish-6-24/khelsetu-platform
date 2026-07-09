@@ -58,7 +58,7 @@ export const BracketMatchCard = ({
         clsx(
           'w-64 rounded-xl border overflow-hidden',
           'bg-[var(--bg-surface)]/80 dark:bg-[var(--bg-surface)]/80 backdrop-blur-xl',
-          'border-gray-200/60 dark:border-[var(--border-subtle)]/60',
+          'border-[var(--border-subtle)]/60',
           'shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-lg)]',
           'transition-shadow duration-200',
           match.status === 'live' &&
@@ -148,11 +148,11 @@ export const BracketMatchCard = ({
 
         {/* Divider */}
         <div className="flex items-center gap-2 px-2">
-          <div className="flex-1 h-px bg-gray-100 dark:bg-[var(--bg-surface-raised)]/50" />
+          <div className="flex-1 h-px bg-[var(--bg-surface-sunken)]" />
           <span className="text-[10px] font-semibold text-[var(--text-secondary)] dark:text-[var(--text-secondary)]">
             VS
           </span>
-          <div className="flex-1 h-px bg-gray-100 dark:bg-[var(--bg-surface-raised)]/50" />
+          <div className="flex-1 h-px bg-[var(--bg-surface-sunken)]" />
         </div>
 
         {/* Team B */}
@@ -203,7 +203,7 @@ export const BracketMatchCard = ({
 
       {/* Footer */}
       {(match.venue || match.scheduledAt) && (
-        <div className="px-3 py-2 border-t border-gray-100 dark:border-[var(--border-subtle)]/50 bg-[var(--bg-surface-sunken)]/50 dark:bg-[var(--bg-surface)]/50 flex items-center gap-3 text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
+        <div className="px-3 py-2 border-t border-[var(--border-subtle)]/50 bg-[var(--bg-surface-sunken)]/50 dark:bg-[var(--bg-surface)]/50 flex items-center gap-3 text-xs text-[var(--text-tertiary)] dark:text-[var(--text-tertiary)]">
           {match.venue && (
             <span className="flex items-center gap-1">
               <MapPin className="h-3 w-3" />

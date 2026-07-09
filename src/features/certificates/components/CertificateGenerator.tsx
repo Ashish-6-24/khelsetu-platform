@@ -33,8 +33,8 @@ export function CertificateGenerator() {
       <div className="grid gap-8 lg:grid-cols-2">
         {/* Form Section */}
         <div className="space-y-6">
-          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+          <div className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6 shadow-sm">
+            <h3 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
               Certificate Details
             </h3>
             <CertificateForm
@@ -45,8 +45,8 @@ export function CertificateGenerator() {
 
           {/* Download & Info Section */}
           {certificateData && (
-            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+            <div className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6 shadow-sm">
+              <h3 className="mb-4 text-lg font-semibold text-[var(--text-primary)]">
                 Certificate Info
               </h3>
 
@@ -54,13 +54,13 @@ export function CertificateGenerator() {
                 <div>
                   <label
                     htmlFor="cert-id"
-                    className="text-xs font-medium text-gray-500 dark:text-gray-400"
+                    className="text-xs font-medium text-[var(--text-tertiary)]"
                   >
                     Certificate ID
                   </label>
                   <p
                     id="cert-id"
-                    className="font-mono text-sm text-gray-900 dark:text-white"
+                    className="font-mono text-sm text-[var(--text-primary)]"
                   >
                     {certificateData.certificateId}
                   </p>
@@ -69,14 +69,14 @@ export function CertificateGenerator() {
                 <div>
                   <label
                     htmlFor="cert-verify-url"
-                    className="text-xs font-medium text-gray-500 dark:text-gray-400"
+                    className="text-xs font-medium text-[var(--text-tertiary)]"
                   >
                     Verification URL
                   </label>
                   <div className="flex items-center gap-2">
                     <code
                       id="cert-verify-url"
-                      className="flex-1 truncate rounded bg-gray-100 px-2 py-1 text-xs dark:bg-gray-700"
+                      className="flex-1 truncate rounded bg-[var(--bg-surface-sunken)] px-2 py-1 text-xs"
                     >
                       {certificateData.verificationUrl}
                     </code>
@@ -88,7 +88,7 @@ export function CertificateGenerator() {
                         )
                       }
                       aria-label="Copy verification URL"
-                      className="rounded bg-gray-200 px-2 py-1 text-xs text-gray-700 hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200"
+                      className="rounded bg-[var(--bg-surface-sunken)] px-2 py-1 text-xs text-[var(--text-secondary)] hover:bg-[var(--bg-surface)]"
                     >
                       Copy
                     </button>
@@ -117,7 +117,7 @@ export function CertificateGenerator() {
                 <button
                   type="button"
                   onClick={reset}
-                  className="w-full text-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                  className="w-full text-center text-sm text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]"
                 >
                   Create Another Certificate
                 </button>
@@ -131,12 +131,12 @@ export function CertificateGenerator() {
           {certificateData ? (
             <CertificatePreview data={certificateData} />
           ) : (
-            <div className="flex h-[560px] w-full items-center justify-center rounded-xl border-2 border-dashed border-accent-700/30 bg-accent-50/50">
-              <div className="text-center text-gray-400 dark:text-gray-500">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-accent-100 text-3xl">
+            <div className="flex h-[560px] w-full items-center justify-center rounded-xl border-2 border-dashed border-[var(--border-subtle)] bg-[var(--bg-surface-sunken)]">
+              <div className="text-center text-[var(--text-tertiary)]">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--brand-primary)]/10 text-3xl">
                   🏆
                 </div>
-                <p className="text-lg font-medium text-gray-500 dark:text-gray-400">
+                <p className="text-lg font-medium text-[var(--text-secondary)]">
                   No Certificate Generated
                 </p>
                 <p className="mt-1 text-sm">

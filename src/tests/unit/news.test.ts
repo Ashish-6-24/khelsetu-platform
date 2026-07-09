@@ -21,7 +21,7 @@ describe('News Utils', () => {
 
     it('should return default color for unknown category', () => {
       const color = getCategoryColor('unknown' as NewsCategory);
-      expect(color).toContain('gray');
+      expect(color).toContain('bg-[var(--bg-surface-sunken)]');
     });
   });
 

@@ -20,19 +20,19 @@ export const StatsTracker = ({ teamA, teamB }: StatsTrackerProps) => {
 
   return (
     <div className="space-y-2">
-      <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+      <h4 className="text-sm font-semibold text-[var(--text-secondary)]">
         Match Stats
       </h4>
       <div className="space-y-1">
         {stats.map(({ label, key }) => (
           <div key={key} className="flex items-center justify-between text-sm">
-            <span className="font-medium text-gray-900 dark:text-white w-8 text-right">
+            <span className="font-medium text-[var(--text-primary)] w-8 text-right">
               {teamA[key]}
             </span>
-            <span className="flex-1 text-center text-gray-500 dark:text-gray-400">
+            <span className="flex-1 text-center text-[var(--text-tertiary)]">
               {label}
             </span>
-            <span className="font-medium text-gray-900 dark:text-white w-8">
+            <span className="font-medium text-[var(--text-primary)] w-8">
               {teamB[key]}
             </span>
           </div>

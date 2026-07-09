@@ -1,8 +1,8 @@
+import { api } from '@lib/axios';
 import { Button } from '@shared/ui/Button';
 import { Input } from '@shared/ui/Input';
 import { useToast } from '@shared/ui/toast-context';
 import { API_ENDPOINTS, ROUTES } from '@shared/utils/constants';
-import { api } from '@lib/axios';
 import { clsx } from 'clsx';
 import { type Variants, motion } from 'framer-motion';
 import {
@@ -174,7 +174,7 @@ const ContactForm = ({
 }: FormProps) => (
   <form
     onSubmit={onSubmit}
-    className="rounded-3xl border border-[var(--border-subtle)] bg-white p-8 shadow-[0_12px_24px_-6px_rgb(15_23_42/0.06)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)] sm:p-10"
+    className="rounded-2xl border border-[var(--border-subtle)] bg-white p-8 shadow-[0_12px_24px_-6px_rgb(15_23_42/0.06)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)] sm:p-10"
     noValidate
   >
     <h2 className="font-display text-2xl font-bold tracking-tight text-[var(--text-primary)] dark:text-white">
@@ -329,7 +329,10 @@ const ContactForm = ({
     <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <p className="text-xs text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
         By submitting, you agree to our{' '}
-        <a href={ROUTES.PRIVACY} className="underline hover:text-[var(--brand-primary)]">
+        <a
+          href={ROUTES.PRIVACY}
+          className="underline hover:text-[var(--brand-primary)]"
+        >
           privacy policy
         </a>
         .
@@ -379,7 +382,7 @@ const infoItems = [
 
 const ContactInfo = () => (
   <aside className="space-y-6">
-    <div className="rounded-3xl border border-[var(--border-subtle)] bg-white p-8 dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)]">
+    <div className="rounded-2xl border border-[var(--border-subtle)] bg-white p-8 dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)]">
       <h2 className="font-display text-xl font-bold tracking-tight text-[var(--text-primary)] dark:text-white">
         Other ways to reach us
       </h2>
@@ -421,7 +424,7 @@ const ContactInfo = () => (
       href="https://wa.me/9779800000000"
       target="_blank"
       rel="noreferrer"
-      className="group flex items-center justify-between gap-3 rounded-3xl border border-[var(--color-success)]/30 bg-gradient-to-br from-[var(--color-success)]/10 via-white to-[var(--bg-surface)] p-6 transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_24px_-6px_rgb(21_128_61/0.15)] dark:border-[var(--color-success)]/30 dark:from-[var(--color-success)]/15 dark:via-[var(--bg-surface-raised)] dark:to-[var(--bg-canvas)]"
+      className="group flex items-center justify-between gap-3 rounded-2xl border border-[var(--color-success)]/30 bg-gradient-to-br from-[var(--color-success)]/10 via-white to-[var(--bg-surface)] p-6 transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_24px_-6px_rgb(21_128_61/0.15)] dark:border-[var(--color-success)]/30 dark:from-[var(--color-success)]/15 dark:via-[var(--bg-surface-raised)] dark:to-[var(--bg-canvas)]"
     >
       <div className="flex items-center gap-3">
         <div

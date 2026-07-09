@@ -25,27 +25,25 @@ export const FixtureCard = ({ match, onClick }: FixtureCardProps) => {
             >
               {match.status}
             </Badge>
-            <span className="text-xs text-gray-500 dark:text-gray-400">
+            <span className="text-xs text-[var(--text-tertiary)]">
               {formatDate(match.scheduledAt)} • {formatTime(match.scheduledAt)}
             </span>
           </div>
           <div className="flex items-center justify-between">
             <div className="flex-1 text-center">
-              <p className="font-medium text-gray-900 dark:text-white">
+              <p className="font-medium text-[var(--text-primary)]">
                 {match.teamA.name}
               </p>
             </div>
-            <div className="px-4 text-sm text-gray-500 dark:text-gray-400">
-              vs
-            </div>
+            <div className="px-4 text-sm text-[var(--text-tertiary)]">vs</div>
             <div className="flex-1 text-center">
-              <p className="font-medium text-gray-900 dark:text-white">
+              <p className="font-medium text-[var(--text-primary)]">
                 {match.teamB.name}
               </p>
             </div>
           </div>
           {match.venue && (
-            <p className="mt-3 text-xs text-gray-500 dark:text-gray-400 text-center">
+            <p className="mt-3 text-xs text-[var(--text-tertiary)] text-center">
               {match.venue}
             </p>
           )}

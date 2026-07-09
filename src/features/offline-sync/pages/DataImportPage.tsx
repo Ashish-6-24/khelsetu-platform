@@ -200,7 +200,7 @@ export const DataImportPage = () => {
               };
               const statusClass =
                 statusStyles[job.status] ??
-                'bg-gray-100 text-[var(--text-secondary)]';
+                'bg-[var(--bg-surface-sunken)] text-[var(--text-secondary)]';
               return (
                 <div
                   key={job.id}

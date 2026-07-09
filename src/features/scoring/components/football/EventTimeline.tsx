@@ -14,11 +14,11 @@ export const EventTimeline = ({ events }: EventTimelineProps) => {
 
   return (
     <div className="space-y-2">
-      <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+      <h4 className="text-sm font-semibold text-[var(--text-secondary)]">
         Match Events
       </h4>
       {sortedEvents.length === 0 ? (
-        <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-4">
+        <p className="text-sm text-[var(--text-tertiary)] text-center py-4">
           No events yet
         </p>
       ) : (
@@ -29,20 +29,20 @@ export const EventTimeline = ({ events }: EventTimelineProps) => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.05 }}
-              className="flex items-center gap-3 p-2 bg-gray-50 dark:bg-gray-800 rounded"
+              className="flex items-center gap-3 p-2 bg-[var(--bg-surface-sunken)] rounded"
             >
               <span className="text-lg">{getEventIcon(event.type)}</span>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                <p className="text-sm font-medium text-[var(--text-primary)] truncate">
                   {event.playerName}
                   {event.assistPlayerName &&
                     ` (Assist: ${event.assistPlayerName})`}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-[var(--text-tertiary)]">
                   {event.teamName}
                 </p>
               </div>
-              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+              <span className="text-sm font-semibold text-[var(--text-secondary)]">
                 {formatMinute(event.minute, event.extraMinute)}
               </span>
             </motion.div>

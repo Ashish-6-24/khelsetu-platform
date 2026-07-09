@@ -135,7 +135,7 @@ export const AdvancedBracketView = ({
 
       {/* Progress bar */}
       <div className="flex items-center gap-3">
-        <div className="flex-1 h-2 rounded-full bg-gray-100 dark:bg-[var(--bg-surface)] overflow-hidden">
+        <div className="flex-1 h-2 rounded-full bg-[var(--bg-surface-sunken)] overflow-hidden">
           <motion.div
             className="h-full rounded-full bg-gradient-to-r from-[var(--brand-primary-bg)] to-[var(--brand-accent)]"
             initial={{ width: 0 }}
@@ -177,7 +177,7 @@ export const AdvancedBracketView = ({
       {/* Bracket visualization */}
       <ZoomPanContainer
         id={BRACKET_ELEMENT_ID}
-        className="bg-[var(--bg-canvas)] border border-gray-200/60 dark:border-[var(--border-subtle)]/60 rounded-2xl"
+        className="bg-[var(--bg-canvas)] border border-[var(--border-subtle)]/60 rounded-2xl"
       >
         <motion.div
           className="flex gap-8 p-6 sm:p-8 min-h-[400px] overflow-x-auto"

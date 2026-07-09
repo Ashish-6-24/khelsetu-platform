@@ -71,7 +71,7 @@ export const BasketballScoringPanel = ({
       <div className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-lg p-4">
         <div className="flex items-center justify-between">
           <div className="text-center flex-1">
-            <p className="text-lg font-bold text-gray-900 dark:text-white">
+            <p className="text-lg font-bold text-[var(--text-primary)]">
               {score.teamA.teamName}
             </p>
             <p className="text-4xl font-bold text-red-600 dark:text-red-400 mt-1">
@@ -79,15 +79,15 @@ export const BasketballScoringPanel = ({
             </p>
           </div>
           <div className="text-center px-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-[var(--text-tertiary)]">
               Q{score.currentQuarter}
             </p>
-            <p className="text-xs text-gray-400 dark:text-gray-500">
+            <p className="text-xs text-[var(--text-muted)]">
               Shot Clock: {score.shotClock}s
             </p>
           </div>
           <div className="text-center flex-1">
-            <p className="text-lg font-bold text-gray-900 dark:text-white">
+            <p className="text-lg font-bold text-[var(--text-primary)]">
               {score.teamB.teamName}
             </p>
             <p className="text-4xl font-bold text-red-600 dark:text-red-400 mt-1">
@@ -116,7 +116,7 @@ export const BasketballScoringPanel = ({
 
           <div className="space-y-3">
             <div>
-              <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              <h3 className="text-sm font-semibold text-[var(--text-secondary)] mb-2">
                 Scoring
               </h3>
               <div className="grid grid-cols-3 gap-2">
@@ -145,7 +145,7 @@ export const BasketballScoringPanel = ({
             </div>
 
             <div>
-              <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              <h3 className="text-sm font-semibold text-[var(--text-secondary)] mb-2">
                 Stats
               </h3>
               <div className="grid grid-cols-4 gap-2">
@@ -196,22 +196,22 @@ export const BasketballScoringPanel = ({
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
-                    className="flex items-center gap-3 p-2 bg-gray-50 dark:bg-gray-800 rounded"
+                    className="flex items-center gap-3 p-2 bg-[var(--bg-surface-sunken)] rounded"
                   >
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">
+                      <p className="text-sm font-medium text-[var(--text-primary)]">
                         {event.playerName}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-[var(--text-tertiary)]">
                         {event.teamName}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      <p className="text-sm font-semibold text-[var(--text-secondary)]">
                         {getEventTypeLabel(event.type)}
                         {event.points ? ` (+${event.points})` : ''}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-[var(--text-tertiary)]">
                         Q{event.quarter}{' '}
                         {formatGameTime(event.minute, event.second)}
                       </p>

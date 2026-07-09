@@ -141,10 +141,10 @@ export const ScoringMatchPage = () => {
   if (!match) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
           Match Not Found
         </h1>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-[var(--text-secondary)]">
           The match you are looking for does not exist.
         </p>
       </div>
@@ -172,10 +172,10 @@ export const ScoringMatchPage = () => {
             Back
           </Button>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-2xl font-bold text-[var(--text-primary)]">
               {match.teamA.name} vs {match.teamB.name}
             </h1>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-sm text-[var(--text-tertiary)]">
               {match.venue} &middot;{' '}
               {sport.charAt(0).toUpperCase() + sport.slice(1)}
             </p>
@@ -195,7 +195,7 @@ export const ScoringMatchPage = () => {
         <Card>
           <CardBody>
             <div className="text-center py-8 space-y-4">
-              <p className="text-lg font-semibold text-gray-900 dark:text-white">
+              <p className="text-lg font-semibold text-[var(--text-primary)]">
                 Ready to start scoring?
               </p>
               <Button variant="live" onClick={handleStartMatch}>
@@ -259,27 +259,25 @@ export const ScoringMatchPage = () => {
           <div>
             <Card>
               <CardBody>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">
                   Match Info
                 </h3>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <p className="text-gray-500 dark:text-gray-400">
-                      Tournament
-                    </p>
-                    <p className="font-medium text-gray-900 dark:text-white">
+                    <p className="text-[var(--text-tertiary)]">Tournament</p>
+                    <p className="font-medium text-[var(--text-primary)]">
                       {match.tournamentId ?? 'N/A'}
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-500 dark:text-gray-400">Sport</p>
-                    <p className="font-medium text-gray-900 dark:text-white capitalize">
+                    <p className="text-[var(--text-tertiary)]">Sport</p>
+                    <p className="font-medium text-[var(--text-primary)] capitalize">
                       {sport}
                     </p>
                   </div>
                   <div>
-                    <p className="text-gray-500 dark:text-gray-400">Status</p>
-                    <p className="font-medium text-gray-900 dark:text-white capitalize">
+                    <p className="text-[var(--text-tertiary)]">Status</p>
+                    <p className="font-medium text-[var(--text-primary)] capitalize">
                       {match.status}
                     </p>
                   </div>

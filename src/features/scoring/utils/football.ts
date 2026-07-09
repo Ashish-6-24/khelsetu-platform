@@ -81,7 +81,7 @@ export const getEventColor = (type: FootballEvent['type']): string => {
     return 'text-yellow-600 dark:text-yellow-400';
   if (type === 'red_card') return 'text-red-600 dark:text-red-400';
   if (type === 'substitution') return 'text-blue-600 dark:text-blue-400';
-  return 'text-gray-600 dark:text-gray-400';
+  return 'text-[var(--text-secondary)]';
 };
 
 export const formatMinute = (minute: number, extraMinute?: number): string => {

@@ -27,7 +27,7 @@ export const OverTracker = ({ balls, overNumber }: OverTrackerProps) => {
 
   return (
     <div className="space-y-2">
-      <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+      <h4 className="text-sm font-semibold text-[var(--text-secondary)]">
         Over {overNumber + 1}
       </h4>
       <div className="flex flex-wrap gap-2">
@@ -46,7 +46,7 @@ export const OverTracker = ({ balls, overNumber }: OverTrackerProps) => {
           </motion.div>
         ))}
         {balls.length === 0 && (
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-[var(--text-tertiary)]">
             No balls bowled yet
           </p>
         )}

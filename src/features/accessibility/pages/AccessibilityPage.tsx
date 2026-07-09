@@ -83,10 +83,10 @@ export const AccessibilityPage = () => {
                       placeholder="Input 2"
                       className="w-full px-3 py-2 border rounded-lg dark:bg-[var(--bg-surface)] dark:border-[var(--border-subtle)]"
                     />
-                    <button className="px-4 py-2 text-sm font-medium rounded-lg bg-gray-200 dark:bg-[var(--bg-surface-raised)]">
+                    <button className="px-4 py-2 text-sm font-medium rounded-lg bg-[var(--bg-surface-sunken)]">
                       Button 1
                     </button>
-                    <button className="px-4 py-2 text-sm font-medium rounded-lg bg-gray-200 dark:bg-[var(--bg-surface-raised)]">
+                    <button className="px-4 py-2 text-sm font-medium rounded-lg bg-[var(--bg-surface-sunken)]">
                       Button 2
                     </button>
                   </div>

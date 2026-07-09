@@ -47,7 +47,7 @@ export const LiveBroadcastPage = () => {
               <h2 className="text-lg font-bold text-[var(--text-primary)] dark:text-white">
                 Preview
               </h2>
-              <div className="aspect-video bg-gray-900 rounded-lg flex items-center justify-center relative overflow-hidden">
+              <div className="aspect-video bg-[var(--bg-canvas)] rounded-xl flex items-center justify-center relative overflow-hidden">
                 {isLive ? (
                   <>
                     <div className="absolute top-4 left-4 bg-red-600 text-white px-2 py-1 rounded text-xs font-bold flex items-center gap-1">
@@ -102,7 +102,7 @@ export const LiveBroadcastPage = () => {
         <div className="flex justify-end">
           <button
             onClick={resetBroadcast}
-            className="px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"
+            className="px-4 py-2 text-sm text-[var(--color-danger)] hover:bg-[var(--color-danger)]/10 rounded-xl"
           >
             Reset Broadcast
           </button>

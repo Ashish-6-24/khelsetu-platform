@@ -36,7 +36,7 @@ const CATEGORY_LABELS: Record<NewsCategory, string> = {
 export function getCategoryColor(category: NewsCategory): string {
   return (
     CATEGORY_COLORS[category] ??
-    'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300'
+    'bg-[var(--bg-surface-sunken)] text-[var(--text-secondary)]'
   );
 }
 

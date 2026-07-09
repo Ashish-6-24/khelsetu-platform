@@ -25,10 +25,10 @@ export function CertificateQR({ value, size = 56 }: CertificateQRProps) {
   if (!src) {
     return (
       <div
-        className="flex items-center justify-center rounded border border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-800"
+        className="flex items-center justify-center rounded border border-[var(--border-subtle)] bg-[var(--bg-surface)]"
         style={{ width: size, height: size }}
       >
-        <span className="text-[8px] text-gray-400 dark:text-gray-500">QR</span>
+        <span className="text-[8px] text-[var(--text-muted)]">QR</span>
       </div>
     );
   }

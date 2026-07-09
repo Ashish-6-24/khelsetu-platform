@@ -118,24 +118,24 @@ export const CricketScoringPanel = ({
               <div className="space-y-3">
                 <div className="grid grid-cols-2 gap-3 text-sm">
                   <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-3">
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-[var(--text-tertiary)]">
                       Striker
                     </p>
-                    <p className="font-bold text-gray-900 dark:text-white">
+                    <p className="font-bold text-[var(--text-primary)]">
                       {striker?.playerName ?? '—'}
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-[var(--text-secondary)]">
                       {striker?.runs} ({striker?.balls})
                     </p>
                   </div>
                   <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3">
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-[var(--text-tertiary)]">
                       Non-Striker
                     </p>
-                    <p className="font-bold text-gray-900 dark:text-white">
+                    <p className="font-bold text-[var(--text-primary)]">
                       {nonStriker?.playerName ?? '—'}
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-[var(--text-secondary)]">
                       {nonStriker?.runs} ({nonStriker?.balls})
                     </p>
                   </div>
@@ -143,13 +143,13 @@ export const CricketScoringPanel = ({
 
                 {currentBowler && (
                   <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-3">
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-[var(--text-tertiary)]">
                       Bowler
                     </p>
-                    <p className="font-bold text-gray-900 dark:text-white">
+                    <p className="font-bold text-[var(--text-primary)]">
                       {currentBowler.playerName}
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-[var(--text-secondary)]">
                       {currentBowler.overs} ov, {currentBowler.wickets}/
                       {currentBowler.runs}
                     </p>
@@ -171,7 +171,7 @@ export const CricketScoringPanel = ({
           <Card>
             <CardBody>
               <div className="space-y-3">
-                <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                <h3 className="text-sm font-semibold text-[var(--text-secondary)]">
                   Runs
                 </h3>
                 <RunButtons onRun={handleRun} />
@@ -182,7 +182,7 @@ export const CricketScoringPanel = ({
           <Card>
             <CardBody>
               <div className="space-y-3">
-                <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                <h3 className="text-sm font-semibold text-[var(--text-secondary)]">
                   Extras / Wicket
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
@@ -223,10 +223,10 @@ export const CricketScoringPanel = ({
                 .map((batsman) => (
                   <div
                     key={batsman.playerId}
-                    className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded"
+                    className="flex items-center justify-between p-2 bg-[var(--bg-surface-sunken)] rounded"
                   >
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white">
+                      <p className="font-medium text-[var(--text-primary)]">
                         {batsman.playerName}
                         {batsman.isOnStrike && (
                           <span className="ml-2 text-xs text-green-600 dark:text-green-400">
@@ -236,10 +236,10 @@ export const CricketScoringPanel = ({
                       </p>
                     </div>
                     <div className="text-right text-sm">
-                      <p className="font-bold text-gray-900 dark:text-white">
+                      <p className="font-bold text-[var(--text-primary)]">
                         {batsman.runs} ({batsman.balls})
                       </p>
-                      <p className="text-gray-500 dark:text-gray-400">
+                      <p className="text-[var(--text-tertiary)]">
                         SR: {batsman.strikeRate}
                       </p>
                     </div>
@@ -262,10 +262,10 @@ export const CricketScoringPanel = ({
               {innings.bowlers.map((bowler) => (
                 <div
                   key={bowler.playerId}
-                  className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded"
+                  className="flex items-center justify-between p-2 bg-[var(--bg-surface-sunken)] rounded"
                 >
                   <div>
-                    <p className="font-medium text-gray-900 dark:text-white">
+                    <p className="font-medium text-[var(--text-primary)]">
                       {bowler.playerName}
                       {bowler.isBowling && (
                         <span className="ml-2 text-xs text-purple-600 dark:text-purple-400">
@@ -275,10 +275,10 @@ export const CricketScoringPanel = ({
                     </p>
                   </div>
                   <div className="text-right text-sm">
-                    <p className="font-bold text-gray-900 dark:text-white">
+                    <p className="font-bold text-[var(--text-primary)]">
                       {bowler.overs} ov
                     </p>
-                    <p className="text-gray-500 dark:text-gray-400">
+                    <p className="text-[var(--text-tertiary)]">
                       {bowler.wickets}/{bowler.runs} (Econ: {bowler.economy})
                     </p>
                   </div>

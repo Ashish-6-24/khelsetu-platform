@@ -35,15 +35,15 @@ export const MatchTimer = ({
   }, [isRunning, minute, onMinuteUpdate]);
 
   return (
-    <div className="flex items-center justify-between bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+    <div className="flex items-center justify-between bg-[var(--bg-surface-sunken)] rounded-lg p-3">
       <div className="text-center">
-        <p className="text-3xl font-bold text-gray-900 dark:text-white">
+        <p className="text-3xl font-bold text-[var(--text-primary)]">
           {minute}
-          <span className="text-lg text-gray-500 dark:text-gray-400">
+          <span className="text-lg text-[var(--text-tertiary)]">
             :{seconds.toString().padStart(2, '0')}
           </span>
         </p>
-        <p className="text-xs text-gray-500 dark:text-gray-400">minutes</p>
+        <p className="text-xs text-[var(--text-tertiary)]">minutes</p>
       </div>
       <Button
         variant={isRunning ? 'outline' : 'primary'}

@@ -114,10 +114,10 @@ export const FormationPage = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">
             Team Formation
           </h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-[var(--text-tertiary)]">
             {match
               ? `${match.teamA.name} vs ${match.teamB.name}`
               : 'Match Formation Builder'}
@@ -142,10 +142,10 @@ export const FormationPage = () => {
 
       <Card glass>
         <CardBody>
-          <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--text-tertiary)]">
             How to use
           </h3>
-          <ul className="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-400">
+          <ul className="mt-2 space-y-1 text-sm text-[var(--text-secondary)]">
             <li>• Select a formation template above to arrange players</li>
             <li>• Drag players on the pitch to fine-tune positions</li>
             <li>

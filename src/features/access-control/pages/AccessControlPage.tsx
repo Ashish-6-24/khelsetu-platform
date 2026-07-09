@@ -31,10 +31,10 @@ export const UserRolesPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
           User Roles & Permissions
         </h1>
-        <p className="text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-[var(--text-tertiary)] mt-1">
           Manage user roles, permissions, and access control
         </p>
       </div>
@@ -73,7 +73,7 @@ export const UserRolesPage = () => {
                   className={`px-3 py-1.5 text-sm rounded-lg capitalize ${
                     currentRole === role
                       ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
-                      : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+                      : 'bg-[var(--bg-surface-sunken)] text-[var(--text-secondary)]'
                   }`}
                 >
                   {role}

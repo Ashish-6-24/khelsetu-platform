@@ -39,7 +39,7 @@ export const EventInputPanel = ({
                   'border border-[var(--border-subtle)] dark:border-[var(--border-subtle)]/50',
                   'bg-[var(--bg-surface)]/60 dark:bg-[var(--bg-surface)]/60',
                   'hover:bg-[var(--bg-surface)] dark:hover:bg-[var(--bg-surface-raised)]/60',
-                  'hover:border-[var(--border-subtle)] dark:hover:border-gray-600',
+                  'hover:border-[var(--border-subtle)]',
                   'hover:-translate-y-0.5 hover:shadow-md',
                   'active:translate-y-0',
                   'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)]',

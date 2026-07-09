@@ -9,7 +9,7 @@ interface RunButtonsProps {
 const RUN_VALUES = [0, 1, 2, 3, 4, 6];
 
 const RUN_COLORS: Record<number, string> = {
-  0: 'bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600',
+  0: 'bg-[var(--bg-surface-sunken)] text-[var(--text-secondary)] hover:bg-[var(--bg-surface)]',
   1: 'bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-200 dark:hover:bg-blue-800',
   2: 'bg-blue-200 text-blue-900 hover:bg-blue-300 dark:bg-blue-800 dark:text-blue-100 dark:hover:bg-blue-700',
   3: 'bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-200 dark:hover:bg-purple-800',

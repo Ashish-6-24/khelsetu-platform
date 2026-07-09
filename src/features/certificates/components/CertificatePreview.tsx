@@ -75,7 +75,7 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
             <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--text-muted)] dark:text-[var(--text-tertiary)]">
               Team
             </p>
-            <p className="mt-0.5 font-medium text-[var(--text-primary)] dark:text-gray-200">
+            <p className="mt-0.5 font-medium text-[var(--text-primary)]">
               {data.teamName}
             </p>
           </div>
@@ -83,7 +83,7 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
             <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--text-muted)] dark:text-[var(--text-tertiary)]">
               Tournament
             </p>
-            <p className="mt-0.5 font-medium text-[var(--text-primary)] dark:text-gray-200">
+            <p className="mt-0.5 font-medium text-[var(--text-primary)]">
               {data.tournamentName}
             </p>
           </div>
@@ -91,7 +91,7 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
             <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--text-muted)] dark:text-[var(--text-tertiary)]">
               Date
             </p>
-            <p className="mt-0.5 font-medium text-[var(--text-primary)] dark:text-gray-200">
+            <p className="mt-0.5 font-medium text-[var(--text-primary)]">
               {getFormattedDate(data.date)}
             </p>
           </div>
@@ -101,7 +101,7 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
         <div className="flex w-full items-end justify-between">
           {/* Left signature */}
           <div className="cert-signature text-center">
-            <p className="text-sm font-medium text-[var(--text-primary)] dark:text-gray-200">
+            <p className="text-sm font-medium text-[var(--text-primary)]">
               {data.organizer}
             </p>
             <p className="text-[10px] text-[var(--text-muted)] dark:text-[var(--text-tertiary)]">
@@ -118,7 +118,7 @@ export function CertificatePreview({ data }: CertificatePreviewProps) {
 
           {/* Right signature */}
           <div className="cert-signature text-center">
-            <p className="text-sm font-medium text-[var(--text-primary)] dark:text-gray-200">
+            <p className="text-sm font-medium text-[var(--text-primary)]">
               KhelSetu
             </p>
             <p className="text-[10px] text-[var(--text-muted)] dark:text-[var(--text-tertiary)]">

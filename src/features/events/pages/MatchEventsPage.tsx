@@ -48,10 +48,10 @@ export const LiveEventCenterPage = () => {
   if (!match) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
           Match Not Found
         </h1>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-[var(--text-secondary)]">
           The match you are looking for does not exist.
         </p>
       </div>
@@ -63,10 +63,10 @@ export const LiveEventCenterPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
           {match.teamA.name} vs {match.teamB.name}
         </h1>
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-[var(--text-tertiary)]">
           {match.venue} &middot;{' '}
           {sport.charAt(0).toUpperCase() + sport.slice(1)}
         </p>

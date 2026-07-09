@@ -87,7 +87,7 @@ export const SearchPage = () => {
               {[1, 2, 3].map((n) => (
                 <div
                   key={`skeleton-${n}`}
-                  className="animate-pulse h-16 bg-gray-200 dark:bg-[var(--bg-surface-raised)] rounded-lg"
+                  className="animate-pulse h-16 bg-[var(--bg-surface-sunken)] rounded-lg"
                 />
               ))}
             </div>

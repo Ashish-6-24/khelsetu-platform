@@ -15,29 +15,29 @@ export const PartnershipDisplay = ({
       : '0.00';
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 space-y-2">
-      <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+    <div className="bg-[var(--bg-surface-sunken)] rounded-lg p-3 space-y-2">
+      <h4 className="text-sm font-semibold text-[var(--text-secondary)]">
         Partnership
       </h4>
       <div className="grid grid-cols-2 gap-2 text-sm">
         <div>
-          <p className="text-gray-500 dark:text-gray-400">Runs</p>
-          <p className="font-bold text-gray-900 dark:text-white">
+          <p className="text-[var(--text-tertiary)]">Runs</p>
+          <p className="font-bold text-[var(--text-primary)]">
             {partnership.runs}
           </p>
         </div>
         <div>
-          <p className="text-gray-500 dark:text-gray-400">Balls</p>
-          <p className="font-bold text-gray-900 dark:text-white">
+          <p className="text-[var(--text-tertiary)]">Balls</p>
+          <p className="font-bold text-[var(--text-primary)]">
             {partnership.balls}
           </p>
         </div>
         <div>
-          <p className="text-gray-500 dark:text-gray-400">Run Rate</p>
-          <p className="font-bold text-gray-900 dark:text-white">{runRate}</p>
+          <p className="text-[var(--text-tertiary)]">Run Rate</p>
+          <p className="font-bold text-[var(--text-primary)]">{runRate}</p>
         </div>
       </div>
-      <div className="text-xs text-gray-500 dark:text-gray-400">
+      <div className="text-xs text-[var(--text-tertiary)]">
         {partnership.batsmanAName} & {partnership.batsmanBName}
       </div>
     </div>

@@ -31,10 +31,10 @@ export const MatchStatisticsPage = () => {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">
             Match Statistics
           </h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-[var(--text-tertiary)]">
             Loading match data...
           </p>
         </div>
@@ -57,11 +57,11 @@ export const MatchStatisticsPage = () => {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">
             Match Statistics
           </h1>
           {match && (
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-sm text-[var(--text-tertiary)]">
               {match.teamA.name} vs {match.teamB.name}
             </p>
           )}
@@ -74,10 +74,10 @@ export const MatchStatisticsPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
           Match Statistics
         </h1>
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-[var(--text-tertiary)]">
           {statistics.teamA.teamName} vs {statistics.teamB.teamName}
         </p>
       </div>

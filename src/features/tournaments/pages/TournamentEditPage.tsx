@@ -122,9 +122,9 @@ export const TournamentEditPage = () => {
     return (
       <div className="space-y-6">
         <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-48" />
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-64" />
-          <div className="h-64 bg-gray-200 dark:bg-gray-700 rounded" />
+          <div className="h-8 bg-[var(--bg-surface-sunken)] rounded w-48" />
+          <div className="h-4 bg-[var(--bg-surface-sunken)] rounded w-64" />
+          <div className="h-64 bg-[var(--bg-surface-sunken)] rounded" />
         </div>
       </div>
     );
@@ -143,10 +143,10 @@ export const TournamentEditPage = () => {
   if (!tournament) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
           Tournament Not Found
         </h1>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-[var(--text-secondary)]">
           The tournament you are looking for does not exist.
         </p>
       </div>
@@ -156,10 +156,10 @@ export const TournamentEditPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
           Edit Tournament
         </h1>
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-1 text-sm text-[var(--text-tertiary)]">
           Update tournament details
         </p>
       </div>

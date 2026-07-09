@@ -90,10 +90,10 @@ export const MediaPage = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">
             Media Library
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-[var(--text-tertiary)] mt-1">
             Manage images, videos, and logos
           </p>
         </div>
@@ -124,7 +124,7 @@ export const MediaPage = () => {
             className={`px-3 py-1.5 text-sm rounded-lg capitalize ${
               activeFilter === f
                 ? 'bg-[var(--brand-primary)] text-white shadow-md'
-                : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                : 'bg-[var(--bg-surface-sunken)] text-[var(--text-secondary)] hover:bg-[var(--bg-surface)]'
             }`}
           >
             {f}
@@ -137,22 +137,22 @@ export const MediaPage = () => {
           <Card key={item.id} hover>
             <CardBody>
               <div className="space-y-3">
-                <div className="aspect-video bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
+                <div className="aspect-video bg-[var(--bg-surface-sunken)] rounded-xl flex items-center justify-center">
                   {item.type === 'image' && (
-                    <Image className="w-8 h-8 text-gray-400" />
+                    <Image className="w-8 h-8 text-[var(--text-tertiary)]" />
                   )}
                   {item.type === 'video' && (
-                    <Image className="w-8 h-8 text-gray-400" />
+                    <Image className="w-8 h-8 text-[var(--text-tertiary)]" />
                   )}
                   {item.type === 'logo' && (
-                    <Image className="w-8 h-8 text-gray-400" />
+                    <Image className="w-8 h-8 text-[var(--text-tertiary)]" />
                   )}
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                  <p className="text-sm font-medium text-[var(--text-primary)] truncate">
                     {item.name}
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-[var(--text-tertiary)]">
                     {item.size}
                   </p>
                 </div>
@@ -172,7 +172,7 @@ export const MediaPage = () => {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-red-600 dark:text-red-400"
+                      className="text-[var(--color-danger)]"
                       onClick={() => handleDelete(item)}
                       aria-label={`Delete ${item.name}`}
                     >

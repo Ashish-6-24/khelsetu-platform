@@ -317,10 +317,10 @@ export function MatchReport({
 export function MatchReportSkeleton() {
   return (
     <div className="space-y-6 animate-pulse">
-      <div className="h-48 rounded-2xl bg-gray-200 dark:bg-[var(--bg-surface-raised)]" />
-      <div className="h-32 rounded-xl bg-gray-200 dark:bg-[var(--bg-surface-raised)]" />
-      <div className="h-48 rounded-xl bg-gray-200 dark:bg-[var(--bg-surface-raised)]" />
-      <div className="h-48 rounded-xl bg-gray-200 dark:bg-[var(--bg-surface-raised)]" />
+      <div className="h-48 rounded-2xl bg-[var(--bg-surface-sunken)]" />
+      <div className="h-32 rounded-xl bg-[var(--bg-surface-sunken)]" />
+      <div className="h-48 rounded-xl bg-[var(--bg-surface-sunken)]" />
+      <div className="h-48 rounded-xl bg-[var(--bg-surface-sunken)]" />
     </div>
   );
 }

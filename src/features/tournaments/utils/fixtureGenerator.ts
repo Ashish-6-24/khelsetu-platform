@@ -142,7 +142,7 @@ export const generateKnockoutBracket = (
 
 export const getMatchStatusColor = (status: MatchStatus): string => {
   const colors: Record<MatchStatus, string> = {
-    scheduled: 'text-gray-500 dark:text-gray-400',
+    scheduled: 'text-[var(--text-tertiary)]',
     live: 'text-green-600 dark:text-green-400',
     completed: 'text-blue-600 dark:text-blue-400',
     cancelled: 'text-red-600 dark:text-red-400',

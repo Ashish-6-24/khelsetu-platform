@@ -62,7 +62,7 @@ export const RegisterPage = () => {
   };
 
   return (
-    <div className="rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-7 shadow-[var(--shadow-xl)] sm:p-9">
+    <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-7 shadow-[var(--shadow-xl)] sm:p-9">
       <div className="lg:hidden mb-6 flex justify-center">
         <Logo size="md" />
       </div>

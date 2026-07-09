@@ -71,7 +71,7 @@ export const BracketControls = ({
       </div>
 
       {/* Export buttons */}
-      <div className="flex flex-wrap items-center gap-1.5 rounded-xl bg-[var(--bg-surface)]/80 dark:bg-[var(--bg-surface)]/80 backdrop-blur-xl border border-gray-200/60 dark:border-[var(--border-subtle)]/60 p-1 shadow-[var(--shadow-sm)]">
+      <div className="flex flex-wrap items-center gap-1.5 rounded-xl bg-[var(--bg-surface)]/80 dark:bg-[var(--bg-surface)]/80 backdrop-blur-xl border border-[var(--border-subtle)]/60 p-1 shadow-[var(--shadow-sm)]">
         <Button
           variant="ghost"
           size="sm"
