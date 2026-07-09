@@ -236,7 +236,7 @@ jobs:
           # Auto-fixable only if purely lint/format AND not a fork
           AUTO_FIXABLE="false"
           IS_FORK="${{ steps.find-pr.outputs.is_fork }}"
-          if [ "$PRIMARY" = "lint" ] && [ "$TYPE" -eq 0 ] && [ "$TEST" -eq 0 ] && [ "$BUILD" -eq 0 ] && [ "$IS_FORK" = "false" ]; then
+          if [ "$PRIMARY" = "lint" ] && [ "$TEST" -eq 0 ] && [ "$BUILD" -eq 0 ] && [ "$IS_FORK" = "false" ]; then
             AUTO_FIXABLE="true"
           fi
 
