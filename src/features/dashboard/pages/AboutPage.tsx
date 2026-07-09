@@ -22,7 +22,7 @@ export const AboutPage = () => {
       <Hero />
       <Mission />
       <Story />
-      <Team />
+
       <Values />
       <BackedBy />
       <FooterCta />
@@ -159,72 +159,6 @@ const Story = () => (
               </p>
             </div>
           </motion.div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-const team = [
-  {
-    name: 'Ashish Subedi',
-    role: 'Co-founder, Engineering',
-    bio: 'Previously at a fintech in Lalitpur. Built three tournament apps that nobody used.',
-    initials: 'AS',
-  },
-  {
-    name: 'Sita Rana',
-    role: 'Co-founder, Product',
-    bio: 'Ran the Pokhara Premier League for 4 years. Knows where scorecards go to die.',
-    initials: 'SR',
-  },
-  {
-    name: 'Bibek Shrestha',
-    role: 'Co-founder, Design',
-    bio: 'Designer, occasional cricket scorer, permanent chai enthusiast.',
-    initials: 'BS',
-  },
-];
-
-const Team = () => (
-  <section className="border-t border-[var(--border-subtle)] py-20 dark:border-[var(--border-strong)] sm:py-24">
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-2xl text-center">
-        <div className="text-xs font-semibold uppercase tracking-wider text-[var(--brand-accent)]">
-          The team
-        </div>
-        <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-[var(--text-primary)] sm:text-4xl dark:text-white">
-          Three people. One platform.
-        </h2>
-        <p className="mt-4 text-lg text-[var(--text-secondary)] dark:text-[var(--text-muted)]">
-          We&apos;re small, opinionated, and we ship on Fridays.
-        </p>
-      </div>
-      <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-3">
-        {team.map((m) => (
-          <div
-            key={m.name}
-            className="rounded-2xl border border-[var(--border-subtle)] bg-white p-6 transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_24px_-6px_rgb(15_23_42/0.08)] dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-raised)]"
-          >
-            <div
-              className="flex h-16 w-16 items-center justify-center rounded-full text-xl font-semibold text-white shadow-sm"
-              style={{
-                background:
-                  'linear-gradient(135deg, var(--brand-primary-bg-hover) 0%, var(--brand-primary-bg) 100%)',
-              }}
-            >
-              {m.initials}
-            </div>
-            <h3 className="mt-4 text-base font-semibold text-[var(--text-primary)] dark:text-white">
-              {m.name}
-            </h3>
-            <p className="mt-1 text-xs text-[var(--brand-primary)] dark:text-[var(--brand-primary)]">
-              {m.role}
-            </p>
-            <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)] dark:text-[var(--text-muted)]">
-              {m.bio}
-            </p>
-          </div>
         ))}
       </div>
     </div>
