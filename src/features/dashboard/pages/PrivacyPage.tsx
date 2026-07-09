@@ -1,15 +1,21 @@
-import { Link } from 'react-router-dom';
-
 import { ROUTES } from '@shared/utils/constants';
+
+import { Link } from 'react-router-dom';
 
 export const PrivacyPage = () => (
   <div className="mx-auto max-w-3xl px-4 py-16">
-    <h1 className="text-3xl font-bold text-[var(--text-primary)]">Privacy Policy</h1>
-    <p className="mt-2 text-sm text-[var(--text-tertiary)]">Last updated: July 9, 2026</p>
+    <h1 className="text-3xl font-bold text-[var(--text-primary)]">
+      Privacy Policy
+    </h1>
+    <p className="mt-2 text-sm text-[var(--text-tertiary)]">
+      Last updated: July 9, 2026
+    </p>
 
     <div className="prose prose-sm mt-8 space-y-6 text-[var(--text-secondary)]">
       <section>
-        <h2 className="text-xl font-semibold text-[var(--text-primary)]">1. Information We Collect</h2>
+        <h2 className="text-xl font-semibold text-[var(--text-primary)]">
+          1. Information We Collect
+        </h2>
         <p>We collect information you provide directly:</p>
         <ul className="list-disc pl-5">
           <li>Account information (name, email, phone, role)</li>
@@ -20,7 +26,9 @@ export const PrivacyPage = () => (
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-[var(--text-primary)]">2. How We Use Information</h2>
+        <h2 className="text-xl font-semibold text-[var(--text-primary)]">
+          2. How We Use Information
+        </h2>
         <p>We use your information to:</p>
         <ul className="list-disc pl-5">
           <li>Provide and improve the Service</li>
@@ -32,23 +40,31 @@ export const PrivacyPage = () => (
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-[var(--text-primary)]">3. Data Sharing</h2>
+        <h2 className="text-xl font-semibold text-[var(--text-primary)]">
+          3. Data Sharing
+        </h2>
         <p>
-          We do not sell your personal information. We may share data with service providers
-          who assist in operating the Service, and as required by law.
+          We do not sell your personal information. We may share data with
+          service providers who assist in operating the Service, and as required
+          by law.
         </p>
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-[var(--text-primary)]">4. Data Security</h2>
+        <h2 className="text-xl font-semibold text-[var(--text-primary)]">
+          4. Data Security
+        </h2>
         <p>
-          We implement industry-standard security measures including encryption in transit (TLS)
-          and at rest, access controls, and regular security audits.
+          We implement industry-standard security measures including encryption
+          in transit (TLS) and at rest, access controls, and regular security
+          audits.
         </p>
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-[var(--text-primary)]">5. Your Rights</h2>
+        <h2 className="text-xl font-semibold text-[var(--text-primary)]">
+          5. Your Rights
+        </h2>
         <p>You have the right to:</p>
         <ul className="list-disc pl-5">
           <li>Access your personal data</li>
@@ -60,20 +76,29 @@ export const PrivacyPage = () => (
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-[var(--text-primary)]">6. Data Retention</h2>
+        <h2 className="text-xl font-semibold text-[var(--text-primary)]">
+          6. Data Retention
+        </h2>
         <p>
-          We retain your data for as long as your account is active or as needed to provide
-          the Service. We may retain certain information as required by law.
+          We retain your data for as long as your account is active or as needed
+          to provide the Service. We may retain certain information as required
+          by law.
         </p>
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-[var(--text-primary)]">7. Contact</h2>
+        <h2 className="text-xl font-semibold text-[var(--text-primary)]">
+          7. Contact
+        </h2>
         <p>
           For privacy-related requests, email{' '}
-          <a href="mailto:privacy@khelsetu.app" className="text-[var(--text-link)] hover:underline">
+          <a
+            href="mailto:privacy@khelsetu.app"
+            className="text-[var(--text-link)] hover:underline"
+          >
             privacy@khelsetu.app
-          </a>.
+          </a>
+          .
         </p>
       </section>
     </div>

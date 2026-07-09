@@ -41,7 +41,9 @@ export const ResetPasswordPage = () => {
     return (
       <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-7 shadow-[var(--shadow-xl)] sm:p-9 text-center">
         <Logo size="md" className="mx-auto mb-6" />
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">Invalid link</h1>
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
+          Invalid link
+        </h1>
         <p className="mt-3 text-sm text-[var(--text-secondary)]">
           This password reset link is invalid or expired.
         </p>
@@ -59,7 +61,9 @@ export const ResetPasswordPage = () => {
     return (
       <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-7 shadow-[var(--shadow-xl)] sm:p-9 text-center">
         <Logo size="md" className="mx-auto mb-6" />
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">Password updated</h1>
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
+          Password updated
+        </h1>
         <p className="mt-3 text-sm text-[var(--text-secondary)]">
           Your password has been reset successfully.
         </p>
@@ -76,7 +80,9 @@ export const ResetPasswordPage = () => {
   return (
     <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-7 shadow-[var(--shadow-xl)] sm:p-9">
       <Logo size="md" className="mx-auto mb-6" />
-      <h1 className="text-2xl font-bold text-[var(--text-primary)]">Set new password</h1>
+      <h1 className="text-2xl font-bold text-[var(--text-primary)]">
+        Set new password
+      </h1>
       <p className="mt-2 text-sm text-[var(--text-secondary)]">
         Choose a strong password for your account.
       </p>
@@ -109,7 +115,9 @@ export const ResetPasswordPage = () => {
         />
         <Button
           type="submit"
-          disabled={isLoading || password.length < 8 || password !== confirmPassword}
+          disabled={
+            isLoading || password.length < 8 || password !== confirmPassword
+          }
           isLoading={isLoading}
           fullWidth
           size="lg"
