@@ -1,11 +1,15 @@
+import { playerService } from '@features/players/services/playerService';
 import {
   BasketballScoringPanel,
   CricketScoringPanel,
   FootballScoringPanel,
   VolleyballScoringPanel,
 } from '@features/scoring/components';
+import { useScoringWebSocket } from '@features/scoring/hooks/useScoringWebSocket';
+import { ConnectionStatusIndicator } from '@features/scoring/live/components/ConnectionStatusIndicator';
 import { MatchStatusIndicator } from '@features/scoring/live/components/MatchStatusIndicator';
 import { matchService } from '@features/tournaments/services/tournament';
+import { useSocket } from '@features/websocket/useSocket';
 import type { Match } from '@shared/types/tournament';
 import { Button } from '@shared/ui/Button';
 import { Card, CardBody } from '@shared/ui/Card';
@@ -82,6 +86,23 @@ export const ScoringMatchPage = () => {
     queryFn: () => matchService.getById(matchId!),
     enabled: !!matchId,
   });
+
+  const { data: teamAPlayers = [] } = useQuery({
+    queryKey: ['players', 'team', match?.teamA?.id],
+    queryFn: () => playerService.getByTeam(match!.teamA.id),
+    enabled: !!match?.teamA?.id,
+  });
+
+  const { data: teamBPlayers = [] } = useQuery({
+    queryKey: ['players', 'team', match?.teamB?.id],
+    queryFn: () => playerService.getByTeam(match!.teamB.id),
+    enabled: !!match?.teamB?.id,
+  });
+
+  useScoringWebSocket(matchId);
+
+  const { connectionStatus, reconnectAttempts, maxReconnectAttempts } =
+    useSocket();
 
   useEffect(() => {
     if (match && matchId) {
@@ -160,7 +181,14 @@ export const ScoringMatchPage = () => {
             </p>
           </div>
         </div>
-        <MatchStatusIndicator status={match.status} />
+        <div className="flex items-center gap-3">
+          <ConnectionStatusIndicator
+            status={connectionStatus}
+            reconnectAttempts={reconnectAttempts}
+            maxReconnectAttempts={maxReconnectAttempts}
+          />
+          <MatchStatusIndicator status={match.status} />
+        </div>
       </div>
 
       {!activeSport && (
@@ -198,6 +226,14 @@ export const ScoringMatchPage = () => {
                 onMinuteUpdate={updateFootballMinute}
                 onToggleTimer={toggleFootballTimer}
                 onUndo={undoLastAction}
+                teamAPlayers={teamAPlayers.map((p) => ({
+                  id: p.id,
+                  name: p.name,
+                }))}
+                teamBPlayers={teamBPlayers.map((p) => ({
+                  id: p.id,
+                  name: p.name,
+                }))}
               />
             )}
             {sport === 'volleyball' && volleyball.score && (
