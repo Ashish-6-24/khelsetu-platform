@@ -284,12 +284,12 @@ jobs:
             --arg primary "${{ steps.classify.outputs.primary }}" \
             --arg auto_fixable "${{ steps.classify.outputs.auto_fixable }}" \
             --argjson failed_jobs '${{ steps.data.outputs.jobs }}' \
-            --argjson annotations '${{ steps.annotations.outputs.annotations }}' \
-            --argjson sonar_issues '${{ steps.sonar.outputs.issues }}' \
+            --argjson annotations '${{ steps.annotations.outputs.annotations || '[]' }}' \
+            --argjson sonar_issues '${{ steps.sonar.outputs.issues || '[]' }}' \
             --arg coverage "${{ steps.coverage.outputs.percentage }}" \
             --arg is_flaky "${{ steps.flaky.outputs.is_flaky }}" \
             --arg is_fork "${{ steps.find-pr.outputs.is_fork }}" \
-            --arg pr_number "${{ steps.find-pr.outputs.number }}" \
+            --arg pr_number "${{ steps.find-pr.outputs.number || '' }}" \
             --arg retry_reached "${{ steps.retry.outputs.reached_limit }}" \
             --argjson lint "${{ steps.classify.outputs.lint || 0 }}" \
             --argjson type "${{ steps.classify.outputs.type || 0 }}" \
