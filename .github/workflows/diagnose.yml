@@ -287,6 +287,12 @@ jobs:
             --arg is_fork "${{ steps.find-pr.outputs.is_fork }}" \
             --arg pr_number "${{ steps.find-pr.outputs.number }}" \
             --arg retry_reached "${{ steps.retry.outputs.reached_limit }}" \
+            --argjson lint "${{ steps.classify.outputs.lint || 0 }}" \
+            --argjson type "${{ steps.classify.outputs.type || 0 }}" \
+            --argjson test "${{ steps.classify.outputs.test || 0 }}" \
+            --argjson build_count "${{ steps.classify.outputs.build || 0 }}" \
+            --argjson dep "${{ steps.classify.outputs.dep || 0 }}" \
+            --argjson snapshot "${{ steps.classify.outputs.snapshot || 0 }}" \
             '{
               timestamp: (now | todate),
               workflow: $workflow,
@@ -299,12 +305,12 @@ jobs:
               auto_fixable: ($auto_fixable == "true"),
               retry_reached: ($retry_reached == "true"),
               counts: {
-                lint: ($lint // 0),
-                type: ($type // 0),
-                test: ($test // 0),
-                build: ($build // 0),
-                dependency: ($dep // 0),
-                snapshot: ($snapshot // 0)
+                lint: $lint,
+                type: $type,
+                test: $test,
+                build: $build_count,
+                dependency: $dep,
+                snapshot: $snapshot
               },
               failed_jobs: $failed_jobs,
               annotations: $annotations,
