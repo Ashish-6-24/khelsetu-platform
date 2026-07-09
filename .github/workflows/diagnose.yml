@@ -283,7 +283,7 @@ jobs:
             --arg sha "${{ steps.data.outputs.sha }}" \
             --arg primary "${{ steps.classify.outputs.primary }}" \
             --arg auto_fixable "${{ steps.classify.outputs.auto_fixable }}" \
-            --argjson failed_jobs '${{ steps.data.outputs.jobs }}' \
+            --argjson failed_jobs '${{ steps.data.outputs.jobs || '[]' }}' \
             --argjson annotations '${{ steps.annotations.outputs.annotations || '[]' }}' \
             --argjson sonar_issues '${{ steps.sonar.outputs.issues || '[]' }}' \
             --arg coverage "${{ steps.coverage.outputs.percentage }}" \
