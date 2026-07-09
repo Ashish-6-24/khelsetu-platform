@@ -184,6 +184,7 @@ const SaveButton = ({
 export const SettingsPage = () => {
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
+  const logout = useAuthStore((state) => state.logout);
   const theme = useUIStore((state) => state.theme);
   const { addToast } = useToast();
 
@@ -237,13 +238,11 @@ export const SettingsPage = () => {
   });
 
   const updatePasswordMutation = useMutation({
-    mutationFn: (_data: PasswordFormData) => {
-      addToast({
-        type: 'warning',
-        message: 'Password change is not yet connected to the backend.',
-      });
-      return Promise.resolve();
-    },
+    mutationFn: (data: PasswordFormData) =>
+      authService.changePassword({
+        currentPassword: data.currentPassword,
+        newPassword: data.newPassword,
+      }),
     onSuccess: () => {
       addToast({ type: 'success', message: 'Password updated successfully' });
       resetPassword();
@@ -545,12 +544,27 @@ export const SettingsPage = () => {
                 variant="danger"
                 size="sm"
                 className="mt-3"
-                onClick={() =>
-                  addToast({
-                    type: 'warning',
-                    message: 'Account deletion is not yet available.',
-                  })
-                }
+                onClick={async () => {
+                  if (
+                    !window.confirm(
+                      'Are you sure? This will permanently delete your account and all data.',
+                    )
+                  )
+                    return;
+                  try {
+                    await authService.deleteAccount();
+                    addToast({
+                      type: 'success',
+                      message: 'Account deleted. Signing out…',
+                    });
+                    logout();
+                  } catch {
+                    addToast({
+                      type: 'error',
+                      message: 'Failed to delete account. Contact support.',
+                    });
+                  }
+                }}
               >
                 Delete Account
               </Button>

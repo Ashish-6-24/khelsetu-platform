@@ -21,6 +21,10 @@ export const ROUTES = {
   CONTACT: '/contact',
   LOGIN: '/auth/login',
   REGISTER: '/auth/register',
+  FORGOT_PASSWORD: '/auth/forgot-password',
+  RESET_PASSWORD: '/auth/reset-password',
+  TERMS: '/terms',
+  PRIVACY: '/privacy',
   DASHBOARD: '/dashboard',
   TOURNAMENTS: '/tournaments',
   TOURNAMENT_CREATE: '/tournaments/create',
@@ -71,6 +75,8 @@ export const API_ENDPOINTS = {
     LOGOUT: '/auth/logout',
     REFRESH: '/auth/refresh',
     PROFILE: '/auth/profile',
+    FORGOT_PASSWORD: '/auth/forgot-password',
+    RESET_PASSWORD: '/auth/reset-password',
   },
   TOURNAMENTS: {
     LIST: '/tournaments',
@@ -137,6 +143,9 @@ export const API_ENDPOINTS = {
     CREATE: '/news',
     UPDATE: (id: string) => `/news/${id}`,
     DELETE: (id: string) => `/news/${id}`,
+  },
+  CONTACT: {
+    SEND: '/contact',
   },
   CERTIFICATES: {
     GENERATE: '/certificates/generate',

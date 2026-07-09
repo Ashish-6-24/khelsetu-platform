@@ -21,6 +21,7 @@ export const LoginPage = () => {
   const { addToast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [validatingEmail, setValidatingEmail] = useState(false);
   const [validatingPassword, setValidatingPassword] = useState(false);
@@ -199,16 +200,18 @@ export const LoginPage = () => {
               id="remember-me"
               name="remember-me"
               type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
               className="h-4 w-4 rounded border-[var(--border-strong)] text-[var(--brand-primary)] transition-colors focus:ring-2 focus:ring-[var(--brand-primary)]/30 dark:border-[var(--border-strong)] dark:bg-[var(--bg-surface-sunken)]"
             />
             Remember me
           </label>
-          <button
-            type="button"
+          <Link
+            to={ROUTES.FORGOT_PASSWORD}
             className="font-medium text-[var(--text-link)] transition-colors hover:text-[var(--brand-primary-hover)]"
           >
             Forgot password?
-          </button>
+          </Link>
         </div>
 
         <Button
@@ -239,6 +242,13 @@ export const LoginPage = () => {
         variant="outline"
         fullWidth
         size="lg"
+        onClick={() =>
+          addToast({
+            type: 'info',
+            title: 'Coming soon',
+            message: 'Google sign-in will be available in a future update.',
+          })
+        }
         leftIcon={
           <svg className="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
             <path

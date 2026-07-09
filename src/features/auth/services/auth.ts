@@ -42,4 +42,20 @@ export const authService = {
     const response = await api.patch<User>(API_ENDPOINTS.AUTH.PROFILE, data);
     return response.data;
   },
+
+  forgotPassword: async (email: string) => {
+    await api.post(API_ENDPOINTS.AUTH.FORGOT_PASSWORD, { email });
+  },
+
+  resetPassword: async (token: string, password: string) => {
+    await api.post(API_ENDPOINTS.AUTH.RESET_PASSWORD, { token, password });
+  },
+
+  changePassword: async (data: { currentPassword: string; newPassword: string }) => {
+    await api.post('/auth/change-password', data);
+  },
+
+  deleteAccount: async () => {
+    await api.delete(API_ENDPOINTS.AUTH.PROFILE);
+  },
 };

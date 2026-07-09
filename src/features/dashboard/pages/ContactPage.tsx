@@ -1,6 +1,8 @@
 import { Button } from '@shared/ui/Button';
 import { Input } from '@shared/ui/Input';
 import { useToast } from '@shared/ui/toast-context';
+import { API_ENDPOINTS, ROUTES } from '@shared/utils/constants';
+import { api } from '@lib/axios';
 import { clsx } from 'clsx';
 import { type Variants, motion } from 'framer-motion';
 import {
@@ -60,23 +62,39 @@ export const ContactPage = () => {
     ev.preventDefault();
     if (!validate()) return;
     setIsSending(true);
-    await new Promise((r) => setTimeout(r, 600));
-    setIsSending(false);
-    addToast({
-      type: 'success',
-      title: 'Message sent!',
-      message: `We&apos;ll get back to you within 24 hours${
-        form.language === 'ne' ? ' in Nepali' : ''
-      }.`,
-    });
-    setForm({
-      name: '',
-      email: '',
-      phone: '',
-      topic: 'General',
-      message: '',
-      language: 'en',
-    });
+    try {
+      await api.post(API_ENDPOINTS.CONTACT.SEND, {
+        name: form.name,
+        email: form.email,
+        phone: form.phone || undefined,
+        topic: form.topic,
+        message: form.message,
+        language: form.language,
+      });
+      addToast({
+        type: 'success',
+        title: 'Message sent!',
+        message: `We'll get back to you within 24 hours${
+          form.language === 'ne' ? ' in Nepali' : ''
+        }.`,
+      });
+      setForm({
+        name: '',
+        email: '',
+        phone: '',
+        topic: 'General',
+        message: '',
+        language: 'en',
+      });
+    } catch {
+      addToast({
+        type: 'error',
+        title: 'Failed to send',
+        message: 'Please try again or email us directly.',
+      });
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -311,7 +329,7 @@ const ContactForm = ({
     <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <p className="text-xs text-[var(--text-secondary)] dark:text-[var(--text-tertiary)]">
         By submitting, you agree to our{' '}
-        <a href="#" className="underline hover:text-[var(--brand-primary)]">
+        <a href={ROUTES.PRIVACY} className="underline hover:text-[var(--brand-primary)]">
           privacy policy
         </a>
         .
