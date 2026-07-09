@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     if: >-
       (github.event_name == 'workflow_dispatch') ||
-      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request')
+      (github.event.workflow_run.conclusion != 'failure' && github.event.workflow_run.event != 'schedule')
     steps:
       # ── 1. Determine context ─────────────────────────────────────
       - name: Determine context
@@ -35,11 +35,17 @@ jobs:
             echo "run_id=${{ inputs.fix_run_id }}" >> "$GITHUB_OUTPUT"
           else
             RUN_ID="${{ github.event.workflow_run.id }}"
-            ARTIFACT_NAME=$(gh api "repos/$REPO/actions/runs/$RUN_ID/artifacts" \
-              --jq '.artifacts[] | select(.name | startswith("fix-results-")) | .name' 2>/dev/null || echo "")
-            PR_NUM=$(echo "$ARTIFACT_NAME" | grep -oP 'fix-results-\K[0-9]+' || echo "")
-            echo "pr_number=$PR_NUM" >> "$GITHUB_OUTPUT"
+            EVENT="${{ github.event.workflow_run.event }}"
             echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+
+            if [ "$EVENT" = "pull_request" ]; then
+              ARTIFACT_NAME=$(gh api "repos/$REPO/actions/runs/$RUN_ID/artifacts" \
+                --jq '.artifacts[] | select(.name | startswith("fix-results-")) | .name' 2>/dev/null || echo "")
+              PR_NUM=$(echo "$ARTIFACT_NAME" | grep -oP 'fix-results-\K[0-9]+' || echo "")
+              echo "pr_number=$PR_NUM" >> "$GITHUB_OUTPUT"
+            else
+              echo "pr_number=" >> "$GITHUB_OUTPUT"
+            fi
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
