@@ -1,0 +1,36 @@
+name: Auto-Merge Dependabot
+
+on:
+  pull_request:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  approve-and-merge:
+    name: Auto-approve & merge
+    runs-on: ubuntu-latest
+    if: >-
+      github.event.pull_request.user.login == 'dependabot[bot]' ||
+      github.event.pull_request.user.login == 'renovate[bot]'
+    steps:
+      - name: Wait for CI to pass
+        uses: lewagon/wait-on-check-action@v1.3.4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          check-name: 'Pipeline Gate'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 30
+
+      - name: Approve PR
+        run: gh pr review "$PR" --approve
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+
+      - name: Enable auto-merge
+        run: gh pr merge "$PR" --squash --auto
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
