@@ -95,11 +95,24 @@ jobs:
 
       # ── 3. Download diagnosis artifact ───────────────────────────
       - name: Download diagnosis
-        uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e
-        with:
-          name: diagnosis-${{ steps.context.outputs.run_id }}
-          path: /tmp
-          run-id: ${{ steps.context.outputs.run_id }}
+        run: |
+          RUN_ID="${{ steps.context.outputs.run_id }}"
+          REPO="${{ github.repository }}"
+
+          DIAG_ARTIFACT_ID=$(gh api "repos/$REPO/actions/runs/$RUN_ID/artifacts" \
+            --jq '.artifacts[] | select(.name | startswith("diagnosis-")) | .id' 2>/dev/null || echo "")
+
+          if [ -n "$DIAG_ARTIFACT_ID" ]; then
+            gh api "repos/$REPO/actions/runs/$RUN_ID/artifacts/$DIAG_ARTIFACT_ID/zip" > /tmp/diagnosis.zip 2>/dev/null
+            unzip -q -o /tmp/diagnosis.zip -d /tmp 2>/dev/null || true
+            echo "Downloaded diagnosis artifact"
+          else
+            echo "No diagnosis artifact found for run $RUN_ID"
+            exit 1
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
 
       # ── 4. Validate fix eligibility ──────────────────────────────
       - name: Validate fix eligibility

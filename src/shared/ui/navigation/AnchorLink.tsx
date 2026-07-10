@@ -32,8 +32,8 @@ export const AnchorLink = ({
         const id = href.replace('#', '');
         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
       } else {
-        // Different route — hard navigate so browser scrolls after load
-        window.location.href = href;
+        // Different route — navigate home first, then scroll after load
+        window.location.href = `/${href}`;
       }
     },
     [href, location.pathname, onClick],
