@@ -8,8 +8,8 @@ import {
 import { useScoringWebSocket } from '@features/scoring/hooks/useScoringWebSocket';
 import { ConnectionStatusIndicator } from '@features/scoring/live/components/ConnectionStatusIndicator';
 import { MatchStatusIndicator } from '@features/scoring/live/components/MatchStatusIndicator';
-import { matchService } from '@features/tournaments/services/tournament';
 import { useSocket } from '@features/websocket/useSocket';
+import { matchService } from '@shared/api/tournaments';
 import type { Match } from '@shared/types/tournament';
 import { Button } from '@shared/ui/Button';
 import { Card, CardBody } from '@shared/ui/Card';

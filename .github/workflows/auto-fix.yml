@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     if: >-
       (github.event_name == 'workflow_dispatch') ||
-      (github.event.workflow_run.conclusion != 'failure' && github.event.workflow_run.event != 'schedule')
+      (github.event.workflow_run.conclusion == 'failure' && github.event.workflow_run.event != 'schedule')
     steps:
       # ── 1. Determine PR and diagnosis source ─────────────────────
       - name: Determine context

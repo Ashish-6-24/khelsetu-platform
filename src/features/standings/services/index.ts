@@ -1,5 +1,5 @@
 import type { Standing } from '@features/standings/types';
-import { tournamentService } from '@features/tournaments/services/tournament';
+import { tournamentService } from '@shared/api/tournaments';
 
 export { standingsService as standingsCrudService } from './standingsService';
 

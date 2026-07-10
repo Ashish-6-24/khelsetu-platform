@@ -2,10 +2,7 @@ import { ActivityFeed } from '@features/dashboard/components/ActivityFeed';
 import type { ActivityItem } from '@features/dashboard/components/ActivityFeed';
 import { LiveMatchesPanel } from '@features/dashboard/components/LiveMatchesPanel';
 import { OnboardingChecklist } from '@features/dashboard/components/OnboardingChecklist';
-import {
-  matchService,
-  tournamentService,
-} from '@features/tournaments/services/tournament';
+import { matchService, tournamentService } from '@shared/api/tournaments';
 import type { Match, Tournament } from '@shared/types/tournament';
 import { Badge } from '@shared/ui/Badge';
 import { Button } from '@shared/ui/Button';

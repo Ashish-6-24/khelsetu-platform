@@ -1,4 +1,1 @@
-export {
-  tournamentService,
-  matchService,
-} from '@features/tournaments/services/tournament';
+export { tournamentService, matchService } from '@shared/api/tournaments';

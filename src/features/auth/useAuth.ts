@@ -1,9 +1,6 @@
 import { authService } from '@features/auth/services/auth';
-import {
-  matchService,
-  tournamentService,
-} from '@features/tournaments/services/tournament';
 import { logger } from '@lib/logger';
+import { matchService, tournamentService } from '@shared/api/tournaments';
 import type { LoginCredentials, RegisterCredentials } from '@shared/types/auth';
 import { useAuthStore } from '@state/authStore';
 import { useQueryClient } from '@tanstack/react-query';
