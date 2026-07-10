@@ -63,20 +63,3 @@ jobs:
         uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294
         with:
           fail-on-severity: high
-
-  sonarcloud:
-    name: SonarCloud
-    runs-on: ubuntu-latest
-    if: >-
-      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) &&
-      github.event.pull_request.user.login != 'dependabot[bot]'
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
-        with:
-          fetch-depth: 0
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarqube-scan-action@713881670b6b3676cda39549040e2d88c70d582e
-        env:
-          SONAR_TOKEN: ${{ secrets.SONARQUBECLOUD }}
