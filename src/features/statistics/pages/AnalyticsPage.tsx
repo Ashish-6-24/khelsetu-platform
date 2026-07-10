@@ -1,4 +1,4 @@
-import { tournamentService } from '@features/tournaments/services/tournament';
+import { tournamentService } from '@shared/api/tournaments';
 import type { Tournament } from '@shared/types/tournament';
 import { Badge } from '@shared/ui/Badge';
 import { Card, CardBody } from '@shared/ui/Card';

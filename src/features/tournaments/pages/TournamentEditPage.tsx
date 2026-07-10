@@ -2,7 +2,7 @@ import {
   type TournamentFormData,
   TournamentFormWizard,
 } from '@features/tournaments/components';
-import { tournamentService } from '@features/tournaments/services/tournament';
+import { tournamentService } from '@shared/api/tournaments';
 import type { Tournament } from '@shared/types/tournament';
 import { ErrorState } from '@shared/ui/ErrorState';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';

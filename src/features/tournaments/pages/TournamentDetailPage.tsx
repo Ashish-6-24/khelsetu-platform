@@ -1,7 +1,7 @@
 import { StandingsTable } from '@features/standings/components';
 import { useStandings, useStandingsWebSocket } from '@features/standings/hooks';
 import type { Standing } from '@features/standings/types';
-import { tournamentService } from '@features/tournaments/services/tournament';
+import { tournamentService } from '@shared/api/tournaments';
 import type { Match, Team, Tournament } from '@shared/types/tournament';
 import { Badge } from '@shared/ui/Badge';
 import { Button } from '@shared/ui/Button';

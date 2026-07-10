@@ -1,6 +1,6 @@
 import { CreateMatchModal } from '@features/scoring/components/CreateMatchModal';
 import { MatchSelector } from '@features/scoring/components/MatchSelector';
-import { matchService } from '@features/tournaments/services/tournament';
+import { matchService } from '@shared/api/tournaments';
 import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 import type { Match } from '@shared/types/tournament';
 import { Button } from '@shared/ui/Button';

@@ -1,5 +1,5 @@
 import { LiveEventCenter } from '@features/events';
-import { matchService } from '@features/tournaments/services/tournament';
+import { matchService } from '@shared/api/tournaments';
 import type { Match } from '@shared/types/tournament';
 import { ErrorState } from '@shared/ui/ErrorState';
 import { Skeleton } from '@shared/ui/Skeleton';
