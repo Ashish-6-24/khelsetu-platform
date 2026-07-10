@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { AnchorLink } from './AnchorLink';
 
 const navLinks = [
+  { name: 'Home', href: ROUTES.HOME },
   { name: 'Features', href: '#features' },
   { name: 'Sports', href: '#sports' },
   { name: 'Pricing', href: '#pricing' },

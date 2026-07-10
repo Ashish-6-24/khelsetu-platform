@@ -335,7 +335,7 @@ jobs:
           UPLOAD_EOF
 
       - name: Upload diagnosis artifact
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: diagnosis-${{ github.event.workflow_run.id }}
           path: /tmp/diagnosis.json
@@ -367,7 +367,7 @@ jobs:
 
           if ! git diff --quiet; then
             git add -A
-            git commit -m "style: auto-fix formatting [skip ci]"
+            git commit -m "Style: Auto-fix formatting [skip ci]"
             git push origin HEAD
             echo "fixed=true" >> "$GITHUB_OUTPUT"
           else

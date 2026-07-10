@@ -41,10 +41,13 @@ jobs:
             if [ "$EVENT" = "pull_request" ]; then
               ARTIFACT_NAME=$(gh api "repos/$REPO/actions/runs/$RUN_ID/artifacts" \
                 --jq '.artifacts[] | select(.name | startswith("fix-results-")) | .name' 2>/dev/null || echo "")
-              PR_NUM=$(echo "$ARTIFACT_NAME" | grep -oP 'fix-results-\K[0-9]+' || echo "")
+              PR_NUM=$(echo "$ARTIFACT_NAME" | grep -oP 'fix-results-\K[0-9]+' | head -1 || echo "")
+              DIAG_RUN=$(echo "$ARTIFACT_NAME" | grep -oP 'fix-results-[0-9]+-\K[0-9]+' | head -1 || echo "")
               echo "pr_number=$PR_NUM" >> "$GITHUB_OUTPUT"
+              echo "diagnose_run_id=$DIAG_RUN" >> "$GITHUB_OUTPUT"
             else
               echo "pr_number=" >> "$GITHUB_OUTPUT"
+              echo "diagnose_run_id=" >> "$GITHUB_OUTPUT"
             fi
           fi
         env:
@@ -79,14 +82,14 @@ jobs:
       - name: Verify previously-failed jobs
         id: verify
         run: |
-          RUN_ID="${{ steps.context.outputs.run_id }}"
+          DIAG_RUN="${{ steps.context.outputs.diagnose_run_id }}"
           REPO="${{ github.repository }}"
 
-          # Download original diagnosis
-          if gh api "repos/$REPO/actions/runs/$RUN_ID/artifacts" \
+          # Download original diagnosis from the diagnose workflow run
+          if [ -n "$DIAG_RUN" ] && gh api "repos/$REPO/actions/runs/$DIAG_RUN/artifacts" \
             --jq '.artifacts[] | select(.name | startswith("diagnosis-")) | .id' 2>/dev/null | \
             read -r DIAG_ARTIFACT_ID; then
-            gh api "repos/$REPO/actions/runs/$RUN_ID/artifacts/$DIAG_ARTIFACT_ID/zip" > /tmp/original-diagnosis.zip 2>/dev/null
+            gh api "repos/$REPO/actions/runs/$DIAG_RUN/artifacts/$DIAG_ARTIFACT_ID/zip" > /tmp/original-diagnosis.zip 2>/dev/null
             unzip -q -o /tmp/original-diagnosis.zip -d /tmp/original-diagnosis 2>/dev/null || true
           fi
 
@@ -153,18 +156,3 @@ jobs:
           gh pr comment "$PR" --repo "${{ github.repository }}" --body "$BODY"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # ── 5. Update model telemetry ────────────────────────────────
-      - name: Update model telemetry
-        if: steps.verify.outputs.status == 'passed'
-        run: |
-          # Record successful model usage for ranking
-          MODEL="glm-5.2"  # Current active model
-          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          PR="${{ steps.context.outputs.pr_number }}"
-
-          # Append to telemetry log (would be in a real telemetry store)
-          echo "{\"model\":\"$MODEL\",\"timestamp\":\"$TIMESTAMP\",\"pr\":$PR,\"result\":\"success\",\"issue_type\":\"${{ steps.verify.outputs.original_primary }}\"}" >> /tmp/model-telemetry.jsonl
-
-          # Upload telemetry for future ranking
-          cat /tmp/model-telemetry.jsonl
