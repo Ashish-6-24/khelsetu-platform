@@ -132,3 +132,5 @@ khelsetu-platform-cicd-automation-strategy.md
 # Misc
 # =============================================================================
 *.local
+.editorconfig
+.gitleaksignore
