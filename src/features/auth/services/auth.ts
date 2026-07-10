@@ -55,7 +55,7 @@ export const authService = {
     currentPassword: string;
     newPassword: string;
   }) => {
-    await api.post('/auth/change-password', data);
+    await api.post(API_ENDPOINTS.AUTH.CHANGE_PASSWORD, data);
   },
 
   deleteAccount: async () => {

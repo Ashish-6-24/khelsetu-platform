@@ -54,9 +54,11 @@ export const useAuthStore = create<AuthStore>()(
       name: 'auth-storage',
       partialize: (state) => ({
         user: state.user,
+        tokens: state.tokens,
       }),
       onRehydrateStorage: () => (state) => {
-        if (state?.user) {
+        if (state?.user && state?.tokens) {
+          setAccessToken(state.tokens.accessToken);
           state.isAuthenticated = true;
           useUIStore.getState().allowDarkMode();
         }

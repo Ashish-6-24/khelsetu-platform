@@ -26,9 +26,9 @@ export const validationRules = {
     message: value ? 'Enter a valid email' : 'Email is required',
   }),
   password: (value: string): ValidationRule => ({
-    validate: () => value.length >= 6,
+    validate: () => value.length >= 8,
     message: value
-      ? 'Password must be at least 6 characters'
+      ? 'Password must be at least 8 characters'
       : 'Password is required',
   }),
   required: (value: string): ValidationRule => ({

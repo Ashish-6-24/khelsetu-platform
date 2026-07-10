@@ -75,4 +75,47 @@ export const authHandlers = [
       updatedAt: new Date().toISOString(),
     });
   }),
+
+  http.post('/auth/forgot-password', async ({ request }) => {
+    const body = (await request.json()) as { email: string };
+    if (!body.email) {
+      return HttpResponse.json(
+        { error: { message: 'Email is required' } },
+        { status: 400 },
+      );
+    }
+    return HttpResponse.json({ success: true, message: 'Reset email sent' });
+  }),
+
+  http.post('/auth/reset-password', async ({ request }) => {
+    const body = (await request.json()) as {
+      token: string;
+      password: string;
+    };
+    if (!body.token || !body.password) {
+      return HttpResponse.json(
+        { error: { message: 'Token and password are required' } },
+        { status: 400 },
+      );
+    }
+    return HttpResponse.json({ success: true, message: 'Password reset' });
+  }),
+
+  http.post('/auth/change-password', async ({ request }) => {
+    const body = (await request.json()) as {
+      currentPassword: string;
+      newPassword: string;
+    };
+    if (!body.currentPassword || !body.newPassword) {
+      return HttpResponse.json(
+        { error: { message: 'Both passwords are required' } },
+        { status: 400 },
+      );
+    }
+    return HttpResponse.json({ success: true, message: 'Password changed' });
+  }),
+
+  http.delete('/auth/profile', () => {
+    return HttpResponse.json({ success: true, message: 'Account deleted' });
+  }),
 ];
