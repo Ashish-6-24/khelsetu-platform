@@ -35,10 +35,9 @@ playwright-report/
 playwright/.cache/
 
 # =============================================================================
-# E2E Screenshots & Visual Snapshots (binary bloat)
+# E2E Tests (not pushed to public repo)
 # =============================================================================
-e2e/screenshots/
-e2e/visual/visual.spec.ts-snapshots/
+e2e/
 
 # =============================================================================
 # Generated Files
@@ -56,6 +55,7 @@ yarn-error.log*
 *.temp
 *.bak
 storybook.log
+debug-storybook.log
 
 # =============================================================================
 # IDE & Editor
@@ -88,15 +88,47 @@ graphify-out/
 .cursor/
 .claude/
 .superpowers/
+.agents/
+.codex/
 docs/superpowers/plans/
 
 # =============================================================================
-# Storybook
+# Storybook (not pushed to public repo)
 # =============================================================================
+.storybook/
 storybook-static/
+
+# =============================================================================
+# Documentation (not pushed to public repo)
+# =============================================================================
+docs/
+design-system/
+
+# =============================================================================
+# Config files (not pushed to public repo)
+# =============================================================================
+config/
+scripts/
+lighthouserc.json
+lighthouserc.desktop.json
+sonar-project.properties
+renovate.json
+playwright.config.ts
+playwright.visual.config.ts
+
+# =============================================================================
+# Standard markdown (not pushed to public repo)
+# =============================================================================
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+SECURITY.md
+
+# =============================================================================
+# Internal docs
+# =============================================================================
+khelsetu-platform-cicd-automation-strategy.md
 
 # =============================================================================
 # Misc
 # =============================================================================
 *.local
-khelsetu-platform-cicd-automation-strategy.md
