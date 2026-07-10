@@ -2,8 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", ":dependencyDashboard"],
   "vulnerabilityAlerts": {
-    "schedule": ["at any time"],
-    "labels": ["security", "priority"]
+    "enabled": false
   },
   "packageRules": [
     {
