@@ -1,8 +1,5 @@
 import { ScoreTicker } from '@features/scoring/live/components/ScoreTicker';
 import { Button } from '@shared/ui/Button';
-import { FloatingOrb } from '@shared/ui/FloatingOrb';
-import { GradientMesh } from '@shared/ui/PremiumCard';
-import { CursorGlow } from '@shared/ui/animations';
 import { ROUTES } from '@shared/utils/constants';
 import {
   BarChart3,
@@ -25,16 +22,6 @@ import { liveScores } from './data';
 
 export const Hero = () => (
   <section className="relative overflow-hidden">
-    <CursorGlow />
-    <GradientMesh variant="premium" />
-    <FloatingOrb
-      color="var(--brand-primary)"
-      size={300}
-      delay={0}
-      duration={25}
-      className="-left-32 top-1/4"
-    />
-
     <div className="mx-auto max-w-7xl px-4 pb-20 pt-20 sm:px-6 sm:pt-28 lg:px-8 lg:pt-32">
       <div
         className="animate-fade-in-up mx-auto mb-10 max-w-3xl"

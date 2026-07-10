@@ -1,4 +1,3 @@
-import { FloatingOrb } from '@shared/ui/FloatingOrb';
 import { Logo } from '@shared/ui/Logo';
 import { Reveal } from '@shared/ui/animations';
 import { ROUTES } from '@shared/utils/constants';
@@ -32,20 +31,6 @@ export const CTA = () => (
                 'radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.15) 1px, transparent 0)',
               backgroundSize: '24px 24px',
             }}
-          />
-          <FloatingOrb
-            color="var(--brand-accent)"
-            size={280}
-            delay={0}
-            duration={18}
-            className="-left-20 -top-20"
-          />
-          <FloatingOrb
-            color="var(--brand-primary)"
-            size={220}
-            delay={3}
-            duration={22}
-            className="-right-16 -bottom-16"
           />
           <div className="relative">
             <div

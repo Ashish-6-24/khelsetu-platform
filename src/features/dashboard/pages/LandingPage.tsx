@@ -1,5 +1,3 @@
-import { CursorGlow } from '@shared/ui/animations';
-
 import { CTA } from '../components/landing/CTA';
 import { FAQ } from '../components/landing/FAQ';
 import { Features } from '../components/landing/Features';
@@ -13,7 +11,6 @@ import { Testimonials } from '../components/landing/Testimonials';
 
 export const LandingPage = () => (
   <div className="relative overflow-hidden">
-    <CursorGlow />
     <Hero />
     <SocialProof />
     <Sports />

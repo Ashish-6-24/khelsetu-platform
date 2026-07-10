@@ -6,7 +6,7 @@ export {
 } from './components';
 export { useScoring } from './hooks';
 export { scoringService } from './services';
-export { useScoringStore } from './store';
+export { useScoringStore } from '@state/scoringStore';
 export type {
   SportType,
   MatchScore,
@@ -21,7 +21,7 @@ export type {
   BasketballEventType,
   BasketballEvent,
   BasketballScore,
-} from './types';
+} from '@shared/types/scoring';
 export {
   createCricketBall,
   createFootballEvent,
