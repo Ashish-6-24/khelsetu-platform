@@ -303,7 +303,7 @@ jobs:
               conclusion: $conclusion,
               branch: $branch,
               sha: $sha,
-              pr_number: ($pr_number | tonumber),
+              pr_number: ($pr_number | if . == "" then null else tonumber end),
               is_fork: ($is_fork == "true"),
               primary_issue: $primary,
               auto_fixable: ($auto_fixable == "true"),

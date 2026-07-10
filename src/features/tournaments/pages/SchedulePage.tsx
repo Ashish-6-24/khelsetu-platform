@@ -1,4 +1,4 @@
-import { matchService } from '@features/tournaments/services/tournament';
+import { matchService } from '@shared/api/tournaments';
 import { useReducedMotion } from '@shared/hooks/useReducedMotion';
 import type { Match } from '@shared/types/tournament';
 import { Badge } from '@shared/ui/Badge';

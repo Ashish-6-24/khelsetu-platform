@@ -1,5 +1,5 @@
 import { TournamentCard } from '@features/tournaments/components/TournamentCard';
-import { tournamentService } from '@features/tournaments/services/tournament';
+import { tournamentService } from '@shared/api/tournaments';
 import type { Tournament } from '@shared/types/tournament';
 import { Button } from '@shared/ui/Button';
 import { Skeleton } from '@shared/ui/Skeleton';

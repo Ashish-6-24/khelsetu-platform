@@ -1,6 +1,6 @@
 import { FormationBuilder } from '@features/formation/components/FormationBuilder';
 import { useFormation } from '@features/formation/hooks/useFormation';
-import { matchService } from '@features/tournaments/services/tournament';
+import { matchService } from '@shared/api/tournaments';
 import { Card, CardBody } from '@shared/ui/Card';
 import { ErrorState } from '@shared/ui/ErrorState';
 import { Skeleton } from '@shared/ui/Skeleton';

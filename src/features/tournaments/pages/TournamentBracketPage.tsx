@@ -1,6 +1,6 @@
 import { AdvancedBracketView } from '@features/brackets';
 import { FixtureTable } from '@features/tournaments/components';
-import { tournamentService } from '@features/tournaments/services/tournament';
+import { tournamentService } from '@shared/api/tournaments';
 import type { Match, Tournament } from '@shared/types/tournament';
 import { Badge } from '@shared/ui/Badge';
 import { Button } from '@shared/ui/Button';
