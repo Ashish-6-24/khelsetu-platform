@@ -146,8 +146,14 @@ jobs:
     needs: [build]
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          fetch-depth: 0
       - uses: ./.github/actions/setup-node
       - run: npm run test:coverage
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@713881670b6b3676cda39549040e2d88c70d582e
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARQUBECLOUD }}
 
   # ╔══════════════════════════════════════════════════════════════╗
   # ║  STAGE 5 — Integration Tests                                ║
