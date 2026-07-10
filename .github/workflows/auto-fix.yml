@@ -205,11 +205,4 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # ── 6. Upload diagnosis for audit trail ─────────────────────
-      - name: Upload diagnosis
-        if: steps.download.outputs.found == 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: diagnosis-${{ steps.ctx.outputs.pr }}-${{ steps.ctx.outputs.run_id }}
-          path: /tmp/diagnosis.json
-          retention-days: 1
+

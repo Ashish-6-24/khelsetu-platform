@@ -6,9 +6,6 @@ on:
       pr_number:
         description: 'PR number to verify'
         required: true
-      fix_run_id:
-        description: 'Run ID of the auto-fix that produced the patch'
-        required: true
   workflow_run:
     workflows: ['Auto-Fix CI Issues']
     types: [completed]
@@ -32,123 +29,75 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "pr_number=${{ inputs.pr_number }}" >> "$GITHUB_OUTPUT"
-            echo "run_id=${{ inputs.fix_run_id }}" >> "$GITHUB_OUTPUT"
           else
             RUN_ID="${{ github.event.workflow_run.id }}"
             EVENT="${{ github.event.workflow_run.event }}"
-            echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
 
             if [ "$EVENT" = "pull_request" ]; then
               ARTIFACT_NAME=$(gh api "repos/$REPO/actions/runs/$RUN_ID/artifacts" \
                 --jq '.artifacts[] | select(.name | startswith("fix-results-")) | .name' 2>/dev/null || echo "")
               PR_NUM=$(echo "$ARTIFACT_NAME" | grep -oP 'fix-results-\K[0-9]+' | head -1 || echo "")
-              DIAG_RUN=$(echo "$ARTIFACT_NAME" | grep -oP 'fix-results-[0-9]+-\K[0-9]+' | head -1 || echo "")
               echo "pr_number=$PR_NUM" >> "$GITHUB_OUTPUT"
-              echo "diagnose_run_id=$DIAG_RUN" >> "$GITHUB_OUTPUT"
             else
               echo "pr_number=" >> "$GITHUB_OUTPUT"
-              echo "diagnose_run_id=" >> "$GITHUB_OUTPUT"
             fi
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
 
-      # ── 2. Wait for CI to complete ───────────────────────────────
-      - name: Wait for CI
-        run: |
-          PR="${{ steps.context.outputs.pr_number }}"
-          echo "Waiting for CI to complete on PR #$PR..."
-
-          # Poll CI status every 30 seconds, max 10 minutes
-          for i in $(seq 1 20); do
-            STATUS=$(gh pr checks "$PR" --repo "$REPO" 2>/dev/null | grep -c "pending" || echo "0")
-            if [ "$STATUS" -eq 0 ]; then
-              echo "CI completed"
-              break
-            fi
-            echo "Waiting... ($i/20) — $STATUS checks pending"
-            sleep 30
-          done
-
-          # Final status check
-          CI_STATE=$(gh pr checks "$PR" --repo "$REPO" 2>/dev/null | grep -c "fail" || echo "0")
-          echo "failed_count=$CI_STATE" >> "$GITHUB_OUTPUT"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.repository }}
-
-      # ── 3. Check specific previously-failed jobs ─────────────────
-      - name: Verify previously-failed jobs
+      # ── 2. Check final CI status ─────────────────────────────────
+      - name: Check CI status
         id: verify
         run: |
-          DIAG_RUN="${{ steps.context.outputs.diagnose_run_id }}"
-          REPO="${{ github.repository }}"
+          PR="${{ steps.context.outputs.pr_number }}"
 
-          # Download original diagnosis from the diagnose workflow run
-          if [ -n "$DIAG_RUN" ] && gh api "repos/$REPO/actions/runs/$DIAG_RUN/artifacts" \
-            --jq '.artifacts[] | select(.name | startswith("diagnosis-")) | .id' 2>/dev/null | \
-            read -r DIAG_ARTIFACT_ID; then
-            gh api "repos/$REPO/actions/runs/$DIAG_RUN/artifacts/$DIAG_ARTIFACT_ID/zip" > /tmp/original-diagnosis.zip 2>/dev/null
-            unzip -q -o /tmp/original-diagnosis.zip -d /tmp/original-diagnosis 2>/dev/null || true
+          if [ -z "$PR" ] || [ "$PR" = "null" ] || [ "$PR" = "" ]; then
+            echo "status=skipped" >> "$GITHUB_OUTPUT"
+            echo "message=No PR number found" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
 
-          # Extract previously failed job names
-          PREV_FAILED=$(jq -r '.failed_jobs[].name // empty' /tmp/original-diagnosis/diagnosis.json 2>/dev/null || echo "")
+          # Check if any checks are still pending
+          PENDING=$(gh pr checks "$PR" --repo "$REPO" 2>/dev/null | grep -c "pending" || echo "0")
+          if [ "$PENDING" -gt 0 ]; then
+            echo "status=pending" >> "$GITHUB_OUTPUT"
+            echo "message=$PENDING check(s) still pending" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
 
-          # Check current CI status
-          PR="${{ steps.context.outputs.pr_number }}"
-          CURRENT_FAILS=$(gh pr checks "$PR" --repo "$REPO" 2>/dev/null | grep -c "fail" || echo "0")
-
-          # Determine result
-          ORIGINAL_PRIMARY=$(jq -r '.primary_issue // "unknown"' /tmp/original-diagnosis/diagnosis.json 2>/dev/null || echo "unknown")
-
-          if [ "$CURRENT_FAILS" -gt 0 ]; then
+          # Check for failures
+          FAILED=$(gh pr checks "$PR" --repo "$REPO" 2>/dev/null | grep -c "fail" || echo "0")
+          if [ "$FAILED" -gt 0 ]; then
             echo "status=failed" >> "$GITHUB_OUTPUT"
-            echo "message=CI still has $CURRENT_FAILS failing check(s)" >> "$GITHUB_OUTPUT"
-          elif [ "$ORIGINAL_PRIMARY" = "unknown" ]; then
-            echo "status=uncertain" >> "$GITHUB_OUTPUT"
-            echo "message=Original issue was 'unknown' — manual verification recommended" >> "$GITHUB_OUTPUT"
+            echo "message=CI still has $FAILED failing check(s)" >> "$GITHUB_OUTPUT"
           else
             echo "status=passed" >> "$GITHUB_OUTPUT"
-            echo "message=All checks passing. Original issue ($ORIGINAL_PRIMARY) resolved." >> "$GITHUB_OUTPUT"
+            echo "message=All checks passing." >> "$GITHUB_OUTPUT"
           fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
 
-          echo "original_primary=$ORIGINAL_PRIMARY" >> "$GITHUB_OUTPUT"
-
-      # ── 4. Post verification comment ─────────────────────────────
+      # ── 3. Post verification comment ─────────────────────────────
       - name: Post verification comment
-        if: steps.context.outputs.pr_number != ''
+        if: steps.context.outputs.pr_number != '' && steps.context.outputs.pr_number != 'null'
         run: |
           PR="${{ steps.context.outputs.pr_number }}"
           STATUS="${{ steps.verify.outputs.status }}"
           MESSAGE="${{ steps.verify.outputs.message }}"
-          PRIMARY="${{ steps.verify.outputs.original_primary }}"
 
           if [ "$STATUS" = "passed" ]; then
             BADGE="✅"
-            BODY="## $BADGE Fix Verified
-
-          $MESSAGE
-
-          The \`$PRIMARY\` issue that triggered diagnosis has been resolved."
           elif [ "$STATUS" = "failed" ]; then
             BADGE="❌"
-            BODY="## $BADGE Fix Incomplete
-
-          $MESSAGE
-
-          The fix did not resolve the issue. Manual intervention required."
           else
             BADGE="⚠️"
-            BODY="## $BADge Fix Uncertain
-
-          $MESSAGE
-
-          Please review the CI results manually."
           fi
 
-          BODY="$BODY
+          BODY="## $BADGE Fix Verification
+
+          $MESSAGE
 
           ---
           *Verified by [workflow](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})*"

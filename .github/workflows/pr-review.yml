@@ -23,40 +23,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Select model with fallback
+      - name: Select model
         id: model
         run: |
           REGISTRY="config/model-registry.json"
-          if [ ! -f "$REGISTRY" ]; then
-            echo "model=glm-5.2" >> "$GITHUB_OUTPUT"
-            exit 0
+          if [ -f "$REGISTRY" ]; then
+            MODEL=$(jq -r '.selection_policy.primary' "$REGISTRY")
+          else
+            MODEL="glm-5.2"
           fi
-
-          PRIMARY=$(jq -r '.selection_policy.primary' "$REGISTRY")
-          FALLBACKS=$(jq -r '.fallback_chain[]' "$REGISTRY")
-          MAX_RETRIES=$(jq -r '.selection_policy.max_retries_per_model' "$REGISTRY")
-
-          # Try primary first, then fallbacks
-          for MODEL in $PRIMARY $FALLBACKS; do
-            # Test model availability with a lightweight request
-            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
-              -H "Authorization: Bearer ${{ secrets.NVIDIA_NIM_API_KEY }}" \
-              -H "Content-Type: application/json" \
-              "${{ secrets.NVIDIA_NIM_BASE_URL || 'https://integrate.api.nvidia.com/v1' }}/chat/completions" \
-              -d "{\"model\":\"$MODEL\",\"messages\":[{\"role\":\"user\",\"content\":\"test\"}],\"max_tokens\":1}" \
-              --connect-timeout 5 --max-time 10 2>/dev/null || echo "000")
-
-            if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "429" ]; then
-              echo "model=$MODEL" >> "$GITHUB_OUTPUT"
-              echo "Using model: $MODEL (HTTP $HTTP_CODE)"
-              exit 0
-            fi
-            echo "Model $MODEL unavailable (HTTP $HTTP_CODE), trying next..."
-          done
-
-          # All models failed, use primary anyway (let PR-Agent handle errors)
-          echo "model=$PRIMARY" >> "$GITHUB_OUTPUT"
-          echo "All models unavailable, falling back to primary: $PRIMARY"
+          echo "model=$MODEL" >> "$GITHUB_OUTPUT"
 
       - name: PR-Agent Review
         uses: The-PR-Agent/pr-agent@8e4d32e5497defd43c023a404f73560c62728961

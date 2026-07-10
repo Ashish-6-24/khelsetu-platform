@@ -9,9 +9,7 @@ on:
     - cron: '0 6 * * 1'
   workflow_dispatch:
 
-concurrency:
-  group: security-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+
 
 env:
   NODE_VERSION: '22'

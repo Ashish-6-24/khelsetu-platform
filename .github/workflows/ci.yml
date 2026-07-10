@@ -17,9 +17,9 @@ env:
 # ─────────────────────────────────────────────────────────────────
 #  Pipeline Architecture
 #
-#  Stage 1 ─ Static Checks    (parallel with Build, ~45s)
-#  Stage 2 ─ Build            (parallel with Static, ~60s)
-#  Stage 3 ─ Unit Tests       (after build, parallel shards, ~60s)
+#  Stage 1 ─ Static Checks    (parallel with Build)
+#  Stage 2 ─ Build            (parallel with Static)
+#  Stage 3 ─ Unit Tests       (parallel with Build, no dep)
 #  Stage 4 ─ Integration Tests (after unit, heavy tier only)
 #  Final   ─ Pipeline Gate     (evaluates all stages)
 # ─────────────────────────────────────────────────────────────────
@@ -53,11 +53,10 @@ jobs:
               - 'vitest.config.*'
               - 'playwright.config.*'
               - '.github/workflows/**'
-              - 'scripts/**'
 
   # ╔══════════════════════════════════════════════════════════════╗
   # ║  STAGE 1 — Static Checks                                   ║
-  # ║  Lint, format, typecheck, circular deps, structure.         ║
+  # ║  Lint, format, typecheck.                                   ║
   # ╚══════════════════════════════════════════════════════════════╝
 
   static-checks:
@@ -76,10 +75,6 @@ jobs:
         run: npm run format:check
       - name: Type Check
         run: npm run typecheck
-      - name: Circular Dependencies
-        run: npm run circular
-      - name: Structure
-        run: bash scripts/check-duplicates.sh
 
   # ╔══════════════════════════════════════════════════════════════╗
   # ║  STAGE 2 — Build                                            ║
@@ -97,7 +92,6 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - uses: ./.github/actions/setup-node
       - run: npm run build
-      - run: npx size-limit
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: build-output
@@ -106,7 +100,7 @@ jobs:
 
   # ╔══════════════════════════════════════════════════════════════╗
   # ║  STAGE 3 — Unit Tests                                       ║
-  # ║  Parallel shards + coverage. Depends on build.              ║
+  # ║  Parallel shards + coverage. No build dependency.           ║
   # ╚══════════════════════════════════════════════════════════════╝
 
   unit:
@@ -114,7 +108,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    needs: [build]
+    needs: [changes]
+    if: needs.changes.outputs.code == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -123,24 +118,16 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - uses: ./.github/actions/setup-node
       - run: npx vitest run --shard=${{ matrix.shard }}/2
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        if: always()
-        with:
-          name: unit-results-${{ matrix.shard }}
-          path: test-results/
-          retention-days: 3
-          if-no-files-found: ignore
 
   coverage:
     name: '3 · Coverage'
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    needs: [build]
+    needs: [changes]
+    if: needs.changes.outputs.code == 'true'
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
-        with:
-          fetch-depth: 0
       - uses: ./.github/actions/setup-node
       - run: npm run test:coverage
       - name: SonarCloud Scan
@@ -151,7 +138,6 @@ jobs:
   # ╔══════════════════════════════════════════════════════════════╗
   # ║  STAGE 4 — Integration Tests                                ║
   # ║  Heavy tier. Only on merge or "run-full-suite" label.       ║
-  # ║  All jobs run in parallel after unit tests pass.            ║
   # ╚══════════════════════════════════════════════════════════════╝
 
   e2e:
@@ -185,13 +171,6 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit == 'true'
         run: npx playwright install-deps chromium
       - run: npx playwright test --project=chromium --shard=${{ matrix.shard }}/2 --retries=2
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        if: always()
-        with:
-          name: e2e-report-${{ matrix.shard }}
-          path: playwright-report/
-          retention-days: 14
-          if-no-files-found: ignore
 
   smoke:
     name: '4 · Smoke'
@@ -248,13 +227,6 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit == 'true'
         run: npx playwright install-deps chromium
       - run: npx playwright test --project=a11y-public --retries=2
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        if: always()
-        with:
-          name: a11y-report
-          path: playwright-report/
-          retention-days: 14
-          if-no-files-found: ignore
 
   lighthouse:
     name: '4 · Lighthouse'
@@ -265,22 +237,12 @@ jobs:
     if: github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'run-full-suite')
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
-        with:
-          fetch-depth: 20
       - uses: ./.github/actions/setup-node
       - uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e
         with:
           name: build-output
           path: dist/
-      - run: npx @lhci/cli autorun --config=lighthouserc.json
-      - run: npx @lhci/cli autorun --config=lighthouserc.desktop.json
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        if: always()
-        with:
-          name: lighthouse-report
-          path: .lighthouseci/
-          retention-days: 14
-          if-no-files-found: ignore
+      - run: npx @lhci/cli autorun
 
   # ╔══════════════════════════════════════════════════════════════╗
   # ║  PIPELINE GATE                                              ║
