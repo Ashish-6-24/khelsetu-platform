@@ -51,7 +51,10 @@ export const authService = {
     await api.post(API_ENDPOINTS.AUTH.RESET_PASSWORD, { token, password });
   },
 
-  changePassword: async (data: { currentPassword: string; newPassword: string }) => {
+  changePassword: async (data: {
+    currentPassword: string;
+    newPassword: string;
+  }) => {
     await api.post('/auth/change-password', data);
   },
 
