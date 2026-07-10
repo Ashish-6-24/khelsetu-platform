@@ -2,7 +2,7 @@ const getEnv = () => {
   const env = import.meta.env.VITE_APP_ENV || 'development';
   const isProd = env === 'production';
 
-  const required = ['VITE_API_URL'];
+  const required: string[] = [];
   const missing = required.filter((key) => !import.meta.env[key]);
 
   if (missing.length > 0 && isProd) {
@@ -11,26 +11,19 @@ const getEnv = () => {
     );
   }
 
-  const apiUrl =
-    import.meta.env.VITE_API_URL !== undefined
-      ? import.meta.env.VITE_API_URL
-      : 'http://localhost:8080';
+  const apiUrl = import.meta.env.VITE_API_URL || '';
   const wsUrl =
     import.meta.env.VITE_WS_URL !== undefined
       ? import.meta.env.VITE_WS_URL
       : 'ws://localhost:8080';
 
-  if (isProd) {
-    if (!apiUrl.startsWith('https://')) {
-      throw new Error(
-        `VITE_API_URL must use https:// in production. Got: ${apiUrl}`,
-      );
-    }
-    if (!wsUrl.startsWith('wss://')) {
-      throw new Error(
-        `VITE_WS_URL must use wss:// in production. Got: ${wsUrl}`,
-      );
-    }
+  if (isProd && apiUrl && !apiUrl.startsWith('https://')) {
+    throw new Error(
+      `VITE_API_URL must use https:// in production. Got: ${apiUrl}`,
+    );
+  }
+  if (isProd && wsUrl && !wsUrl.startsWith('wss://')) {
+    throw new Error(`VITE_WS_URL must use wss:// in production. Got: ${wsUrl}`);
   }
 
   return {
