@@ -38,10 +38,12 @@ export const ForgotPasswordPage = () => {
     return (
       <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-7 shadow-[var(--shadow-xl)] sm:p-9 text-center">
         <Logo size="md" className="mx-auto mb-6" />
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">Check your email</h1>
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
+          Check your email
+        </h1>
         <p className="mt-3 text-sm text-[var(--text-secondary)]">
-          We sent a password reset link to <strong>{email}</strong>.
-          Check your inbox and follow the instructions.
+          We sent a password reset link to <strong>{email}</strong>. Check your
+          inbox and follow the instructions.
         </p>
         <p className="mt-6 text-xs text-[var(--text-tertiary)]">
           Didn't receive it? Check your spam folder or{' '}
@@ -66,7 +68,9 @@ export const ForgotPasswordPage = () => {
   return (
     <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-7 shadow-[var(--shadow-xl)] sm:p-9">
       <Logo size="md" className="mx-auto mb-6" />
-      <h1 className="text-2xl font-bold text-[var(--text-primary)]">Reset your password</h1>
+      <h1 className="text-2xl font-bold text-[var(--text-primary)]">
+        Reset your password
+      </h1>
       <p className="mt-2 text-sm text-[var(--text-secondary)]">
         Enter your email and we'll send you a reset link.
       </p>
