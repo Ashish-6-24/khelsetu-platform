@@ -99,6 +99,7 @@ jobs:
         with:
           name: diagnosis-${{ steps.context.outputs.run_id }}
           path: /tmp
+          run-id: ${{ steps.context.outputs.run_id }}
 
       # ── 4. Validate fix eligibility ──────────────────────────────
       - name: Validate fix eligibility
