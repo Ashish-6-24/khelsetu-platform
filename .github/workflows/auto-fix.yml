@@ -94,11 +94,25 @@ jobs:
         run: |
           RUN_ID="${{ steps.ctx.outputs.run_id }}"
 
+          # Validate RUN_ID exists
+          if [ -z "$RUN_ID" ]; then
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Check if run exists before fetching artifacts
+          if ! gh api "repos/$REPO/actions/runs/$RUN_ID" &>/dev/null; then
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            echo "Run $RUN_ID not found" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
           DIAG_ID=$(gh api "repos/$REPO/actions/runs/$RUN_ID/artifacts" \
             --jq '.artifacts[] | select(.name | startswith("diagnosis-")) | .id' 2>/dev/null || echo "")
 
           if [ -z "$DIAG_ID" ]; then
             echo "found=false" >> "$GITHUB_OUTPUT"
+            echo "No diagnosis artifact found in run $RUN_ID" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
