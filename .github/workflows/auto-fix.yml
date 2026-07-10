@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     if: >-
       (github.event_name == 'workflow_dispatch') ||
-      (github.event.workflow_run.conclusion == 'failure' && github.event.workflow_run.event != 'schedule')
+      (github.event_name == 'workflow_run' && github.event.workflow_run.event != 'schedule')
     steps:
       # ── 1. Determine PR and diagnosis source ─────────────────────
       - name: Determine context
@@ -129,7 +129,7 @@ jobs:
 
           # Check if fixer workflow is allowed for this branch
           BRANCH="${{ steps.pr-branch.outputs.branch }}"
-          ALLOWED=$(jq -r --arg b "$BRANCH" '.branch_restrictions.auto_fix_branches[] | select(. == $b)' config/workflow-policy.json 2>/dev/null || echo "master")
+          ALLOWED=$(jq -r --arg b "$BRANCH" '.workflows["auto-fix.yml"].allowed_branches[] | select(. == $b)' config/workflow-policy.json 2>/dev/null || echo "master")
           if [ -z "$ALLOWED" ]; then
             echo "eligible=false" >> "$GITHUB_OUTPUT"
             echo "reason=Branch '$BRANCH' not in allowed fix branches" >> "$GITHUB_OUTPUT"
@@ -154,7 +154,7 @@ jobs:
 
           if ! git diff --quiet; then
             git add -A
-            git commit -m "fix: auto-fix formatting and lint issues [skip ci]"
+            git commit -m "Fix: Auto-fix formatting and lint issues [skip ci]"
             git push origin HEAD
             echo "fixed=true" >> "$GITHUB_OUTPUT"
             echo "files_changed=$(git diff --stat HEAD~1 --name-only | wc -l)" >> "$GITHUB_OUTPUT"
@@ -188,9 +188,9 @@ jobs:
       # ── 7. Upload fix results for verify ─────────────────────────
       - name: Upload fix results
         if: steps.validate.outputs.eligible == 'true'
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: fix-results-${{ steps.context.outputs.pr_number }}
+          name: fix-results-${{ steps.context.outputs.pr_number }}-${{ steps.context.outputs.run_id }}
           path: |
             /tmp/diagnosis.json
             /tmp/fix-results.json
