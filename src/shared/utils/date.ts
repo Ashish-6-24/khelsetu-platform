@@ -1,4 +1,4 @@
-import { format, formatDistanceToNow, isValid, parseISO } from 'date-fns';
+import { format, isValid, parseISO } from 'date-fns';
 
 export const formatDate = (
   date: string | Date,
@@ -19,28 +19,6 @@ export const formatTime = (date: string | Date): string => {
   const parsed = typeof date === 'string' ? parseISO(date) : date;
   if (!isValid(parsed)) return 'Invalid Time';
   return format(parsed, 'HH:mm');
-};
-
-export const formatRelativeTime = (date: string | Date): string => {
-  const parsed = typeof date === 'string' ? parseISO(date) : date;
-  if (!isValid(parsed)) return '';
-  return formatDistanceToNow(parsed, { addSuffix: true });
-};
-
-export const isDatePassed = (date: string | Date): boolean => {
-  const parsed = typeof date === 'string' ? parseISO(date) : date;
-  return isValid(parsed) && parsed < new Date();
-};
-
-export const isDateToday = (date: string | Date): boolean => {
-  const parsed = typeof date === 'string' ? parseISO(date) : date;
-  if (!isValid(parsed)) return false;
-  const today = new Date();
-  return (
-    parsed.getDate() === today.getDate() &&
-    parsed.getMonth() === today.getMonth() &&
-    parsed.getFullYear() === today.getFullYear()
-  );
 };
 
 export const getGreeting = (): string => {

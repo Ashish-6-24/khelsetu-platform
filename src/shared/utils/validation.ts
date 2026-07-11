@@ -18,19 +18,3 @@ export const nameSchema = z
   .max(100, 'Name must be less than 100 characters');
 
 export const urlSchema = z.string().url('Invalid URL').optional();
-
-export const validateEmail = (email: string): boolean => {
-  return emailSchema.safeParse(email).success;
-};
-
-export const validatePassword = (password: string): boolean => {
-  return passwordSchema.safeParse(password).success;
-};
-
-export const validatePhone = (phone: string): boolean => {
-  return phoneSchema.safeParse(phone).success;
-};
-
-export const validateName = (name: string): boolean => {
-  return nameSchema.safeParse(name).success;
-};

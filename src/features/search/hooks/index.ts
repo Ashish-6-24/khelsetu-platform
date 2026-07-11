@@ -1,8 +1,16 @@
 import { useSearchStore } from '@features/search/store';
 import type { SearchResult } from '@features/search/types';
-import { useDebounce } from '@shared/hooks/useDebounce';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+
+const useDebounce = <T>(value: T, delay: number): T => {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() => {
+    const t = setTimeout(() => setDebounced(value), delay);
+    return () => clearTimeout(t);
+  }, [value, delay]);
+  return debounced;
+};
 
 const mockData: SearchResult[] = [
   {
