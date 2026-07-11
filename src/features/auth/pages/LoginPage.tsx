@@ -14,11 +14,12 @@ import { Lock, Mail, ShieldCheck } from 'lucide-react';
 
 import { useEffect, useState } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const LoginPage = () => {
   const { login } = useAuth();
   const { addToast } = useToast();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -105,6 +106,7 @@ export const LoginPage = () => {
         message: 'Signed in successfully. Redirecting…',
       });
       resetValidation();
+      navigate(ROUTES.DASHBOARD);
     } else {
       addToast({
         type: 'error',

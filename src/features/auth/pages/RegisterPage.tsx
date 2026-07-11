@@ -8,11 +8,12 @@ import { Lock, Mail, User as UserIcon } from 'lucide-react';
 
 import { useState } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const RegisterPage = () => {
   const { register } = useAuth();
   const { addToast } = useToast();
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -47,6 +48,7 @@ export const RegisterPage = () => {
         title: 'Account created',
         message: 'Welcome aboard! Setting up your workspace…',
       });
+      navigate(ROUTES.DASHBOARD);
     } else {
       const msg =
         (res.error as { response?: { data?: { message?: string } } })?.response
