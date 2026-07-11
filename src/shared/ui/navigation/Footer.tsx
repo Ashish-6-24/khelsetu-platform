@@ -1,5 +1,5 @@
 import { Logo } from '@shared/ui/Logo';
-import { APP_NAME } from '@shared/utils/constants';
+import { APP_NAME, ROUTES } from '@shared/utils/constants';
 
 const TwitterIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
@@ -60,10 +60,10 @@ const linkGroups = [
   {
     title: 'Company',
     links: [
-      { name: 'About', href: '#' },
+      { name: 'About', href: ROUTES.ABOUT },
       { name: 'Blog', href: '#' },
       { name: 'Careers', href: '#' },
-      { name: 'Contact', href: '#' },
+      { name: 'Contact', href: ROUTES.CONTACT },
       { name: 'Press kit', href: '#' },
     ],
   },
@@ -141,12 +141,12 @@ export const Footer = () => {
             &copy; {new Date().getFullYear()} {APP_NAME}. Crafted in Kathmandu.
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-[var(--text-tertiary)] dark:text-[var(--text-secondary)]">
-            <span aria-disabled="true" className="cursor-default">
+            <a href={ROUTES.PRIVACY} className="transition-colors hover:text-[var(--text-primary)]">
               Privacy
-            </span>
-            <span aria-disabled="true" className="cursor-default">
+            </a>
+            <a href={ROUTES.TERMS} className="transition-colors hover:text-[var(--text-primary)]">
               Terms
-            </span>
+            </a>
             <span aria-disabled="true" className="cursor-default">
               Security
             </span>
