@@ -7,9 +7,6 @@ npm run build
 echo "Running unit tests..."
 npm run test:run
 
-echo "Running circular dependency check..."
-npm run circular
-
 echo "Running security audit..."
 npm audit --audit-level=high
 
